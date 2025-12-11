@@ -1,0 +1,14 @@
+{
+  "name": "io.github.ykysnk.yky-toolkit.Editor",
+  "references": [
+    "io.github.ykysnk.yky-toolkit"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "autoReferenced": true,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "defineConstraints": [],
+  "optionalUnityReferences": []
+}
