@@ -2,11 +2,18 @@
   "dependencies": {
     "com.vrchat.core.vpm-resolver": {
       "version": "0.1.29"
+    },
+    "io.github.ykysnk.utils": {
+      "version": "0.23.3"
     }
   },
   "locked": {
     "com.vrchat.core.vpm-resolver": {
       "version": "0.1.29",
+      "dependencies": {}
+    },
+    "io.github.ykysnk.utils": {
+      "version": "0.23.3",
       "dependencies": {}
     }
   }

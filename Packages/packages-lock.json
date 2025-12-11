@@ -105,6 +105,12 @@
         "com.unity.nuget.newtonsoft-json": "3.0.2"
       }
     },
+    "io.github.ykysnk.utils": {
+      "version": "file:io.github.ykysnk.utils",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "io.github.ykysnk.yky-toolkit": {
       "version": "file:io.github.ykysnk.yky-toolkit",
       "depth": 0,
