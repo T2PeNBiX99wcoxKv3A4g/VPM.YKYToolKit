@@ -1,7 +1,7 @@
 {
   "name": "io.github.ykysnk.yky-toolkit",
   "displayName": "YKY Toolkit",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Toolkit for Unity",
   "gitDependencies": {},
   "vpmDependencies": {
