@@ -26,7 +26,7 @@ internal static class EmptyFolderClear
         var count = 0;
         reportPaths.ForEach(path =>
         {
-            EditorUtility.DisplayProgressBar(Title, $"Clearing Empty Folder\n{path}", (float)count / reportPaths.Count);
+            EditorUtility.DisplayProgressBar(Title, $"Clearing Empty Folder - {path}", (float)count / reportPaths.Count);
             AssetDatabase.DeleteAsset(path);
             count++;
         });
