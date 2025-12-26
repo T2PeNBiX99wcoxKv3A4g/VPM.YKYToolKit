@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using io.github.ykysnk.utils.Extensions;
 using UnityEditor;
 
 namespace io.github.ykysnk.ykyToolkit.Editor;
@@ -28,7 +29,9 @@ internal static class EmptyFolderClear
             var count = 0;
             reportPaths.ForEach(path =>
             {
-                EditorUtility.DisplayProgressBar(Title, Path.GetFullPath(path), (float)count / reportPaths.Count);
+                var fullPath = Path.GetFullPath(path);
+                var cutPath = fullPath.LastPath("Assets\\") ?? fullPath.LastPath("Assets/") ?? "";
+                EditorUtility.DisplayProgressBar(Title, cutPath, (float)count / reportPaths.Count);
                 AssetDatabase.DeleteAsset(path);
                 count++;
             });
