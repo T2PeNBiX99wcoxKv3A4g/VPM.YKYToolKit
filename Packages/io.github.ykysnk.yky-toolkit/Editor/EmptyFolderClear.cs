@@ -14,6 +14,12 @@ internal static class EmptyFolderClear
         var reportPaths = Directory.GetDirectories("Assets/", "*", SearchOption.AllDirectories).Where(path =>
             Directory.GetFiles(path).Length < 1 && Directory.GetDirectories(path).Length < 1).ToList();
 
+        if (reportPaths.Count < 1)
+        {
+            EditorUtility.DisplayDialog(Title, "No empty folders found.", "OK");
+            return;
+        }
+
         if (!EditorUtility.DisplayDialog(Title, $"Found {reportPaths.Count} empty folders.", "Start Clearing",
                 "Cancel")) return;
 
