@@ -6,9 +6,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor;
 
 internal static class AssetBackup
 {
-    private const string MenuPath = $"Assets/{Util.Name}/Asset Backup #b";
-
-    [MenuItem(MenuPath, false)]
+    [MenuItem($"Assets/{Util.Name}/Asset Backup #b")]
     private static void Backup()
     {
         if (Selection.assetGUIDs.Length < 1) return;
