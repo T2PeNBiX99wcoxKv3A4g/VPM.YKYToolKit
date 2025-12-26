@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEditor;
@@ -11,8 +12,7 @@ internal static class EmptyFolderClear
     [MenuItem($"Tools/{Util.Name}/{Title}")]
     private static void Clear()
     {
-        var reportPaths = Directory.GetDirectories("Assets/", "*", SearchOption.AllDirectories).Where(path =>
-            Directory.GetFiles(path).Length < 1 && Directory.GetDirectories(path).Length < 1).ToList();
+        var reportPaths = GetEmptyFolders();
 
         if (reportPaths.Count < 1)
         {
@@ -23,13 +23,24 @@ internal static class EmptyFolderClear
         if (!EditorUtility.DisplayDialog(Title, $"Found {reportPaths.Count} empty folders.", "Start Clearing",
                 "Cancel")) return;
 
-        var count = 0;
-        reportPaths.ForEach(path =>
+        while (reportPaths.Count > 0)
         {
-            EditorUtility.DisplayProgressBar(Title, $"Clearing Empty Folder - {path}", (float)count / reportPaths.Count);
-            AssetDatabase.DeleteAsset(path);
-            count++;
-        });
+            var count = 0;
+            reportPaths.ForEach(path =>
+            {
+                EditorUtility.DisplayProgressBar(Title, Path.GetFullPath(path), (float)count / reportPaths.Count);
+                AssetDatabase.DeleteAsset(path);
+                count++;
+            });
+            reportPaths = GetEmptyFolders();
+        }
+
         EditorUtility.ClearProgressBar();
+    }
+
+    private static List<string> GetEmptyFolders()
+    {
+        return Directory.GetDirectories("Assets/", "*", SearchOption.AllDirectories).Where(path =>
+            Directory.GetFiles(path).Length < 1 && Directory.GetDirectories(path).Length < 1).ToList();
     }
 }
