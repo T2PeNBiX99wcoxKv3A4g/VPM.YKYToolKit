@@ -7,11 +7,12 @@ internal static class ObjectAndTagChange
 {
     private const string EditorOnlyTag = "EditorOnly";
     private const string UntaggedTag = "Untagged";
+    private const string Title = "Set Object and Tag";
     private static readonly Dictionary<int, string> OriginalTags = new();
     private static readonly Dictionary<int, bool> WasActives = new();
 
-    [MenuItem($"Tools/{Util.Name}/Set Object and Tag #e")]
-    [MenuItem($"GameObject/{Util.Name}/Set Object and Tag")]
+    [MenuItem($"Tools/{Util.Name}/{Title} #e", false, Util.ObjectAndTagChangePriority)]
+    [MenuItem($"GameObject/{Util.Name}/{Title}", false, Util.ObjectAndTagChangePriority)]
     private static void ToggleInactiveAndTag(MenuCommand menuCommand)
     {
         if (!Util.ShouldExecute(menuCommand)) return;

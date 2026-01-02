@@ -6,6 +6,8 @@ internal static class Util
 {
     internal const string Name = "YKYToolkit";
 
+    internal const int ObjectAndTagChangePriority = 10;
+
     // Refs: https://discussions.unity.com/t/how-to-execute-menuitem-for-multiple-objects-once/91492/5
     internal static bool ShouldExecute(MenuCommand menuCommand)
     {

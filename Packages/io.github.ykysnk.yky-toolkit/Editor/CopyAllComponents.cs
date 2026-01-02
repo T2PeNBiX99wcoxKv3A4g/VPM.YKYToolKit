@@ -8,8 +8,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor;
 
 internal static class CopyAllComponents
 {
-    [MenuItem($"GameObject/{Util.Name}/Copy All Components")]
-    [MenuItem($"CONTEXT/Component/{Util.Name}/Copy All Components")]
+    private const string CopyTitle = "Copy All Components";
+
+    private const string PasteTitle = "Paste All Components";
+
+    [MenuItem($"GameObject/{Util.Name}/{CopyTitle}")]
+    [MenuItem($"CONTEXT/Component/{Util.Name}/{CopyTitle}")]
     private static void Copy()
     {
         var selectedObjects = Selection.gameObjects;
@@ -21,8 +25,8 @@ internal static class CopyAllComponents
         EditorGUIUtility.systemCopyBuffer = JsonUtility.ToJson(copyData);
     }
 
-    [MenuItem($"GameObject/{Util.Name}/Paste All Components")]
-    [MenuItem($"CONTEXT/Component/{Util.Name}/Paste All Components")]
+    [MenuItem($"GameObject/{Util.Name}/{PasteTitle}")]
+    [MenuItem($"CONTEXT/Component/{Util.Name}/{PasteTitle}")]
     private static void Paste()
     {
         var selectedObjects = Selection.gameObjects;
