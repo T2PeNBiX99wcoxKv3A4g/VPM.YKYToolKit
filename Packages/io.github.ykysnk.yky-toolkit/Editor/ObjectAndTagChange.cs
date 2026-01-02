@@ -14,12 +14,9 @@ internal static class ObjectAndTagChange
     [MenuItem($"GameObject/{Util.Name}/Set Object and Tag")]
     private static void ToggleInactiveAndTag(MenuCommand menuCommand)
     {
-        if (!ShouldExecute(menuCommand)) return;
-
+        if (!Util.ShouldExecute(menuCommand)) return;
         var selectedObjects = Selection.gameObjects;
-
-        if (selectedObjects.Length < 1)
-            return;
+        if (selectedObjects.Length < 1) return;
 
         foreach (var obj in selectedObjects)
         {
@@ -53,12 +50,5 @@ internal static class ObjectAndTagChange
 
             EditorUtility.SetDirty(obj);
         }
-    }
-
-    // Refs: https://discussions.unity.com/t/how-to-execute-menuitem-for-multiple-objects-once/91492/5
-    private static bool ShouldExecute(MenuCommand menuCommand)
-    {
-        if (menuCommand.context == null) return true;
-        return menuCommand.context == Selection.activeObject;
     }
 }
