@@ -233,9 +233,7 @@
       "version": "file:io.github.ykysnk.yky-toolkit",
       "depth": 0,
       "source": "embedded",
-      "dependencies": {
-        "com.unity.memoryprofiler": ""
-      }
+      "dependencies": {}
     },
     "jp.lilxyzw.editortoolbox": {
       "version": "file:jp.lilxyzw.editortoolbox",
