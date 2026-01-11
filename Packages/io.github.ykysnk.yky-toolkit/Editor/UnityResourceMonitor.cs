@@ -118,7 +118,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         [MenuItem("Tools/YKYToolkit/Unity Resource Monitor")]
         private static void ShowWindow()
         {
-            var window = GetWindow<UnityResourceMonitor>(Title);
+            var window = GetWindow<UnityResourceMonitor>();
+            window.titleContent = new(
+                Title,
+                EditorGUIUtility.IconContent("Profiler.Memory").image
+            );
             window.rows.Clear();
             window.rows.Add(new(0, "USER Handles"));
             window.rows.Add(new(1, "GDI Handles"));
