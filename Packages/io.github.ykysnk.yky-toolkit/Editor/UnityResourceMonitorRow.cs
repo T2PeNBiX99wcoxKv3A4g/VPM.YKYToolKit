@@ -9,22 +9,24 @@ namespace io.github.ykysnk.ykyToolkit.Editor
     {
         public delegate string ValueHandle(long value);
 
+        public int id;
         public long value;
         public long maxValue;
         public string title;
         public string text;
 
-        public UnityResourceMonitorRow(string title2, long maxValue2)
+        public UnityResourceMonitorRow(int id, string title)
         {
+            this.id = id;
             value = -1;
-            maxValue = maxValue2;
-            title = title2;
+            this.title = title;
             text = "- / -";
         }
 
-        public void Update(long newValue, ValueHandle valueHandler)
+        public void Update(long newValue, long newNaxValue, ValueHandle valueHandler)
         {
             value = newValue;
+            maxValue = newNaxValue;
             text = $"{valueHandler(value)} / {valueHandler(maxValue)}";
         }
     }

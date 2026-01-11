@@ -17,10 +17,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var tree = uxml.CloneTree();
             tree.Bind(property.serializedObject);
 
-            var maxValue = property.FindPropertyRelative("maxValue").intValue;
             var bar = tree.Q<ProgressBar>("bar");
             var progressFill = bar.Q(null, "unity-progress-bar__progress");
-            bar.highValue = maxValue;
 
             var valueLabel = tree.Q<Label>("value");
             tree.schedule.Execute(UpdateUI).Every(100);
@@ -30,12 +28,15 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             void UpdateUI()
             {
-                if (bar.value > (float)maxValue / 2)
+                var maxValue = property.FindPropertyRelative("maxValue").intValue;
+                bar.highValue = maxValue;
+
+                if (bar.value > (float)maxValue * 0.6)
                 {
                     valueLabel.style.color = new Color(1f, 0.5f, 0);
                     progressFill.style.backgroundColor = new Color(1f, 0.5f, 0);
                 }
-                else if (bar.value > maxValue)
+                else if (bar.value >= (float)maxValue * 0.8)
                 {
                     valueLabel.style.color = new Color(0.5f, 0, 0);
                     progressFill.style.backgroundColor = new Color(0.5f, 0, 0);
