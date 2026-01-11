@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <ui:VisualElement style="flex-grow: 1; flex-direction: row; justify-content: space-between;">
+        <ui:Label text="Title" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Title"/>
+        <ui:Label tabindex="-1" text="Value" parse-escape-sequences="true" display-tooltip-when-elided="true"
+                  name="Value"/>
+    </ui:VisualElement>
+</ui:UXML>

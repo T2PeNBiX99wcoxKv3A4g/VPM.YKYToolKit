@@ -1,0 +1,40 @@
+.root {
+    padding: 8px;
+    flex-direction: column;
+}
+
+.title {
+    -unity-font-style: bold;
+    -unity-text-align: upper-center;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.tableHeader {
+    flex-direction: row;
+    background-color: #333333;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+.headerCell {
+    flex-grow: 1;
+    color: white;
+    -unity-font-style: bold;
+    -unity-text-align: upper-center;
+}
+
+.tableRow {
+    flex-direction: row;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+.cell {
+    flex-grow: 1;
+}
+
+ProgressBar {
+    height: 18px;
+    margin-bottom: 6px;
+}

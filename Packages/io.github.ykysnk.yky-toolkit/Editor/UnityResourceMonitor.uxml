@@ -1,0 +1,13 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/UnityResourceMonitor.uss?fileID=7433441132597879392&amp;guid=25f427bf8ebb416438d9843074da83cf&amp;type=3#UnityResourceMonitor"/>
+    <ui:VisualElement class="root">
+        <ui:Label text="Unity Editor Resource Monitor" name="title" class="title" style="display: none;"/>
+        <ui:VisualElement class="tableHeader" style="min-height: 15px;">
+            <ui:Label text="Type" class="headerCell"/>
+            <ui:Label text="Value" class="headerCell"/>
+        </ui:VisualElement>
+        <ui:ListView selection-type="Multiple" show-alternating-row-backgrounds="ContentOnly" show-border="true"
+                     virtualization-method="DynamicHeight" binding-path="rows" reorder-mode="Animated"
+                     show-bound-collection-size="false" reorderable="true"/>
+    </ui:VisualElement>
+</ui:UXML>

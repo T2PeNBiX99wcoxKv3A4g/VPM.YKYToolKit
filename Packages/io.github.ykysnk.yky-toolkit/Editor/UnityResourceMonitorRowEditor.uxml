@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="True">
+    <Style src="project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/UnityResourceMonitor.uss?fileID=7433441132597879392&amp;guid=25f427bf8ebb416438d9843074da83cf&amp;type=3#UnityResourceMonitor"/>
+    <ui:VisualElement class="tableRow">
+        <ui:Label name="type" text="-" binding-path="title" class="cell"/>
+        <ui:Label name="value" text="-" binding-path="text" class="cell"
+                  style="-unity-text-align: upper-right; -unity-font-style: bold;"/>
+    </ui:VisualElement>
+    <ui:ProgressBar name="bar" high-value="8000" binding-path="value"/>
+</ui:UXML>
