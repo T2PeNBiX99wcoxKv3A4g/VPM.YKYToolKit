@@ -11,7 +11,7 @@ using UnityEngine.UIElements;
 
 namespace io.github.ykysnk.ykyToolkit.Editor
 {
-    public class UnityResourceMonitor : EditorWindow
+    internal class UnityResourceMonitor : EditorWindow
     {
         private const string Title = "Unity Resource Monitor";
 
@@ -27,7 +27,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private double _lastCpuTime;
         private Process? _process;
 
-        public void CreateGUI()
+        private void CreateGUI()
         {
             _process = Process.GetCurrentProcess();
 
@@ -116,7 +116,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 #endif
 
         [MenuItem("Tools/YKYToolkit/Unity Resource Monitor")]
-        public static void ShowWindow()
+        private static void ShowWindow()
         {
             var window = GetWindow<UnityResourceMonitor>(Title);
             window.rows.Clear();
