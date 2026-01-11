@@ -1,7 +1,7 @@
 {
   "name": "io.github.ykysnk.yky-toolkit",
   "displayName": "YKY Toolkit",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Toolkit for Unity",
   "gitDependencies": {},
   "vpmDependencies": {
@@ -14,8 +14,5 @@
   },
   "legacyFolders": {},
   "legacyFiles": {},
-  "localPath": "L:\\VRChatProjects\\VPM.YKYToolKit\\Packages\\io.github.ykysnk.yky-toolkit",
-  "dependencies": {
-    "com.unity.memoryprofiler": ""
-  }
+  "localPath": "L:\\VRChatProjects\\VPM.YKYToolKit\\Packages\\io.github.ykysnk.yky-toolkit"
 }
