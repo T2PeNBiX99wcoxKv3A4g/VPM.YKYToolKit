@@ -14,5 +14,8 @@
   },
   "legacyFolders": {},
   "legacyFiles": {},
-  "localPath": "L:\\VRChatProjects\\VPM.YKYToolKit\\Packages\\io.github.ykysnk.yky-toolkit"
+  "localPath": "L:\\VRChatProjects\\VPM.YKYToolKit\\Packages\\io.github.ykysnk.yky-toolkit",
+  "dependencies": {
+    "com.unity.memoryprofiler": ""
+  }
 }
