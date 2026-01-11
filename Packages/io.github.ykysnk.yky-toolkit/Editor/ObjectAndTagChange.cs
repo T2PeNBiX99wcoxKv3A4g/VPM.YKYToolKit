@@ -1,55 +1,58 @@
 using System.Collections.Generic;
 using UnityEditor;
 
-namespace io.github.ykysnk.ykyToolkit.Editor;
-
-internal static class ObjectAndTagChange
+namespace io.github.ykysnk.ykyToolkit.Editor
 {
-    private const string EditorOnlyTag = "EditorOnly";
-    private const string UntaggedTag = "Untagged";
-    private const string Title = "Set Object and Tag";
-    private static readonly Dictionary<int, string> OriginalTags = new();
-    private static readonly Dictionary<int, bool> WasActives = new();
-
-    [MenuItem($"Tools/{Util.Name}/{Title} #e", false, Util.ObjectAndTagChangePriority)]
-    [MenuItem($"GameObject/{Util.Name}/{Title}", false, Util.ObjectAndTagChangePriority)]
-    private static void ToggleInactiveAndTag(MenuCommand menuCommand)
+    internal static class ObjectAndTagChange
     {
-        if (!Util.ShouldExecute(menuCommand)) return;
-        var selectedObjects = Selection.gameObjects;
-        if (selectedObjects.Length < 1) return;
+        private const string EditorOnlyTag = "EditorOnly";
+        private const string UntaggedTag = "Untagged";
+        private const string Title = "Set Object and Tag";
+        private static readonly Dictionary<int, string> OriginalTags = new();
+        private static readonly Dictionary<int, bool> WasActives = new();
 
-        foreach (var obj in selectedObjects)
+        [MenuItem("Tools/YKYToolkit/Set Object and Tag #e", false, Util.ObjectAndTagChangePriority)]
+        [MenuItem("GameObject/YKYToolkit/Set Object and Tag", false, Util.ObjectAndTagChangePriority)]
+        private static void ToggleInactiveAndTag(MenuCommand menuCommand)
         {
-            var id = obj.GetInstanceID();
+            if (!Util.ShouldExecute(menuCommand)) return;
+            var selectedObjects = Selection.gameObjects;
+            if (selectedObjects.Length < 1) return;
 
-            if (obj.activeSelf)
+            foreach (var obj in selectedObjects)
             {
-                if (!OriginalTags.ContainsKey(id))
+                var id = obj.GetInstanceID();
+
+                if (obj.activeSelf)
                 {
-                    OriginalTags.TryAdd(id, obj.tag);
-                    WasActives.TryAdd(id, obj.activeSelf);
+                    if (!OriginalTags.ContainsKey(id))
+                    {
+                        OriginalTags.TryAdd(id, obj.tag);
+                        WasActives.TryAdd(id, obj.activeSelf);
+                    }
+
+                    Undo.RecordObject(obj, "Change EditorOnly");
+                    obj.SetActive(false);
+                    obj.tag = EditorOnlyTag;
+                }
+                else
+                {
+                    var hasOriginalTag = OriginalTags.TryGetValue(id, out var originalTag);
+                    var hasActive = WasActives.TryGetValue(id, out var wasActive);
+
+                    Undo.RecordObject(obj, "Undo Tag");
+                    obj.SetActive(!hasActive || wasActive);
+                    if (obj.CompareTag(EditorOnlyTag))
+                        obj.tag = hasOriginalTag && originalTag != EditorOnlyTag
+                            ? originalTag ?? UntaggedTag
+                            : UntaggedTag;
+
+                    OriginalTags.Remove(id);
+                    WasActives.Remove(id);
                 }
 
-                Undo.RecordObject(obj, "Change EditorOnly");
-                obj.SetActive(false);
-                obj.tag = EditorOnlyTag;
+                EditorUtility.SetDirty(obj);
             }
-            else
-            {
-                var hasOriginalTag = OriginalTags.TryGetValue(id, out var originalTag);
-                var hasActive = WasActives.TryGetValue(id, out var wasActive);
-
-                Undo.RecordObject(obj, "Undo Tag");
-                obj.SetActive(!hasActive || wasActive);
-                if (obj.CompareTag(EditorOnlyTag))
-                    obj.tag = hasOriginalTag && originalTag != EditorOnlyTag ? originalTag ?? UntaggedTag : UntaggedTag;
-
-                OriginalTags.Remove(id);
-                WasActives.Remove(id);
-            }
-
-            EditorUtility.SetDirty(obj);
         }
     }
 }

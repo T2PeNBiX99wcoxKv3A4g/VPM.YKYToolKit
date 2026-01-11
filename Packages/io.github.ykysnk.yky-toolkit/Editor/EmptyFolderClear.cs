@@ -4,46 +4,47 @@ using System.Linq;
 using io.github.ykysnk.utils.Extensions;
 using UnityEditor;
 
-namespace io.github.ykysnk.ykyToolkit.Editor;
-
-internal static class EmptyFolderClear
+namespace io.github.ykysnk.ykyToolkit.Editor
 {
-    private const string Title = "Clear Empty Folder";
-
-    [MenuItem($"Tools/{Util.Name}/{Title}")]
-    private static void Clear()
+    internal static class EmptyFolderClear
     {
-        var reportPaths = GetEmptyFolders();
+        private const string Title = "Clear Empty Folder";
 
-        if (reportPaths.Count < 1)
+        [MenuItem("Tools/YKYToolkit/Clear Empty Folder")]
+        private static void Clear()
         {
-            EditorUtility.DisplayDialog(Title, "No empty folders found.", "OK");
-            return;
-        }
+            var reportPaths = GetEmptyFolders();
 
-        if (!EditorUtility.DisplayDialog(Title, $"Found {reportPaths.Count} empty folders.", "Start Clearing",
-                "Cancel")) return;
-
-        while (reportPaths.Count > 0)
-        {
-            var count = 0;
-            reportPaths.ForEach(path =>
+            if (reportPaths.Count < 1)
             {
-                var fullPath = Path.GetFullPath(path);
-                var cutPath = fullPath.LastPath("Assets\\") ?? fullPath.LastPath("Assets/") ?? "";
-                EditorUtility.DisplayProgressBar(Title, cutPath, (float)count / reportPaths.Count);
-                AssetDatabase.DeleteAsset(path);
-                count++;
-            });
-            reportPaths = GetEmptyFolders();
+                EditorUtility.DisplayDialog(Title, "No empty folders found.", "OK");
+                return;
+            }
+
+            if (!EditorUtility.DisplayDialog(Title, $"Found {reportPaths.Count} empty folders.", "Start Clearing",
+                    "Cancel")) return;
+
+            while (reportPaths.Count > 0)
+            {
+                var count = 0;
+                reportPaths.ForEach(path =>
+                {
+                    var fullPath = Path.GetFullPath(path);
+                    var cutPath = fullPath.LastPath("Assets\\") ?? fullPath.LastPath("Assets/") ?? "";
+                    EditorUtility.DisplayProgressBar(Title, cutPath, (float)count / reportPaths.Count);
+                    AssetDatabase.DeleteAsset(path);
+                    count++;
+                });
+                reportPaths = GetEmptyFolders();
+            }
+
+            EditorUtility.ClearProgressBar();
         }
 
-        EditorUtility.ClearProgressBar();
-    }
-
-    private static List<string> GetEmptyFolders()
-    {
-        return Directory.GetDirectories("Assets/", "*", SearchOption.AllDirectories).Where(path =>
-            Directory.GetFiles(path).Length < 1 && Directory.GetDirectories(path).Length < 1).ToList();
+        private static List<string> GetEmptyFolders()
+        {
+            return Directory.GetDirectories("Assets/", "*", SearchOption.AllDirectories).Where(path =>
+                Directory.GetFiles(path).Length < 1 && Directory.GetDirectories(path).Length < 1).ToList();
+        }
     }
 }
