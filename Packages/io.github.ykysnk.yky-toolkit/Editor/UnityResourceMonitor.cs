@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Runtime.InteropServices;
+using io.github.ykysnk.utils.Editor;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -18,10 +18,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         [SerializeField] private VisualTreeAsset? uxml;
         [SerializeField] private List<UnityResourceMonitorRow> rows = new();
 
-        private PerformanceCounter[] _gpuCounters =
-        {
-        };
-
         private double _lastCheckTime;
 
         private double _lastCpuTime;
@@ -31,20 +27,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         {
             _process = Process.GetCurrentProcess();
 
-            var pid = _process.Id;
-
-            _gpuCounters = new PerformanceCounterCategory("GPU Engine")
-                .GetInstanceNames()
-                .Where(name2 => name2.Contains($"pid_{pid}"))
-                .SelectMany(name2 => new PerformanceCounterCategory("GPU Engine")
-                    .GetCounters(name2)
-                    .Where(c => c.CounterName == "Utilization Percentage"))
-                .ToArray();
-
             var serializedObject = new SerializedObject(this);
             var tree = uxml?.CloneTree();
             tree.Bind(serializedObject);
             rootVisualElement.Add(tree);
+            rootVisualElement.AddManipulator(
+                new ContextualMenuManipulator(evt => evt.menu.AppendAction("Reload", _ => Reload())));
             rootVisualElement.schedule.Execute(UpdateUI).Every(100);
             UpdateUI();
             return;
@@ -97,17 +85,19 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                         case 5:
                             row.Update((long)cpuUsage, 100, value => $"{value}%");
                             break;
-                        case 6:
-                            if (_gpuCounters.Length < 1)
-                            {
-                                row.Update(0, 100, value => $"{value}%");
-                                break;
-                            }
-
-                            row.Update((long)_gpuCounters.Sum(counter => counter.NextValue()), 100, value => $"{value}%");
-                            break;
                     }
             }
+        }
+
+        private void Reload()
+        {
+            rows.Clear();
+            rows.Add(new(0, "USER Handles"));
+            rows.Add(new(1, "GDI Handles"));
+            rows.Add(new(2, "Mono Used"));
+            rows.Add(new(3, "GC Allocated"));
+            rows.Add(new(4, "Total Allocated"));
+            rows.Add(new(5, "CPU Usage"));
         }
 
 #if UNITY_EDITOR_WIN
@@ -119,18 +109,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private static void ShowWindow()
         {
             var window = GetWindow<UnityResourceMonitor>();
-            window.titleContent = new(
-                Title,
-                EditorGUIUtility.IconContent("Profiler.Memory").image
-            );
-            window.rows.Clear();
-            window.rows.Add(new(0, "USER Handles"));
-            window.rows.Add(new(1, "GDI Handles"));
-            window.rows.Add(new(2, "Mono Used"));
-            window.rows.Add(new(3, "GC Allocated"));
-            window.rows.Add(new(4, "Total Allocated"));
-            window.rows.Add(new(5, "CPU Usage"));
-            window.rows.Add(new(6, "GPU Usage"));
+
+            window.titleContent = EditorGUIUtils.IconContent(Title, "Profiler.Memory");
+            window.Reload();
         }
     }
 }
