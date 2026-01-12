@@ -1,3 +1,4 @@
+using io.github.ykysnk.utils.Editor;
 using UnityEditor;
 
 namespace io.github.ykysnk.ykyToolkit.Editor
@@ -7,10 +8,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         [MenuItem("Tools/YKYToolkit/Install Memory Profiler")]
         private static void Install()
         {
-            _ = new UpmInstaller(new[]
+            UpmInstaller.Install(new[]
             {
                 "com.unity.memoryprofiler"
-            }).InstallAsync();
+            });
         }
     }
 }
