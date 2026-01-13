@@ -82,7 +82,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private static void ShowWindow()
         {
             var window = GetWindow<UpmInstallerWindow>();
-            window.titleContent = EditorGUIUtils.IconContent(Title, "CloudConnect");
+            window.titleContent = EditorGUIUtils.IconContent(Title, "package manager");
         }
     }
 }
