@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using io.github.ykysnk.utils;
+using io.github.ykysnk.utils.Editor;
 using io.github.ykysnk.utils.Extensions;
 using UnityEditor;
 using Progress = UnityEditor.Progress;
@@ -17,17 +18,14 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private static int _isWorking;
 
         [MenuItem("Tools/YKYToolkit/Clear Empty Folder")]
-        private static void Clear()
-        {
-            _ = ClearFolder(CancellationToken.None);
-        }
+        private static void Clear() => _ = ClearFolder(CancellationToken.None);
 
         private static async UniTask ClearFolder(CancellationToken token)
         {
             if (Interlocked.Exchange(ref _isWorking, 1) == 1) return;
 
             var cts = CancellationTokenSource.CreateLinkedTokenSource(token);
-            var progressId = Progress.Start(Title, "Clearing empty folders...");
+            var progressId = Progress.Start("Clearing empty folders...", "Preparing...", Progress.Options.Sticky);
 
             Progress.RegisterCancelCallback(progressId, () =>
             {
@@ -43,13 +41,14 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 var reportPaths = await GetEmptyFolders();
                 if (reportPaths.Count < 1)
                 {
-                    // TODO: Replace to custom dialog
-                    EditorUtility.DisplayDialog(Title, "No empty folders found.", "OK");
+                    _ = EditorUtils.DisplayDialogAsync(Title, "No empty folders found.");
+                    Progress.Report(progressId, 1, "No empty folders found.");
+                    Progress.Finish(progressId);
                     return;
                 }
 
-                if (!EditorUtility.DisplayDialog(Title, $"Found {reportPaths.Count} empty folders.", "Start Clearing",
-                        "Cancel")) return;
+                if (!await EditorUtils.DisplayDialogAsync(Title, $"Found {reportPaths.Count} empty folders.",
+                        "Start Clearing", "Cancel")) return;
 
                 while (reportPaths.Count > 0)
                 {
@@ -58,11 +57,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     {
                         var fullPath = Path.GetFullPath(path);
                         var cutPath = fullPath.LastPath("Assets\\") ?? fullPath.LastPath("Assets/") ?? "";
+                        if (cts.IsCancellationRequested)
+                            throw new OperationCanceledException(cts.Token);
                         Progress.Report(progressId, (float)count / reportPaths.Count, $"Deleting: {cutPath}");
                         AssetDatabase.DeleteAsset(path);
                         count++;
-
-                        await UniTask.Yield();
+                        await UniTask.Delay(100, cancellationToken: cts.Token);
                     }
 
                     reportPaths = await GetEmptyFolders();
@@ -73,18 +73,17 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             catch (OperationCanceledException)
             {
                 Progress.Finish(progressId, Progress.Status.Canceled);
-                Progress.UnregisterCancelCallback(progressId);
                 Utils.LogWarning(nameof(EmptyFolderClear), "Installation cancelled.");
             }
             catch (Exception ex)
             {
                 Progress.Finish(progressId, Progress.Status.Failed);
-                Progress.UnregisterCancelCallback(progressId);
                 Utils.LogError(nameof(EmptyFolderClear), $"Installation Error: {ex.Message}\n{ex.StackTrace}");
             }
             finally
             {
                 Interlocked.Exchange(ref _isWorking, 0);
+                Progress.UnregisterCancelCallback(progressId);
             }
         }
 
