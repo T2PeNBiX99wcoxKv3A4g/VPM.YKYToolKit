@@ -1,0 +1,31 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/UpmInstallerWindow.uss?fileID=7433441132597879392&amp;guid=3a2de8958a2e834458945bec73401276&amp;type=3#UpmInstallerWindow"/>
+    <ui:VisualElement class="root" style="flex-grow: 1;">
+        <ui:Label tabindex="-1" text="UPM Installer" parse-escape-sequences="true" display-tooltip-when-elided="true"
+                  name="title" class="title"/>
+        <ui:ListView binding-path="packages" virtualization-method="DynamicHeight" show-border="true"
+                     selection-type="Multiple" show-alternating-row-backgrounds="ContentOnly"
+                     show-bound-collection-size="false" reorder-mode="Animated" reorderable="true"
+                     show-add-remove-footer="true" name="packages"/>
+        <ui:VisualElement style="flex-direction: row;">
+            <ui:Button text="Install" parse-escape-sequences="true" display-tooltip-when-elided="true" name="install"
+                       class="cell"/>
+            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="remove" text="Remove"
+                       class="cell"/>
+            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="update" text="Update"
+                       class="cell"/>
+            <ui:Button text="Clear" name="clear" parse-escape-sequences="true" display-tooltip-when-elided="true"
+                       class="cell"/>
+        </ui:VisualElement>
+        <ui:VisualElement style="flex-direction: row;">
+            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="upgrade"
+                       text="Check update then upgrade all UPM packages" class="cell"/>
+        </ui:VisualElement>
+        <ui:VisualElement style="flex-grow: 1;">
+            <ui:Foldout text="Package Lists" value="false" binding-path="isPackageListExpanded">
+                <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="quickInstall"
+                           text="Tool packages List"/>
+            </ui:Foldout>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
