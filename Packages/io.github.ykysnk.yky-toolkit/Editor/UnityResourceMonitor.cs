@@ -19,7 +19,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         [SerializeField] private List<UnityResourceMonitorRow> rows = new();
 
         private double _lastCheckTime;
-
         private double _lastCpuTime;
         private Process? _process;
 
@@ -111,7 +110,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var window = GetWindow<UnityResourceMonitor>();
 
             window.titleContent = EditorGUIUtils.IconContent(Title, "Profiler.Memory");
-            window.Reload();
+            if (window.rows.Count < 1)
+                window.Reload();
         }
     }
 }

@@ -15,6 +15,7 @@
     background-color: #333333;
     padding-left: 4px;
     padding-right: 4px;
+    min-height: 15px;
 }
 
 .headerCell {

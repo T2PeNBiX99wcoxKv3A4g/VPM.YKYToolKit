@@ -2,7 +2,7 @@
     <Style src="project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/UnityResourceMonitor.uss?fileID=7433441132597879392&amp;guid=25f427bf8ebb416438d9843074da83cf&amp;type=3#UnityResourceMonitor"/>
     <ui:VisualElement class="root">
         <ui:Label text="Unity Editor Resource Monitor" name="title" class="title" style="display: none;"/>
-        <ui:VisualElement class="tableHeader" style="min-height: 15px;">
+        <ui:VisualElement class="tableHeader">
             <ui:Label text="Type" class="headerCell"/>
             <ui:Label text="Value" class="headerCell"/>
         </ui:VisualElement>
