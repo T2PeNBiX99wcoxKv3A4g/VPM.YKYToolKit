@@ -9,6 +9,7 @@ using UnityEngine.UIElements;
 
 namespace io.github.ykysnk.ykyToolkit.Editor
 {
+    // TODO: change packages string type to custom class
     internal class UpmInstallerWindow : EditorWindow
     {
         private const string Title = "UPM Installer";
