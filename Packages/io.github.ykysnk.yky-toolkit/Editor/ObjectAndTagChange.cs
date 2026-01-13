@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEditor;
+using UnityEngine;
 
 namespace io.github.ykysnk.ykyToolkit.Editor
 {
@@ -18,7 +20,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             if (!Util.ShouldExecute(menuCommand)) return;
             var selectedObjects = Selection.gameObjects;
             if (selectedObjects.Length < 1) return;
+            ToggleInactiveAndTagAsync(selectedObjects).Forget();
+        }
 
+        private static async UniTask ToggleInactiveAndTagAsync(GameObject[] selectedObjects)
+        {
             foreach (var obj in selectedObjects)
             {
                 var id = obj.GetInstanceID();
@@ -52,6 +58,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 }
 
                 EditorUtility.SetDirty(obj);
+                await UniTask.Delay(100);
             }
         }
     }

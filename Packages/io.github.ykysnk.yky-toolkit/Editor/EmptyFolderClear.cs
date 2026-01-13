@@ -18,7 +18,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private static int _isWorking;
 
         [MenuItem("Tools/YKYToolkit/Clear Empty Folder")]
-        private static void Clear() => _ = ClearFolder(CancellationToken.None);
+        private static void Clear() => ClearFolder(CancellationToken.None).Forget();
 
         private static async UniTask ClearFolder(CancellationToken token)
         {

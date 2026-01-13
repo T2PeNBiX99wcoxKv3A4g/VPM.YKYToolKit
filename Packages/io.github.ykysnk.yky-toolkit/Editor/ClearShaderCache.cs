@@ -11,12 +11,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
     internal static class ClearShaderCache
     {
         [MenuItem("Tools/YKYToolkit/Clear Shader Cache")]
-        private static void Clear() => _ = ClearAsync();
+        private static void Clear() => ClearAsync().Forget();
 
         private static async UniTask ClearAsync()
         {
             if (!await EditorUtils.DisplayDialogAsync("Clear Shader Cache",
-                    "Are you sure you want to clear the Shader Cache?\nWarning!!!\nThis action can't be undone! and unity may rebuild all shader cache when unity editor is start.",
+                    "Are you sure want to clear the shader cache?\nUnity may rebuild all shader cache when unity editor is start.\nThis action can't be undone!",
                     "Yes", "No")) return;
             var shaderCachePath =
                 Path.Combine(Directory.GetParent(Application.dataPath)?.FullName ?? "", "Library/ShaderCache");

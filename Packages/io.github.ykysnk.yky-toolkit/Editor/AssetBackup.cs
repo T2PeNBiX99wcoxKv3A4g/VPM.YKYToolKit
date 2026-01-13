@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using Cysharp.Threading.Tasks;
 using UnityEditor;
 
 namespace io.github.ykysnk.ykyToolkit.Editor
@@ -14,7 +15,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var now = DateTime.Now;
             var date = $"{now:yy-MM-dd}";
 
-            foreach (var guid in Selection.assetGUIDs)
+            BackupAsync(date, Selection.assetGUIDs).Forget();
+        }
+
+        private static async UniTask BackupAsync(string date, string[] guids)
+        {
+            foreach (var guid in guids)
             {
                 var path = AssetDatabase.GUIDToAssetPath(guid);
                 var pathDir = Path.GetDirectoryName(path);
@@ -25,6 +31,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 AssetDatabase.CopyAsset(path, string.IsNullOrEmpty(AssetDatabase.AssetPathToGUID(newPath))
                     ? newPath
                     : GetNewPathUntilNotExist(pathDir, newName, ext));
+
+                await UniTask.Delay(100);
             }
         }
 
