@@ -4,7 +4,8 @@
   "references": [
     "io.github.ykysnk.utils",
     "io.github.ykysnk.utils.Editor",
-    "io.github.ykysnk.utils.non-udon"
+    "io.github.ykysnk.utils.non-udon",
+    "UniTask"
   ],
   "includePlatforms": [
     "Editor"
