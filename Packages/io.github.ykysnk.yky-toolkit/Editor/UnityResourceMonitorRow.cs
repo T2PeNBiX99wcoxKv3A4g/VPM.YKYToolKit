@@ -1,4 +1,6 @@
 using System;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
 using JetBrains.Annotations;
 
 namespace io.github.ykysnk.ykyToolkit.Editor
@@ -9,25 +11,37 @@ namespace io.github.ykysnk.ykyToolkit.Editor
     {
         public delegate string ValueHandle(long value);
 
-        public int id;
         public long value;
         public long maxValue;
         public string title;
         public string text;
 
-        public UnityResourceMonitorRow(int id, string title)
+        protected readonly Process Process;
+
+        protected UnityResourceMonitorRow(string title)
         {
-            this.id = id;
             value = -1;
             this.title = title;
             text = "- / -";
+            Process = Process.GetCurrentProcess();
         }
 
-        public void Update(long newValue, long newNaxValue, ValueHandle valueHandler)
+        protected virtual ValueHandle ValueHandler => x => x.ToString();
+
+        public virtual void Update()
+        {
+        }
+
+        protected void UpdateValue(long newValue, long newNaxValue)
         {
             value = newValue;
             maxValue = newNaxValue;
-            text = $"{valueHandler(value)} / {valueHandler(maxValue)}";
+            text = $"{ValueHandler(value)} / {ValueHandler(maxValue)}";
         }
+
+#if UNITY_EDITOR_WIN
+        [DllImport("user32.dll")]
+        protected static extern int GetGuiResources(IntPtr hProcess, int uiFlags);
+#endif
     }
 }
