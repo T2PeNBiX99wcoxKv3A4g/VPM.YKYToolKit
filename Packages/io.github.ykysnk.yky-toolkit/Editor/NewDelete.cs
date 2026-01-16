@@ -13,22 +13,25 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 {
     internal static class NewDelete
     {
+        private const string ToolsMenuPath = "Tools/YKYToolkit/Delete Selected Warn Window";
+        private const string AssetsMenuPath = "Assets/YKYToolkit/Delete Selected Warn Window";
+
         private static bool ShowWarnWindow
         {
             set => EditorPrefs.SetBool("YKYToolkit/DeleteSelectedWarnWindow", value);
             get => EditorPrefs.GetBool("YKYToolkit/DeleteSelectedWarnWindow", true);
         }
 
-        [MenuItem("GameObject/YKYToolkit/Delete Selected Warn Window", false, Util.DeleteSelectedPriority)]
-        [MenuItem("Assets/YKYToolkit/Delete Selected Warn Window")]
+        [MenuItem(ToolsMenuPath, false, Util.DeleteSelectedPriority)]
+        [MenuItem(AssetsMenuPath)]
         private static void DeleteSelectedShowMenu() => ShowWarnWindow = !ShowWarnWindow;
 
-        [MenuItem("GameObject/YKYToolkit/Delete Selected Warn Window", true, Util.DeleteSelectedPriority)]
-        [MenuItem("Assets/YKYToolkit/Delete Selected Warn Window", true)]
-        private static bool DeleteSelectedShowMenuValidate()
+        [MenuItem(ToolsMenuPath, true, Util.DeleteSelectedPriority)]
+        [MenuItem(AssetsMenuPath, true)]
+        private static bool DeleteSelectedGameObjectsShowMenuValidate()
         {
-            Menu.SetChecked("GameObject/YKYToolkit/Delete Selected Warn Window", ShowWarnWindow);
-            Menu.SetChecked("Assets/YKYToolkit/Delete Selected Warn Window", ShowWarnWindow);
+            Menu.SetChecked(ToolsMenuPath, ShowWarnWindow);
+            Menu.SetChecked(AssetsMenuPath, ShowWarnWindow);
             return true;
         }
 
