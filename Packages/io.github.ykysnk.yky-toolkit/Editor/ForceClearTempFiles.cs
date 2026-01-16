@@ -57,7 +57,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     }
                 }
 
-                AssetDatabase.Refresh();
                 Progress.Finish(progressId);
             }
             catch (OperationCanceledException)
