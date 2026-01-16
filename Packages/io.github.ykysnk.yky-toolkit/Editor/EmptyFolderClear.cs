@@ -48,7 +48,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 }
 
                 if (!await EditorUtils.DisplayDialogAsync(Title, $"Found {reportPaths.Count} empty folders.",
-                        "Start Clearing", "Cancel"))
+                        "Clear", "Cancel"))
                 {
                     Progress.Finish(progressId, Progress.Status.Canceled);
                     return;
