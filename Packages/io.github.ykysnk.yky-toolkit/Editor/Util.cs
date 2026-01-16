@@ -6,8 +6,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
     {
         internal const string Name = "YKYToolkit";
 
-        internal const int ObjectAndTagChangePriority = 10;
-        internal const int DeleteSelectedPriority = ObjectAndTagChangePriority + 11;
+        private const int Separator = 11;
+        internal const int One = 10;
+        internal const int Twe = One + Separator;
 
         // Refs: https://discussions.unity.com/t/how-to-execute-menuitem-for-multiple-objects-once/91492/5
         internal static bool ShouldExecute(MenuCommand menuCommand)

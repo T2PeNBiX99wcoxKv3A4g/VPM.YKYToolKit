@@ -13,8 +13,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private static readonly Dictionary<int, string> OriginalTags = new();
         private static readonly Dictionary<int, bool> WasActives = new();
 
-        [MenuItem("Tools/YKYToolkit/Set Object and Tag #e", false, Util.ObjectAndTagChangePriority)]
-        [MenuItem("GameObject/YKYToolkit/Set Object and Tag", false, Util.ObjectAndTagChangePriority)]
+        [MenuItem("Tools/YKYToolkit/Set Object and Tag #e", false, Util.One)]
+        [MenuItem("GameObject/YKYToolkit/Set Object and Tag", false, Util.One)]
         private static void ToggleInactiveAndTag(MenuCommand menuCommand)
         {
             if (!Util.ShouldExecute(menuCommand)) return;
