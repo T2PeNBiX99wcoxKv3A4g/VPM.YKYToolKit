@@ -58,7 +58,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 }
 
                 EditorUtility.SetDirty(obj);
-                await UniTask.Delay(100);
+                await UniTask.NextFrame();
             }
         }
     }
