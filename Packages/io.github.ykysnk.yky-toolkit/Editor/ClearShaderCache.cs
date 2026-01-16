@@ -16,13 +16,13 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private static async UniTask ClearAsync()
         {
             if (!await EditorUtils.DisplayDialogAsync("Clear Shader Cache",
-                    "Are you sure want to clear the shader cache?\nUnity may rebuild all shader cache when unity editor is start.\nThis action can't be undone!",
-                    "Yes", "No")) return;
+                    "Are you sure want to clear the shader cache?\nUnity may rebuild all shader cache when unity editor is start.\n\nYou cannot undo the action.",
+                    "Clear", "Cancel")) return;
             var shaderCachePath =
                 Path.Combine(Directory.GetParent(Application.dataPath)?.FullName ?? "", "Library/ShaderCache");
             Utils.Log(nameof(ClearShaderCache), $"Shader Cache Path: {shaderCachePath}");
             var progressId = Progress.Start("Clearing shader Cache...", "Preparing...",
-                Progress.Options.Sticky | Progress.Options.Indefinite);
+                Progress.Options.Managed | Progress.Options.Indefinite);
             Progress.Report(progressId, 0, "Clearing...");
             await UniTask.RunOnThreadPool(() =>
             {

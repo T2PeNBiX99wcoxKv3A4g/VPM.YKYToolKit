@@ -25,7 +25,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             if (Interlocked.Exchange(ref _isWorking, 1) == 1) return;
 
             var cts = CancellationTokenSource.CreateLinkedTokenSource(token);
-            var progressId = Progress.Start("Clearing empty folders...", "Preparing...", Progress.Options.Sticky);
+            var progressId = Progress.Start("Clearing empty folders...", "Preparing...", Progress.Options.Managed);
 
             Progress.RegisterCancelCallback(progressId, () =>
             {
@@ -41,14 +41,18 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 var reportPaths = await GetEmptyFolders();
                 if (reportPaths.Count < 1)
                 {
-                    _ = EditorUtils.DisplayDialogAsync(Title, "No empty folders found.");
+                    await EditorUtils.DisplayDialogAsync(Title, "No empty folders found.");
                     Progress.Report(progressId, 1, "No empty folders found.");
                     Progress.Finish(progressId);
                     return;
                 }
 
                 if (!await EditorUtils.DisplayDialogAsync(Title, $"Found {reportPaths.Count} empty folders.",
-                        "Start Clearing", "Cancel")) return;
+                        "Start Clearing", "Cancel"))
+                {
+                    Progress.Finish(progressId, Progress.Status.Canceled);
+                    return;
+                }
 
                 while (reportPaths.Count > 0)
                 {
