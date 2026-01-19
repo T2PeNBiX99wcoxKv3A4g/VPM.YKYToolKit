@@ -7,9 +7,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
     {
         private const string MenuPath = "Tools/YKYToolkit/Allow Async Compilation";
 
-        static ShaderAsync() => ShaderUtil.allowAsyncCompilation = ShowWarnWindow;
+        static ShaderAsync() => ShaderUtil.allowAsyncCompilation = AllowAsyncCompilation;
 
-        private static bool ShowWarnWindow
+        private static bool AllowAsyncCompilation
         {
             set
             {
@@ -20,12 +20,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         }
 
         [MenuItem(MenuPath, false, Util.Twe)]
-        private static void Toggle() => ShowWarnWindow = !ShowWarnWindow;
+        private static void Toggle() => AllowAsyncCompilation = !AllowAsyncCompilation;
 
         [MenuItem(MenuPath, true, Util.Twe)]
         private static bool ToggleValidate()
         {
-            Menu.SetChecked(MenuPath, ShowWarnWindow);
+            Menu.SetChecked(MenuPath, AllowAsyncCompilation);
             return true;
         }
     }
