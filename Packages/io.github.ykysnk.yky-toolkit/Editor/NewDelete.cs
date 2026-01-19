@@ -131,7 +131,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             {
                 var paths = guids.Select(AssetDatabase.GUIDToAssetPath).ToList();
 
-                if (ShowWarnWindow && !await EditorUtils.DisplayDialogAsync("Delete select asset",
+                if (ShowWarnWindow && !await EditorUtils.DisplayDialogAsync("Delete select assets",
                         $"{string.Join("\n", paths)}\n\nYou can undo the delete assets action. (Not 100%)", "Delete",
                         "Cancel"))
                 {
