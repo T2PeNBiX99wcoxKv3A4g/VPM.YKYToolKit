@@ -14,6 +14,9 @@
     },
     "net.nekobako.editor-patcher": {
       "version": "1.0.0"
+    },
+    "io.github.ykysnk.localization": {
+      "version": "0.5.4"
     }
   },
   "locked": {
@@ -36,6 +39,12 @@
     "net.nekobako.editor-patcher": {
       "version": "1.0.0",
       "dependencies": {}
+    },
+    "io.github.ykysnk.localization": {
+      "version": "0.5.4",
+      "dependencies": {
+        "io.github.ykysnk.utils": ">=0.22.0"
+      }
     }
   }
 }
