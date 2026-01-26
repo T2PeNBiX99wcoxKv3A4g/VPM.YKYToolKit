@@ -90,7 +90,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     current++;
                     var progress = (float)current / total;
                     Progress.Report(progressId, progress, $"Deleted: {name}");
-                    await UniTask.NextFrame(cts.Token);
+                    await UniTask.DelayFrame(10, cancellationToken: cts.Token);
                 }
 
                 Progress.Finish(progressId);
@@ -158,7 +158,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                                 {
                                     await File.WriteAllBytesAsync(path, backup, cts.Token);
                                     AssetDatabase.ImportAsset(path);
-                                    await UniTask.NextFrame(cts.Token);
+                                    await UniTask.DelayFrame(10, cancellationToken: cts.Token);
                                 }
                                 else
                                 {
@@ -180,7 +180,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     current++;
                     var progress = (float)current / total;
                     Progress.Report(progressId, progress, $"Deleted: {path}");
-                    await UniTask.NextFrame(cts.Token);
+                    await UniTask.DelayFrame(10, cancellationToken: cts.Token);
                 }
 
                 Progress.Finish(progressId);

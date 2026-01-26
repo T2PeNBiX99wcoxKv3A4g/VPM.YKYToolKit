@@ -66,7 +66,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                         Progress.Report(progressId, (float)count / reportPaths.Count, $"Deleting: {cutPath}");
                         AssetDatabase.DeleteAsset(path);
                         count++;
-                        await UniTask.NextFrame(cts.Token);
+                        await UniTask.DelayFrame(10, cancellationToken: cts.Token);
                     }
 
                     reportPaths = await GetEmptyFolders();

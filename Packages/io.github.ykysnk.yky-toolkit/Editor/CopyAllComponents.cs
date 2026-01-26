@@ -70,7 +70,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     }
 
                     EditorJsonUtility.FromJsonOverwrite(componentData.componentJson, component);
-                    await UniTask.NextFrame();
+                    await UniTask.DelayFrame(10);
                 }
             }
             catch (Exception e)
@@ -99,7 +99,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     }
 
                     EditorJsonUtility.FromJsonOverwrite(componentData.componentJson, component);
-                    await UniTask.NextFrame();
+                    await UniTask.DelayFrame(10);
                 }
             }
             catch (Exception e)

@@ -53,7 +53,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                         Progress.Report(progressId, (float)count / dirs.Length, $"Deleting: {dir}");
                         Utils.Log(nameof(ForceClearTempFiles), $"Deleted folder: {dir}");
                         count++;
-                        await UniTask.NextFrame(cts.Token);
+                        await UniTask.DelayFrame(10, cancellationToken: cts.Token);
                     }
                 }
 

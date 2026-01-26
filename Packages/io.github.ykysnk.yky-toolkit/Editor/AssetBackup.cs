@@ -32,7 +32,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     ? newPath
                     : GetNewPathUntilNotExist(pathDir, newName, ext));
 
-                await UniTask.NextFrame();
+                await UniTask.DelayFrame(10);
             }
         }
 
