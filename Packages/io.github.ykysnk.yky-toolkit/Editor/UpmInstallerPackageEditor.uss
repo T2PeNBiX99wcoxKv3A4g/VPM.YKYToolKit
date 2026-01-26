@@ -1,0 +1,35 @@
+.upm-package-row {
+    flex-direction: row;
+    align-items: center;
+}
+
+.package-name {
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+.package-version {
+    flex-shrink: 1;
+    max-width: 110px;
+    min-width: 0;
+    margin-left: 6px;
+}
+
+.placeholder {
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    color: rgb(136, 136, 136);
+}
+
+.package-name > .unity-text-input {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.package-version > .unity-text-input {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

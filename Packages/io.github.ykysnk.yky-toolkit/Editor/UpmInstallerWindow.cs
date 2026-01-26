@@ -9,7 +9,6 @@ using UnityEngine.UIElements;
 
 namespace io.github.ykysnk.ykyToolkit.Editor
 {
-    // TODO: change packages string type to custom class
     internal class UpmInstallerWindow : EditorWindow
     {
         private const string Title = "UPM Installer";
@@ -21,39 +20,42 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         };
 
         [SerializeField] private VisualTreeAsset? uxml;
-        [SerializeField] private List<string> packages = new();
+        [SerializeField] private List<UpmInstallerPackage> packages = new();
+        [SerializeField] private List<UpmInstallerPackage> packageListMaker = new();
         [SerializeField] private bool isPackageListExpanded;
 
         private void CreateGUI()
         {
             var serializedObject = new SerializedObject(this);
-            var tree = uxml?.CloneTree();
+            var tree = uxml!.CloneTree();
+            InternalLocalizationExtensions.Helper.UILocalize(tree);
             tree.Bind(serializedObject);
             rootVisualElement.Add(tree);
 
             var installButton = tree.Q<Button>("install");
             installButton.clicked += () =>
             {
-                RebuildList();
+                RebuildList(packages);
                 if (!packages.Any()) return;
-                UpmInstaller.Install(packages.ToArray());
+                UpmInstaller.Install(packages.Select(x => x.FullName).ToArray());
             };
 
             var removeButton = tree.Q<Button>("remove");
             removeButton.clicked += () =>
             {
-                RebuildList();
+                RebuildList(packages);
                 if (!packages.Any()) return;
-                UpmInstaller.Remove(packages.ToArray());
+                UpmInstaller.Remove(packages.Select(x => x.FullName).ToArray());
             };
 
             var updateButton = tree.Q<Button>("update");
             updateButton.clicked += () =>
             {
+                RebuildList(packages);
                 UpmInstaller.UpdateAsync().WaitEditor(updatePackage =>
                 {
-                    packages.AddRange(updatePackage);
-                    RebuildList();
+                    packages.AddRange(updatePackage.Select(x => new UpmInstallerPackage(x)));
+                    RebuildList(packages);
                 });
             };
 
@@ -66,14 +68,14 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var quickInstallButton = tree.Q<Button>("quickInstall");
             quickInstallButton.clicked += () =>
             {
-                packages.AddRange(ToolPackages);
-                RebuildList();
+                packages.AddRange(ToolPackages.Select(x => new UpmInstallerPackage(x)));
+                RebuildList(packages);
             };
         }
 
-        private void RebuildList()
+        private static void RebuildList(List<UpmInstallerPackage> packages)
         {
-            packages.RemoveAll(string.IsNullOrEmpty);
+            packages.RemoveAll(x => string.IsNullOrEmpty(x.FullName));
             var newList = packages.Distinct().ToList();
             packages.Clear();
             packages.AddRange(newList);

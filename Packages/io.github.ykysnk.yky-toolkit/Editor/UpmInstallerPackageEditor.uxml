@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="True">
+    <Style src="project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/UpmInstallerPackageEditor.uss?fileID=7433441132597879392&amp;guid=9aa3e19cdecaabe428375cc9adec98b7&amp;type=3#UpmInstallerPackageEditor"/>
+    <ui:VisualElement class="upm-package-row">
+        <ui:TextField name="packageName" binding-path="packageName" class="package-name">
+            <ui:Label text="Name" class="placeholder"/>
+        </ui:TextField>
+        <ui:TextField name="version" binding-path="version" placeholder="Input text here" class="package-version">
+            <ui:Label text="Version (opt.)" class="placeholder"/>
+        </ui:TextField>
+    </ui:VisualElement>
+</ui:UXML>
