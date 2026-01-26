@@ -15,6 +15,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 AssetDatabase.GUIDToAssetPath("40e54acba952f1c46964c0e4ef8d8cb4"));
             if (uxml == null) return BasicEditor.CreateUxmlImportErrorUI();
             var tree = uxml.CloneTree();
+            InternalLocalizationExtensions.Helper.UILocalize(tree, false);
             tree.Bind(property.serializedObject);
 
             var bar = tree.Q<ProgressBar>("bar");

@@ -27,7 +27,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             _process = Process.GetCurrentProcess();
 
             var serializedObject = new SerializedObject(this);
-            var tree = uxml?.CloneTree();
+            var tree = uxml!.CloneTree();
+            InternalLocalizationExtensions.Helper.UILocalize(tree);
             tree.Bind(serializedObject);
             rootVisualElement.Add(tree);
             rootVisualElement.AddManipulator(
