@@ -14,7 +14,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 {
     internal static class EmptyFolderClear
     {
-        private const string Title = "Clear Empty Folder";
+        private const string Title = "label.empty_folder_clear.title";
         private static int _isWorking;
 
         [MenuItem("Tools/YKYToolkit/Clear Empty Folder")]
@@ -41,14 +41,15 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 var reportPaths = await GetEmptyFolders();
                 if (reportPaths.Count < 1)
                 {
-                    await EditorUtils.DisplayDialogAsync(Title, "No empty folders found.");
+                    await EditorUtils.DisplayDialogAsync(Title.S(), "label.empty_folder_clear.no_empty_folders".S());
                     Progress.Report(progressId, 1, "No empty folders found.");
                     Progress.Finish(progressId);
                     return;
                 }
 
-                if (!await EditorUtils.DisplayDialogAsync(Title, $"Found {reportPaths.Count} empty folders.",
-                        "Clear", "Cancel"))
+                if (!await EditorUtils.DisplayDialogAsync(Title.S(),
+                        "label.empty_folder_clear.has_empty_folders".Sf(reportPaths.Count),
+                        "label.empty_folder_clear.ok".S(), "label.empty_folder_clear.cancel".S()))
                 {
                     Progress.Finish(progressId, Progress.Status.Canceled);
                     return;

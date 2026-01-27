@@ -15,11 +15,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         private static async UniTask ClearAsync()
         {
-            if (!await EditorUtils.DisplayDialogAsync("Clear Shader Cache",
-                    "Are you sure want to clear the shader cache?\nUnity may rebuild all shader cache when unity editor is start.\n\nYou cannot undo the action.",
-                    "Clear", "Cancel")) return;
-            var shaderCachePath =
-                Path.Combine(Directory.GetParent(Application.dataPath)?.FullName ?? "", "Library/ShaderCache");
+            if (!await EditorUtils.DisplayDialogAsync("label.clear_shader_cache.title".S(),
+                    "label.clear_shader_cache.message".S(), "label.clear_shader_cache.ok".S(),
+                    "label.clear_shader_cache.cancel".S())) return;
+            var shaderCachePath = Path.Combine(Directory.GetParent(Application.dataPath)?.FullName ?? "",
+                "Library/ShaderCache");
             Utils.Log(nameof(ClearShaderCache), $"Shader Cache Path: {shaderCachePath}");
             var progressId = Progress.Start("Clearing shader Cache...", "Preparing...",
                 Progress.Options.Managed | Progress.Options.Indefinite);
@@ -30,7 +30,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     Directory.Delete(shaderCachePath, true);
             });
             Progress.Finish(progressId);
-            await EditorUtils.DisplayDialogAsync("Shader Cache Cleared", "Shader Cache has been cleared.");
+            await EditorUtils.DisplayDialogAsync("label.clear_shader_cache.title2".S(),
+                "label.clear_shader_cache.message2".S());
             AssetDatabase.Refresh();
         }
     }

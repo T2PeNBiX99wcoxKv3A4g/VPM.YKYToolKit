@@ -90,3 +90,42 @@ MonoBehaviour:
   - key: label.new_delete.cancel
     translate: Cancel
     tooltip: 
+  - key: label.empty_folder_clear.no_empty_folders
+    translate: No empty folders found.
+    tooltip: 
+  - key: label.empty_folder_clear.has_empty_folders
+    translate: Found {0} empty folders.
+    tooltip: 
+  - key: label.empty_folder_clear.ok
+    translate: Clear
+    tooltip: 
+  - key: label.empty_folder_clear.cancel
+    translate: Cancel
+    tooltip: 
+  - key: label.empty_folder_clear.title
+    translate: Clear Empty Folder
+    tooltip: 
+  - key: label.clear_shader_cache.title
+    translate: Clear Shader Cache
+    tooltip: 
+  - key: label.clear_shader_cache.message
+    translate: 'Are you sure want to clear the shader cache?
+
+      Unity may rebuild
+      all shader cache when unity editor is start.
+
+
+      You cannot undo the action.'
+    tooltip: 
+  - key: label.clear_shader_cache.ok
+    translate: Clear
+    tooltip: 
+  - key: label.clear_shader_cache.cancel
+    translate: Cancel
+    tooltip: 
+  - key: label.clear_shader_cache.title2
+    translate: Shader Cache Cleared
+    tooltip: 
+  - key: label.clear_shader_cache.message2
+    translate: Shader Cache has been cleared.
+    tooltip: 

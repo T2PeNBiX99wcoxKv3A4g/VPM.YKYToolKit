@@ -87,3 +87,36 @@ MonoBehaviour:
   - key: label.new_delete.cancel
     translate: "\u30AD\u30E3\u30F3\u30BB\u30EB"
     tooltip: 
+  - key: label.empty_folder_clear.no_empty_folders
+    translate: "\u7A7A\u306E\u30D5\u30A9\u30EB\u30C0\u306F\u898B\u3064\u304B\u308A\u307E\u305B\u3093\u3067\u3057\u305F\u3002"
+    tooltip: 
+  - key: label.empty_folder_clear.has_empty_folders
+    translate: "{0}\u500B\u306E\u7A7A\u30D5\u30A9\u30EB\u30C0\u304C\u898B\u3064\u304B\u308A\u307E\u3057\u305F\u3002"
+    tooltip: 
+  - key: label.empty_folder_clear.ok
+    translate: "\u30AF\u30EA\u30A2"
+    tooltip: 
+  - key: label.empty_folder_clear.cancel
+    translate: "\u30AD\u30E3\u30F3\u30BB\u30EB"
+    tooltip: 
+  - key: label.empty_folder_clear.title
+    translate: "\u7A7A\u306E\u30D5\u30A9\u30EB\u30C0\u3092\u524A\u9664"
+    tooltip: 
+  - key: label.clear_shader_cache.title
+    translate: "\u30B7\u30A7\u30FC\u30C0\u30FC\u30AD\u30E3\u30C3\u30B7\u30E5\u3092\u30AF\u30EA\u30A2"
+    tooltip: 
+  - key: label.clear_shader_cache.message
+    translate: "\u30B7\u30A7\u30FC\u30C0\u30FC\u30AD\u30E3\u30C3\u30B7\u30E5\u3092\u672C\u5F53\u306B\u30AF\u30EA\u30A2\u3057\u307E\u3059\u304B\uFF1F\nUnity\u30A8\u30C7\u30A3\u30BF\u30FC\u8D77\u52D5\u6642\u306B\u3001\u3059\u3079\u3066\u306E\u30B7\u30A7\u30FC\u30C0\u30FC\u30AD\u30E3\u30C3\u30B7\u30E5\u304C\u518D\u69CB\u7BC9\u3055\u308C\u308B\u53EF\u80FD\u6027\u304C\u3042\u308A\u307E\u3059\u3002\n\n\u3053\u306E\u64CD\u4F5C\u306F\u53D6\u308A\u6D88\u305B\u307E\u305B\u3093\u3002"
+    tooltip: 
+  - key: label.clear_shader_cache.ok
+    translate: "\u30AF\u30EA\u30A2"
+    tooltip: 
+  - key: label.clear_shader_cache.cancel
+    translate: "\u30AD\u30E3\u30F3\u30BB\u30EB"
+    tooltip: 
+  - key: label.clear_shader_cache.title2
+    translate: "\u30B7\u30A7\u30FC\u30C0\u30FC\u30AD\u30E3\u30C3\u30B7\u30E5\u304C\u30AF\u30EA\u30A2\u3055\u308C\u307E\u3057\u305F"
+    tooltip: 
+  - key: label.clear_shader_cache.message2
+    translate: "\u30B7\u30A7\u30FC\u30C0\u30FC\u30AD\u30E3\u30C3\u30B7\u30E5\u304C\u30AF\u30EA\u30A2\u3055\u308C\u307E\u3057\u305F\u3002"
+    tooltip: 
