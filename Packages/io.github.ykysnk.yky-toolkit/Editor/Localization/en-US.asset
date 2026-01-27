@@ -18,3 +18,60 @@ MonoBehaviour:
   - key: label.language
     translate: Language
     tooltip: Change your target language in the editor.
+  - key: label.unity_resource_monitor.type
+    translate: Type
+    tooltip: 
+  - key: label.unity_resource_monitor.value
+    translate: Value
+    tooltip: 
+  - key: label.upm_installer_window.install
+    translate: Install
+    tooltip: 
+  - key: label.upm_installer_window.remove
+    translate: Remove
+    tooltip: 
+  - key: label.upm_installer_window.update
+    translate: Update
+    tooltip: 
+  - key: label.upm_installer_window.clear
+    translate: Clear
+    tooltip: 
+  - key: label.upm_installer_window.check_and_upgrade
+    translate: Check update then upgrade all UPM packages
+    tooltip: 
+  - key: label.upm_installer_package.name
+    translate: Name
+    tooltip: 
+  - key: label.upm_installer_package.version
+    translate: Version (opt.)
+    tooltip: 
+  - key: label.upm_installer_window.create_and_copy
+    translate: Create and copy
+    tooltip: 
+  - key: label.upm_installer_window.package_list_name
+    translate: Package List Name
+    tooltip: 
+  - key: label.upm_installer_window.package_list_maker
+    translate: Package List Maker
+    tooltip: 
+  - key: label.upm_installer_window.package_list
+    translate: Package List
+    tooltip: 
+  - key: label.upm_installer_window.import
+    translate: Import
+    tooltip: 
+  - key: label.upm_installer_window.remove_selected
+    translate: Remove Selected
+    tooltip: 
+  - key: label.upm_package_list_wrapper.packages
+    translate: Packages
+    tooltip: 
+  - key: label.upm_installer_window.import_to_maker
+    translate: Import to maker
+    tooltip: 
+  - key: label.upm_installer_window.copy
+    translate: Copy
+    tooltip: 
+  - key: label.upm_installer_window.remove
+    translate: Remove
+    tooltip: 
