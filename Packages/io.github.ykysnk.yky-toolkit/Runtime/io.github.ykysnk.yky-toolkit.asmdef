@@ -1,0 +1,14 @@
+{
+  "name": "io.github.ykysnk.yky-toolkit",
+  "rootNamespace": "io.github.ykysnk.yky-toolkit",
+  "references": [],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}
