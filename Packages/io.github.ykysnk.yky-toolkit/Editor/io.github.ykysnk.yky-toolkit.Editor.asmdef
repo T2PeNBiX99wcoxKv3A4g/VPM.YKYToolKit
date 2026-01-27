@@ -1,22 +1,23 @@
 {
-  "name": "io.github.ykysnk.yky-toolkit.Editor",
-  "rootNamespace": "io.github.ykysnk.ykyToolkit",
-  "references": [
-    "io.github.ykysnk.utils",
-    "io.github.ykysnk.utils.Editor",
-    "io.github.ykysnk.utils.non-udon",
-    "UniTask",
-    "io.github.ykysnk.localization.Editor"
-  ],
-  "includePlatforms": [
-    "Editor"
-  ],
-  "excludePlatforms": [],
-  "allowUnsafeCode": false,
-  "overrideReferences": false,
-  "precompiledReferences": [],
-  "autoReferenced": true,
-  "defineConstraints": [],
-  "versionDefines": [],
-  "noEngineReferences": false
+    "name": "io.github.ykysnk.yky-toolkit.Editor",
+    "rootNamespace": "io.github.ykysnk.ykyToolkit",
+    "references": [
+        "io.github.ykysnk.utils",
+        "io.github.ykysnk.utils.Editor",
+        "io.github.ykysnk.utils.non-udon",
+        "UniTask",
+        "io.github.ykysnk.localization.Editor",
+        "io.github.ykysnk.yky-toolkit"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }
