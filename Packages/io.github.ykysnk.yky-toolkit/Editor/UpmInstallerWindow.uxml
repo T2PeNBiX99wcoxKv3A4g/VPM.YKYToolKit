@@ -1,31 +1,58 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="True">
     <Style src="project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/UpmInstallerWindow.uss?fileID=7433441132597879392&amp;guid=3a2de8958a2e834458945bec73401276&amp;type=3#UpmInstallerWindow"/>
-    <ui:VisualElement class="root" style="flex-grow: 1;">
-        <ui:Label tabindex="-1" text="UPM Installer" parse-escape-sequences="true" display-tooltip-when-elided="true"
-                  name="title" class="title" style="display: none;"/>
-        <ui:ListView binding-path="packages" virtualization-method="DynamicHeight" show-border="true"
-                     selection-type="Multiple" show-alternating-row-backgrounds="ContentOnly"
-                     show-bound-collection-size="false" reorder-mode="Animated" reorderable="true"
-                     show-add-remove-footer="true" name="packages"/>
-        <ui:VisualElement style="flex-direction: row;">
-            <ui:Button text="Install" parse-escape-sequences="true" display-tooltip-when-elided="true" name="install"
-                       class="cell"/>
-            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="remove" text="Remove"
-                       class="cell"/>
-            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="update" text="Update"
-                       class="cell"/>
-            <ui:Button text="Clear" name="clear" parse-escape-sequences="true" display-tooltip-when-elided="true"
-                       class="cell"/>
+    <ui:ScrollView>
+        <ui:VisualElement class="root" style="flex-grow: 1;">
+            <ui:Label tabindex="-1" text="UPM Installer" parse-escape-sequences="true"
+                      display-tooltip-when-elided="true" name="title" class="title" style="display: none;"/>
+            <ui:ListView binding-path="packages" virtualization-method="DynamicHeight" show-border="true"
+                         selection-type="Multiple" show-alternating-row-backgrounds="ContentOnly"
+                         show-bound-collection-size="false" reorder-mode="Animated" reorderable="true"
+                         show-add-remove-footer="true" name="packages"/>
+            <ui:VisualElement style="flex-direction: row;">
+                <ui:Button text="label.upm_installer_window.install" parse-escape-sequences="true"
+                           display-tooltip-when-elided="true" name="install" class="cell"/>
+                <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="remove"
+                           text="label.upm_installer_window.remove" class="cell"/>
+                <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="update"
+                           text="label.upm_installer_window.update" class="cell"/>
+                <ui:Button text="label.upm_installer_window.clear" name="clear" parse-escape-sequences="true"
+                           display-tooltip-when-elided="true" class="cell"/>
+            </ui:VisualElement>
+            <ui:VisualElement style="flex-direction: row;">
+                <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="upgrade"
+                           text="label.upm_installer_window.check_and_upgrade" class="cell"/>
+                <ui:Button text="label.upm_installer_window.import_to_maker" parse-escape-sequences="true"
+                           display-tooltip-when-elided="true" name="importToMaker" class="cell"/>
+            </ui:VisualElement>
+            <ui:VisualElement style="flex-grow: 1;">
+                <ui:Foldout text="label.upm_installer_window.package_list" value="true"
+                            binding-path="isPackageListExpanded">
+                    <ui:ListView virtualization-method="DynamicHeight" show-border="true" selection-type="Multiple"
+                                 show-alternating-row-backgrounds="ContentOnly" reorderable="true"
+                                 reorder-mode="Animated" show-bound-collection-size="false" binding-path="packageLists"
+                                 name="packageLists"/>
+                    <ui:VisualElement style="flex-direction: row;">
+                        <ui:Button text="label.upm_installer_window.import" parse-escape-sequences="true"
+                                   display-tooltip-when-elided="true" name="import" class="cell"/>
+                        <ui:Button text="label.upm_installer_window.remove_selected" parse-escape-sequences="true"
+                                   display-tooltip-when-elided="true" name="removeSelected" class="cell"/>
+                    </ui:VisualElement>
+                </ui:Foldout>
+            </ui:VisualElement>
+            <ui:VisualElement style="flex-grow: 1;">
+                <ui:Foldout text="label.upm_installer_window.package_list_maker"
+                            binding-path="isPackageListMakerExpanded" name="isPackageListMakerExpanded">
+                    <ui:ListView virtualization-method="DynamicHeight" show-border="true" selection-type="Multiple"
+                                 show-alternating-row-backgrounds="ContentOnly" reorderable="true"
+                                 show-add-remove-footer="true" reorder-mode="Animated"
+                                 show-bound-collection-size="false" binding-path="packageListMaker"/>
+                    <ui:TextField name="createListName">
+                        <ui:Label text="label.upm_installer_window.package_list_name" class="placeholder"/>
+                    </ui:TextField>
+                    <ui:Button text="label.upm_installer_window.create_and_copy" parse-escape-sequences="true"
+                               display-tooltip-when-elided="true" name="createAndCopy"/>
+                </ui:Foldout>
+            </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement style="flex-direction: row;">
-            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="upgrade"
-                       text="Check update then upgrade all UPM packages" class="cell"/>
-        </ui:VisualElement>
-        <ui:VisualElement style="flex-grow: 1;">
-            <ui:Foldout text="Package Lists" value="false" binding-path="isPackageListExpanded">
-                <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="quickInstall"
-                           text="Tool packages List"/>
-            </ui:Foldout>
-        </ui:VisualElement>
-    </ui:VisualElement>
+    </ui:ScrollView>
 </ui:UXML>

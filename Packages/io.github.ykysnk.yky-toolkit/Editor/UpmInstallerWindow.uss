@@ -38,3 +38,10 @@ ProgressBar {
     height: 18px;
     margin-bottom: 6px;
 }
+
+.placeholder {
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    color: rgb(136, 136, 136);
+}
