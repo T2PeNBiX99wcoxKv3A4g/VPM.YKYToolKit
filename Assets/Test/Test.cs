@@ -1,3 +1,5 @@
+using io.github.ykysnk.utils;
+using io.github.ykysnk.ykyToolkit.Editor;
 using UnityEditor;
 
 namespace Test
@@ -19,6 +21,36 @@ namespace Test
                         AssetDatabase.CreateFolder($"Assets/{x}/{y}", $"{y}");
                 }
             }
+        }
+
+        [MenuItem("Test/Discord RPC")]
+        private static void TestDiscordRPC()
+        {
+            DiscordEditorRPC.Initialize(DiscordEditorRPC.ApplicationId);
+        }
+
+        [MenuItem("Test/Discord RPC Set Activity")]
+        private static void TestDiscordSetActivity()
+        {
+            DiscordEditorRPC.SetActivity("Unity Editor Test", "Unity Editor Test State", "unity-1024");
+        }
+
+        [MenuItem("Test/Discord RPC Clear Activity")]
+        private static void TestDiscordClearActivity()
+        {
+            DiscordEditorRPC.ClearActivity();
+        }
+
+        [MenuItem("Test/Discord RPC Shutdown")]
+        private static void TestDiscordShutdown()
+        {
+            DiscordEditorRPC.Shutdown();
+        }
+
+        [MenuItem("Test/Test")]
+        private static void Test2()
+        {
+            Utils.Log(nameof(TestClass), $"Test: {EditorMainWindowTitle.GetTitle()}");
         }
     }
 }
