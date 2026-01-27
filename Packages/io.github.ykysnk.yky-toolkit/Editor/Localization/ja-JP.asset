@@ -75,3 +75,15 @@ MonoBehaviour:
   - key: label.upm_installer_window.remove
     translate: "\u524A\u9664"
     tooltip: 
+  - key: label.new_delete.title
+    translate: "\u9078\u629E\u3057\u305F\u30A2\u30BB\u30C3\u30C8\u3092\u524A\u9664"
+    tooltip: 
+  - key: label.new_delete.message
+    translate: "{0}\n\n\u524A\u9664\u3057\u305F\u30A2\u30BB\u30C3\u30C8\u306E\u64CD\u4F5C\u306F\u5143\u306B\u623B\u305B\u307E\u3059\u3002\uFF08100%\u3067\u306F\u3042\u308A\u307E\u305B\u3093\uFF09"
+    tooltip: 
+  - key: label.new_delete.ok
+    translate: "\u524A\u9664"
+    tooltip: 
+  - key: label.new_delete.cancel
+    translate: "\u30AD\u30E3\u30F3\u30BB\u30EB"
+    tooltip: 

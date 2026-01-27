@@ -75,3 +75,18 @@ MonoBehaviour:
   - key: label.upm_installer_window.remove
     translate: Remove
     tooltip: 
+  - key: label.new_delete.title
+    translate: Delete select assets
+    tooltip: 
+  - key: label.new_delete.message
+    translate: '{0}
+
+
+      You can undo the delete assets action. (Not 100%)'
+    tooltip: 
+  - key: label.new_delete.ok
+    translate: Delete
+    tooltip: 
+  - key: label.new_delete.cancel
+    translate: Cancel
+    tooltip: 
