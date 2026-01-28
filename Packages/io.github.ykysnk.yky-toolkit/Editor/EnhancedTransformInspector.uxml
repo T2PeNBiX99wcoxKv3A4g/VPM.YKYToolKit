@@ -1,0 +1,93 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <Style src="project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/EnhancedTransformInspector.uss?fileID=7433441132597879392&amp;guid=f73a8c4781e128b4180a465abad72513&amp;type=3#EnhancedTransformInspector"/>
+    <ui:VisualElement>
+        <ui:Foldout text="label.enhanced_transform_inspector.default_ui" value="false" name="defaultGUIFoldout">
+            <ui:IMGUIContainer name="defaultGUI"/>
+        </ui:Foldout>
+        <ui:VisualElement class="row" style="justify-content: space-between;">
+            <ui:Label text="label.enhanced_transform_inspector.local_space" parse-escape-sequences="true"
+                      display-tooltip-when-elided="true" class="space-title"/>
+            <ui:VisualElement class="row">
+                <ui:Button text="label.enhanced_transform_inspector.copy_transform" parse-escape-sequences="true"
+                           display-tooltip-when-elided="true" name="copyLocalTransform" class="cell"/>
+                <ui:Button text="label.enhanced_transform_inspector.paste_transform" parse-escape-sequences="true"
+                           display-tooltip-when-elided="true" name="pasteLocalTransform" class="cell"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:Vector3Field label="label.enhanced_transform_inspector.local_position" binding-path="m_LocalPosition"
+                         name="position"/>
+        <ui:Vector3Field label="label.enhanced_transform_inspector.local_rotation" name="rotation"
+                         binding-path="m_LocalEulerAnglesHint"/>
+        <ui:Vector3Field label="label.enhanced_transform_inspector.local_scale" binding-path="m_LocalScale"
+                         name="scale"/>
+        <ui:VisualElement class="row" style="flex-grow: 1;">
+            <ui:Button text="label.enhanced_transform_inspector.reset_position" parse-escape-sequences="true"
+                       display-tooltip-when-elided="true" name="resetLocalPosition" class="cell"/>
+            <ui:Button text="label.enhanced_transform_inspector.reset_rotation" parse-escape-sequences="true"
+                       display-tooltip-when-elided="true" name="resetLocalRotation" class="cell"/>
+            <ui:Button text="label.enhanced_transform_inspector.reset_scale" parse-escape-sequences="true"
+                       display-tooltip-when-elided="true" name="resetLocalScale" class="cell"/>
+            <ui:Button text="label.enhanced_transform_inspector.reset_all" parse-escape-sequences="true"
+                       display-tooltip-when-elided="true" name="resetLocalAll"/>
+        </ui:VisualElement>
+        <ui:VisualElement class="row" style="flex-grow: 1;">
+            <ui:Button text="label.enhanced_transform_inspector.random_position" parse-escape-sequences="true"
+                       display-tooltip-when-elided="true" name="randomLocalPosition" class="cell"/>
+            <ui:Button text="label.enhanced_transform_inspector.random_rotation" parse-escape-sequences="true"
+                       display-tooltip-when-elided="true" name="randomLocalRotation" class="cell"/>
+            <ui:Button text="label.enhanced_transform_inspector.random_scale" parse-escape-sequences="true"
+                       display-tooltip-when-elided="true" name="randomLocalScale" class="cell"/>
+            <ui:Button text="label.enhanced_transform_inspector.random_all" parse-escape-sequences="true"
+                       display-tooltip-when-elided="true" name="randomLocalAll" class="cell"/>
+        </ui:VisualElement>
+        <ui:VisualElement class="row" style="justify-content: space-between;">
+            <ui:Label text="label.enhanced_transform_inspector.global_space" parse-escape-sequences="true"
+                      display-tooltip-when-elided="true" class="space-title"/>
+            <ui:VisualElement class="row">
+                <ui:Button text="label.enhanced_transform_inspector.copy_transform" parse-escape-sequences="true"
+                           display-tooltip-when-elided="true" name="copyGlobalTransform" class="cell"/>
+                <ui:Button text="label.enhanced_transform_inspector.paste_transform" parse-escape-sequences="true"
+                           display-tooltip-when-elided="true" name="pasteGlobalTransform" class="cell"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:Vector3Field label="label.enhanced_transform_inspector.global_position" name="globalPosition"/>
+        <ui:Vector3Field label="label.enhanced_transform_inspector.global_rotation" name="globalRotation"/>
+        <ui:Vector3Field label="label.enhanced_transform_inspector.global_scale" name="lossyScale"/>
+        <ui:VisualElement class="row" style="flex-grow: 1;">
+            <ui:Button text="label.enhanced_transform_inspector.reset_position" parse-escape-sequences="true"
+                       display-tooltip-when-elided="true" name="resetGlobalPosition" class="cell"/>
+            <ui:Button text="label.enhanced_transform_inspector.reset_rotation" parse-escape-sequences="true"
+                       display-tooltip-when-elided="true" name="resetGlobalRotation" class="cell"/>
+            <ui:Button text="label.enhanced_transform_inspector.reset_scale" parse-escape-sequences="true"
+                       display-tooltip-when-elided="true" name="resetGlobalScale" class="cell"/>
+            <ui:Button text="label.enhanced_transform_inspector.reset_all" parse-escape-sequences="true"
+                       display-tooltip-when-elided="true" name="resetGlobalAll"/>
+        </ui:VisualElement>
+        <ui:VisualElement class="row" style="flex-grow: 1;">
+            <ui:Button text="label.enhanced_transform_inspector.random_position" parse-escape-sequences="true"
+                       display-tooltip-when-elided="true" name="randomGlobalPosition" class="cell"/>
+            <ui:Button text="label.enhanced_transform_inspector.random_rotation" parse-escape-sequences="true"
+                       display-tooltip-when-elided="true" name="randomGlobalRotation" class="cell"/>
+            <ui:Button text="label.enhanced_transform_inspector.random_scale" parse-escape-sequences="true"
+                       display-tooltip-when-elided="true" name="randomGlobalScale" class="cell"/>
+            <ui:Button text="label.enhanced_transform_inspector.random_all" parse-escape-sequences="true"
+                       display-tooltip-when-elided="true" name="randomGlobalAll" class="cell"/>
+        </ui:VisualElement>
+        <ui:Label text="label.enhanced_transform_inspector.other" parse-escape-sequences="true"
+                  display-tooltip-when-elided="true" class="space-title"/>
+        <ui:Vector3Field label="label.enhanced_transform_inspector.bounds_size" name="boundsSize"/>
+        <ui:TextField picking-mode="Ignore" label="label.enhanced_transform_inspector.hierarchy_path"
+                      value="filler text" name="hierarchyPath" readonly="true"/>
+        <uie:ObjectField label="label.enhanced_transform_inspector.father" binding-path="m_Father" name="father"
+                         type="UnityEngine.Transform, UnityEngine.CoreModule" class="readonly-object-field"/>
+        <ui:ListView virtualization-method="DynamicHeight" show-border="true"
+                     show-alternating-row-backgrounds="ContentOnly" name="childrenList"
+                     header-title="label.enhanced_transform_inspector.children" show-foldout-header="true"/>
+        <ui:VisualElement class="row">
+            <ui:Button text="label.enhanced_transform_inspector.align_to_parent" parse-escape-sequences="true"
+                       display-tooltip-when-elided="true" name="alignToParent" class="cell"/>
+            <ui:Button text="label.enhanced_transform_inspector.align_to_ground" parse-escape-sequences="true"
+                       display-tooltip-when-elided="true" name="alignToGround" class="cell"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
