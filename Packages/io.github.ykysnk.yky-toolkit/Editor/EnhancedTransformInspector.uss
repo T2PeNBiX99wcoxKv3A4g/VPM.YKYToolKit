@@ -1,0 +1,22 @@
+.scale-row {
+    flex-direction: row;
+    align-items: center;
+}
+
+.space-title {
+    margin-bottom: 5px;
+    -unity-font-style: bold;
+    margin-top: 5px;
+}
+
+.cell {
+    flex-grow: 1;
+}
+
+.row {
+    flex-direction: row;
+}
+
+.readonly-object-field:disabled .unity-label {
+    color: white;
+}
