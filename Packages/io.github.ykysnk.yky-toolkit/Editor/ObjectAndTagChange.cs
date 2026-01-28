@@ -9,7 +9,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
     {
         private const string EditorOnlyTag = "EditorOnly";
         private const string UntaggedTag = "Untagged";
-        private const string Title = "Set Object and Tag";
         private static readonly Dictionary<int, string> OriginalTags = new();
         private static readonly Dictionary<int, bool> WasActives = new();
 

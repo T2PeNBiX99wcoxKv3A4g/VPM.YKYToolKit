@@ -61,6 +61,13 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         [MenuItem("Tools/YKYToolkit/Discord SDK Shutdown")]
         private static void MenuShutdown() => Shutdown();
 
+        [MenuItem("Tools/YKYToolkit/Discord SDK Restart")]
+        private static void MenuRestart()
+        {
+            Shutdown();
+            Initialize(ApplicationId);
+        }
+
         private static void DelayedInit()
         {
             SetActivity(EditorMainWindowTitle.GetTitleOrDefault("Unity Editor"), "Unity Editor Test State", "unity-1024");
