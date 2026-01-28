@@ -129,3 +129,81 @@ MonoBehaviour:
   - key: label.clear_shader_cache.message2
     translate: Shader Cache has been cleared.
     tooltip: 
+  - key: label.enhanced_transform_inspector.local_position
+    translate: Position
+    tooltip: The local position of this GameObject relative to the parent.
+  - key: label.enhanced_transform_inspector.local_rotation
+    translate: Rotation
+    tooltip: The local rotation of this GameObject relative to the parent.
+  - key: label.enhanced_transform_inspector.local_scale
+    translate: Scale
+    tooltip: The local scale of this GameObject relative to the parent.
+  - key: label.enhanced_transform_inspector.local_space
+    translate: Local Space
+    tooltip: 
+  - key: label.enhanced_transform_inspector.global_space
+    translate: World Space
+    tooltip: 
+  - key: label.enhanced_transform_inspector.global_position
+    translate: Position
+    tooltip: The global position of this GameObject.
+  - key: label.enhanced_transform_inspector.global_rotation
+    translate: Rotation
+    tooltip: The global rotation of this GameObject.
+  - key: label.enhanced_transform_inspector.global_scale
+    translate: Scale
+    tooltip: The lossy global scale of this GameObject. (Is lossy)
+  - key: label.enhanced_transform_inspector.reset_position
+    translate: Reset Position
+    tooltip: 
+  - key: label.enhanced_transform_inspector.reset_rotation
+    translate: Reset Rotation
+    tooltip: 
+  - key: label.enhanced_transform_inspector.reset_scale
+    translate: Reset Scale
+    tooltip: 
+  - key: label.enhanced_transform_inspector.reset_all
+    translate: Reset All
+    tooltip: 
+  - key: label.enhanced_transform_inspector.copy_transform
+    translate: Copy
+    tooltip: 
+  - key: label.enhanced_transform_inspector.paste_transform
+    translate: Paste
+    tooltip: 
+  - key: label.enhanced_transform_inspector.random_position
+    translate: Random Position
+    tooltip: 
+  - key: label.enhanced_transform_inspector.random_rotation
+    translate: Random Rotation
+    tooltip: 
+  - key: label.enhanced_transform_inspector.random_scale
+    translate: Random Scale
+    tooltip: 
+  - key: label.enhanced_transform_inspector.random_all
+    translate: Random All
+    tooltip: 
+  - key: label.enhanced_transform_inspector.default_ui
+    translate: Default UI
+    tooltip: 
+  - key: label.enhanced_transform_inspector.other
+    translate: Other
+    tooltip: 
+  - key: label.enhanced_transform_inspector.father
+    translate: Father
+    tooltip: 
+  - key: label.enhanced_transform_inspector.align_to_parent
+    translate: Align to Parent
+    tooltip: 
+  - key: label.enhanced_transform_inspector.align_to_ground
+    translate: Align to Ground
+    tooltip: 
+  - key: label.enhanced_transform_inspector.hierarchy_path
+    translate: Hierarchy Path
+    tooltip: 
+  - key: label.enhanced_transform_inspector.children
+    translate: Children
+    tooltip: 
+  - key: label.enhanced_transform_inspector.bounds_size
+    translate: Bounds Size
+    tooltip: 

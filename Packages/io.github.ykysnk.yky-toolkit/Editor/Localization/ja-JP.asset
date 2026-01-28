@@ -120,3 +120,82 @@ MonoBehaviour:
   - key: label.clear_shader_cache.message2
     translate: "\u30B7\u30A7\u30FC\u30C0\u30FC\u30AD\u30E3\u30C3\u30B7\u30E5\u304C\u30AF\u30EA\u30A2\u3055\u308C\u307E\u3057\u305F\u3002"
     tooltip: 
+  - key: label.enhanced_transform_inspector.local_position
+    translate: "\u4F4D\u7F6E"
+    tooltip: "\u3053\u306EGameObject\u306E\u89AA\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8\u306B\u5BFE\u3059\u308B\u30ED\u30FC\u30AB\u30EB\u4F4D\u7F6E\u3002"
+  - key: label.enhanced_transform_inspector.local_rotation
+    translate: "\u56DE\u8EE2"
+    tooltip: "\u3053\u306EGameObject\u306E\u89AA\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8\u306B\u5BFE\u3059\u308B\u30ED\u30FC\u30AB\u30EB\u56DE\u8EE2\u3002"
+  - key: label.enhanced_transform_inspector.local_scale
+    translate: "\u30B9\u30B1\u30FC\u30EB"
+    tooltip: "\u3053\u306EGameObject\u306E\u89AA\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8\u306B\u5BFE\u3059\u308B\u30ED\u30FC\u30AB\u30EB\u30B9\u30B1\u30FC\u30EB\u3002"
+  - key: label.enhanced_transform_inspector.local_space
+    translate: "\u30ED\u30FC\u30AB\u30EB\u5EA7\u6A19\u7CFB"
+    tooltip: 
+  - key: label.enhanced_transform_inspector.global_space
+    translate: "\u30EF\u30FC\u30EB\u30C9\u5EA7\u6A19\u7CFB"
+    tooltip: 
+  - key: label.enhanced_transform_inspector.global_position
+    translate: "\u4F4D\u7F6E"
+    tooltip: "\u3053\u306EGameObject\u306E\u30EF\u30FC\u30EB\u30C9\u4F4D\u7F6E\u3002"
+  - key: label.enhanced_transform_inspector.global_rotation
+    translate: "\u56DE\u8EE2"
+    tooltip: "\u3053\u306EGameObject\u306E\u30EF\u30FC\u30EB\u30C9\u56DE\u8EE2\u3002"
+  - key: label.enhanced_transform_inspector.global_scale
+    translate: "\u30B9\u30B1\u30FC\u30EB"
+    tooltip: "\u3053\u306EGameObject\u306E\u30ED\u30B9\u3042\u308A\u30EF\u30FC\u30EB\u30C9\u30B9\u30B1\u30FC\u30EB\u3002
+      (\u30ED\u30B9\u3042\u308A)"
+  - key: label.enhanced_transform_inspector.reset_position
+    translate: "\u4F4D\u7F6E\u3092\u30EA\u30BB\u30C3\u30C8"
+    tooltip: 
+  - key: label.enhanced_transform_inspector.reset_rotation
+    translate: "\u56DE\u8EE2\u3092\u30EA\u30BB\u30C3\u30C8"
+    tooltip: 
+  - key: label.enhanced_transform_inspector.reset_scale
+    translate: "\u30B9\u30B1\u30FC\u30EB\u3092\u30EA\u30BB\u30C3\u30C8"
+    tooltip: 
+  - key: label.enhanced_transform_inspector.reset_all
+    translate: "\u3059\u3079\u3066\u30EA\u30BB\u30C3\u30C8"
+    tooltip: 
+  - key: label.enhanced_transform_inspector.copy_transform
+    translate: "\u30B3\u30D4\u30FC"
+    tooltip: 
+  - key: label.enhanced_transform_inspector.paste_transform
+    translate: "\u8CBC\u308A\u4ED8\u3051"
+    tooltip: 
+  - key: label.enhanced_transform_inspector.random_position
+    translate: "\u30E9\u30F3\u30C0\u30E0\u4F4D\u7F6E"
+    tooltip: 
+  - key: label.enhanced_transform_inspector.random_rotation
+    translate: "\u30E9\u30F3\u30C0\u30E0\u56DE\u8EE2"
+    tooltip: 
+  - key: label.enhanced_transform_inspector.random_scale
+    translate: "\u30E9\u30F3\u30C0\u30E0\u30B9\u30B1\u30FC\u30EB"
+    tooltip: 
+  - key: label.enhanced_transform_inspector.random_all
+    translate: "\u3059\u3079\u3066\u30E9\u30F3\u30C0\u30E0"
+    tooltip: 
+  - key: label.enhanced_transform_inspector.default_ui
+    translate: "\u30C7\u30D5\u30A9\u30EB\u30C8UI"
+    tooltip: 
+  - key: label.enhanced_transform_inspector.other
+    translate: "\u305D\u306E\u4ED6"
+    tooltip: 
+  - key: label.enhanced_transform_inspector.father
+    translate: "\u89AA"
+    tooltip: 
+  - key: label.enhanced_transform_inspector.align_to_parent
+    translate: "\u89AA\u306B\u5408\u308F\u305B\u308B"
+    tooltip: 
+  - key: label.enhanced_transform_inspector.align_to_ground
+    translate: "\u5730\u9762\u306B\u5408\u308F\u305B\u308B"
+    tooltip: 
+  - key: label.enhanced_transform_inspector.hierarchy_path
+    translate: "\u30D2\u30A8\u30E9\u30EB\u30AD\u30FC\u30D1\u30B9"
+    tooltip: 
+  - key: label.enhanced_transform_inspector.children
+    translate: "\u5B50\r"
+    tooltip: 
+  - key: label.enhanced_transform_inspector.bounds_size
+    translate: "\u30D0\u30A6\u30F3\u30BA\u30B5\u30A4\u30BA"
+    tooltip: 
