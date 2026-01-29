@@ -57,7 +57,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             tree.Bind(serializedObject);
 
             var defaultUIFoldOut = tree.Q<Foldout>("defaultGUIFoldout");
-            defaultUIFoldOut.value = IsDefaultUIExpanded;
+            defaultUIFoldOut.SetValueWithoutNotify(IsDefaultUIExpanded);
             defaultUIFoldOut.RegisterValueChangedCallback(evt => IsDefaultUIExpanded = evt.newValue);
 
             var defaultGUI = tree.Q<IMGUIContainer>("defaultGUI");
@@ -66,7 +66,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var positionField = tree.Q<Vector3Field>("position");
             var globalPositionField = tree.Q<Vector3Field>("globalPosition");
 
-            globalPositionField.value = theTarget.position;
+            globalPositionField.SetValueWithoutNotify(theTarget.position);
 
             Vector3FieldApplyParsedInput(positionField, t => t.localPosition,
                 (t, newVector) => t.localPosition = newVector);
@@ -104,30 +104,45 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var rotationField = tree.Q<Vector3Field>("rotation");
             var globalRotationField = tree.Q<Vector3Field>("globalRotation");
 
-            globalRotationField.value = theTarget.eulerAngles;
+            rotationField.SetValueWithoutNotify(theTarget.localEulerAngles);
+            globalRotationField.SetValueWithoutNotify(theTarget.eulerAngles);
 
             Vector3FieldApplyParsedInput(rotationField, t => t.localEulerAngles,
                 (t, newVector) => t.localEulerAngles = newVector);
             Vector3FieldApplyParsedInput(globalRotationField, t => t.eulerAngles,
                 (t, newVector) => t.eulerAngles = newVector);
 
+            var rotationEditing = false;
+
+            rotationField.RegisterCallback<FocusInEvent>(_ => rotationEditing = true);
+            rotationField.RegisterCallback<FocusOutEvent>(_ => rotationEditing = false);
+
             rotationField.RegisterValueChangedCallback(evt =>
             {
                 var clearVector = evt.newValue.Clean().DeltaAngle();
 
                 CleanTransforms();
-                ApplyToTargets(t => t.localEulerAngles = clearVector, "Set Local Rotation");
+
+                if (rotationEditing)
+                    ApplyToTargets(t => t.localEulerAngles = clearVector, "Set Local Rotation");
 
                 rotationField.SetValueWithoutNotify(clearVector);
                 globalRotationField.SetValueWithoutNotify(theTarget.eulerAngles.DeltaAngle());
             });
+
+            var globalRotationEditing = false;
+
+            globalRotationField.RegisterCallback<FocusInEvent>(_ => globalRotationEditing = true);
+            globalRotationField.RegisterCallback<FocusOutEvent>(_ => globalRotationEditing = false);
 
             globalRotationField.RegisterValueChangedCallback(evt =>
             {
                 var clearVector = evt.newValue.Clean().DeltaAngle();
 
                 CleanTransforms();
-                ApplyToTargets(t => t.eulerAngles = clearVector, "Set World Rotation");
+
+                if (globalRotationEditing)
+                    ApplyToTargets(t => t.eulerAngles = clearVector, "Set World Rotation");
 
                 rotationField.SetValueWithoutNotify(theTarget.localEulerAngles.DeltaAngle());
                 globalRotationField.SetValueWithoutNotify(clearVector);
@@ -146,7 +161,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 });
                 evt.menu.AppendSeparator();
                 evt.menu.AppendAction("Copy Euler Angles",
-                    _ => EditorGUIUtility.systemCopyBuffer = FormatVector3LikeUnity(rotationField.value));
+                    _ => EditorGUIUtility.systemCopyBuffer = FormatVector3LikeUnity(theTarget.localEulerAngles));
                 evt.menu.AppendAction("Copy Quaternion",
                     _ => EditorGUIUtility.systemCopyBuffer = FormatQuaternionLikeUnity(theTarget.localRotation));
 
@@ -192,7 +207,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var scaleField = tree.Q<Vector3Field>("scale");
             var lossyScaleField = tree.Q<Vector3Field>("lossyScale");
 
-            lossyScaleField.value = theTarget.lossyScale;
+            lossyScaleField.SetValueWithoutNotify(theTarget.lossyScale);
 
             Vector3FieldApplyParsedInput(scaleField, t => t.localScale, (t, newVector) => t.localScale = newVector);
             Vector3FieldApplyParsedInput(lossyScaleField, t => t.lossyScale,
