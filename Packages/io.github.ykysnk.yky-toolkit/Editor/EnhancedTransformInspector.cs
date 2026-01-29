@@ -461,14 +461,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             });
 
             var alignToGroundButton = tree.Q<Button>("alignToGround");
-            alignToGroundButton.clicked += () =>
-            {
-                ApplyToTargets(t =>
-                {
-                    if (!Physics.Raycast(t.position + Vector3.up * 1000, Vector3.down, out var hit, 5000)) return;
-                    t.position = hit.point;
-                }, "Align to Ground");
-            };
+            alignToGroundButton.clicked += () => ApplyToTargets(t => AlignToGround(t, AlignModeSave), "Align to Ground");
+
             var clearParentButton = tree.Q<Button>("clearParent");
             clearParentButton.clicked += () => ApplyToTargets(t => t.SetParent(null, true), "Clear Parent");
 
@@ -775,6 +769,68 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     });
                 if (parsed) onParsed?.Invoke();
             }).Every(1000);
+        }
+
+        private static Bounds GetObjectBounds(Transform t)
+        {
+            var renderers = t.GetComponentsInChildren<Renderer>();
+            if (renderers.Length > 0)
+            {
+                var b = renderers[0].bounds;
+                for (var i = 1; i < renderers.Length; i++)
+                    b.Encapsulate(renderers[i].bounds);
+                return b;
+            }
+
+            var colliders = t.GetComponentsInChildren<Collider>();
+            if (colliders.Length <= 0) return new(t.position, Vector3.one);
+            {
+                var b = colliders[0].bounds;
+                for (var i = 1; i < colliders.Length; i++)
+                    b.Encapsulate(colliders[i].bounds);
+                return b;
+            }
+        }
+
+        private static void AlignToGround(Transform t, AlignMode mode)
+        {
+            var selfCol = t.GetComponent<Collider>();
+            var origin = t.position + Vector3.up * 1000f;
+
+            // ReSharper disable once Unity.PreferNonAllocApi
+            var hits = Physics.RaycastAll(origin, Vector3.down, 5000, ~LayerMask.GetMask("Ignore Raycast"));
+
+            if (hits.Length < 1) return;
+
+            RaycastHit? best = null;
+
+            foreach (var hit in hits)
+            {
+                if (selfCol != null && hit.collider == selfCol)
+                    continue;
+
+                best = hit;
+                break;
+            }
+
+            if (!best.HasValue)
+                return;
+
+            var groundPoint = best.Value.point;
+            var b = GetObjectBounds(t);
+            var offset = mode switch
+            {
+                AlignMode.Pivot => 0f,
+                AlignMode.Bottom => b.min.y - t.position.y,
+                AlignMode.Center => b.center.y - t.position.y,
+                _ => 0f
+            };
+
+            t.position = new(
+                t.position.x,
+                groundPoint.y - offset,
+                t.position.z
+            );
         }
     }
 }
