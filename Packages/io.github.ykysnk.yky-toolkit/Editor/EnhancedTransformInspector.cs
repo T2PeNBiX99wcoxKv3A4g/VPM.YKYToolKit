@@ -119,6 +119,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var globalRotationField = tree.Q<Vector3Field>("globalRotation");
 
             rotationField.SetValueWithoutNotify(theTarget.localEulerAngles.Clean());
+            // Fix the dumb issue of L input
             rotationField.schedule.Execute(() =>
                 rotationField.SetValueWithoutNotify(theTarget.localEulerAngles.Clean()));
             globalRotationField.SetValueWithoutNotify(theTarget.eulerAngles.Clean());
