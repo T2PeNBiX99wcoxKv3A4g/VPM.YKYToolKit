@@ -14,6 +14,14 @@ using Random = UnityEngine.Random;
 
 namespace io.github.ykysnk.ykyToolkit.Editor
 {
+    public enum AlignMode
+    {
+        Pivot,
+        Bottom,
+        Center
+    }
+
+    // TODO: RL RI SL SI, Simple buttons, Scale button
     [CustomEditor(typeof(Transform))]
     [CanEditMultipleObjects]
     public class EnhancedTransformInspector : BasicEditor
@@ -38,6 +46,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         {
             get => EditorPrefs.GetBool("YKYToolkit/TransformChildrenListExpanded");
             set => EditorPrefs.SetBool("YKYToolkit/TransformChildrenListExpanded", value);
+        }
+
+        private static AlignMode AlignModeSave
+        {
+            get => (AlignMode)EditorPrefs.GetInt("YKYToolkit/TransformAlignMode", 1);
+            set => EditorPrefs.SetInt("YKYToolkit/TransformAlignMode", (int)value);
         }
 
         private void OnDestroy()
@@ -437,6 +451,14 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     t.position = t.parent.position;
                 }, "Align to Parent");
             };
+
+            var alignModeField = tree.Q<EnumField>("alignMode");
+            alignModeField.SetValueWithoutNotify(AlignModeSave);
+            alignModeField.RegisterValueChangedCallback(evt =>
+            {
+                if (evt.newValue is not AlignMode mode) return;
+                AlignModeSave = mode;
+            });
 
             var alignToGroundButton = tree.Q<Button>("alignToGround");
             alignToGroundButton.clicked += () =>
