@@ -21,7 +21,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         Center
     }
 
-    // TODO: Simple buttons, Scale button
+    // TODO: Simple icon buttons, Scale button
     [CustomEditor(typeof(Transform))]
     [CanEditMultipleObjects]
     public class EnhancedTransformInspector : BasicEditor
@@ -46,6 +46,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         {
             get => EditorPrefs.GetBool("YKYToolkit/TransformChildrenListExpanded");
             set => EditorPrefs.SetBool("YKYToolkit/TransformChildrenListExpanded", value);
+        }
+
+        private static bool IsHelpExpanded
+        {
+            get => EditorPrefs.GetBool("YKYToolkit/TransformHelpExpanded");
+            set => EditorPrefs.SetBool("YKYToolkit/TransformHelpExpanded", value);
         }
 
         private static AlignMode AlignModeSave
@@ -108,10 +114,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             globalPositionField.AddManipulator(new ContextualMenuManipulator(evt =>
             {
-                evt.menu.AppendAction("Copy",
+                evt.menu.AppendAction("label.copy".S(),
                     _ => EditorGUIUtility.systemCopyBuffer = FormatVector3LikeUnity(globalPositionField.value));
                 var canBePaste = TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer, out var pasteVector3);
-                evt.menu.AppendAction("Paste", _ => globalPositionField.value = pasteVector3,
+                evt.menu.AppendAction("label.paste".S(), _ => globalPositionField.value = pasteVector3,
                     canBePaste ? DropdownMenuAction.Status.Normal : DropdownMenuAction.Status.Disabled);
             }));
 
@@ -252,10 +258,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             lossyScaleField.AddManipulator(new ContextualMenuManipulator(evt =>
             {
-                evt.menu.AppendAction("Copy",
+                evt.menu.AppendAction("label.copy".S(),
                     _ => EditorGUIUtility.systemCopyBuffer = FormatVector3LikeUnity(lossyScaleField.value));
                 var canBePaste = TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer, out var pasteVector3);
-                evt.menu.AppendAction("Paste", _ => lossyScaleField.value = pasteVector3,
+                evt.menu.AppendAction("label.paste".S(), _ => lossyScaleField.value = pasteVector3,
                     canBePaste ? DropdownMenuAction.Status.Normal : DropdownMenuAction.Status.Disabled);
             }));
 
@@ -399,7 +405,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             boundsSizeField.AddManipulator(new ContextualMenuManipulator(evt =>
             {
-                evt.menu.AppendAction("Copy",
+                evt.menu.AppendAction("label.copy".S(),
                     _ => EditorGUIUtility.systemCopyBuffer = FormatVector3LikeUnity(boundsSizeField.value));
             }));
 
@@ -409,7 +415,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             hierarchyPathField.AddManipulator(new ContextualMenuManipulator(evt =>
             {
-                evt.menu.AppendAction("Copy", _ => EditorGUIUtility.systemCopyBuffer = hierarchyPathField.value);
+                evt.menu.AppendAction("label.copy".S(),
+                    _ => EditorGUIUtility.systemCopyBuffer = hierarchyPathField.value);
             }));
 
             var fatherField = tree.Q<ObjectField>("father");
@@ -468,6 +475,14 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             var clearParentButton = tree.Q<Button>("clearParent");
             clearParentButton.clicked += () => ApplyToTargets(t => t.SetParent(null, true), "Clear Parent");
+
+            var helpFoldout = tree.Q<Foldout>("helpFoldout");
+            helpFoldout.value = IsHelpExpanded;
+            helpFoldout.RegisterValueChangedCallback(evt => IsHelpExpanded = evt.newValue);
+
+            var helpText = tree.Q<Label>("helpText");
+            helpText.AddManipulator(new ContextualMenuManipulator(evt =>
+                evt.menu.AppendAction("label.copy".S(), _ => EditorGUIUtility.systemCopyBuffer = helpText.text)));
 
             return tree;
 

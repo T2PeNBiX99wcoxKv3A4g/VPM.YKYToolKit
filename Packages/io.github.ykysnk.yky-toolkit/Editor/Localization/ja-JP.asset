@@ -205,3 +205,21 @@ MonoBehaviour:
   - key: label.enhanced_transform_inspector.clear_parent
     translate: "\u89AA\u3092\u89E3\u9664"
     tooltip: 
+  - key: label.enhanced_transform_inspector.help
+    translate: "\u30D8\u30EB\u30D7"
+    tooltip: 
+  - key: label.enhanced_transform_inspector.helpText
+    translate: "=x, E(x) -> \u7D76\u5BFE\u5024\u8A2D\u5B9A\r\n+x, A(x) -> \u52A0\u7B97\r\n*x,
+      M(X) -> \u4E57\u7B97\r\n/x, D(x) -> \u9664\u7B97\r\nL(start, step) -> \u7DDA\u5F62\u30B7\u30FC\u30B1\u30F3\u30B9\r\nR(min,
+      max) -> \u30E9\u30F3\u30C0\u30E0\r\nI(start, end) -> \u88DC\u9593\r\ni(start,
+      end) -> \u9006\u88DC\u9593\r\nLL(min, max) -> \u30AF\u30E9\u30F3\u30D7\r\nRR(center,
+      step) -> \u30DF\u30E9\u30FC\r\nTT(start, count) -> \u30B9\u30C6\u30C3\u30D7\u30B7\u30FC\u30B1\u30F3\u30B9\r\nP(start,
+      end) -> \u30D4\u30F3\u30DD\u30F3\r\nNN(origin, step) -> \u8DDD\u96E2\u30D9\u30FC\u30B9\r\nAA(centerAngle,
+      step) -> \u89D2\u5EA6\u30D9\u30FC\u30B9\r\nN(scale, min, max) -> \u30CE\u30A4\u30BA"
+    tooltip: 
+  - key: label.copy
+    translate: "\u30B3\u30D4\u30FC"
+    tooltip: 
+  - key: label.paste
+    translate: "\u8CBC\u308A\u4ED8\u3051"
+    tooltip: 

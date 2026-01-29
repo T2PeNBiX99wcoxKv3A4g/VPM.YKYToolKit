@@ -213,3 +213,49 @@ MonoBehaviour:
   - key: label.enhanced_transform_inspector.clear_parent
     translate: Clear Parent
     tooltip: 
+  - key: label.enhanced_transform_inspector.help
+    translate: Help
+    tooltip: 
+  - key: label.enhanced_transform_inspector.helpText
+    translate: '=x, E(x) -> Absolute
+
+      +x, A(x) -> Additive
+
+      *x, M(X)
+      -> Multiply
+
+      /x, D(x) -> Division
+
+      L(start, step) -> Linear
+
+      R(min,
+      max) -> Random
+
+      I(start, end) -> Interpolate
+
+      i(start, end) ->
+      Interpolate Reverse
+
+      LL(min, max) -> Clamp
+
+      RR(center, step)
+      -> Mirror
+
+      TT(start, count) -> Step
+
+      P(start, end) -> Ping Pong
+
+      NN(origin,
+      step) -> Distance
+
+      AA(centerAngle, step) -> Angle
+
+      N(scale, min,
+      max) -> Noise'
+    tooltip: 
+  - key: label.copy
+    translate: Copy
+    tooltip: 
+  - key: label.paste
+    translate: Paste
+    tooltip: 
