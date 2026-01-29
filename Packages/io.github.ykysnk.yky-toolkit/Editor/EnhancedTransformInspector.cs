@@ -118,8 +118,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var rotationField = tree.Q<Vector3Field>("rotation");
             var globalRotationField = tree.Q<Vector3Field>("globalRotation");
 
-            rotationField.SetValueWithoutNotify(theTarget.localEulerAngles);
-            globalRotationField.SetValueWithoutNotify(theTarget.eulerAngles);
+            rotationField.SetValueWithoutNotify(theTarget.localEulerAngles.Clean());
+            rotationField.schedule.Execute(() =>
+                rotationField.SetValueWithoutNotify(theTarget.localEulerAngles.Clean()));
+            globalRotationField.SetValueWithoutNotify(theTarget.eulerAngles.Clean());
 
             Vector3FieldApplyParsedInput(rotationField, t => t.localEulerAngles,
                 (t, newVector) => t.localEulerAngles = newVector);

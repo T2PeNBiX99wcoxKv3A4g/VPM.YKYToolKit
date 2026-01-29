@@ -16,7 +16,8 @@
         </ui:VisualElement>
         <ui:Vector3Field label="label.enhanced_transform_inspector.local_position" binding-path="m_LocalPosition"
                          name="position"/>
-        <ui:Vector3Field label="label.enhanced_transform_inspector.local_rotation" name="rotation"/>
+        <ui:Vector3Field label="label.enhanced_transform_inspector.local_rotation" name="rotation"
+                         binding-path="m_LocalEulerAnglesHint"/>
         <ui:Vector3Field label="label.enhanced_transform_inspector.local_scale" binding-path="m_LocalScale"
                          name="scale"/>
         <ui:VisualElement class="row" style="flex-grow: 1;">
