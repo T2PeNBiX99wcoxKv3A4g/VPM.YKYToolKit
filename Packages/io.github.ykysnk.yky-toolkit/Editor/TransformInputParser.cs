@@ -10,6 +10,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         Absolute, // =x, E(x)
         Additive, // +x, A(x)
         Multiply, // *x, M(x)
+        Division, // /x, D(x)
         Linear, // L(start, step)
         Random, // R(min, max)
         Interpolate, // I(start, end)
@@ -20,8 +21,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
     public struct TransformInputParseResult
     {
         public TransformInputMode Mode;
-        public float A;
-        public float B;
+        public float A, B, C;
 
         public bool Success => Mode != TransformInputMode.None;
     }
@@ -38,45 +38,35 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             return s switch
             {
-                _ when s.StartsWith("=") && float.TryParse(s[1..], out var v)
+                _ when s.StartsWith("=") && float.TryParse(s[1..], out var v) ||
+                       s.StartsWith("E(") && float.TryParse(s.MiddlePath('(', ')'), out v)
                     => new()
                     {
                         Mode = TransformInputMode.Absolute,
                         A = v
                     },
 
-                _ when s.StartsWith("E(") && float.TryParse(s.MiddlePath('(', ')'), out var v)
-                    => new()
-                    {
-                        Mode = TransformInputMode.Absolute,
-                        A = v
-                    },
-
-                _ when s.StartsWith("+") && float.TryParse(s[1..], out var v)
+                _ when s.StartsWith("+") && float.TryParse(s[1..], out var v) ||
+                       s.StartsWith("A(") && float.TryParse(s.MiddlePath('(', ')'), out v)
                     => new()
                     {
                         Mode = TransformInputMode.Additive,
                         A = v
                     },
 
-                _ when s.StartsWith("A(") && float.TryParse(s.MiddlePath('(', ')'), out var v)
-                    => new()
-                    {
-                        Mode = TransformInputMode.Additive,
-                        A = v
-                    },
-
-                _ when s.StartsWith("*") && float.TryParse(s[1..], out var v)
+                _ when s.StartsWith("*") && float.TryParse(s[1..], out var v) ||
+                       s.StartsWith("M(") && float.TryParse(s.MiddlePath('(', ')'), out v)
                     => new()
                     {
                         Mode = TransformInputMode.Multiply,
                         A = v
                     },
 
-                _ when s.StartsWith("M(") && float.TryParse(s.MiddlePath('(', ')'), out var v)
+                _ when s.StartsWith("/") && float.TryParse(s[1..], out var v) ||
+                       s.StartsWith("D(") && float.TryParse(s.MiddlePath('(', ')'), out v)
                     => new()
                     {
-                        Mode = TransformInputMode.Multiply,
+                        Mode = TransformInputMode.Division,
                         A = v
                     },
 

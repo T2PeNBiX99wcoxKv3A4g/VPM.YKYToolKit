@@ -21,7 +21,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         Center
     }
 
-    // TODO: RL RI SL SI, Simple buttons, Scale button
+    // TODO: Simple buttons, Scale button
     [CustomEditor(typeof(Transform))]
     [CanEditMultipleObjects]
     public class EnhancedTransformInspector : BasicEditor
@@ -695,6 +695,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
                     case TransformInputMode.Multiply:
                         value *= parsed.A;
+                        break;
+
+                    case TransformInputMode.Division:
+                        value /= parsed.A;
                         break;
 
                     case TransformInputMode.Linear:
