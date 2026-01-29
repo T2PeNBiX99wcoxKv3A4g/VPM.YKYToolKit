@@ -756,7 +756,20 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                         break;
 
                     case TransformInputMode.Distance:
-                        // TODO
+                        var center = (targets[0] as Transform)?.position ?? Vector3.zero;
+                        var list2 = targets
+                            .OfType<Transform>()
+                            .Select(t3 => new
+                            {
+                                t3,
+                                dist = Vector3.Distance(t.position, center)
+                            })
+                            .OrderBy(e => e.dist)
+                            .ToList();
+
+                        var sortedIndex2 = list2.FindIndex(e => e.t3 == t);
+
+                        value = parsed.A + parsed.B * sortedIndex2;
                         break;
 
                     case TransformInputMode.None:
