@@ -17,6 +17,6 @@
     flex-direction: row;
 }
 
-.readonly-object-field:disabled .unity-label {
+.readonly-object-field:disabled .unity-label .unity-base-field__label .unity-object-field__label {
     color: white;
 }
