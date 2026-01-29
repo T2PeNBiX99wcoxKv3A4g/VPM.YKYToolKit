@@ -716,8 +716,52 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     case TransformInputMode.InterpolateRev:
                         value = Mathf.Lerp(parsed.A, parsed.B, 1f - index / (float)(count - 1));
                         break;
+
+                    case TransformInputMode.Clamp:
+                        value = Mathf.Clamp(value, parsed.A, parsed.B);
+                        break;
+
+                    case TransformInputMode.Mirror:
+                        value = parsed.A + parsed.B * (index - (count - 1) * 0.5f);
+                        break;
+
+                    case TransformInputMode.Step:
+                        value = parsed.A + index % (int)parsed.B;
+                        break;
+
+                    case TransformInputMode.PingPong:
+                        value = Mathf.Lerp(parsed.A, parsed.B, Mathf.PingPong(index, 1f));
+                        break;
+
+                    case TransformInputMode.Angle:
+                        var list = targets
+                            .OfType<Transform>()
+                            .Select(t2 => new
+                            {
+                                t2,
+                                angle = Mathf.Atan2(t.position.z, t.position.x) * Mathf.Rad2Deg
+                            })
+                            .OrderBy(e => e.angle)
+                            .ToList();
+
+                        var sortedIndex = list.FindIndex(e => e.t2 == t);
+
+                        value = parsed.A + parsed.B * sortedIndex;
+                        break;
+
+                    case TransformInputMode.Noise:
+                        var t2 = index * parsed.A;
+                        var n = Mathf.PerlinNoise(t2, 0f);
+                        value = Mathf.Lerp(parsed.B, parsed.C, n);
+                        break;
+
+                    case TransformInputMode.Distance:
+                        // TODO
+                        break;
+
                     case TransformInputMode.None:
                         break;
+
                     default:
                         throw new ArgumentOutOfRangeException();
                 }

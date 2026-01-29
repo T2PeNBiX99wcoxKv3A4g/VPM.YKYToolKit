@@ -18,7 +18,16 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         Linear, // L(start, step)
         Random, // R(min, max)
         Interpolate, // I(start, end)
-        InterpolateRev // i(start, end)
+        InterpolateRev, // i(start, end)
+
+        // Extended
+        Clamp, // LL(min, max)
+        Mirror, // RR(center, step)
+        Step, // TT(start, count)
+        PingPong, // P(start, end)
+        Distance, // NN(origin, step)
+        Angle, // AA(centerAngle, step)
+        Noise // N(scale, min, max)
     }
 
     [PublicAPI]
@@ -106,6 +115,64 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                         Mode = TransformInputMode.InterpolateRev,
                         A = a,
                         B = b
+                    },
+
+                // Extended
+                _ when TryParseTwo("LL", s, out var a, out var b)
+                    => new()
+                    {
+                        Mode = TransformInputMode.Clamp,
+                        A = a,
+                        B = b
+                    },
+
+                _ when TryParseTwo("RR", s, out var a, out var b)
+                    => new()
+                    {
+                        Mode = TransformInputMode.Mirror,
+                        A = a,
+                        B = b
+                    },
+
+                _ when TryParseTwo("TT", s, out var a, out var b)
+                    => new()
+                    {
+                        Mode = TransformInputMode.Step,
+                        A = a,
+                        B = b
+                    },
+
+                _ when TryParseTwo("P", s, out var a, out var b)
+                    => new()
+                    {
+                        Mode = TransformInputMode.PingPong,
+                        A = a,
+                        B = b
+                    },
+
+                _ when TryParseTwo("NN", s, out var a, out var b)
+                    => new()
+                    {
+                        Mode = TransformInputMode.Distance,
+                        A = a,
+                        B = b
+                    },
+
+                _ when TryParseTwo("AA", s, out var a, out var b)
+                    => new()
+                    {
+                        Mode = TransformInputMode.Angle,
+                        A = a,
+                        B = b
+                    },
+
+                _ when TryParseThree("N", s, out var a, out var b, out var c)
+                    => new()
+                    {
+                        Mode = TransformInputMode.Noise,
+                        A = a,
+                        B = b,
+                        C = c
                     },
 
                 _ => default
