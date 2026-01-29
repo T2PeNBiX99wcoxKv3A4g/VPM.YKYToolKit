@@ -7,10 +7,14 @@ namespace io.github.ykysnk.ykyToolkit.Editor
     public enum TransformInputMode
     {
         None,
+
+        // Basic
         Absolute, // =x, E(x)
         Additive, // +x, A(x)
         Multiply, // *x, M(x)
         Division, // /x, D(x)
+
+        // Unity-like
         Linear, // L(start, step)
         Random, // R(min, max)
         Interpolate, // I(start, end)
@@ -38,6 +42,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             return s switch
             {
+                // Basic
                 _ when s.StartsWith("=") && float.TryParse(s[1..], out var v) ||
                        s.StartsWith("E(") && float.TryParse(s.MiddlePath('(', ')'), out v)
                     => new()
@@ -70,6 +75,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                         A = v
                     },
 
+                // Unity-like
                 _ when TryParseTwo("L", s, out var a, out var b)
                     => new()
                     {
@@ -121,6 +127,24 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             return float.TryParse(parts[0], out a) &&
                    float.TryParse(parts[1], out b);
+        }
+
+        private static bool TryParseThree(string prefix, string s, out float a, out float b, out float c)
+        {
+            a = b = c = 0;
+
+            if (!s.StartsWith(prefix + "(") || !s.EndsWith(")"))
+                return false;
+
+            var inner = s.MiddlePath('(', ')')!;
+            var parts = inner.Split(',');
+
+            if (parts.Length != 3)
+                return false;
+
+            return float.TryParse(parts[0], out a) &&
+                   float.TryParse(parts[1], out b) &&
+                   float.TryParse(parts[2], out c);
         }
     }
 }
