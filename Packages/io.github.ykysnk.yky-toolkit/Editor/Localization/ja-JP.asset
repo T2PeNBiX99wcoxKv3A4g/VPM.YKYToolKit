@@ -199,3 +199,9 @@ MonoBehaviour:
   - key: label.enhanced_transform_inspector.bounds_size
     translate: "\u30D0\u30A6\u30F3\u30BA\u30B5\u30A4\u30BA"
     tooltip: 
+  - key: label.enhanced_transform_inspector.align_mode
+    translate: "\u6574\u5217\u30E2\u30FC\u30C9"
+    tooltip: 
+  - key: label.enhanced_transform_inspector.clear_parent
+    translate: "\u89AA\u3092\u89E3\u9664"
+    tooltip: 

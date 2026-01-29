@@ -190,7 +190,7 @@ MonoBehaviour:
     translate: Other
     tooltip: 
   - key: label.enhanced_transform_inspector.father
-    translate: Father
+    translate: Parent
     tooltip: 
   - key: label.enhanced_transform_inspector.align_to_parent
     translate: Align to Parent
@@ -206,4 +206,10 @@ MonoBehaviour:
     tooltip: 
   - key: label.enhanced_transform_inspector.bounds_size
     translate: Bounds Size
+    tooltip: 
+  - key: label.enhanced_transform_inspector.align_mode
+    translate: Align Mode
+    tooltip: 
+  - key: label.enhanced_transform_inspector.clear_parent
+    translate: Clear Parent
     tooltip: 
