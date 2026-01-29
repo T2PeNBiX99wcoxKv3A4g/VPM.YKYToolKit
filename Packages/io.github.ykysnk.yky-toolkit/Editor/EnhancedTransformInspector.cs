@@ -432,6 +432,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     t.position = hit.point;
                 }, "Align to Ground");
             };
+            var clearParentButton = tree.Q<Button>("clearParent");
+            clearParentButton.clicked += () => ApplyToTargets(t => t.SetParent(null, true), "Clear Parent");
 
             return tree;
 
