@@ -627,14 +627,14 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     action(t);
         }
 
-        private void ApplyParsedInputToAxis(
+        private bool ApplyParsedInputToAxis(
             string input,
             Func<Transform, float> getter,
             Action<Transform, float> setter)
         {
             var parsed = TransformInputParser.Parse(input);
             if (!parsed.Success)
-                return;
+                return false;
 
             var count = targets.Length;
             var index = 0;
@@ -676,20 +676,26 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     case TransformInputMode.InterpolateRev:
                         value = Mathf.Lerp(parsed.A, parsed.B, 1f - index / (float)(count - 1));
                         break;
+                    case TransformInputMode.None:
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
                 }
 
                 setter(t, value);
                 index++;
             }
+
+            return true;
         }
 
         private void Vector3FieldApplyParsedInput(Vector3Field? vector3Field, Func<Transform, Vector3> getter,
-            Action<Transform, Vector3> setter)
+            Action<Transform, Vector3> setter, Action? onParsed = null)
         {
             var xField = vector3Field.Q<FloatField>("unity-x-input");
             xField.schedule.Execute(() =>
             {
-                ApplyParsedInputToAxis(
+                var parsed = ApplyParsedInputToAxis(
                     xField.text,
                     t => getter(t).x,
                     (t, v) =>
@@ -698,12 +704,13 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                         p.x = v;
                         setter(t, p);
                     });
+                if (parsed) onParsed?.Invoke();
             }).Every(1000);
 
             var yField = vector3Field.Q<FloatField>("unity-y-input");
             yField.schedule.Execute(() =>
             {
-                ApplyParsedInputToAxis(
+                var parsed = ApplyParsedInputToAxis(
                     yField.text,
                     t => getter(t).y,
                     (t, v) =>
@@ -712,12 +719,13 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                         p.y = v;
                         setter(t, p);
                     });
+                if (parsed) onParsed?.Invoke();
             }).Every(1000);
 
             var zField = vector3Field.Q<FloatField>("unity-z-input");
             zField.schedule.Execute(() =>
             {
-                ApplyParsedInputToAxis(
+                var parsed = ApplyParsedInputToAxis(
                     zField.text,
                     t => getter(t).z,
                     (t, v) =>
@@ -726,6 +734,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                         p.z = v;
                         setter(t, p);
                     });
+                if (parsed) onParsed?.Invoke();
             }).Every(1000);
         }
     }
