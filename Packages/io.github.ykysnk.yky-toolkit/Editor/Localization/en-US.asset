@@ -259,3 +259,15 @@ MonoBehaviour:
   - key: label.paste
     translate: Paste
     tooltip: 
+  - key: label.copy_euler_angles
+    translate: Copy Euler Angles
+    tooltip: 
+  - key: label.copy_quaternion
+    translate: Copy Quaternion
+    tooltip: 
+  - key: label.copy_property_path
+    translate: Copy Property Path
+    tooltip: 
+  - key: label.search_for_same_property
+    translate: Search for same Property
+    tooltip: 

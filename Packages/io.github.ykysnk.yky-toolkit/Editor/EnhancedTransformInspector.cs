@@ -173,8 +173,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             rotationField.AddManipulator(new ContextualMenuManipulator(evt =>
             {
-                evt.menu.AppendAction("Copy Property Path", _ => EditorGUIUtility.systemCopyBuffer = "m_LocalRotation");
-                evt.menu.AppendAction("Search for same Property", _ =>
+                evt.menu.AppendAction("label.copy_property_path".S(),
+                    _ => EditorGUIUtility.systemCopyBuffer = "m_LocalRotation");
+                evt.menu.AppendAction("label.search_for_same_property".S(), _ =>
                 {
                     var rot = theTarget.localEulerAngles;
                     var context = SearchService.CreateContext("scene",
@@ -183,16 +184,16 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     SearchService.ShowWindow(context);
                 });
                 evt.menu.AppendSeparator();
-                evt.menu.AppendAction("Copy Euler Angles",
+                evt.menu.AppendAction("label.copy_euler_angles".S(),
                     _ => EditorGUIUtility.systemCopyBuffer = FormatVector3LikeUnity(theTarget.localEulerAngles));
-                evt.menu.AppendAction("Copy Quaternion",
+                evt.menu.AppendAction("label.copy_quaternion".S(),
                     _ => EditorGUIUtility.systemCopyBuffer = FormatQuaternionLikeUnity(theTarget.localRotation));
 
                 var canBePasteToVector3 = TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer, out var pasteVector3);
                 var canBePasteToQuaternion =
                     TryParseUnityQuaternion(EditorGUIUtility.systemCopyBuffer, out var pasteQuaternion);
 
-                evt.menu.AppendAction("Paste", _ =>
+                evt.menu.AppendAction("label.paste".S(), _ =>
                     {
                         if (canBePasteToVector3)
                             rotationField.value = pasteVector3;
@@ -206,16 +207,16 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             globalRotationField.AddManipulator(new ContextualMenuManipulator(evt =>
             {
-                evt.menu.AppendAction("Copy Euler Angles",
+                evt.menu.AppendAction("label.copy_euler_angles".S(),
                     _ => EditorGUIUtility.systemCopyBuffer = FormatVector3LikeUnity(globalRotationField.value));
-                evt.menu.AppendAction("Copy Quaternion",
+                evt.menu.AppendAction("label.copy_quaternion".S(),
                     _ => EditorGUIUtility.systemCopyBuffer = FormatQuaternionLikeUnity(theTarget.rotation));
 
                 var canBePasteToVector3 = TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer, out var pasteVector3);
                 var canBePasteToQuaternion =
                     TryParseUnityQuaternion(EditorGUIUtility.systemCopyBuffer, out var pasteQuaternion);
 
-                evt.menu.AppendAction("Paste", _ =>
+                evt.menu.AppendAction("label.paste".S(), _ =>
                     {
                         if (canBePasteToVector3)
                             globalRotationField.value = pasteVector3;
