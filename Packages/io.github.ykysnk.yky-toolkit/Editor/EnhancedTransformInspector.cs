@@ -459,8 +459,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 ApplyToTargets(t =>
                 {
                     if (t.parent == null) return;
-                    t.position = t.parent.position;
+                    t.position = t.parent.position.Clean();
                 }, "Align to Parent");
+                CleanWorldTransforms();
+                CleanField();
             };
 
             var alignModeField = tree.Q<EnumField>("alignMode");
@@ -472,7 +474,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             });
 
             var alignToGroundButton = tree.Q<Button>("alignToGround");
-            alignToGroundButton.clicked += () => ApplyToTargets(t => AlignToGround(t, AlignModeSave), "Align to Ground");
+            alignToGroundButton.clicked += () =>
+            {
+                ApplyToTargets(t => AlignToGround(t, AlignModeSave), "Align to Ground");
+                CleanWorldTransforms();
+                CleanField();
+            };
 
             var clearParentButton = tree.Q<Button>("clearParent");
             clearParentButton.clicked += () => ApplyToTargets(t => t.SetParent(null, true), "Clear Parent");
@@ -486,6 +493,13 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 evt.menu.AppendAction("label.copy".S(), _ => EditorGUIUtility.systemCopyBuffer = helpText.text)));
 
             return tree;
+
+            void CleanField()
+            {
+                positionField.value = positionField.value.Clean();
+                rotationField.value = rotationField.value.Clean().DeltaAngle();
+                scaleField.value = scaleField.value.Clean();
+            }
 
             void ResetLocalPosition()
             {
@@ -665,8 +679,22 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 Undo.RecordObject(t, "Clean Transform");
 
                 t.localPosition = t.localPosition.Clean(threshold);
-                t.localEulerAngles = t.localEulerAngles.Clean(threshold);
+                t.localEulerAngles = t.localEulerAngles.Clean(threshold).DeltaAngle();
                 t.localScale = t.localScale.Clean(threshold);
+            }
+        }
+
+        private void CleanWorldTransforms(float threshold = 0.0001f)
+        {
+            foreach (var obj in targets)
+            {
+                if (obj is not Transform t) continue;
+
+                Undo.RecordObject(t, "Clean World Transform");
+
+                t.position = t.position.Clean(threshold);
+                t.eulerAngles = t.eulerAngles.Clean(threshold).DeltaAngle();
+                t.SetLossyScale(t.lossyScale.Clean(threshold));
             }
         }
 
