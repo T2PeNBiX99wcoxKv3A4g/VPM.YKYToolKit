@@ -260,6 +260,18 @@
       "source": "embedded",
       "dependencies": {}
     },
+    "yueby.tools.editor-core": {
+      "version": "file:yueby.tools.editor-core",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "yueby.tools.mirror-tool": {
+      "version": "file:yueby.tools.mirror-tool",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.unity.modules.ai": {
       "version": "1.0.0",
       "depth": 0,
