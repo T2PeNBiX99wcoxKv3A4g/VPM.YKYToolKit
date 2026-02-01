@@ -289,8 +289,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 ResetLocalPosition();
                 ResetLocalRotation();
                 ResetLocalScale();
-                // dumb rotation field issue
-                // resetLocalAllButton.schedule.Execute(ResetLocalRotation);
             };
 
             var resetGlobalAllButton = tree.Q<IconButton>("resetGlobalAll");
