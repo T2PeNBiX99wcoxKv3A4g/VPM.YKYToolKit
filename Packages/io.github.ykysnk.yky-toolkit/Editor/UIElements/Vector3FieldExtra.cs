@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using io.github.ykysnk.utils.Editor;
 using JetBrains.Annotations;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -114,7 +113,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor.UIElements
         public void SetLinked(bool linked)
         {
             LinkButton.style.backgroundImage = linked ? LinkedIcon : UnlinkedIcon;
-            LinkButton.tooltip = L10n.Tr((linked ? "Disable" : "Enable") + " constrained proportions");
+            LinkButton.tooltip = linked
+                ? "label.enhanced_transform_inspector.scale_link_disable".S()
+                : "label.enhanced_transform_inspector.scale_link_enable".S();
         }
 
         public new class UxmlFactory : UxmlFactory<Vector3FieldExtra, UxmlTraits>

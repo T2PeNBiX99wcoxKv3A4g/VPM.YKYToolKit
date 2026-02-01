@@ -280,3 +280,9 @@ MonoBehaviour:
   - key: unity:label.scale
     translate: Scale
     tooltip: The local scaling of this GameObject relative to the parent.
+  - key: label.enhanced_transform_inspector.scale_link_enable
+    translate: Enable constrained proportions
+    tooltip: 
+  - key: label.enhanced_transform_inspector.scale_link_disable
+    translate: Disable constrained proportions
+    tooltip: 
