@@ -283,7 +283,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             lossyScaleField.RandomButton.clicked += RandomGlobalScale;
 
             var resetLocalAllButton = tree.Q<IconButton>("resetLocalAll");
-            resetLocalAllButton.style.backgroundImage = new(EditorGUIUtils.IconTexture("refresh") as Texture2D);
+            resetLocalAllButton.style.backgroundImage = Vector3FieldExtra.ResetIcon;
             resetLocalAllButton.clicked += () =>
             {
                 ResetLocalPosition();
@@ -292,7 +292,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             };
 
             var resetGlobalAllButton = tree.Q<IconButton>("resetGlobalAll");
-            resetGlobalAllButton.style.backgroundImage = new(EditorGUIUtils.IconTexture("refresh") as Texture2D);
+            resetGlobalAllButton.style.backgroundImage = Vector3FieldExtra.ResetIcon;
             resetGlobalAllButton.clicked += () =>
             {
                 ResetGlobalPosition();
@@ -301,8 +301,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             };
 
             var randomLocalAllButton = tree.Q<IconButton>("randomLocalAll");
-            randomLocalAllButton.style.backgroundImage =
-                new(EditorGUIUtils.IconTexture("preaudioloopoff") as Texture2D);
+            randomLocalAllButton.style.backgroundImage = Vector3FieldExtra.RandomIcon;
             randomLocalAllButton.clicked += () =>
             {
                 RandomLocalPosition();
@@ -311,8 +310,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             };
 
             var randomGlobalAllButton = tree.Q<IconButton>("randomGlobalAll");
-            randomGlobalAllButton.style.backgroundImage =
-                new(EditorGUIUtils.IconTexture("preaudioloopoff") as Texture2D);
+            randomGlobalAllButton.style.backgroundImage = Vector3FieldExtra.RandomIcon;
             randomGlobalAllButton.clicked += () =>
             {
                 RandomGlobalPosition();

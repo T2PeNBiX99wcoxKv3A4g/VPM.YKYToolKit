@@ -8,10 +8,17 @@ namespace io.github.ykysnk.ykyToolkit.Editor.UIElements
 {
     public class Vector3FieldExtra : Vector3Field
     {
-        private readonly StyleBackground _linkedIcon = new(EditorGUIUtils.IconTexture("linked") as Texture2D);
-        private readonly StyleBackground _randomIcon = new(EditorGUIUtils.IconTexture("preaudioloopoff") as Texture2D);
-        private readonly StyleBackground _resetIcon = new(EditorGUIUtils.IconTexture("refresh") as Texture2D);
-        private readonly StyleBackground _unlinkedIcon = new(EditorGUIUtils.IconTexture("unlinked") as Texture2D);
+        [PublicAPI] internal static readonly StyleBackground LinkedIcon =
+            new(EditorGUIUtils.IconTexture("linked") as Texture2D);
+
+        [PublicAPI] internal static readonly StyleBackground RandomIcon =
+            new(EditorGUIUtils.IconTexture("preaudioloopoff") as Texture2D);
+
+        [PublicAPI] internal static readonly StyleBackground ResetIcon =
+            new(EditorGUIUtils.IconTexture("refresh") as Texture2D);
+
+        [PublicAPI] internal static readonly StyleBackground UnlinkedIcon =
+            new(EditorGUIUtils.IconTexture("unlinked") as Texture2D);
 
         private bool _showLinkButton;
 
@@ -32,7 +39,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor.UIElements
                 name = "linkButton",
                 style =
                 {
-                    backgroundImage = _unlinkedIcon
+                    backgroundImage = UnlinkedIcon
                 }
             };
 
@@ -43,7 +50,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor.UIElements
                 name = "randomButton",
                 style =
                 {
-                    backgroundImage = _randomIcon
+                    backgroundImage = RandomIcon
                 }
             };
 
@@ -54,17 +61,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor.UIElements
                 name = "resetButton",
                 style =
                 {
-                    backgroundImage = _resetIcon
+                    backgroundImage = ResetIcon
                 }
             };
 
             ExtraSlot.Add(ResetButton);
-            ExtraSlot.schedule.Execute(() =>
-            {
-                ResetButton.tooltip = ResetButton.tooltip.S();
-                RandomButton.tooltip = RandomButton.tooltip.S();
-                LinkButton.tooltip = LinkButton.tooltip.S();
-            }).ExecuteLater(100);
         }
 
         [PublicAPI] public VisualElement ExtraSlot { get; }
@@ -111,7 +112,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor.UIElements
         [PublicAPI]
         public void SetLinked(bool linked)
         {
-            LinkButton.style.backgroundImage = linked ? _linkedIcon : _unlinkedIcon;
+            LinkButton.style.backgroundImage = linked ? LinkedIcon : UnlinkedIcon;
         }
 
         public new class UxmlFactory : UxmlFactory<Vector3FieldExtra, UxmlTraits>
