@@ -22,19 +22,21 @@
             </ui:VisualElement>
         </ui:VisualElement>
         <io.github.ykysnk.ykyToolkit.Editor.UIElements.Vector3FieldExtra name="position" binding-path="m_LocalPosition"
-                                                                         label="label.enhanced_transform_inspector.local_position"
+                                                                         label="unity:Position"
                                                                          reset-button-tooltip="label.enhanced_transform_inspector.reset_position"
-                                                                         random-button-tooltip="label.enhanced_transform_inspector.random_position"/>
+                                                                         random-button-tooltip="label.enhanced_transform_inspector.random_position"
+                                                                         tooltip="unity:The local position of this GameObject relative to the parent."/>
         <io.github.ykysnk.ykyToolkit.Editor.UIElements.Vector3FieldExtra name="rotation"
                                                                          binding-path="m_LocalEulerAnglesHint"
-                                                                         label="label.enhanced_transform_inspector.local_rotation"
+                                                                         label="unity:Rotation"
                                                                          reset-button-tooltip="label.enhanced_transform_inspector.reset_rotation"
-                                                                         random-button-tooltip="label.enhanced_transform_inspector.random_rotation"/>
+                                                                         random-button-tooltip="label.enhanced_transform_inspector.random_rotation"
+                                                                         tooltip="unity:The local rotation of this Game Object relative to the parent."/>
         <io.github.ykysnk.ykyToolkit.Editor.UIElements.Vector3FieldExtra name="scale" binding-path="m_LocalScale"
-                                                                         label="label.enhanced_transform_inspector.local_scale"
-                                                                         show-link-button="true"
+                                                                         label="unity:Scale" show-link-button="true"
                                                                          random-button-tooltip="label.enhanced_transform_inspector.random_scale"
-                                                                         reset-button-tooltip="label.enhanced_transform_inspector.reset_scale"/>
+                                                                         reset-button-tooltip="label.enhanced_transform_inspector.reset_scale"
+                                                                         tooltip="unity:The local scaling of this GameObject relative to the parent."/>
         <ui:VisualElement class="row" style="justify-content: space-between;">
             <ui:Label text="label.enhanced_transform_inspector.global_space" parse-escape-sequences="true"
                       display-tooltip-when-elided="true" class="space-title"/>
@@ -52,9 +54,9 @@
             </ui:VisualElement>
         </ui:VisualElement>
         <io.github.ykysnk.ykyToolkit.Editor.UIElements.Vector3FieldExtra name="globalPosition"
-                                                                         label="label.enhanced_transform_inspector.global_position"
                                                                          reset-button-tooltip="label.enhanced_transform_inspector.reset_position"
-                                                                         random-button-tooltip="label.enhanced_transform_inspector.random_position"/>
+                                                                         random-button-tooltip="label.enhanced_transform_inspector.random_position"
+                                                                         label="label.enhanced_transform_inspector.global_position"/>
         <io.github.ykysnk.ykyToolkit.Editor.UIElements.Vector3FieldExtra name="globalRotation"
                                                                          label="label.enhanced_transform_inspector.global_rotation"
                                                                          reset-button-tooltip="label.enhanced_transform_inspector.reset_rotation"
