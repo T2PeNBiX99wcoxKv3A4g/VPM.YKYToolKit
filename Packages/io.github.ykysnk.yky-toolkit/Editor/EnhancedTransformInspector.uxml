@@ -22,21 +22,20 @@
             </ui:VisualElement>
         </ui:VisualElement>
         <io.github.ykysnk.ykyToolkit.Editor.UIElements.Vector3FieldExtra name="position" binding-path="m_LocalPosition"
-                                                                         label="unity:Position"
+                                                                         label="unity:label.position"
                                                                          reset-button-tooltip="label.enhanced_transform_inspector.reset_position"
                                                                          random-button-tooltip="label.enhanced_transform_inspector.random_position"
-                                                                         tooltip="The local position of this GameObject relative to the parent."/>
+                                                                         class="localize-tooltip"/>
         <io.github.ykysnk.ykyToolkit.Editor.UIElements.Vector3FieldExtra name="rotation"
                                                                          binding-path="m_LocalEulerAnglesHint"
-                                                                         label="unity:Rotation"
+                                                                         label="unity:label.rotation"
                                                                          reset-button-tooltip="label.enhanced_transform_inspector.reset_rotation"
-                                                                         random-button-tooltip="label.enhanced_transform_inspector.random_rotation"
-                                                                         tooltip="The local rotation of this Game Object relative to the parent."/>
+                                                                         random-button-tooltip="label.enhanced_transform_inspector.random_rotation"/>
         <io.github.ykysnk.ykyToolkit.Editor.UIElements.Vector3FieldExtra name="scale" binding-path="m_LocalScale"
-                                                                         label="unity:Scale" show-link-button="true"
+                                                                         label="unity:label.scale"
+                                                                         show-link-button="true"
                                                                          random-button-tooltip="label.enhanced_transform_inspector.random_scale"
-                                                                         reset-button-tooltip="label.enhanced_transform_inspector.reset_scale"
-                                                                         tooltip="The local scaling of this GameObject relative to the parent."/>
+                                                                         reset-button-tooltip="label.enhanced_transform_inspector.reset_scale"/>
         <ui:VisualElement class="row" style="justify-content: space-between;">
             <ui:Label text="label.enhanced_transform_inspector.global_space" parse-escape-sequences="true"
                       display-tooltip-when-elided="true" class="space-title"/>
