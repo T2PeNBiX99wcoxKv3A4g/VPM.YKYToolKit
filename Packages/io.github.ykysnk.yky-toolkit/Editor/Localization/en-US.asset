@@ -238,8 +238,8 @@ MonoBehaviour:
 
       LL(min, max) -> Clamp
 
-      RR(center, step)
-      -> Mirror
+      RR(center, step) ->
+      Mirror
 
       TT(start, count) -> Step
 
@@ -271,3 +271,12 @@ MonoBehaviour:
   - key: label.search_for_same_property
     translate: Search for same Property
     tooltip: 
+  - key: unity:label.position
+    translate: Position
+    tooltip: The local position of this GameObject relative to the parent.
+  - key: unity:label.rotation
+    translate: Rotation
+    tooltip: The local rotation of this Game Object relative to the parent.
+  - key: unity:label.scale
+    translate: Scale
+    tooltip: The local scaling of this GameObject relative to the parent.
