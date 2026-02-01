@@ -47,7 +47,7 @@
       "dependencies": {}
     },
     "io.github.ykysnk.localization": {
-      "version": "0.9.1",
+      "version": "0.9.2",
       "dependencies": {
         "io.github.ykysnk.utils": ">=0.33.2"
       }
