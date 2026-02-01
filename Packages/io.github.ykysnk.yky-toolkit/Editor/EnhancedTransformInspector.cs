@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using io.github.ykysnk.utils.Editor;
 using io.github.ykysnk.utils.Extensions;
@@ -22,18 +21,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         Center
     }
 
-    // TODO: Simple icon buttons, Scale button
+    // TODO: Scale Link function
     [CustomEditor(typeof(Transform))]
     [CanEditMultipleObjects]
     public class EnhancedTransformInspector : BasicEditor
     {
-        private static bool _locked;
-
-        private static Vector3 _copyPos;
-        private static Vector3 _copyRot;
-        private static Vector3 _copyScale;
-        private static bool _hasCopy;
-
         [SerializeField] private VisualTreeAsset? uxml;
         private UnityEditor.Editor? _defaultEditor;
 
@@ -282,6 +274,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             lossyScaleField.ResetButton.clicked += ResetGlobalScale;
             lossyScaleField.RandomButton.clicked += RandomGlobalScale;
 
+            var constrainProportionsScaleToggle = tree.Q<Toggle>("constrainProportionsScale");
+
+            scaleField.LinkButton.clicked += ChangeLinkButtonState;
+            lossyScaleField.LinkButton.clicked += ChangeLinkButtonState;
+            constrainProportionsScaleToggle.RegisterValueChangedCallback(_ => UpdateLinkButtonState());
+
             var resetLocalAllButton = tree.Q<IconButton>("resetLocalAll");
             resetLocalAllButton.style.backgroundImage = Vector3FieldExtra.ResetIcon;
             resetLocalAllButton.clicked += () =>
@@ -368,31 +366,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 pasteLocalTransformButton.SetEnabled(canBePaste);
                 pasteGlobalTransformButton.SetEnabled(canBePaste);
             }).Every(100);
-
-            var boundsSizeField = tree.Q<Vector3Field>("boundsSize");
-            var boundsSizeFieldFloatFields = boundsSizeField.Query<FloatField>().ToList() ?? new List<FloatField>();
-
-            foreach (var floatField in boundsSizeFieldFloatFields)
-                floatField.isReadOnly = true;
-
-            boundsSizeField.style.display = DisplayStyle.None;
-            boundsSizeField.schedule.Execute(() =>
-            {
-                if (!theTarget.TryGetComponent(out Renderer r))
-                {
-                    boundsSizeField.style.display = DisplayStyle.None;
-                    return;
-                }
-
-                boundsSizeField.value = r.bounds.size;
-                boundsSizeField.style.display = DisplayStyle.Flex;
-            }).Every(100);
-
-            boundsSizeField.AddManipulator(new ContextualMenuManipulator(evt =>
-            {
-                evt.menu.AppendAction("label.copy".S(),
-                    _ => EditorGUIUtility.systemCopyBuffer = FormatVector3LikeUnity(boundsSizeField.value));
-            }));
 
             var hierarchyPathField = tree.Q<TextField>("hierarchyPath");
             hierarchyPathField.schedule.Execute(() => hierarchyPathField.SetValueWithoutNotify(theTarget.FullName()))
@@ -569,6 +542,17 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 var randomVector = (Random.insideUnitSphere * 2).Clean();
                 ApplyToTargets(t => t.SetLossyScale(t.lossyScale + randomVector), "Random World Scale");
                 lossyScaleField.value += randomVector;
+            }
+
+            void UpdateLinkButtonState()
+            {
+                scaleField.SetLinked(constrainProportionsScaleToggle.value);
+                lossyScaleField.SetLinked(constrainProportionsScaleToggle.value);
+            }
+
+            void ChangeLinkButtonState()
+            {
+                constrainProportionsScaleToggle.value = !constrainProportionsScaleToggle.value;
             }
         }
 

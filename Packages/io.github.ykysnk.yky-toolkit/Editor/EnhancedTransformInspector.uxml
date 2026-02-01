@@ -4,6 +4,7 @@
         <ui:Foldout text="label.enhanced_transform_inspector.default_ui" value="false" name="defaultGUIFoldout">
             <ui:IMGUIContainer name="defaultGUI"/>
         </ui:Foldout>
+        <ui:Toggle binding-path="m_ConstrainProportionsScale" name="constrainProportionsScale" style="display: none;"/>
         <ui:VisualElement class="row" style="justify-content: space-between;">
             <ui:Label text="label.enhanced_transform_inspector.local_space" parse-escape-sequences="true"
                       display-tooltip-when-elided="true" class="space-title"/>
@@ -63,13 +64,8 @@
                                                                          show-link-button="true"
                                                                          reset-button-tooltip="label.enhanced_transform_inspector.reset_scale"
                                                                          random-button-tooltip="label.enhanced_transform_inspector.random_scale"/>
-        <ui:Foldout text="label.enhanced_transform_inspector.help" name="helpFoldout">
-            <ui:Label tabindex="-1" text="label.enhanced_transform_inspector.helpText" parse-escape-sequences="true"
-                      display-tooltip-when-elided="true" name="helpText" style="white-space: normal; flex-wrap: wrap;"/>
-        </ui:Foldout>
         <ui:Label text="label.enhanced_transform_inspector.other" parse-escape-sequences="true"
                   display-tooltip-when-elided="true" class="space-title"/>
-        <ui:Vector3Field label="label.enhanced_transform_inspector.bounds_size" name="boundsSize"/>
         <ui:TextField picking-mode="Ignore" label="label.enhanced_transform_inspector.hierarchy_path"
                       value="filler text" name="hierarchyPath" readonly="true"/>
         <uie:ObjectField label="label.enhanced_transform_inspector.father" binding-path="m_Father" name="father"
@@ -90,5 +86,9 @@
             <ui:Button text="label.enhanced_transform_inspector.clear_parent" parse-escape-sequences="true"
                        display-tooltip-when-elided="true" name="clearParent" class="cell"/>
         </ui:VisualElement>
+        <ui:Foldout text="label.enhanced_transform_inspector.help" name="helpFoldout">
+            <ui:Label tabindex="-1" text="label.enhanced_transform_inspector.helpText" parse-escape-sequences="true"
+                      display-tooltip-when-elided="true" name="helpText" style="white-space: normal; flex-wrap: wrap;"/>
+        </ui:Foldout>
     </ui:VisualElement>
 </ui:UXML>
