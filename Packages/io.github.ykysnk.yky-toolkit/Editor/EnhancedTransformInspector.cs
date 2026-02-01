@@ -4,6 +4,7 @@ using System.Linq;
 using io.github.ykysnk.utils.Editor;
 using io.github.ykysnk.utils.Extensions;
 using io.github.ykysnk.utils.NonUdon;
+using io.github.ykysnk.ykyToolkit.Editor.UIElements;
 using UnityEditor;
 using UnityEditor.Search;
 using UnityEditor.UIElements;
@@ -83,8 +84,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var defaultGUI = tree.Q<IMGUIContainer>("defaultGUI");
             defaultGUI.onGUIHandler = () => _defaultEditor?.OnInspectorGUI();
 
-            var positionField = tree.Q<Vector3Field>("position");
-            var globalPositionField = tree.Q<Vector3Field>("globalPosition");
+            var positionField = tree.Q<Vector3FieldExtra>("position");
+            var globalPositionField = tree.Q<Vector3FieldExtra>("globalPosition");
 
             globalPositionField.SetValueWithoutNotify(theTarget.position);
 
@@ -121,11 +122,16 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     canBePaste ? DropdownMenuAction.Status.Normal : DropdownMenuAction.Status.Disabled);
             }));
 
-            var rotationField = tree.Q<Vector3Field>("rotation");
-            var globalRotationField = tree.Q<Vector3Field>("globalRotation");
+            positionField.ResetButton.clicked += ResetLocalPosition;
+            positionField.RandomButton.clicked += RandomLocalPosition;
+            globalPositionField.ResetButton.clicked += ResetGlobalPosition;
+            globalPositionField.RandomButton.clicked += RandomGlobalPosition;
+
+            var rotationField = tree.Q<Vector3FieldExtra>("rotation");
+            var globalRotationField = tree.Q<Vector3FieldExtra>("globalRotation");
 
             rotationField.SetValueWithoutNotify(theTarget.localEulerAngles.Clean());
-            // Fix the dumb issue of L input
+            // Fix the dumb issue of rotation field input
             rotationField.schedule.Execute(() =>
                 rotationField.SetValueWithoutNotify(theTarget.localEulerAngles.Clean()));
             globalRotationField.SetValueWithoutNotify(theTarget.eulerAngles.Clean());
@@ -228,8 +234,13 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                         : DropdownMenuAction.Status.Disabled);
             }));
 
-            var scaleField = tree.Q<Vector3Field>("scale");
-            var lossyScaleField = tree.Q<Vector3Field>("lossyScale");
+            rotationField.ResetButton.clicked += ResetLocalRotation;
+            rotationField.RandomButton.clicked += RandomLocalRotation;
+            globalRotationField.ResetButton.clicked += ResetGlobalRotation;
+            globalRotationField.RandomButton.clicked += RandomGlobalRotation;
+
+            var scaleField = tree.Q<Vector3FieldExtra>("scale");
+            var lossyScaleField = tree.Q<Vector3FieldExtra>("lossyScale");
 
             lossyScaleField.SetValueWithoutNotify(theTarget.lossyScale);
 
@@ -266,33 +277,24 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     canBePaste ? DropdownMenuAction.Status.Normal : DropdownMenuAction.Status.Disabled);
             }));
 
-            var resetLocalPositionButton = tree.Q<Button>("resetLocalPosition");
-            resetLocalPositionButton.clicked += ResetLocalPosition;
+            scaleField.ResetButton.clicked += ResetLocalScale;
+            scaleField.RandomButton.clicked += RandomLocalScale;
+            lossyScaleField.ResetButton.clicked += ResetGlobalScale;
+            lossyScaleField.RandomButton.clicked += RandomGlobalScale;
 
-            var resetLocalRotationButton = tree.Q<Button>("resetLocalRotation");
-            resetLocalRotationButton.clicked += ResetLocalRotation;
-
-            var resetLocalScaleButton = tree.Q<Button>("resetLocalScale");
-            resetLocalScaleButton.clicked += ResetLocalScale;
-
-            var resetLocalAllButton = tree.Q<Button>("resetLocalAll");
+            var resetLocalAllButton = tree.Q<IconButton>("resetLocalAll");
+            resetLocalAllButton.style.backgroundImage = new(EditorGUIUtils.IconTexture("refresh") as Texture2D);
             resetLocalAllButton.clicked += () =>
             {
                 ResetLocalPosition();
                 ResetLocalRotation();
                 ResetLocalScale();
+                // dumb rotation field issue
+                // resetLocalAllButton.schedule.Execute(ResetLocalRotation);
             };
 
-            var resetGlobalPositionButton = tree.Q<Button>("resetGlobalPosition");
-            resetGlobalPositionButton.clicked += ResetGlobalPosition;
-
-            var resetGlobalRotationButton = tree.Q<Button>("resetGlobalRotation");
-            resetGlobalRotationButton.clicked += ResetGlobalRotation;
-
-            var resetGlobalScaleButton = tree.Q<Button>("resetGlobalScale");
-            resetGlobalScaleButton.clicked += ResetGlobalScale;
-
-            var resetGlobalAllButton = tree.Q<Button>("resetGlobalAll");
+            var resetGlobalAllButton = tree.Q<IconButton>("resetGlobalAll");
+            resetGlobalAllButton.style.backgroundImage = new(EditorGUIUtils.IconTexture("refresh") as Texture2D);
             resetGlobalAllButton.clicked += () =>
             {
                 ResetGlobalPosition();
@@ -300,16 +302,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 ResetGlobalScale();
             };
 
-            var randomLocalPositionButton = tree.Q<Button>("randomLocalPosition");
-            randomLocalPositionButton.clicked += RandomLocalPosition;
-
-            var randomLocalRotationButton = tree.Q<Button>("randomLocalRotation");
-            randomLocalRotationButton.clicked += RandomLocalRotation;
-
-            var randomLocalScaleButton = tree.Q<Button>("randomLocalScale");
-            randomLocalScaleButton.clicked += RandomLocalScale;
-
-            var randomLocalAllButton = tree.Q<Button>("randomLocalAll");
+            var randomLocalAllButton = tree.Q<IconButton>("randomLocalAll");
+            randomLocalAllButton.style.backgroundImage =
+                new(EditorGUIUtils.IconTexture("preaudioloopoff") as Texture2D);
             randomLocalAllButton.clicked += () =>
             {
                 RandomLocalPosition();
@@ -317,16 +312,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 RandomLocalScale();
             };
 
-            var randomGlobalPositionButton = tree.Q<Button>("randomGlobalPosition");
-            randomGlobalPositionButton.clicked += RandomGlobalPosition;
-
-            var randomGlobalRotationButton = tree.Q<Button>("randomGlobalRotation");
-            randomGlobalRotationButton.clicked += RandomGlobalRotation;
-
-            var randomGlobalScaleButton = tree.Q<Button>("randomGlobalScale");
-            randomGlobalScaleButton.clicked += RandomGlobalScale;
-
-            var randomGlobalAllButton = tree.Q<Button>("randomGlobalAll");
+            var randomGlobalAllButton = tree.Q<IconButton>("randomGlobalAll");
+            randomGlobalAllButton.style.backgroundImage =
+                new(EditorGUIUtils.IconTexture("preaudioloopoff") as Texture2D);
             randomGlobalAllButton.clicked += () =>
             {
                 RandomGlobalPosition();
@@ -509,8 +497,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             void ResetLocalRotation()
             {
+                rotationEditing = true;
                 ApplyToTargets(t => t.localEulerAngles = Vector3.zero, "Reset Local Rotation");
                 rotationField.value = Vector3.zero;
+                rotationField.schedule.Execute(() => rotationEditing = false);
             }
 
             void ResetLocalScale()
@@ -527,8 +517,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             void ResetGlobalRotation()
             {
+                rotationEditing = true;
                 ApplyToTargets(t => t.eulerAngles = Vector3.zero, "Reset World Rotation");
                 globalRotationField.value = Vector3.zero;
+                globalPositionField.schedule.Execute(() => rotationEditing = false);
             }
 
             void ResetGlobalScale()
@@ -546,9 +538,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             void RandomLocalRotation()
             {
+                rotationEditing = true;
                 var randomVector = (Random.insideUnitSphere * 360).Clean().DeltaAngle();
                 ApplyToTargets(t => t.localEulerAngles = randomVector, "Random Local Rotation");
                 rotationField.value = randomVector;
+                rotationField.schedule.Execute(() => rotationEditing = false);
             }
 
             void RandomLocalScale()
@@ -567,9 +561,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             void RandomGlobalRotation()
             {
+                rotationEditing = true;
                 var randomVector = (Random.insideUnitSphere * 360).Clean().DeltaAngle();
                 ApplyToTargets(t => t.eulerAngles = randomVector, "Random World Rotation");
                 globalRotationField.value = randomVector;
+                globalPositionField.schedule.Execute(() => rotationEditing = false);
             }
 
             void RandomGlobalScale()
