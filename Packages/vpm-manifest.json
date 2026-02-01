@@ -47,9 +47,9 @@
       "dependencies": {}
     },
     "io.github.ykysnk.localization": {
-      "version": "0.9.0",
+      "version": "0.9.1",
       "dependencies": {
-        "io.github.ykysnk.utils": ">=0.22.0"
+        "io.github.ykysnk.utils": ">=0.33.2"
       }
     },
     "yueby.tools.mirror-tool": {
