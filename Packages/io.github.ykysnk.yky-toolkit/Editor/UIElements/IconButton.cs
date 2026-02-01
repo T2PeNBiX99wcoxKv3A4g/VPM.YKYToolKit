@@ -12,6 +12,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor.UIElements
         public IconButton()
         {
             AddToClassList("icon-button");
+            AddToClassList("localize-tooltip");
             RegisterCallback<ClickEvent>(_ =>
             {
                 ExtrasAnimations.ForEach(action => action());

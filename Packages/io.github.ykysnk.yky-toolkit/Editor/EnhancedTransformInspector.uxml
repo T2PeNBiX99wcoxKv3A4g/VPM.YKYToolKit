@@ -8,8 +8,12 @@
             <ui:Label text="label.enhanced_transform_inspector.local_space" parse-escape-sequences="true"
                       display-tooltip-when-elided="true" class="space-title"/>
             <ui:VisualElement class="row">
-                <io.github.ykysnk.ykyToolkit.Editor.UIElements.IconButton name="randomLocalAll"/>
-                <io.github.ykysnk.ykyToolkit.Editor.UIElements.IconButton name="resetLocalAll"/>
+                <io.github.ykysnk.ykyToolkit.Editor.UIElements.IconButton name="randomLocalAll"
+                                                                          tooltip="label.enhanced_transform_inspector.random_all"
+                                                                          class="cell"/>
+                <io.github.ykysnk.ykyToolkit.Editor.UIElements.IconButton name="resetLocalAll"
+                                                                          tooltip="label.enhanced_transform_inspector.reset_all"
+                                                                          class="cell"/>
                 <ui:Button text="label.enhanced_transform_inspector.copy_transform" parse-escape-sequences="true"
                            display-tooltip-when-elided="true" name="copyLocalTransform" class="cell"/>
                 <ui:Button text="label.enhanced_transform_inspector.paste_transform" parse-escape-sequences="true"
@@ -34,8 +38,12 @@
             <ui:Label text="label.enhanced_transform_inspector.global_space" parse-escape-sequences="true"
                       display-tooltip-when-elided="true" class="space-title"/>
             <ui:VisualElement class="row">
-                <io.github.ykysnk.ykyToolkit.Editor.UIElements.IconButton name="randomGlobalAll"/>
-                <io.github.ykysnk.ykyToolkit.Editor.UIElements.IconButton name="resetGlobalAll"/>
+                <io.github.ykysnk.ykyToolkit.Editor.UIElements.IconButton name="randomGlobalAll"
+                                                                          tooltip="label.enhanced_transform_inspector.random_all"
+                                                                          class="cell"/>
+                <io.github.ykysnk.ykyToolkit.Editor.UIElements.IconButton name="resetGlobalAll"
+                                                                          tooltip="label.enhanced_transform_inspector.reset_all"
+                                                                          class="cell"/>
                 <ui:Button text="label.enhanced_transform_inspector.copy_transform" parse-escape-sequences="true"
                            display-tooltip-when-elided="true" name="copyGlobalTransform" class="cell"/>
                 <ui:Button text="label.enhanced_transform_inspector.paste_transform" parse-escape-sequences="true"

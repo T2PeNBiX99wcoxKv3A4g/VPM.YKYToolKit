@@ -8,6 +8,6 @@
         </ui:VisualElement>
         <ui:ListView selection-type="Multiple" show-alternating-row-backgrounds="ContentOnly" show-border="true"
                      virtualization-method="DynamicHeight" binding-path="rows" reorder-mode="Animated"
-                     show-bound-collection-size="false" reorderable="true"/>
+                     show-bound-collection-size="false" reorderable="true" class="localize-skip"/>
     </ui:VisualElement>
 </ui:UXML>
