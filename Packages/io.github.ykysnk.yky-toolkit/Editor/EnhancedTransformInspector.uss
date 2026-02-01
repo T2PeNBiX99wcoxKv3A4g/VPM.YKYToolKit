@@ -17,6 +17,34 @@
     flex-direction: row;
 }
 
+.extra-slot {
+    padding: 0;
+    margin: 0;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon-button {
+    border-radius: 0;
+    border-width: 0;
+    padding: 0;
+    margin: 0;
+    width: 18px;
+    height: 18px;
+    background-size: 15px 15px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.icon-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: background-color 0.12s ease-in-out;
+}
+
+.icon-button.flash {
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
 .readonly-object-field:disabled .unity-label .unity-base-field__label .unity-object-field__label {
     color: white;
 }

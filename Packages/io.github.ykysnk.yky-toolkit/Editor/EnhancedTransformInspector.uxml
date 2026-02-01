@@ -8,71 +8,53 @@
             <ui:Label text="label.enhanced_transform_inspector.local_space" parse-escape-sequences="true"
                       display-tooltip-when-elided="true" class="space-title"/>
             <ui:VisualElement class="row">
+                <io.github.ykysnk.ykyToolkit.Editor.UIElements.IconButton name="randomLocalAll"/>
+                <io.github.ykysnk.ykyToolkit.Editor.UIElements.IconButton name="resetLocalAll"/>
                 <ui:Button text="label.enhanced_transform_inspector.copy_transform" parse-escape-sequences="true"
                            display-tooltip-when-elided="true" name="copyLocalTransform" class="cell"/>
                 <ui:Button text="label.enhanced_transform_inspector.paste_transform" parse-escape-sequences="true"
                            display-tooltip-when-elided="true" name="pasteLocalTransform" class="cell"/>
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:Vector3Field label="label.enhanced_transform_inspector.local_position" binding-path="m_LocalPosition"
-                         name="position"/>
-        <ui:Vector3Field label="label.enhanced_transform_inspector.local_rotation" name="rotation"
-                         binding-path="m_LocalEulerAnglesHint"/>
-        <ui:Vector3Field label="label.enhanced_transform_inspector.local_scale" binding-path="m_LocalScale"
-                         name="scale"/>
-        <ui:VisualElement class="row" style="flex-grow: 1;">
-            <ui:Button text="label.enhanced_transform_inspector.reset_position" parse-escape-sequences="true"
-                       display-tooltip-when-elided="true" name="resetLocalPosition" class="cell"/>
-            <ui:Button text="label.enhanced_transform_inspector.reset_rotation" parse-escape-sequences="true"
-                       display-tooltip-when-elided="true" name="resetLocalRotation" class="cell"/>
-            <ui:Button text="label.enhanced_transform_inspector.reset_scale" parse-escape-sequences="true"
-                       display-tooltip-when-elided="true" name="resetLocalScale" class="cell"/>
-            <ui:Button text="label.enhanced_transform_inspector.reset_all" parse-escape-sequences="true"
-                       display-tooltip-when-elided="true" name="resetLocalAll"/>
-        </ui:VisualElement>
-        <ui:VisualElement class="row" style="flex-grow: 1;">
-            <ui:Button text="label.enhanced_transform_inspector.random_position" parse-escape-sequences="true"
-                       display-tooltip-when-elided="true" name="randomLocalPosition" class="cell"/>
-            <ui:Button text="label.enhanced_transform_inspector.random_rotation" parse-escape-sequences="true"
-                       display-tooltip-when-elided="true" name="randomLocalRotation" class="cell"/>
-            <ui:Button text="label.enhanced_transform_inspector.random_scale" parse-escape-sequences="true"
-                       display-tooltip-when-elided="true" name="randomLocalScale" class="cell"/>
-            <ui:Button text="label.enhanced_transform_inspector.random_all" parse-escape-sequences="true"
-                       display-tooltip-when-elided="true" name="randomLocalAll" class="cell"/>
-        </ui:VisualElement>
+        <io.github.ykysnk.ykyToolkit.Editor.UIElements.Vector3FieldExtra name="position" binding-path="m_LocalPosition"
+                                                                         label="label.enhanced_transform_inspector.local_position"
+                                                                         reset-button-tooltip="label.enhanced_transform_inspector.reset_position"
+                                                                         random-button-tooltip="label.enhanced_transform_inspector.random_position"/>
+        <io.github.ykysnk.ykyToolkit.Editor.UIElements.Vector3FieldExtra name="rotation"
+                                                                         binding-path="m_LocalEulerAnglesHint"
+                                                                         label="label.enhanced_transform_inspector.local_rotation"
+                                                                         reset-button-tooltip="label.enhanced_transform_inspector.reset_rotation"
+                                                                         random-button-tooltip="label.enhanced_transform_inspector.random_rotation"/>
+        <io.github.ykysnk.ykyToolkit.Editor.UIElements.Vector3FieldExtra name="scale" binding-path="m_LocalScale"
+                                                                         label="label.enhanced_transform_inspector.local_scale"
+                                                                         show-link-button="true"
+                                                                         random-button-tooltip="label.enhanced_transform_inspector.random_scale"
+                                                                         reset-button-tooltip="label.enhanced_transform_inspector.reset_scale"/>
         <ui:VisualElement class="row" style="justify-content: space-between;">
             <ui:Label text="label.enhanced_transform_inspector.global_space" parse-escape-sequences="true"
                       display-tooltip-when-elided="true" class="space-title"/>
             <ui:VisualElement class="row">
+                <io.github.ykysnk.ykyToolkit.Editor.UIElements.IconButton name="randomGlobalAll"/>
+                <io.github.ykysnk.ykyToolkit.Editor.UIElements.IconButton name="resetGlobalAll"/>
                 <ui:Button text="label.enhanced_transform_inspector.copy_transform" parse-escape-sequences="true"
                            display-tooltip-when-elided="true" name="copyGlobalTransform" class="cell"/>
                 <ui:Button text="label.enhanced_transform_inspector.paste_transform" parse-escape-sequences="true"
                            display-tooltip-when-elided="true" name="pasteGlobalTransform" class="cell"/>
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:Vector3Field label="label.enhanced_transform_inspector.global_position" name="globalPosition"/>
-        <ui:Vector3Field label="label.enhanced_transform_inspector.global_rotation" name="globalRotation"/>
-        <ui:Vector3Field label="label.enhanced_transform_inspector.global_scale" name="lossyScale"/>
-        <ui:VisualElement class="row" style="flex-grow: 1;">
-            <ui:Button text="label.enhanced_transform_inspector.reset_position" parse-escape-sequences="true"
-                       display-tooltip-when-elided="true" name="resetGlobalPosition" class="cell"/>
-            <ui:Button text="label.enhanced_transform_inspector.reset_rotation" parse-escape-sequences="true"
-                       display-tooltip-when-elided="true" name="resetGlobalRotation" class="cell"/>
-            <ui:Button text="label.enhanced_transform_inspector.reset_scale" parse-escape-sequences="true"
-                       display-tooltip-when-elided="true" name="resetGlobalScale" class="cell"/>
-            <ui:Button text="label.enhanced_transform_inspector.reset_all" parse-escape-sequences="true"
-                       display-tooltip-when-elided="true" name="resetGlobalAll"/>
-        </ui:VisualElement>
-        <ui:VisualElement class="row" style="flex-grow: 1;">
-            <ui:Button text="label.enhanced_transform_inspector.random_position" parse-escape-sequences="true"
-                       display-tooltip-when-elided="true" name="randomGlobalPosition" class="cell"/>
-            <ui:Button text="label.enhanced_transform_inspector.random_rotation" parse-escape-sequences="true"
-                       display-tooltip-when-elided="true" name="randomGlobalRotation" class="cell"/>
-            <ui:Button text="label.enhanced_transform_inspector.random_scale" parse-escape-sequences="true"
-                       display-tooltip-when-elided="true" name="randomGlobalScale" class="cell"/>
-            <ui:Button text="label.enhanced_transform_inspector.random_all" parse-escape-sequences="true"
-                       display-tooltip-when-elided="true" name="randomGlobalAll" class="cell"/>
-        </ui:VisualElement>
+        <io.github.ykysnk.ykyToolkit.Editor.UIElements.Vector3FieldExtra name="globalPosition"
+                                                                         label="label.enhanced_transform_inspector.global_position"
+                                                                         reset-button-tooltip="label.enhanced_transform_inspector.reset_position"
+                                                                         random-button-tooltip="label.enhanced_transform_inspector.random_position"/>
+        <io.github.ykysnk.ykyToolkit.Editor.UIElements.Vector3FieldExtra name="globalRotation"
+                                                                         label="label.enhanced_transform_inspector.global_rotation"
+                                                                         reset-button-tooltip="label.enhanced_transform_inspector.reset_rotation"
+                                                                         random-button-tooltip="label.enhanced_transform_inspector.random_rotation"/>
+        <io.github.ykysnk.ykyToolkit.Editor.UIElements.Vector3FieldExtra name="lossyScale"
+                                                                         label="label.enhanced_transform_inspector.global_scale"
+                                                                         show-link-button="true"
+                                                                         reset-button-tooltip="label.enhanced_transform_inspector.reset_scale"
+                                                                         random-button-tooltip="label.enhanced_transform_inspector.random_scale"/>
         <ui:Foldout text="label.enhanced_transform_inspector.help" name="helpFoldout">
             <ui:Label tabindex="-1" text="label.enhanced_transform_inspector.helpText" parse-escape-sequences="true"
                       display-tooltip-when-elided="true" name="helpText" style="white-space: normal; flex-wrap: wrap;"/>
