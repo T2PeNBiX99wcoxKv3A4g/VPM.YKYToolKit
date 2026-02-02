@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using io.github.ykysnk.utils.NonUdon;
 using UnityEditor;
 using UnityEngine;
 
@@ -19,7 +20,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         {
             EditorApplication.projectWindowItemOnGUI += OnProjectItemGUI;
 
-            if (!TryGetImportHighlights(out var infos, out _)) return;
+            if (!Load(out var infos)) return;
             Highlights.UnionWith(infos);
         }
 
@@ -38,25 +39,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 Highlights.Add(new(path, EditorApplication.timeSinceStartup + Duration));
 
             Save();
-        }
-
-        // TODO: Move to utils
-        private static bool TryGetImportHighlights(out HighlightInfo[] infos, out Exception? exception)
-        {
-            infos = Array.Empty<HighlightInfo>();
-            exception = null;
-
-            try
-            {
-                var get = JsonUtility.FromJson<HighlightInfos>(PlayerPrefs.GetString("YKYToolkit/ImportHighlights", ""));
-                infos = get.infos;
-                return true;
-            }
-            catch (Exception e)
-            {
-                exception = e;
-                return false;
-            }
         }
 
         private static void OnProjectItemGUI(string guid, Rect rect)
@@ -104,6 +86,15 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         {
             PlayerPrefs.SetString("YKYToolkit/ImportHighlights",
                 JsonUtility.ToJson(new HighlightInfos(Highlights.ToArray())));
+        }
+
+        private static bool Load(out HighlightInfo[] infos)
+        {
+            infos = Array.Empty<HighlightInfo>();
+            if (!JsonUtils.TryFromJson<HighlightInfos>(PlayerPrefs.GetString("YKYToolkit/ImportHighlights", ""),
+                    out var get, out _)) return false;
+            infos = get?.infos ?? Array.Empty<HighlightInfo>();
+            return true;
         }
 
         [Serializable]
