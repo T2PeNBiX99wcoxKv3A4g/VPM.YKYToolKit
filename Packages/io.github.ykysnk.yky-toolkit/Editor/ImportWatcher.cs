@@ -4,7 +4,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace io.github.ykysnk.ykyToolkit.Editor
 {
@@ -99,7 +98,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         }
 
         private static bool AssetExists(string path)
-            => AssetDatabase.LoadAssetAtPath<Object>(path) != null;
+            => AssetDatabase.GetMainAssetTypeAtPath(path) != null;
 
         private static void Save()
         {
