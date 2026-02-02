@@ -101,7 +101,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private static bool AssetExists(string path)
             => AssetDatabase.LoadAssetAtPath<Object>(path) != null;
 
-
         private static void Save()
         {
             PlayerPrefs.SetString("YKYToolkit/ImportHighlights",
