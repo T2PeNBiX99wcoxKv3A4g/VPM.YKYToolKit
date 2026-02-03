@@ -12,10 +12,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
     internal class ImportWatcher : AssetPostprocessor
     {
         private const double Duration = 120;
+        private const string ImportHighlights = "YKYToolkit/ImportWatcher/ImportHighlights";
+        internal const string ImportHighlightColor = "YKYToolkit/ImportWatcher/Color";
 
         // TODO: Add or change new time
         private static readonly HashSet<HighlightInfo> Highlights = new();
-        private static readonly Color HighlightColor = new(1f, 0f, 0f, 0.12f);
+        internal static readonly Color DefaultHighlightColor = new(1f, 0f, 0f, 0.12f);
 
         static ImportWatcher()
         {
@@ -24,6 +26,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             if (!Load(out var infos)) return;
             Highlights.UnionWith(infos);
         }
+
+        private static Color HighlightColor =>
+            ColorUtility.TryParseHtmlString(EditorPrefs.GetString(ImportHighlightColor), out var color)
+                ? color
+                : DefaultHighlightColor;
 
         private static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets,
             string[] movedFromAssetPaths)
@@ -86,13 +93,13 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private static void Save()
         {
             if (!JsonUtils.TryToJson(Highlights.ToArray(), out var json, out _)) return;
-            PlayerPrefs.SetString("YKYToolkit/ImportHighlights", json);
+            PlayerPrefs.SetString(ImportHighlights, json);
         }
 
         private static bool Load(out HighlightInfo[] infos)
         {
             infos = Array.Empty<HighlightInfo>();
-            if (!JsonUtils.TryFromJson<HighlightInfos>(PlayerPrefs.GetString("YKYToolkit/ImportHighlights", ""),
+            if (!JsonUtils.TryFromJson<HighlightInfos>(PlayerPrefs.GetString(ImportHighlights, ""),
                     out var get, out _)) return false;
             infos = get?.infos ?? Array.Empty<HighlightInfo>();
             return true;

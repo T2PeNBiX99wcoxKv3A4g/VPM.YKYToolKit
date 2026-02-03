@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/ImportWatcherWindow.uss?fileID=7433441132597879392&amp;guid=cb3f7d18f6e8d4e4d8f0d704c12890d4&amp;type=3#ImportWatcherWindow"/>
+    <ui:VisualElement style="flex-grow: 1;">
+        <uie:ColorField label="Color" value="RGBA(0.000, 1.000, 1.000, 1.000)" name="color"/>
+        <ui:VisualElement style="flex-grow: 1;"/>
+    </ui:VisualElement>
+</ui:UXML>
