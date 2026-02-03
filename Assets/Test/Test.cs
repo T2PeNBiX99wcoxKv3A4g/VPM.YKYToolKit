@@ -1,6 +1,9 @@
+using System.Collections.Generic;
 using io.github.ykysnk.utils;
+using io.github.ykysnk.utils.NonUdon;
 using io.github.ykysnk.ykyToolkit.Editor;
 using UnityEditor;
+using UnityEngine;
 
 namespace Test
 {
@@ -51,6 +54,19 @@ namespace Test
         private static void Test2()
         {
             Utils.Log(nameof(TestClass), $"Test: {EditorMainWindowTitle.GetTitle()}");
+        }
+
+        [MenuItem("Test/Test2")]
+        private static void Test3()
+        {
+            var list = new List<ImportWatcherFileColor>
+            {
+                new(".png", Color.cyan),
+                new(".jpg", Color.magenta)
+            };
+            Utils.Log(nameof(Test3), $"Test: {JsonUtils.TryToJson(Wrapper.Create(list), out var json, out _)} {json}");
+            Utils.Log(nameof(Test3),
+                $"Test: {JsonUtils.TryFromJson<ListWrapper<ImportWatcherFileColor>>(json!, out var result, out _)} {result}");
         }
     }
 }
