@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 using io.github.ykysnk.utils;
 using io.github.ykysnk.utils.Extensions;
 using io.github.ykysnk.utils.NonUdon;
+using io.github.ykysnk.utils.NonUdon.Extensions;
 using UnityEditor;
 using UnityEngine;
 
@@ -73,7 +74,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                             component = pasteObject.AddComponent(type);
                     }
 
-                    EditorJsonUtility.FromJsonOverwrite(componentData.componentJson, component);
+                    Try.Run(() => EditorJsonUtility.FromJsonOverwrite(componentData.componentJson, component))
+                        .OnFailure(ex =>
+                            Utils.LogError(nameof(CopyAllComponents),
+                                $"Overwrite component failed: {ex!.Message}\n{ex.StackTrace}"));
+
                     await UniTask.DelayFrame(10);
                 }
             }
@@ -97,7 +102,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                             component = pasteObject.AddComponent(type);
                     }
 
-                    EditorJsonUtility.FromJsonOverwrite(componentData.componentJson, component);
+                    Try.Run(() => EditorJsonUtility.FromJsonOverwrite(componentData.componentJson, component))
+                        .OnFailure(ex =>
+                            Utils.LogError(nameof(CopyAllComponents),
+                                $"Overwrite component failed: {ex!.Message}\n{ex.StackTrace}"));
+
                     await UniTask.DelayFrame(10);
                 }
             else
