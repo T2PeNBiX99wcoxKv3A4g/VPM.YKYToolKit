@@ -5,7 +5,7 @@
   "description": "Toolkit for Unity",
   "gitDependencies": {},
   "vpmDependencies": {
-    "io.github.ykysnk.utils": ">=0.33.2",
+    "io.github.ykysnk.utils": ">=0.38.0",
     "io.github.ykysnk.localization": ">=0.9.0"
   },
   "author": {
