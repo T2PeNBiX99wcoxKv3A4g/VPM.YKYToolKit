@@ -113,7 +113,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             infos = new();
             if (!JsonUtils.TryFromJson<ListWrapper<HighlightInfo>>(PlayerPrefs.GetString(ImportHighlights, ""),
                     out var get, out _)) return false;
-            infos.AddRange(get!.items);
+            infos.AddRange(get!);
             return true;
         }
 

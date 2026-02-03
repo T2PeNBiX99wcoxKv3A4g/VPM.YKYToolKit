@@ -180,7 +180,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             if (!JsonUtils.TryFromJson<ListWrapper<UpmPackageListWrapper>>(json, out var result, out _)) return;
 
             packageLists.Clear();
-            packageLists.AddRange(result!.items);
+            packageLists.AddRange(result!);
         }
 
         public static void ImportPackages(UpmPackageListWrapper wrapper)
