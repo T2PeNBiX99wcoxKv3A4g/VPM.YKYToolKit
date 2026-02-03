@@ -30,7 +30,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             {
                 if (cts.IsCancellationRequested || EditorApplication.isCompiling || EditorApplication.isUpdating)
                     return false;
-                Utils.Log(nameof(ForceClearTempFiles), "Cancel requested by user.");
+                Utils.Log(nameof(ForceClearTempFiles), "Cancel requested by the user.");
                 cts.Cancel();
                 return true;
             });
