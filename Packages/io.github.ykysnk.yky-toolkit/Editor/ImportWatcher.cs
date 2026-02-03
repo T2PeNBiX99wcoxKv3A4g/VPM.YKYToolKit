@@ -84,8 +84,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         private static void Save()
         {
-            PlayerPrefs.SetString("YKYToolkit/ImportHighlights",
-                JsonUtility.ToJson(new HighlightInfos(Highlights.ToArray())));
+            if (!JsonUtils.TryToJson(Highlights.ToArray(), out var json, out _)) return;
+            PlayerPrefs.SetString("YKYToolkit/ImportHighlights", json);
         }
 
         private static bool Load(out HighlightInfo[] infos)

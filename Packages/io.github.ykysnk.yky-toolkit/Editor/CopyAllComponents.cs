@@ -2,6 +2,7 @@ using System;
 using Cysharp.Threading.Tasks;
 using io.github.ykysnk.utils;
 using io.github.ykysnk.utils.Extensions;
+using io.github.ykysnk.utils.NonUdon;
 using UnityEditor;
 using UnityEngine;
 
@@ -19,7 +20,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var copyObject = selectedObjects[0];
             var componentDatas = copyObject.ComponentsSelect((_, component) => new ComponentData(component));
             var copyData = new CopyData(componentDatas);
-            EditorGUIUtility.systemCopyBuffer = JsonUtility.ToJson(copyData);
+
+            if (JsonUtils.TryToJson(copyData, out var json, out var exception))
+                EditorGUIUtility.systemCopyBuffer = json;
+            else
+                Utils.LogWarning(nameof(CopyAllComponents),
+                    $"Failed to copy components. {exception!.Message}\n{exception.StackTrace}");
         }
 
         [MenuItem("GameObject/YKYToolkit/Paste All Components")]
@@ -50,10 +56,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         private static async UniTask PasteAsync(string copyDataJson, GameObject pasteObject)
         {
-            try
+            if (JsonUtils.TryFromJson<CopyData>(copyDataJson, out var copyData, out var exception))
             {
-                var copyData = JsonUtility.FromJson<CopyData>(copyDataJson);
-
                 if (copyData.componentDatas.Length < 2) return;
 
                 for (var i = 1; i < copyData.componentDatas.Length; i++)
@@ -73,18 +77,13 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     await UniTask.DelayFrame(10);
                 }
             }
-            catch (Exception e)
-            {
-                Utils.LogError(nameof(CopyAllComponents), $"Paste failed: {e}\n{e.Message}");
-            }
+            else
+                Utils.LogError(nameof(CopyAllComponents), $"Paste failed: {exception!.Message}\n{exception.StackTrace}");
         }
 
         private static async UniTask PasteAsyncWithTransform(string copyDataJson, GameObject pasteObject)
         {
-            try
-            {
-                var copyData = JsonUtility.FromJson<CopyData>(copyDataJson);
-
+            if (JsonUtils.TryFromJson<CopyData>(copyDataJson, out var copyData, out var exception))
                 for (var i = 0; i < copyData.componentDatas.Length; i++)
                 {
                     var componentData = copyData.componentDatas[i];
@@ -101,11 +100,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     EditorJsonUtility.FromJsonOverwrite(componentData.componentJson, component);
                     await UniTask.DelayFrame(10);
                 }
-            }
-            catch (Exception e)
-            {
-                Utils.LogError(nameof(CopyAllComponents), $"Paste failed: {e}\n{e.Message}");
-            }
+            else
+                Utils.LogError(nameof(CopyAllComponents), $"Paste failed: {exception!.Message}\n{exception.StackTrace}");
         }
 
         [Serializable]

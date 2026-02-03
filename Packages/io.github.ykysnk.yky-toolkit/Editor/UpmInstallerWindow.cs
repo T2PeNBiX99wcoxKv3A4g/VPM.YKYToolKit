@@ -1,9 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using io.github.ykysnk.utils;
 using io.github.ykysnk.utils.Editor;
 using io.github.ykysnk.utils.Editor.Extensions;
+using io.github.ykysnk.utils.NonUdon;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -105,8 +105,16 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 wrapper.wrapPackages.AddRange(packageListMaker);
                 packageLists.Add(wrapper);
                 SavePackageList();
-                var json = JsonUtility.ToJson(wrapper);
-                EditorGUIUtility.systemCopyBuffer = json;
+
+                if (JsonUtils.TryToJson(wrapper, out var json, out var exception))
+                    EditorGUIUtility.systemCopyBuffer = json;
+                else
+                {
+                    Utils.LogError(nameof(UpmInstallerWindow),
+                        $"Failed to copy a package list. {exception!.Message}\n{exception.StackTrace}");
+                    return;
+                }
+
                 packageListMaker.Clear();
                 createListNameField.value = "";
             };
@@ -116,24 +124,17 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             {
                 var json = EditorGUIUtility.systemCopyBuffer;
 
-                try
+                if (JsonUtils.TryFromJson<UpmPackageListWrapper>(json, out var result, out var exception))
                 {
-                    var wrapper = JsonUtility.FromJson<UpmPackageListWrapper>(json);
-                    if (wrapper == null)
-                    {
-                        Utils.LogError(nameof(UpmInstallerWindow), "Failed to import package list.");
-                        return;
-                    }
-
                     Utils.Log(nameof(UpmInstallerWindow),
-                        $"Imported package list: {wrapper.wrapName} - {wrapper.wrapPackages.Count}");
-                    packageLists.Add(wrapper);
+                        $"Imported package list: {result!.wrapName} - {result.wrapPackages.Count}");
+                    packageLists.Add(result);
                     SavePackageList();
                 }
-                catch (Exception e)
+                else
                 {
                     Utils.LogError(nameof(UpmInstallerWindow),
-                        $"Failed to import package list. {e.Message}\n{e.StackTrace}");
+                        $"Failed to import package list. {exception!.Message}\n{exception.StackTrace}");
                     SavePackageList();
                 }
             };
