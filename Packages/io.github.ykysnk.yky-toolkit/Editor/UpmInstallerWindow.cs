@@ -15,12 +15,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
     {
         private const string Title = "UPM Installer";
 
-        private static readonly List<string> ToolPackages = new()
-        {
-            "com.unity.memoryprofiler",
-            "com.unity.build-report-inspector"
-        };
-
         [SerializeField] private VisualTreeAsset? uxml;
         [SerializeField] private List<UpmInstallerPackage> packages = new();
         [SerializeField] private List<UpmInstallerPackage> packageListMaker = new();
@@ -30,10 +24,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         private static UpmInstallerWindow? Instance { get; set; }
 
-        private void OnDestroy()
-        {
-            SavePackageList();
-        }
+        private void OnDestroy() => SavePackageList();
 
         private void CreateGUI()
         {
@@ -177,12 +168,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         private void SavePackageList()
         {
-            var wrapper = new UpmPackageListsWrapper
-            {
-                wrapPackageLists = packageLists
-            };
-
-            if (!JsonUtils.TryToJson(wrapper, out var json, out _)) return;
+            if (!JsonUtils.TryToJson(Wrapper.Create(packageLists), out var json, out _)) return;
 
             EditorPrefs.SetString("YKYToolkit/UpmInstallerWindowPackageLists", json);
         }
@@ -191,10 +177,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         {
             var json = EditorPrefs.GetString("YKYToolkit/UpmInstallerWindowPackageLists");
 
-            if (!JsonUtils.TryFromJson<UpmPackageListsWrapper>(json, out var result, out _)) return;
+            if (!JsonUtils.TryFromJson<ListWrapper<UpmPackageListWrapper>>(json, out var result, out _)) return;
 
             packageLists.Clear();
-            packageLists.AddRange(result!.wrapPackageLists);
+            packageLists.AddRange(result!.items);
         }
 
         public static void ImportPackages(UpmPackageListWrapper wrapper)
