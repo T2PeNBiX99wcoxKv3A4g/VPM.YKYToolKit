@@ -320,7 +320,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             copyLocalTransformButton.clicked += () =>
             {
                 var data = new PRSData(theTarget.localPosition, theTarget.localEulerAngles, theTarget.localScale);
-                EditorGUIUtility.systemCopyBuffer = JsonUtility.ToJson(data);
+                if (!JsonUtils.TryToJson(data, out var json, out _)) return;
+                EditorGUIUtility.systemCopyBuffer = json;
             };
 
             var pasteLocalTransformButton = tree.Q<Button>("pasteLocalTransform");
@@ -342,7 +343,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             copyGlobalTransformButton.clicked += () =>
             {
                 var data = new PRSData(theTarget.position, theTarget.eulerAngles, theTarget.lossyScale);
-                EditorGUIUtility.systemCopyBuffer = JsonUtility.ToJson(data);
+                if (!JsonUtils.TryToJson(data, out var json, out _)) return;
+                EditorGUIUtility.systemCopyBuffer = json;
             };
 
             var pasteGlobalTransformButton = tree.Q<Button>("pasteGlobalTransform");
@@ -632,18 +634,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             if (string.IsNullOrWhiteSpace(json))
                 return false;
 
-            try
-            {
-                data = JsonUtility.FromJson<PRSData>(json);
-
-                if (data.scale == default && data.position == default && data.eulerAngles == default)
-                    return json.Contains("position") || json.Contains("eulerAngles") || json.Contains("scale");
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
+            if (!JsonUtils.TryFromJson(json, out data, out _)) return false;
+            if (data.scale == default && data.position == default && data.eulerAngles == default)
+                return json.Contains("position") || json.Contains("eulerAngles") || json.Contains("scale");
+            return true;
         }
 
         private void CleanTransforms(float threshold = 0.0001f)

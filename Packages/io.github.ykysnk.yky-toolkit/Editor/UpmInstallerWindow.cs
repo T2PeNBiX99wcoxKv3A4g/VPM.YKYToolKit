@@ -164,7 +164,13 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             void CopySelected()
             {
-                var json = JsonUtility.ToJson(packageLists[packageListsField.selectedIndex]);
+                if (!JsonUtils.TryToJson(packageLists[packageListsField.selectedIndex], out var json, out var exception))
+                {
+                    Utils.LogError(nameof(UpmInstallerWindow),
+                        $"Copy package list failed. {exception!.Message}\n{exception.StackTrace}");
+                    return;
+                }
+
                 EditorGUIUtility.systemCopyBuffer = json;
             }
         }
@@ -175,23 +181,20 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             {
                 wrapPackageLists = packageLists
             };
-            EditorPrefs.SetString("YKYToolkit/UpmInstallerWindowPackageLists", JsonUtility.ToJson(wrapper));
+
+            if (!JsonUtils.TryToJson(wrapper, out var json, out _)) return;
+
+            EditorPrefs.SetString("YKYToolkit/UpmInstallerWindowPackageLists", json);
         }
 
         private void LoadPackageList()
         {
             var json = EditorPrefs.GetString("YKYToolkit/UpmInstallerWindowPackageLists");
 
-            try
-            {
-                var wrapper = JsonUtility.FromJson<UpmPackageListsWrapper>(json);
-                packageLists.Clear();
-                packageLists.AddRange(wrapper.wrapPackageLists);
-            }
-            catch
-            {
-                // ignored
-            }
+            if (!JsonUtils.TryFromJson<UpmPackageListsWrapper>(json, out var result, out _)) return;
+
+            packageLists.Clear();
+            packageLists.AddRange(result!.wrapPackageLists);
         }
 
         public static void ImportPackages(UpmPackageListWrapper wrapper)
