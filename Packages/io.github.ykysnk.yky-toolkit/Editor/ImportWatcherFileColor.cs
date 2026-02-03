@@ -1,10 +1,12 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 
 namespace io.github.ykysnk.ykyToolkit.Editor
 {
     [Serializable]
-    public class ImportWatcherFileColor
+    [SuppressMessage("ReSharper", "NonReadonlyMemberInGetHashCode")]
+    public class ImportWatcherFileColor : IEquatable<ImportWatcherFileColor>
     {
         public static readonly ImportWatcherFileColor[] DefaultColors =
         {
@@ -23,5 +25,18 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             this.fileExtension = fileExtension;
             this.color = color;
         }
+
+        public bool Equals(ImportWatcherFileColor? other)
+        {
+            if (other is null)
+                return false;
+            return fileExtension == other.fileExtension;
+        }
+
+        public override bool Equals(object? obj) => Equals(obj as ImportWatcherFileColor);
+        public override int GetHashCode() => fileExtension.GetHashCode();
+
+        public override string ToString() =>
+            $"{nameof(ImportWatcherFileColor)}(fileExtension: {fileExtension}, color: {color})";
     }
 }
