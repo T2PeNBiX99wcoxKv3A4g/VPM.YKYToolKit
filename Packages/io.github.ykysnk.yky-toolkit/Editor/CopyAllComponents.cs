@@ -20,9 +20,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             var copyObject = selectedObjects[0];
             var componentDatas = copyObject.ComponentsSelect((_, component) => new ComponentData(component));
-            var copyData = new CopyData(componentDatas);
 
-            if (JsonUtils.TryToJson(copyData, out var json, out var exception))
+            if (JsonUtils.TryToJson(Wrapper.Create(componentDatas), out var json, out var exception))
                 EditorGUIUtility.systemCopyBuffer = json;
             else
                 Utils.LogWarning(nameof(CopyAllComponents),
@@ -57,13 +56,13 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         private static async UniTask PasteAsync(string copyDataJson, GameObject pasteObject)
         {
-            if (JsonUtils.TryFromJson<CopyData>(copyDataJson, out var copyData, out var exception))
+            if (JsonUtils.TryFromJson<ListWrapper<ComponentData>>(copyDataJson, out var copyData, out var exception))
             {
-                if (copyData.componentDatas.Length < 2) return;
+                if (copyData!.Count < 2) return;
 
-                for (var i = 1; i < copyData.componentDatas.Length; i++)
+                for (var i = 1; i < copyData.Count; i++)
                 {
-                    var componentData = copyData.componentDatas[i];
+                    var componentData = copyData[i];
 
                     if (!pasteObject.TryGetComponentAtIndex(i, out var component))
                     {
@@ -88,10 +87,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         private static async UniTask PasteAsyncWithTransform(string copyDataJson, GameObject pasteObject)
         {
-            if (JsonUtils.TryFromJson<CopyData>(copyDataJson, out var copyData, out var exception))
-                for (var i = 0; i < copyData.componentDatas.Length; i++)
+            if (JsonUtils.TryFromJson<ListWrapper<ComponentData>>(copyDataJson, out var copyData, out var exception))
+                for (var i = 0; i < copyData!.Count; i++)
                 {
-                    var componentData = copyData.componentDatas[i];
+                    var componentData = copyData[i];
 
                     if (!pasteObject.TryGetComponentAtIndex(i, out var component))
                     {
@@ -111,14 +110,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 }
             else
                 Utils.LogError(nameof(CopyAllComponents), $"Paste failed: {exception!.Message}\n{exception.StackTrace}");
-        }
-
-        [Serializable]
-        private struct CopyData
-        {
-            public ComponentData[] componentDatas;
-
-            public CopyData(ComponentData[] componentDatas) => this.componentDatas = componentDatas;
         }
 
         [Serializable]
