@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Linq;
 using io.github.ykysnk.utils.NonUdon;
 using UnityEditor;
@@ -8,7 +9,7 @@ using UnityEngine;
 
 namespace io.github.ykysnk.ykyToolkit.Editor
 {
-    // TODO: Menu for settings
+    // TODO: Menu for settings, import log, Editor Settings
     internal class ImportWatcher : AssetPostprocessor
     {
         internal const double DefaultDuration = 120;
@@ -16,7 +17,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         internal const string ImportHighlightColor = "YKYToolkit/ImportWatcher/Color";
         internal const string ImportHighlightDuration = "YKYToolkit/ImportWatcher/Duration";
         private static readonly HashSet<HighlightInfo> Highlights = new();
-        internal static readonly Color DefaultHighlightColor = new(1f, 0f, 0f, 0.12f);
+        internal static readonly Color DefaultHighlightColor = new(1f, 0f, 0f, 0.10f);
 
         static ImportWatcher()
         {
@@ -75,14 +76,14 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         // TODO: Make a menu
         private static Color GetColorForAsset(string path)
         {
-            return path switch
+            return Path.GetExtension(path) switch
             {
-                _ when path.EndsWith(".cs") => new(1f, 0.85f, 0.2f, 0.45f),
-                _ when path.EndsWith(".prefab") => new(0.4f, 0.6f, 1f, 0.45f),
-                _ when path.EndsWith(".png") || path.EndsWith(".jpg") || path.EndsWith(".tga") => new(0.4f, 1f,
+                ".cs" => new(1f, 0.85f, 0.2f, 0.45f),
+                ".prefab" => new(0.4f, 0.6f, 1f, 0.45f),
+                ".png" or ".jpg" or ".tga" => new(0.4f, 1f,
                     0.4f, 0.45f),
-                _ when path.EndsWith(".mat") => new(0.8f, 0.4f, 1f, 0.45f),
-                _ when path.EndsWith(".anim") => new(1f, 0.5f, 0.3f, 0.45f),
+                ".mat" => new(0.8f, 0.4f, 1f, 0.45f),
+                ".anim" => new(1f, 0.5f, 0.3f, 0.45f),
                 _ => new(1, 1, 1, 0.45f)
             };
         }
@@ -103,16 +104,16 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         private static void Save()
         {
-            if (!JsonUtils.TryToJson(Highlights.ToArray(), out var json, out _)) return;
+            if (!JsonUtils.TryToJson(Wrapper.Create(Highlights), out var json, out _)) return;
             PlayerPrefs.SetString(ImportHighlights, json);
         }
 
-        private static bool Load(out HighlightInfo[] infos)
+        private static bool Load(out List<HighlightInfo> infos)
         {
-            infos = Array.Empty<HighlightInfo>();
-            if (!JsonUtils.TryFromJson<HighlightInfos>(PlayerPrefs.GetString(ImportHighlights, ""),
+            infos = new();
+            if (!JsonUtils.TryFromJson<ListWrapper<HighlightInfo>>(PlayerPrefs.GetString(ImportHighlights, ""),
                     out var get, out _)) return false;
-            infos = get?.infos ?? Array.Empty<HighlightInfo>();
+            infos.AddRange(get!.items);
             return true;
         }
 
@@ -139,13 +140,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             public override int GetHashCode() => path.GetHashCode();
 
             public override bool Equals(object? obj) => Equals((HighlightInfo?)obj);
-        }
-
-        [Serializable]
-        private class HighlightInfos
-        {
-            public HighlightInfo[] infos;
-            public HighlightInfos(HighlightInfo[] infos) => this.infos = infos;
         }
     }
 }
