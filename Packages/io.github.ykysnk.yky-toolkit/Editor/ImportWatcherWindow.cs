@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using io.github.ykysnk.utils.Editor;
 using io.github.ykysnk.utils.NonUdon;
 using UnityEditor;
@@ -15,7 +16,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         [SerializeField] private VisualTreeAsset? uxml;
         [SerializeField] private List<ImportWatcherFileColor> fileColors = new();
 
-        private void OnDestroy() => SaveFileColorList();
+        private void OnDestroy()
+        {
+            Distinct();
+            SaveFileColorList();
+        }
 
         private void CreateGUI()
         {
@@ -25,6 +30,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             tree.Bind(serializedObject);
             rootVisualElement.Add(tree);
             LoadFileColorList();
+            Distinct();
 
             var colorField = tree.Q<ColorField>("color");
             colorField.value = ColorUtility.TryParseHtmlString(EditorPrefs.GetString(ImportWatcher.ImportHighlightColor),
@@ -63,6 +69,13 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             fileColors.Clear();
             fileColors.AddRange(colors!);
+        }
+
+        private void Distinct()
+        {
+            var newList = fileColors.Distinct();
+            fileColors.Clear();
+            fileColors.AddRange(newList);
         }
 
         private void SaveFileColorList()
