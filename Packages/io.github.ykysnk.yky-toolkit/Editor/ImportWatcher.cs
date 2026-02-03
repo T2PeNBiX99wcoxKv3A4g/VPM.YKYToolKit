@@ -13,6 +13,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
     {
         private const double Duration = 120;
 
+        // TODO: Add or change new time
         private static readonly HashSet<HighlightInfo> Highlights = new();
         private static readonly Color HighlightColor = new(1f, 0f, 0f, 0.12f);
 
