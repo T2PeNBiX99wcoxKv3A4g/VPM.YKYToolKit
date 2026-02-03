@@ -16,6 +16,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private const string ImportHighlights = "YKYToolkit/ImportWatcher/ImportHighlights";
         internal const string ImportHighlightColor = "YKYToolkit/ImportWatcher/Color";
         internal const string ImportHighlightDuration = "YKYToolkit/ImportWatcher/Duration";
+        internal const string ImportHighlightFileColor = "YKYToolkit/ImportWatcher/FileColor";
         private static readonly HashSet<HighlightInfo> Highlights = new();
         internal static readonly Color DefaultHighlightColor = new(1f, 0f, 0f, 0.10f);
 
@@ -33,6 +34,20 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 : DefaultHighlightColor;
 
         private static double Duration => EditorPrefs.GetFloat(ImportHighlightDuration, (float)DefaultDuration);
+
+        private static List<ImportWatcherFileColor> FileColors
+        {
+            get
+            {
+                var json = EditorPrefs.GetString(ImportHighlightFileColor);
+
+                if (string.IsNullOrEmpty(json) ||
+                    !JsonUtils.TryFromJson<ListWrapper<ImportWatcherFileColor>>(json, out var colors, out _))
+                    return new(ImportWatcherFileColor.DefaultColors);
+
+                return colors!.items;
+            }
+        }
 
         private static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets,
             string[] movedFromAssetPaths)
@@ -73,19 +88,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             EditorGUI.DrawRect(bar, tint);
         }
 
-        // TODO: Make a menu
         private static Color GetColorForAsset(string path)
         {
-            return Path.GetExtension(path) switch
-            {
-                ".cs" => new(1f, 0.85f, 0.2f, 0.45f),
-                ".prefab" => new(0.4f, 0.6f, 1f, 0.45f),
-                ".png" or ".jpg" or ".tga" => new(0.4f, 1f,
-                    0.4f, 0.45f),
-                ".mat" => new(0.8f, 0.4f, 1f, 0.45f),
-                ".anim" => new(1f, 0.5f, 0.3f, 0.45f),
-                _ => new(1, 1, 1, 0.45f)
-            };
+            var fileColor = FileColors.FirstOrDefault(x => Path.GetExtension(path) == x.fileExtension);
+            return fileColor?.color ?? ImportWatcherFileColor.DefaultColor;
         }
 
         private static void CleanupExpired()
