@@ -1,4 +1,4 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="True">
     <Style src="project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/UpmPackageListWrapperEditor.uss?fileID=7433441132597879392&amp;guid=bb0de447f8c41b547adea973d09de041&amp;type=3#UpmPackageListWrapperEditor"/>
     <ui:VisualElement style="flex-direction: row;">
         <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" binding-path="wrapName"

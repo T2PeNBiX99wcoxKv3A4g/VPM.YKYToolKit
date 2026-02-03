@@ -1,4 +1,4 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="True">
     <Style src="project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/UnityResourceMonitor.uss?fileID=7433441132597879392&amp;guid=25f427bf8ebb416438d9843074da83cf&amp;type=3#UnityResourceMonitor"/>
     <ui:VisualElement class="root">
         <ui:Label text="Unity Editor Resource Monitor" name="title" class="title" style="display: none;"/>

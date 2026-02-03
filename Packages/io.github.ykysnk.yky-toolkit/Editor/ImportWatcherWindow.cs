@@ -28,6 +28,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             colorField.RegisterValueChangedCallback(evt =>
                 EditorPrefs.SetString(ImportWatcher.ImportHighlightColor,
                     $"#{ColorUtility.ToHtmlStringRGBA(evt.newValue)}"));
+
+            var doubleField = tree.Q<DoubleField>("duration");
+            doubleField.value =
+                EditorPrefs.GetFloat(ImportWatcher.ImportHighlightDuration, (float)ImportWatcher.DefaultDuration);
+            doubleField.RegisterValueChangedCallback(evt =>
+                EditorPrefs.SetFloat(ImportWatcher.ImportHighlightDuration, (float)evt.newValue));
         }
 
         [MenuItem("Tools/YKYToolkit/Import Watcher Window")]

@@ -11,11 +11,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
     // TODO: Menu for settings
     internal class ImportWatcher : AssetPostprocessor
     {
-        private const double Duration = 120;
+        internal const double DefaultDuration = 120;
         private const string ImportHighlights = "YKYToolkit/ImportWatcher/ImportHighlights";
         internal const string ImportHighlightColor = "YKYToolkit/ImportWatcher/Color";
-
-        // TODO: Add or change new time
+        internal const string ImportHighlightDuration = "YKYToolkit/ImportWatcher/Duration";
         private static readonly HashSet<HighlightInfo> Highlights = new();
         internal static readonly Color DefaultHighlightColor = new(1f, 0f, 0f, 0.12f);
 
@@ -32,6 +31,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 ? color
                 : DefaultHighlightColor;
 
+        private static double Duration => EditorPrefs.GetFloat(ImportHighlightDuration, (float)DefaultDuration);
+
         private static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets,
             string[] movedFromAssetPaths)
         {
@@ -41,12 +42,22 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             CleanupMissingAssets();
 
             foreach (var path in importedAssets)
-                Highlights.Add(new(path, EditorApplication.timeSinceStartup + Duration));
+                AddOrUpdate(path);
 
             foreach (var path in movedAssets)
-                Highlights.Add(new(path, EditorApplication.timeSinceStartup + Duration));
+                AddOrUpdate(path);
 
             Save();
+        }
+
+        private static void AddOrUpdate(string path)
+        {
+            var add = new HighlightInfo(path, EditorApplication.timeSinceStartup + Duration);
+
+            if (Highlights.Contains(add))
+                Highlights.Remove(add);
+
+            Highlights.Add(add);
         }
 
         private static void OnProjectItemGUI(string guid, Rect rect)
