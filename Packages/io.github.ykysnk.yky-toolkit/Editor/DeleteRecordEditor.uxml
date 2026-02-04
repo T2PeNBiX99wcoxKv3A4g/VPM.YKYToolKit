@@ -17,7 +17,7 @@
                 <ui:Label name="time" class="delete-history-item__time"/>
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement class="delete-history-item__button-container">
+        <ui:VisualElement class="delete-history-item__button-container" style="display: none;">
             <ui:Button text="Copy Path" name="copyPath" class="delete-history-item__button"/>
             <ui:Button text="Copy GUID" name="copyGuid" class="delete-history-item__button"/>
         </ui:VisualElement>

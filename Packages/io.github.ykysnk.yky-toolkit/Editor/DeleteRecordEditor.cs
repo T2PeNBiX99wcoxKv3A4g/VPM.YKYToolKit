@@ -24,16 +24,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var extensionProperty = property.FindPropertyRelative("extension");
             var unixSecondsProperty = property.FindPropertyRelative("unixSeconds");
 
-            var pathLabel = tree.Q<Label>("path");
             var guidLabel = tree.Q<Label>("guid");
             var extLabel = tree.Q<Label>("ext");
             var timeLabel = tree.Q<Label>("time");
 
             UpdateLabels();
             tree.TrackPropertyValue(property, _ => UpdateLabels());
-
-            tree.Q<Button>("copyPath").clicked += () => EditorGUIUtility.systemCopyBuffer = pathLabel.text;
-            tree.Q<Button>("copyGuid").clicked += () => EditorGUIUtility.systemCopyBuffer = guidProperty.stringValue;
 
             return tree;
 

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using io.github.ykysnk.utils.Editor;
 using UnityEditor;
 using UnityEditor.UIElements;
@@ -35,6 +36,18 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             _emptyLabel = tree.Q<Label>("emptyLabel");
             _listView = tree.Q<ListView>("listView");
+            _listView.AddManipulator(new ContextualMenuManipulator(evt =>
+            {
+                if (!_listView.selectedIndices.Any() || _listView.selectedIndex < 0)
+                    return;
+
+                var selected = records[_listView.selectedIndex];
+
+                evt.menu.AppendAction("label.delete_record.copy_path".S(),
+                    _ => EditorGUIUtility.systemCopyBuffer = selected.path);
+                evt.menu.AppendAction("label.delete_record.copy_guid".S(),
+                    _ => EditorGUIUtility.systemCopyBuffer = selected.guid);
+            }));
 
             UpdateVisibility();
         }
