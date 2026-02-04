@@ -75,8 +75,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     Utils.LogError(nameof(ForceClearTempFiles), $"Delete Error: {ex.Message}\n{ex.StackTrace}");
                 }
             });
-
-            Progress.UnregisterCancelCallback(progressId);
         }
     }
 }
