@@ -241,6 +241,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                         : DropdownMenuAction.Status.Disabled);
             }));
 
+            Undo.undoRedoPerformed += () =>
+            {
+                rotationField.SetValueWithoutNotify(theTarget.localEulerAngles.DeltaAngle());
+                globalRotationField.SetValueWithoutNotify(theTarget.eulerAngles.DeltaAngle());
+            };
+
             rotationField.ResetButton.clicked += ResetLocalRotation;
             rotationField.RandomButton.clicked += RandomLocalRotation;
             globalRotationField.ResetButton.clicked += ResetGlobalRotation;
