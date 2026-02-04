@@ -75,9 +75,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         public static void Initialize(string id)
         {
             if (_initialized)
-            {
                 return;
-            }
 
             _clientId = id;
 
