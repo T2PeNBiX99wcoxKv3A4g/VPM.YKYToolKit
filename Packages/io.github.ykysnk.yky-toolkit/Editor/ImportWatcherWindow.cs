@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using io.github.ykysnk.utils;
 using io.github.ykysnk.utils.Editor;
 using io.github.ykysnk.utils.Extensions;
 using io.github.ykysnk.utils.NonUdon;
@@ -75,7 +74,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         {
             if (!JsonUtils.TryToJson(Wrapper.Create(fileColors), out var json, out _)) return;
             EditorPrefs.SetString(ImportWatcher.ImportHighlightFileColor, json);
-            Utils.Log(nameof(SaveFileColorList), $"Test saved: {json}, {string.Join(',', fileColors)}");
         }
 
         [MenuItem("Tools/YKYToolkit/Import Watcher Window")]
