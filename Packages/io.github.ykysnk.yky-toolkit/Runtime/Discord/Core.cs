@@ -698,22 +698,18 @@ namespace io.github.ykysnk.ykyToolkit.Discord
 
         public void Filter(string key, LobbySearchComparison comparison, LobbySearchCast cast, string value)
         {
-            if (MethodsPtr != IntPtr.Zero)
-            {
-                var res = Methods.Filter(MethodsPtr, key, comparison, cast, value);
-                if (res != Result.Ok)
-                    throw new ResultException(res);
-            }
+            if (MethodsPtr == IntPtr.Zero) return;
+            var res = Methods.Filter(MethodsPtr, key, comparison, cast, value);
+            if (res != Result.Ok)
+                throw new ResultException(res);
         }
 
         public void Sort(string key, LobbySearchCast cast, string value)
         {
-            if (MethodsPtr != IntPtr.Zero)
-            {
-                var res = Methods.Sort(MethodsPtr, key, cast, value);
-                if (res != Result.Ok)
-                    throw new ResultException(res);
-            }
+            if (MethodsPtr == IntPtr.Zero) return;
+            var res = Methods.Sort(MethodsPtr, key, cast, value);
+            if (res != Result.Ok)
+                throw new ResultException(res);
         }
 
         public void Limit(uint limit)
