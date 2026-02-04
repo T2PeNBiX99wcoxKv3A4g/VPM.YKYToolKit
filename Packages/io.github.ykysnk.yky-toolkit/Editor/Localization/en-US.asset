@@ -286,3 +286,12 @@ MonoBehaviour:
   - key: label.enhanced_transform_inspector.scale_link_disable
     translate: Disable constrained proportions
     tooltip: 
+  - key: label.import_watcher.color
+    translate: Highlight Color
+    tooltip: 
+  - key: label.import_watcher.duration
+    translate: Highlight Duration
+    tooltip: 
+  - key: label.import_watcher.file_extension_colors
+    translate: Highlight colors for file extensions
+    tooltip: 

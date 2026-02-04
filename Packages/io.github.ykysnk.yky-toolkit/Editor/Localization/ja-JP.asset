@@ -241,3 +241,12 @@ MonoBehaviour:
   - key: label.enhanced_transform_inspector.scale_link_disable
     translate: "\u6BD4\u7387\u306E\u56FA\u5B9A\u3092\u89E3\u9664\u3059\u308B"
     tooltip: 
+  - key: label.import_watcher.color
+    translate: "\u30CF\u30A4\u30E9\u30A4\u30C8\u8272"
+    tooltip: 
+  - key: label.import_watcher.duration
+    translate: "\u30CF\u30A4\u30E9\u30A4\u30C8\u306E\u6301\u7D9A\u6642\u9593"
+    tooltip: 
+  - key: label.import_watcher.file_extension_colors
+    translate: "\u30D5\u30A1\u30A4\u30EB\u62E1\u5F35\u5B50\u306E\u30CF\u30A4\u30E9\u30A4\u30C8\u8272"
+    tooltip: 
