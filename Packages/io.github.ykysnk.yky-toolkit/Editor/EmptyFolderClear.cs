@@ -7,6 +7,8 @@ using Cysharp.Threading.Tasks;
 using io.github.ykysnk.utils;
 using io.github.ykysnk.utils.Editor;
 using io.github.ykysnk.utils.Extensions;
+using io.github.ykysnk.utils.NonUdon;
+using io.github.ykysnk.utils.NonUdon.Extensions;
 using UnityEditor;
 using Progress = UnityEditor.Progress;
 
@@ -36,13 +38,13 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 return true;
             });
 
-            try
+            var result = await Try.Run(async () =>
             {
                 var reportPaths = await GetEmptyFolders();
                 if (reportPaths.Count < 1)
                 {
                     await EditorUtils.DisplayDialogAsync(Title.S(), "label.empty_folder_clear.no_empty_folders".S());
-                    Progress.Report(progressId, 1, "No empty folders found.");
+                    Progress.Report(progressId, 1, "No empty folders were found.");
                     Progress.Finish(progressId);
                     return;
                 }
@@ -74,22 +76,23 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 }
 
                 Progress.Finish(progressId);
-            }
-            catch (OperationCanceledException)
+            });
+
+            result.OnFailure(ex =>
             {
-                Progress.Finish(progressId, Progress.Status.Canceled);
-                Utils.LogWarning(nameof(EmptyFolderClear), "Installation cancelled.");
-            }
-            catch (Exception ex)
-            {
-                Progress.Finish(progressId, Progress.Status.Failed);
-                Utils.LogError(nameof(EmptyFolderClear), $"Installation Error: {ex.Message}\n{ex.StackTrace}");
-            }
-            finally
-            {
-                Interlocked.Exchange(ref _isWorking, 0);
-                Progress.UnregisterCancelCallback(progressId);
-            }
+                if (ex is OperationCanceledException)
+                {
+                    Progress.Finish(progressId, Progress.Status.Canceled);
+                    Utils.LogWarning(nameof(EmptyFolderClear), "Installation cancelled.");
+                }
+                else
+                {
+                    Progress.Finish(progressId, Progress.Status.Failed);
+                    Utils.LogError(nameof(EmptyFolderClear), $"Installation Error: {ex.Message}\n{ex.StackTrace}");
+                }
+            });
+
+            Interlocked.Exchange(ref _isWorking, 0);
         }
 
         private static async UniTask<List<string>> GetEmptyFolders()
