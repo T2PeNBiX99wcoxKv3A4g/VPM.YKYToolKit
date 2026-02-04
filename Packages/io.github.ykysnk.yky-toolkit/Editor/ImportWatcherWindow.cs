@@ -15,6 +15,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         [SerializeField] private VisualTreeAsset? uxml;
         [SerializeField] private List<ImportWatcherFileColor> fileColors = new();
+        [SerializeField] private List<ImportSession> sessions = new();
 
         private static bool SettingsExpanded
         {
@@ -38,6 +39,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             LoadFileColorList();
             fileColors.Rebuild();
 
+            RefreshImportLog();
+
             var settingsFoldout = tree.Q<Foldout>("settings");
             settingsFoldout.SetValueWithoutNotify(SettingsExpanded);
             settingsFoldout.RegisterValueChangedCallback(evt => SettingsExpanded = evt.newValue);
@@ -56,6 +59,34 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             addButton.clicked += SaveFileColorList;
             removeButton.clicked += SaveFileColorList;
+
+            var refreshButton = tree.Q<ToolbarButton>("importLogRefresh");
+            var clearButton = tree.Q<ToolbarButton>("importLogClear");
+            var emptyLabel = tree.Q<Label>("importLogEmpty");
+            var listView = tree.Q<ListView>("importLogList");
+
+            refreshButton?.RegisterCallback<ClickEvent>(_ => RefreshImportLog());
+            clearButton?.RegisterCallback<ClickEvent>(_ =>
+            {
+                if (EditorUtility.DisplayDialog("Clear Import Log",
+                        "Are you sure you want to clear all import log records?",
+                        "Clear", "Cancel"))
+                {
+                    ImportHistoryManager.Clear();
+                    RefreshImportLog();
+                }
+            });
+
+            void UpdateVisibility()
+            {
+                if (emptyLabel != null)
+                    emptyLabel.style.display = sessions.Count > 0 ? DisplayStyle.None : DisplayStyle.Flex;
+                if (listView != null)
+                    listView.style.display = sessions.Count > 0 ? DisplayStyle.Flex : DisplayStyle.None;
+            }
+
+            UpdateVisibility();
+            rootVisualElement.RegisterCallback<GeometryChangedEvent>(_ => UpdateVisibility());
         }
 
         private void LoadFileColorList()
@@ -67,6 +98,21 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private void SaveFileColorList()
         {
             ImportWatcher.ColorList = fileColors;
+        }
+
+        private void RefreshImportLog()
+        {
+            sessions.Clear();
+            sessions.AddRange(ImportHistoryManager.AllSessions());
+            sessions.Reverse();
+            sessions.Rebuild();
+
+            var emptyLabel = rootVisualElement.Q<Label>("importLogEmpty");
+            var listView = rootVisualElement.Q<ListView>("importLogList");
+            if (emptyLabel != null)
+                emptyLabel.style.display = sessions.Count > 0 ? DisplayStyle.None : DisplayStyle.Flex;
+            if (listView != null)
+                listView.style.display = sessions.Count > 0 ? DisplayStyle.Flex : DisplayStyle.None;
         }
 
         [MenuItem("Tools/YKYToolkit/Import Watcher Window", false, Util.Three)]

@@ -1,5 +1,14 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
     <Style src="project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/ImportWatcherWindow.uss?fileID=7433441132597879392&amp;guid=cb3f7d18f6e8d4e4d8f0d704c12890d4&amp;type=3#ImportWatcherWindow"/>
+    <uie:Toolbar>
+        <uie:ToolbarButton text="Refresh" name="importLogRefresh"/>
+        <uie:ToolbarButton text="Clear" name="importLogClear"/>
+    </uie:Toolbar>
+    <ui:ListView show-alternating-row-backgrounds="ContentOnly" selection-type="Multiple"
+                 virtualization-method="DynamicHeight" name="importLogList" binding-path="sessions"
+                 show-bound-collection-size="false" style="flex-grow: 1;"/>
+    <ui:Label text="No import log." name="importLogEmpty"
+              style="unity-font-style: bold; color: rgb(150, 150, 150); margin-top: 6px; margin-left: 6px;"/>
     <ui:VisualElement style="padding-top: 8px; padding-right: 8px; padding-bottom: 8px; padding-left: 8px;">
         <ui:Foldout text="label.import_watcher.settings" value="false" name="settings">
             <uie:ColorField label="label.import_watcher.color" value="RGBA(0.000, 1.000, 1.000, 1.000)" name="color"/>
