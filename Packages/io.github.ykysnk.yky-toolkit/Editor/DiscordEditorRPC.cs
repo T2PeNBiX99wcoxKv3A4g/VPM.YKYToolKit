@@ -1,5 +1,7 @@
 using System;
 using io.github.ykysnk.utils;
+using io.github.ykysnk.utils.NonUdon;
+using io.github.ykysnk.utils.NonUdon.Extensions;
 using io.github.ykysnk.ykyToolkit.Discord;
 using JetBrains.Annotations;
 using UnityEditor;
@@ -79,7 +81,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             _clientId = id;
 
-            try
+            Try.Run(() =>
             {
                 _discord = new(
                     long.Parse(_clientId),
@@ -91,8 +93,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 _startTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
 
                 Utils.Log(nameof(DiscordEditorRPC), "Discord SDK initialized.");
-            }
-            catch (Exception ex)
+            }).OnFailure(ex =>
             {
                 _discord = null;
                 _activityManager = null;
@@ -101,7 +102,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
                 Utils.LogError(nameof(DiscordEditorRPC),
                     $"Failed to initialize Discord SDK. {ex.Message}\n{ex.StackTrace}");
-            }
+            });
         }
 
         public static void SetActivity(string details, string state,
@@ -163,17 +164,13 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             if (_discord == null) return;
 
-            try
-            {
-                _discord.RunCallbacks();
-            }
-            catch (Exception ex)
+            Try.Run(() => _discord.RunCallbacks()).OnFailure(ex =>
             {
                 Utils.LogWarning(nameof(DiscordEditorRPC),
                     $"Discord SDK callbacks failed. Attempting to reconnect. {ex.Message}\n{ex.StackTrace}");
                 Shutdown();
                 ResetRetryTime();
-            }
+            });
         }
 
         public static void Shutdown()
@@ -181,23 +178,15 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             if (!_initialized)
                 return;
 
-            try
-            {
-                _discord?.Dispose();
-            }
-            catch (Exception ex)
-            {
-                Utils.LogWarning(nameof(DiscordEditorRPC), $"Discord SDK dispose failed. {ex.Message}\n{ex.StackTrace}");
-            }
-            finally
-            {
-                _discord = null;
-                _activityManager = null;
-                _initialized = false;
-                ResetRetryTime();
+            Try.Run(() => _discord?.Dispose()).OnFailure(ex =>
+                Utils.LogWarning(nameof(DiscordEditorRPC), $"Discord SDK dispose failed. {ex.Message}\n{ex.StackTrace}"));
 
-                Utils.Log(nameof(DiscordEditorRPC), "Discord SDK shutdown.");
-            }
+            _discord = null;
+            _activityManager = null;
+            _initialized = false;
+            ResetRetryTime();
+
+            Utils.Log(nameof(DiscordEditorRPC), "Discord SDK shutdown.");
         }
 
         private static void ResetRetryTime() => _lastRetryTime = EditorApplication.timeSinceStartup;

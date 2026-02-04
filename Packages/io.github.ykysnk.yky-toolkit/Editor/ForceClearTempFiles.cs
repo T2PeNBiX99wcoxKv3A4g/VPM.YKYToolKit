@@ -4,6 +4,8 @@ using System.IO;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using io.github.ykysnk.utils;
+using io.github.ykysnk.utils.NonUdon;
+using io.github.ykysnk.utils.NonUdon.Extensions;
 using UnityEditor;
 using UnityEngine;
 using Progress = UnityEditor.Progress;
@@ -35,7 +37,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 return true;
             });
 
-            try
+            var result = await Try.Run(async () =>
             {
                 foreach (var clearFolder in ClearFolders)
                 {
@@ -58,21 +60,23 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 }
 
                 Progress.Finish(progressId);
-            }
-            catch (OperationCanceledException)
+            });
+
+            result.OnFailure(ex =>
             {
-                Progress.Finish(progressId, Progress.Status.Canceled);
-                Utils.LogWarning(nameof(ForceClearTempFiles), "Installation cancelled.");
-            }
-            catch (Exception ex)
-            {
-                Progress.Finish(progressId, Progress.Status.Failed);
-                Utils.LogError(nameof(ForceClearTempFiles), $"Delete Error: {ex.Message}\n{ex.StackTrace}");
-            }
-            finally
-            {
-                Progress.UnregisterCancelCallback(progressId);
-            }
+                if (ex is OperationCanceledException)
+                {
+                    Progress.Finish(progressId, Progress.Status.Canceled);
+                    Utils.LogWarning(nameof(ForceClearTempFiles), "Installation cancelled.");
+                }
+                else
+                {
+                    Progress.Finish(progressId, Progress.Status.Failed);
+                    Utils.LogError(nameof(ForceClearTempFiles), $"Delete Error: {ex.Message}\n{ex.StackTrace}");
+                }
+            });
+
+            Progress.UnregisterCancelCallback(progressId);
         }
     }
 }
