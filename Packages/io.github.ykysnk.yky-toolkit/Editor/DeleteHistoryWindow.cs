@@ -11,11 +11,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
     {
         [SerializeField] private VisualTreeAsset? uxml;
         [SerializeField] private List<DeleteRecord> records = new();
+
         private ToolbarButton? _clearButton;
         private Label? _emptyLabel;
-
         private ListView? _listView;
-
         private ToolbarButton? _refreshButton;
 
         private void OnEnable()
