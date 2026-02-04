@@ -68,7 +68,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private static void MenuRestart()
         {
             Shutdown();
-            Initialize(ApplicationId);
+            ResetRetryTime();
+            Utils.Log(nameof(DiscordEditorRPC), "Discord SDK will restart after 10 seconds.");
         }
 
         private static void DelayedInit()
@@ -103,7 +104,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 _discord = null;
                 _activityManager = null;
                 _initialized = false;
-                _lastRetryTime = EditorApplication.timeSinceStartup;
+                ResetRetryTime();
 
                 Utils.LogError(nameof(DiscordEditorRPC),
                     $"Failed to initialize Discord SDK.\n{ex.Message}\n{ex.StackTrace}");
@@ -178,7 +179,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 Utils.LogWarning(nameof(DiscordEditorRPC),
                     $"Discord SDK callbacks failed. Attempting to reconnect.\n{ex.Message}");
                 Shutdown();
-                _lastRetryTime = EditorApplication.timeSinceStartup;
+                ResetRetryTime();
             }
         }
 
@@ -201,9 +202,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 _discord = null;
                 _activityManager = null;
                 _initialized = false;
+                ResetRetryTime();
 
                 Utils.Log(nameof(DiscordEditorRPC), "Discord SDK shutdown.");
             }
         }
+
+        private static void ResetRetryTime() => _lastRetryTime = EditorApplication.timeSinceStartup;
     }
 }
