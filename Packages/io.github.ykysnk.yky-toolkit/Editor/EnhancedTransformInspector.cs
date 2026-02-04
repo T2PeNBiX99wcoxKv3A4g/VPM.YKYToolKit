@@ -28,6 +28,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
     {
         [SerializeField] private VisualTreeAsset? uxml;
         private UnityEditor.Editor? _defaultEditor;
+        private VisualElement? _root;
 
         private static bool IsDefaultUIExpanded
         {
@@ -53,10 +54,33 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             set => EditorPrefs.SetInt("YKYToolkit/TransformAlignMode", (int)value);
         }
 
+        protected override void OnEnable()
+        {
+            Undo.undoRedoPerformed += RefreshRotationFields;
+        }
+
+        private void OnDisable()
+        {
+            Undo.undoRedoPerformed -= RefreshRotationFields;
+        }
+
         private void OnDestroy()
         {
             if (_defaultEditor != null)
                 DestroyImmediate(_defaultEditor);
+        }
+
+        private void RefreshRotationFields()
+        {
+            if (target == null || _root == null) return;
+            var theTarget = (Transform)target;
+
+            var tree = _root;
+            var rotationField = tree.Q<Vector3FieldExtra>("rotation");
+            var globalRotationField = tree.Q<Vector3FieldExtra>("globalRotation");
+
+            rotationField?.SetValueWithoutNotify(theTarget.localEulerAngles.DeltaAngle());
+            globalRotationField?.SetValueWithoutNotify(theTarget.eulerAngles.DeltaAngle());
         }
 
         protected override VisualElement? CreateErrorHandleInspectorGUI()
@@ -66,6 +90,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             var theTarget = (Transform)target;
             var tree = uxml!.CloneTree();
+            _root = tree;
             InternalLocalizationExtensions.Helper.UILocalize(tree);
             tree.Bind(serializedObject);
 
@@ -240,12 +265,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                         ? DropdownMenuAction.Status.Normal
                         : DropdownMenuAction.Status.Disabled);
             }));
-
-            Undo.undoRedoPerformed += () =>
-            {
-                rotationField.SetValueWithoutNotify(theTarget.localEulerAngles.DeltaAngle());
-                globalRotationField.SetValueWithoutNotify(theTarget.eulerAngles.DeltaAngle());
-            };
 
             rotationField.ResetButton.clicked += ResetLocalRotation;
             rotationField.RandomButton.clicked += RandomLocalRotation;
