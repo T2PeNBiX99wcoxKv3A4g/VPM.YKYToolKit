@@ -1,6 +1,4 @@
 using System;
-using System.IO;
-using io.github.ykysnk.utils;
 using io.github.ykysnk.utils.Editor;
 using UnityEditor;
 using UnityEditor.UIElements;
@@ -36,29 +34,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             tree.Q<Button>("copyPath").clicked += () => EditorGUIUtility.systemCopyBuffer = pathLabel.text;
             tree.Q<Button>("copyGuid").clicked += () => EditorGUIUtility.systemCopyBuffer = guidProperty.stringValue;
-
-            tree.Q<Button>("ping").clicked += () =>
-            {
-                var path = pathLabel.text;
-                var obj = AssetDatabase.LoadMainAssetAtPath(path);
-                if (obj != null)
-                {
-                    EditorGUIUtility.PingObject(obj);
-                    Selection.activeObject = obj;
-                }
-                else
-                    Utils.LogWarning(nameof(DeleteRecordEditor), $"Asset not found in project: {path}");
-            };
-
-            tree.Q<Button>("reveal").clicked += () =>
-            {
-                var path = pathLabel.text;
-                var dir = Path.GetDirectoryName(path);
-                if (!string.IsNullOrEmpty(dir) && Directory.Exists(dir))
-                    EditorUtility.RevealInFinder(dir);
-                else
-                    Utils.LogWarning(nameof(DeleteRecordEditor), $"Folder not found: {dir}");
-            };
 
             return tree;
 

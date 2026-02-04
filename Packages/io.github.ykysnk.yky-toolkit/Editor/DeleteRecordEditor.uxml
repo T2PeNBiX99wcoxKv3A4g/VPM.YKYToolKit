@@ -3,25 +3,23 @@
     <ui:VisualElement class="delete-history-item">
         <ui:VisualElement name="infoContainer">
             <ui:VisualElement style="flex-direction: row;">
-                <ui:Label text="Path: " class="delete-history-item__path" style="margin-right: 0;"/>
+                <ui:Label text="label.delete_record.path" class="delete-history-item__path" style="margin-right: 0;"/>
                 <ui:Label name="path" binding-path="path" class="delete-history-item__path"/>
             </ui:VisualElement>
             <ui:VisualElement style="flex-direction: row;">
-                <ui:Label text="GUID: " class="delete-history-item__guid" style="margin-right: 0;"/>
+                <ui:Label text="label.delete_record.guid" class="delete-history-item__guid" style="margin-right: 0;"/>
                 <ui:Label name="guid" class="delete-history-item__guid"/>
             </ui:VisualElement>
             <ui:VisualElement class="delete-history-item__meta-container">
-                <ui:Label text="Ext: " class="delete-history-item__ext" style="margin-right: 0;"/>
+                <ui:Label text="label.delete_record.ext" class="delete-history-item__ext" style="margin-right: 0;"/>
                 <ui:Label name="ext" class="delete-history-item__ext" style="margin-right: 10;"/>
-                <ui:Label text="Time: " class="delete-history-item__time" style="margin-right: 0;"/>
+                <ui:Label text="label.delete_record.time" class="delete-history-item__time" style="margin-right: 0;"/>
                 <ui:Label name="time" class="delete-history-item__time"/>
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement class="delete-history-item__button-container">
             <ui:Button text="Copy Path" name="copyPath" class="delete-history-item__button"/>
             <ui:Button text="Copy GUID" name="copyGuid" class="delete-history-item__button"/>
-            <ui:Button text="Ping In Project" name="ping" class="delete-history-item__button--wide"/>
-            <ui:Button text="Reveal Folder" name="reveal" class="delete-history-item__button--wide"/>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

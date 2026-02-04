@@ -307,3 +307,21 @@ MonoBehaviour:
   - key: label.preferences_page.import_watcher
     translate: Import Watcher
     tooltip: 
+  - key: label.delete_record.refresh
+    translate: Refresh
+    tooltip: 
+  - key: label.delete_record.clear
+    translate: Clear
+    tooltip: 
+  - key: label.delete_record.path
+    translate: 'Path: '
+    tooltip: 
+  - key: label.delete_record.guid
+    translate: 'GUID: '
+    tooltip: 
+  - key: label.delete_record.ext
+    translate: 'Ext: '
+    tooltip: 
+  - key: label.delete_record.time
+    translate: 'Time: '
+    tooltip: 
