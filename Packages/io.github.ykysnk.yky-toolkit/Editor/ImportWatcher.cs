@@ -9,7 +9,6 @@ using UnityEngine;
 
 namespace io.github.ykysnk.ykyToolkit.Editor
 {
-    // TODO: import log, Editor Settings
     internal class ImportWatcher : AssetPostprocessor
     {
         private const double DefaultDuration = 120;
@@ -80,11 +79,35 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             CleanupExpired();
             CleanupMissingAssets();
 
+            var session = new ImportSession
+            {
+                unixSeconds = DateTimeOffset.UtcNow.ToUnixTimeSeconds()
+            };
+
             foreach (var path in importedAssets)
+            {
                 AddOrUpdate(path);
+
+                var guid = AssetDatabase.AssetPathToGUID(path);
+                var isFolder = AssetDatabase.IsValidFolder(path);
+
+                session.records.Add(new()
+                {
+                    path = path,
+                    guid = guid,
+                    name = Path.GetFileName(path),
+                    isFolder = isFolder,
+                    iconGuid = string.Empty
+                });
+
+                ImportHistoryManager.IsNewGuid(guid);
+            }
 
             foreach (var path in movedAssets)
                 AddOrUpdate(path);
+
+            if (session.records.Count > 0)
+                ImportHistoryManager.AddSession(session);
 
             Save();
         }
