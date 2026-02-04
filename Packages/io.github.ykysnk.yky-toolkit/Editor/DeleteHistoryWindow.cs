@@ -30,6 +30,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             tree.Bind(serializedObject);
             rootVisualElement.Add(tree);
 
+            Refresh();
+
             _refreshButton = tree.Q<ToolbarButton>("refreshButton");
             _refreshButton.clicked += Refresh;
 
@@ -37,7 +39,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             _clearButton.clicked += OnClearClicked;
 
             _emptyLabel = tree.Q<Label>("emptyLabel");
-
             _listView = tree.Q<ListView>("listView");
 
             UpdateVisibility();
@@ -67,8 +68,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             records.Clear();
             records.AddRange(DeleteHistoryManager.All());
             records.Reverse();
-
-            _listView?.Rebuild();
             UpdateVisibility();
         }
 
