@@ -325,3 +325,15 @@ MonoBehaviour:
   - key: label.delete_record.time
     translate: 'Time: '
     tooltip: 
+  - key: label.delete_record.copy_path
+    translate: Copy Path
+    tooltip: 
+  - key: label.delete_record.copy_guid
+    translate: Copy GUID
+    tooltip: 
+  - key: label.delete_record.unknown
+    translate: (unknown)
+    tooltip: 
+  - key: label.delete_record.none
+    translate: (none)
+    tooltip: 

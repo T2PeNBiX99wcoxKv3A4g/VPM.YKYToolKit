@@ -40,9 +40,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             void UpdateLabels()
             {
                 guidLabel.text =
-                    $"{(string.IsNullOrEmpty(guidProperty.stringValue) ? "(unknown)" : guidProperty.stringValue)}";
+                    $"{(string.IsNullOrEmpty(guidProperty.stringValue) ? "label.delete_record.unknown".S() : guidProperty.stringValue)}";
                 extLabel.text =
-                    $"{(string.IsNullOrEmpty(extensionProperty.stringValue) ? "(none)" : extensionProperty.stringValue)}";
+                    $"{(string.IsNullOrEmpty(extensionProperty.stringValue) ? "label.delete_record.none".S() : extensionProperty.stringValue)}";
 
                 var time = DateTimeOffset.FromUnixTimeSeconds(unixSecondsProperty.longValue).LocalDateTime
                     .ToString("yyyy-MM-dd HH:mm:ss");
