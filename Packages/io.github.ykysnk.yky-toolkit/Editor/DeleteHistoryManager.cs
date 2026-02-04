@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using io.github.ykysnk.utils.NonUdon;
+using JetBrains.Annotations;
 using UnityEditor;
 
 namespace io.github.ykysnk.ykyToolkit.Editor
 {
     [Serializable]
+    [PublicAPI]
     internal struct DeleteRecord
     {
         public string path;
