@@ -17,11 +17,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private ListView? _listView;
         private ToolbarButton? _refreshButton;
 
-        private void OnEnable()
-        {
-            Refresh();
-        }
-
         private void CreateGUI()
         {
             var serializedObject = new SerializedObject(this);
