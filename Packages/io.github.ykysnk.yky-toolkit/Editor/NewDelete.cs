@@ -147,30 +147,22 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
                     try
                     {
-                        byte[]? backup = null;
-
-                        if (File.Exists(path))
-                            backup = await File.ReadAllBytesAsync(path, cts.Token);
-
-                        if (backup != null)
-                            Undo.undoRedoPerformed += () => UniTask.Create(async () =>
-                            {
-                                if (!File.Exists(path))
-                                {
-                                    await File.WriteAllBytesAsync(path, backup, cts.Token);
-                                    AssetDatabase.ImportAsset(path);
-                                    await UniTask.DelayFrame(10, cancellationToken: cts.Token);
-                                }
-                                else
-                                {
-                                    if (!AssetDatabase.MoveAssetToTrash(path))
-                                        Utils.LogWarning(nameof(DeleteSelectedAssetsAsync),
-                                            $"Failed to delete: {path}");
-                                }
-                            });
-
-                        if (!AssetDatabase.MoveAssetToTrash(path))
+                        var guid = AssetDatabase.AssetPathToGUID(path);
+                        var success = AssetDatabase.MoveAssetToTrash(path);
+                        if (!success)
+                        {
                             Utils.LogWarning(nameof(DeleteSelectedAssetsAsync), $"Failed to delete: {path}");
+                        }
+                        else
+                        {
+                            DeleteHistoryManager.Add(new()
+                            {
+                                path = path,
+                                guid = guid,
+                                extension = Path.GetExtension(path),
+                                unixSeconds = DateTimeOffset.UtcNow.ToUnixTimeSeconds()
+                            });
+                        }
                     }
                     catch (Exception ex)
                     {

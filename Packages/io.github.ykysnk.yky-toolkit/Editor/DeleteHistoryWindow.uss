@@ -1,0 +1,49 @@
+.delete-history-item {
+    padding: 4px 8px;
+    border-bottom-width: 1px;
+    border-bottom-color: rgba(0.2, 0.2, 0.2, 0.5);
+}
+
+.delete-history-item__path {
+    -unity-font-style: bold;
+}
+
+.delete-history-item__guid {
+    font-size: 10px;
+    color: rgb(179, 179, 179);
+}
+
+.delete-history-item__meta-container {
+    flex-direction: row;
+}
+
+.delete-history-item__ext {
+    font-size: 10px;
+    color: rgb(153, 153, 153);
+    margin-right: 10px;
+}
+
+.delete-history-item__time {
+    font-size: 10px;
+    color: rgb(153, 153, 153);
+}
+
+.delete-history-item__button-container {
+    flex-direction: row;
+    margin-top: 4px;
+}
+
+.delete-history-item__button {
+    width: 90px;
+}
+
+.delete-history-item__button--wide {
+    width: 110px;
+}
+
+.delete-history-window__empty-label {
+    margin-top: 20px;
+    align-self: center;
+    -unity-font-style: bold;
+    color: gray;
+}

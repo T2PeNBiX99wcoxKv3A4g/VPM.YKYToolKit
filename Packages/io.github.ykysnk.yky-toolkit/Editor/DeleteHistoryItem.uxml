@@ -1,0 +1,19 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="True">
+    <Style src="project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/DeleteHistoryWindow.uss?fileID=7433441132597879392&amp;guid=740dea6a94a94abe8ac59f9a97b81da9&amp;type=3#DeleteHistoryWindow"/>
+    <ui:VisualElement class="delete-history-item">
+        <ui:VisualElement name="infoContainer">
+            <ui:Label name="path" class="delete-history-item__path"/>
+            <ui:Label name="guid" class="delete-history-item__guid"/>
+            <ui:VisualElement class="delete-history-item__meta-container">
+                <ui:Label name="ext" class="delete-history-item__ext"/>
+                <ui:Label name="time" class="delete-history-item__time"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement class="delete-history-item__button-container">
+            <ui:Button text="Copy Path" name="copyPath" class="delete-history-item__button"/>
+            <ui:Button text="Copy GUID" name="copyGuid" class="delete-history-item__button"/>
+            <ui:Button text="Ping In Project" name="ping" class="delete-history-item__button--wide"/>
+            <ui:Button text="Reveal Folder" name="reveal" class="delete-history-item__button--wide"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

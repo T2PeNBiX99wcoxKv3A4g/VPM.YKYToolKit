@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <Style src="project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/DeleteHistoryWindow.uss"/>
+    <uie:Toolbar>
+        <uie:ToolbarButton text="Refresh" name="refreshButton"/>
+        <uie:ToolbarButton text="Clear" name="clearButton"/>
+    </uie:Toolbar>
+    <ui:Label text="No delete history." name="emptyLabel" class="delete-history-window__empty-label"/>
+    <ui:ListView show-alternating-row-backgrounds="ContentOnly" selection-type="Multiple"
+                 virtualization-method="DynamicHeight" name="listView" binding-path="_records" style="flex-grow: 1;"/>
+</ui:UXML>
