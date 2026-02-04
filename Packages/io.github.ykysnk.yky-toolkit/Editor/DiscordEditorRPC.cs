@@ -55,13 +55,13 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             return true;
         }
 
-        [MenuItem("Tools/YKYToolkit/Discord SDK Initialize")]
+        [MenuItem("Tools/YKYToolkit/Discord SDK Initialize", false, Util.Four)]
         private static void MenuInitialize() => Initialize(ApplicationId);
 
-        [MenuItem("Tools/YKYToolkit/Discord SDK Shutdown")]
+        [MenuItem("Tools/YKYToolkit/Discord SDK Shutdown", false, Util.Four)]
         private static void MenuShutdown() => Shutdown();
 
-        [MenuItem("Tools/YKYToolkit/Discord SDK Restart")]
+        [MenuItem("Tools/YKYToolkit/Discord SDK Restart", false, Util.Four)]
         private static void MenuRestart()
         {
             Shutdown();
