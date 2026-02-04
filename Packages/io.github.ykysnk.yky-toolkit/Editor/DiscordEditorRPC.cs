@@ -7,7 +7,6 @@ using UnityEditor;
 namespace io.github.ykysnk.ykyToolkit.Editor
 {
     [InitializeOnLoad]
-    [PublicAPI]
     public static class DiscordEditorRPC
     {
         public const string ApplicationId = "1465547633652138117";
@@ -31,6 +30,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         public static bool EnableDiscordRichPresence
         {
+            [PublicAPI]
             set
             {
                 if (EditorPrefs.GetBool("YKYToolkit/LastEnableDiscordRichPresence", true) != value)
@@ -70,11 +70,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             Shutdown();
             ResetRetryTime();
             Utils.Log(nameof(DiscordEditorRPC), "Discord SDK will restart after 10 seconds.");
-        }
-
-        private static void DelayedInit()
-        {
-            SetActivity(EditorMainWindowTitle.GetTitleOrDefault("Unity Editor"), "Unity Editor Test State", "unity-1024");
         }
 
         public static void Initialize(string id)
