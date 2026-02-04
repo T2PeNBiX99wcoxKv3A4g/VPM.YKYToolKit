@@ -11,7 +11,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
     {
         public const string ApplicationId = "1465547633652138117";
         private const string ToolsMenuPath = "Tools/YKYToolkit/Enable Discord Rich Presence";
-        private const double RetryInterval = 10.0;
+        private const double RetryInterval = 3.0;
         private static Discord.Discord? _discord;
         private static ActivityManager? _activityManager;
         private static string? _clientId;
@@ -69,7 +69,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         {
             Shutdown();
             ResetRetryTime();
-            Utils.Log(nameof(DiscordEditorRPC), "Discord SDK will restart after 10 seconds.");
+            Utils.Log(nameof(DiscordEditorRPC), $"Discord SDK will restart after {RetryInterval} seconds.");
         }
 
         public static void Initialize(string id)
