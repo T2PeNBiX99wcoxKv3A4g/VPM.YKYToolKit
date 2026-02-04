@@ -197,7 +197,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private static void RebuildList(List<UpmInstallerPackage> packages) =>
             packages.Rebuild(x => string.IsNullOrEmpty(x.FullName));
 
-        [MenuItem("Tools/YKYToolkit/UPM Installer")]
+        [MenuItem("Tools/YKYToolkit/UPM Installer", false, Util.Three)]
         private static void ShowWindow()
         {
             var window = GetWindow<UpmInstallerWindow>();

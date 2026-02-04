@@ -105,7 +105,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private static extern int GetGuiResources(IntPtr hProcess, int uiFlags);
 #endif
 
-        [MenuItem("Tools/YKYToolkit/Unity Resource Monitor")]
+        [MenuItem("Tools/YKYToolkit/Unity Resource Monitor", false, Util.Three)]
         private static void ShowWindow()
         {
             var window = GetWindow<UnityResourceMonitor>();

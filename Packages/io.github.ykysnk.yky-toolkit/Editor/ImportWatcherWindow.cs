@@ -76,11 +76,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             EditorPrefs.SetString(ImportWatcher.ImportHighlightFileColor, json);
         }
 
-        [MenuItem("Tools/YKYToolkit/Import Watcher Window")]
+        [MenuItem("Tools/YKYToolkit/Import Watcher Window", false, Util.Three)]
         private static void ShowWindow()
         {
             var window = GetWindow<ImportWatcherWindow>();
-            window.titleContent = EditorGUIUtils.IconContent(Title, "package manager");
+            window.titleContent = EditorGUIUtils.IconContent(Title, "unityeditor.consolewindow");
         }
     }
 }
