@@ -102,14 +102,28 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             globalPositionField.RegisterValueChangedCallback(evt =>
             {
-                var clearVector = evt.newValue.Clean();
+                var prev = evt.previousValue.Clean();
+                var next = evt.newValue.Clean();
 
                 CleanTransforms();
                 if (globalPositionFieldEditing)
-                    ApplyToTargets(t => t.position = clearVector, "Set World Position");
+                {
+                    var xChanged = !Mathf.Approximately(prev.x, next.x);
+                    var yChanged = !Mathf.Approximately(prev.y, next.y);
+                    var zChanged = !Mathf.Approximately(prev.z, next.z);
+
+                    ApplyToTargets(t =>
+                    {
+                        var v = t.position;
+                        if (xChanged) v.x = next.x;
+                        if (yChanged) v.y = next.y;
+                        if (zChanged) v.z = next.z;
+                        t.position = v;
+                    }, "Set World Position");
+                }
 
                 positionField.SetValueWithoutNotify(theTarget.localPosition);
-                globalPositionField.SetValueWithoutNotify(clearVector);
+                globalPositionField.SetValueWithoutNotify(next);
             });
 
             globalPositionField.AddManipulator(new ContextualMenuManipulator(evt =>
@@ -147,14 +161,28 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             rotationField.RegisterValueChangedCallback(evt =>
             {
-                var clearVector = evt.newValue.Clean().DeltaAngle();
+                var prev = evt.previousValue.Clean().DeltaAngle();
+                var next = evt.newValue.Clean().DeltaAngle();
 
                 CleanTransforms();
 
                 if (rotationEditing)
-                    ApplyToTargets(t => t.localEulerAngles = clearVector, "Set Local Rotation");
+                {
+                    var xChanged = !Mathf.Approximately(prev.x, next.x);
+                    var yChanged = !Mathf.Approximately(prev.y, next.y);
+                    var zChanged = !Mathf.Approximately(prev.z, next.z);
 
-                rotationField.SetValueWithoutNotify(clearVector);
+                    ApplyToTargets(t =>
+                    {
+                        var v = t.eulerAngles.DeltaAngle();
+                        if (xChanged) v.x = next.x;
+                        if (yChanged) v.y = next.y;
+                        if (zChanged) v.z = next.z;
+                        t.localEulerAngles = v;
+                    }, "Set Local Rotation");
+                }
+
+                rotationField.SetValueWithoutNotify(next);
                 globalRotationField.SetValueWithoutNotify(theTarget.eulerAngles.DeltaAngle());
             });
 
@@ -165,15 +193,29 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             globalRotationField.RegisterValueChangedCallback(evt =>
             {
-                var clearVector = evt.newValue.Clean().DeltaAngle();
+                var prev = evt.previousValue.Clean().DeltaAngle();
+                var next = evt.newValue.Clean().DeltaAngle();
 
                 CleanTransforms();
 
                 if (globalRotationEditing)
-                    ApplyToTargets(t => t.eulerAngles = clearVector, "Set World Rotation");
+                {
+                    var xChanged = !Mathf.Approximately(prev.x, next.x);
+                    var yChanged = !Mathf.Approximately(prev.y, next.y);
+                    var zChanged = !Mathf.Approximately(prev.z, next.z);
+
+                    ApplyToTargets(t =>
+                    {
+                        var v = t.eulerAngles.DeltaAngle();
+                        if (xChanged) v.x = next.x;
+                        if (yChanged) v.y = next.y;
+                        if (zChanged) v.z = next.z;
+                        t.eulerAngles = v;
+                    }, "Set World Rotation");
+                }
 
                 rotationField.SetValueWithoutNotify(theTarget.localEulerAngles.DeltaAngle());
-                globalRotationField.SetValueWithoutNotify(clearVector);
+                globalRotationField.SetValueWithoutNotify(next);
             });
 
             rotationField.AddManipulator(new ContextualMenuManipulator(evt =>
@@ -264,14 +306,28 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             lossyScaleField.RegisterValueChangedCallback(evt =>
             {
-                var clearVector = evt.newValue.Clean();
+                var prev = evt.previousValue.Clean();
+                var next = evt.newValue.Clean();
 
                 CleanTransforms();
                 if (lossyScaleFieldEditing)
-                    ApplyToTargets(t => t.SetLossyScale(clearVector), "Set World Lossy Scale");
+                {
+                    var xChanged = !Mathf.Approximately(prev.x, next.x);
+                    var yChanged = !Mathf.Approximately(prev.y, next.y);
+                    var zChanged = !Mathf.Approximately(prev.z, next.z);
+
+                    ApplyToTargets(t =>
+                    {
+                        var v = t.lossyScale;
+                        if (xChanged) v.x = next.x;
+                        if (yChanged) v.y = next.y;
+                        if (zChanged) v.z = next.z;
+                        t.SetLossyScale(v);
+                    }, "Set World Lossy Scale");
+                }
 
                 scaleField.SetValueWithoutNotify(theTarget.localScale);
-                lossyScaleField.SetValueWithoutNotify(clearVector);
+                lossyScaleField.SetValueWithoutNotify(next);
             });
 
             lossyScaleField.AddManipulator(new ContextualMenuManipulator(evt =>
