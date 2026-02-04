@@ -32,7 +32,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             Instance = this;
             var serializedObject = new SerializedObject(this);
             var tree = uxml!.CloneTree();
-            InternalLocalizationExtensions.Helper.UILocalize(tree);
+            InternalLocalizationExtensions.Helper.UILocalize(tree, false);
             tree.Bind(serializedObject);
             rootVisualElement.Add(tree);
             LoadPackageList();
