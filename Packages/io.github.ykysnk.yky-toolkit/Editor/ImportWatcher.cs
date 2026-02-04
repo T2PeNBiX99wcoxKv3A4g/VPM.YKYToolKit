@@ -16,9 +16,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private const string ImportHighlights = "YKYToolkit/ImportWatcher/ImportHighlights";
         private const string ImportHighlightColor = "YKYToolkit/ImportWatcher/Color";
         private const string ImportHighlightDuration = "YKYToolkit/ImportWatcher/Duration";
-        internal const string ImportHighlightFileColor = "YKYToolkit/ImportWatcher/FileColor";
+        private const string ImportHighlightFileColor = "YKYToolkit/ImportWatcher/FileColor";
         private static readonly HashSet<HighlightInfo> Highlights = new();
-        internal static readonly Color DefaultHighlightColor = new(1f, 0f, 0f, 0.10f);
+        private static readonly Color DefaultHighlightColor = new(1f, 0f, 0f, 0.10f);
 
         static ImportWatcher()
         {
@@ -40,6 +40,22 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         {
             get => EditorPrefs.GetFloat(ImportHighlightDuration, (float)DefaultDuration);
             set => EditorPrefs.SetFloat(ImportHighlightDuration, (float)value);
+        }
+
+        internal static List<ImportWatcherFileColor> ColorList
+        {
+            get
+            {
+                var json = EditorPrefs.GetString(ImportHighlightFileColor);
+                if (!JsonUtils.TryFromJson<ListWrapper<ImportWatcherFileColor>>(json, out var colors, out _))
+                    return new(ImportWatcherFileColor.DefaultColors);
+                return new(colors!);
+            }
+            set
+            {
+                if (!JsonUtils.TryToJson(Wrapper.Create(value), out var json, out _)) return;
+                EditorPrefs.SetString(ImportHighlightFileColor, json);
+            }
         }
 
         private static List<ImportWatcherFileColor> FileColors

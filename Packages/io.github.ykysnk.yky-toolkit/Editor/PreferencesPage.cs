@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using io.github.ykysnk.utils.Editor;
+using io.github.ykysnk.utils.Extensions;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine.UIElements;
@@ -45,7 +47,55 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                         DiscordEditorRPC.EnableDiscordRichPresence = evt.newValue);
 
                     var importWatcherColorField = tree.Q<ColorField>("importWatcherColor");
-                    importWatcherColorField.value = ImportWatcher.DefaultHighlightColor;
+                    importWatcherColorField.value = ImportWatcher.HighlightColor;
+                    importWatcherColorField.RegisterValueChangedCallback(evt =>
+                        ImportWatcher.HighlightColor = evt.newValue);
+
+                    var importWatcherDurationField = tree.Q<DoubleField>("importWatcherDuration");
+                    importWatcherDurationField.value = ImportWatcher.Duration;
+                    importWatcherDurationField.RegisterValueChangedCallback(evt => ImportWatcher.Duration = evt.newValue);
+
+                    var importWatcherFileExtensionColorsListView = tree.Q<ListView>("importWatcherFileExtensionColors");
+                    var newColorList = new List<ImportWatcherFileColor>(ImportWatcher.ColorList);
+                    importWatcherFileExtensionColorsListView.itemsSource = newColorList;
+                    importWatcherFileExtensionColorsListView.makeItem = () =>
+                    {
+                        var uxml2 = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(
+                            AssetDatabase.GUIDToAssetPath("6bdd0e10034ff1b4281322ac210d8519"));
+
+                        if (uxml2 == null)
+                            return BasicEditor.CreateUxmlImportErrorUI();
+
+                        var tree2 = uxml2.CloneTree();
+                        InternalLocalizationExtensions.Helper.UILocalize(tree, false);
+                        return tree2;
+                    };
+                    importWatcherFileExtensionColorsListView.bindItem = (element, index) =>
+                    {
+                        var value = newColorList.GetValueOrDefault(index) ?? new("", ImportWatcherFileColor.DefaultColor);
+                        var fileExtensionField = element.Q<TextField>("fileExtension");
+                        fileExtensionField.value = value.fileExtension;
+                        fileExtensionField.RegisterValueChangedCallback(evt =>
+                        {
+                            value.fileExtension = evt.newValue;
+                            ImportWatcher.ColorList = newColorList;
+                        });
+                        var colorField = element.Q<ColorField>("color");
+                        colorField.value = value.color;
+                        colorField.RegisterValueChangedCallback(evt =>
+                        {
+                            value.color = evt.newValue;
+                            ImportWatcher.ColorList = newColorList;
+                        });
+                    };
+
+                    var addButton = importWatcherFileExtensionColorsListView.Q<Button>("unity-list-view__add-button");
+                    var removeButton =
+                        importWatcherFileExtensionColorsListView.Q<Button>("unity-list-view__remove-button");
+
+                    addButton.clicked += () => ImportWatcher.ColorList = newColorList;
+                    removeButton.clicked += () => ImportWatcher.ColorList = newColorList;
+                    importWatcherFileExtensionColorsListView.SetEnabled(false);
                 }
             };
 

@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using io.github.ykysnk.utils.Editor;
 using io.github.ykysnk.utils.Extensions;
-using io.github.ykysnk.utils.NonUdon;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -50,23 +49,13 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         private void LoadFileColorList()
         {
-            var json = EditorPrefs.GetString(ImportWatcher.ImportHighlightFileColor);
-
-            if (!JsonUtils.TryFromJson<ListWrapper<ImportWatcherFileColor>>(json, out var colors, out _))
-            {
-                fileColors.Clear();
-                fileColors.AddRange(ImportWatcherFileColor.DefaultColors);
-                return;
-            }
-
             fileColors.Clear();
-            fileColors.AddRange(colors!);
+            fileColors.AddRange(ImportWatcher.ColorList);
         }
 
         private void SaveFileColorList()
         {
-            if (!JsonUtils.TryToJson(Wrapper.Create(fileColors), out var json, out _)) return;
-            EditorPrefs.SetString(ImportWatcher.ImportHighlightFileColor, json);
+            ImportWatcher.ColorList = fileColors;
         }
 
         [MenuItem("Tools/YKYToolkit/Import Watcher Window", false, Util.Three)]
