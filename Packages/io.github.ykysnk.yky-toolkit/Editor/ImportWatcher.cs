@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace io.github.ykysnk.ykyToolkit.Editor
 {
-    // TODO: Menu for settings, import log, Editor Settings
+    // TODO: import log, Editor Settings
     internal class ImportWatcher : AssetPostprocessor
     {
         internal const double DefaultDuration = 120;
