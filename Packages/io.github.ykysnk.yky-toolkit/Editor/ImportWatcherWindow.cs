@@ -11,9 +11,16 @@ namespace io.github.ykysnk.ykyToolkit.Editor
     public class ImportWatcherWindow : EditorWindow
     {
         private const string Title = "Import Watcher";
+        private const string EditorKey = "YKYToolkit/ImportWatcher/Settings";
 
         [SerializeField] private VisualTreeAsset? uxml;
         [SerializeField] private List<ImportWatcherFileColor> fileColors = new();
+
+        private static bool SettingsExpanded
+        {
+            get => EditorPrefs.GetBool(EditorKey);
+            set => EditorPrefs.SetBool(EditorKey, value);
+        }
 
         private void OnDestroy()
         {
@@ -30,6 +37,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             rootVisualElement.Add(tree);
             LoadFileColorList();
             fileColors.Rebuild();
+
+            var settingsFoldout = tree.Q<Foldout>("settings");
+            settingsFoldout.SetValueWithoutNotify(SettingsExpanded);
+            settingsFoldout.RegisterValueChangedCallback(evt => SettingsExpanded = evt.newValue);
 
             var colorField = tree.Q<ColorField>("color");
             colorField.value = ImportWatcher.HighlightColor;
