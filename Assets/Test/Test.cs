@@ -68,5 +68,11 @@ namespace Test
             Utils.Log(nameof(Test3),
                 $"Test: {JsonUtils.TryFromJson<ListWrapper<ImportWatcherFileColor>>(json!, out var result, out _)} {result}");
         }
+
+        [MenuItem("Test/Delete Import Highlight File Color")]
+        private static void DeleteImportHighlightFileColor()
+        {
+            EditorPrefs.DeleteKey("YKYToolkit/ImportWatcher/FileColor");
+        }
     }
 }
