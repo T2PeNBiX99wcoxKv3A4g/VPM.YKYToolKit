@@ -95,11 +95,18 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 globalPositionField.SetValueWithoutNotify(theTarget.position);
             });
 
+            var globalPositionFieldEditing = false;
+
+            globalPositionField.RegisterCallback<FocusInEvent>(_ => globalPositionFieldEditing = true);
+            globalPositionField.RegisterCallback<FocusOutEvent>(_ => globalPositionFieldEditing = false);
+
             globalPositionField.RegisterValueChangedCallback(evt =>
             {
                 var clearVector = evt.newValue.Clean();
 
                 CleanTransforms();
+                if (globalPositionFieldEditing)
+                    ApplyToTargets(t => t.position = clearVector, "Set World Position");
 
                 positionField.SetValueWithoutNotify(theTarget.localPosition);
                 globalPositionField.SetValueWithoutNotify(clearVector);
@@ -250,11 +257,18 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 lossyScaleField.SetValueWithoutNotify(theTarget.lossyScale);
             });
 
+            var lossyScaleFieldEditing = false;
+
+            lossyScaleField.RegisterCallback<FocusInEvent>(_ => lossyScaleFieldEditing = true);
+            lossyScaleField.RegisterCallback<FocusOutEvent>(_ => lossyScaleFieldEditing = false);
+
             lossyScaleField.RegisterValueChangedCallback(evt =>
             {
                 var clearVector = evt.newValue.Clean();
 
                 CleanTransforms();
+                if (lossyScaleFieldEditing)
+                    ApplyToTargets(t => t.SetLossyScale(clearVector), "Set World Lossy Scale");
 
                 scaleField.SetValueWithoutNotify(theTarget.localScale);
                 lossyScaleField.SetValueWithoutNotify(clearVector);
