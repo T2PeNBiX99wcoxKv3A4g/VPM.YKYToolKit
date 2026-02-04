@@ -107,7 +107,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 ResetRetryTime();
 
                 Utils.LogError(nameof(DiscordEditorRPC),
-                    $"Failed to initialize Discord SDK.\n{ex.Message}\n{ex.StackTrace}");
+                    $"Failed to initialize Discord SDK. {ex.Message}\n{ex.StackTrace}");
             }
         }
 
@@ -177,7 +177,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             catch (Exception ex)
             {
                 Utils.LogWarning(nameof(DiscordEditorRPC),
-                    $"Discord SDK callbacks failed. Attempting to reconnect.\n{ex.Message}");
+                    $"Discord SDK callbacks failed. Attempting to reconnect. {ex.Message}\n{ex.StackTrace}");
                 Shutdown();
                 ResetRetryTime();
             }
@@ -194,8 +194,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             }
             catch (Exception ex)
             {
-                Utils.LogWarning(nameof(DiscordEditorRPC),
-                    $"Discord SDK dispose failed.\n{ex.Message}\n{ex.StackTrace}");
+                Utils.LogWarning(nameof(DiscordEditorRPC), $"Discord SDK dispose failed. {ex.Message}\n{ex.StackTrace}");
             }
             finally
             {
