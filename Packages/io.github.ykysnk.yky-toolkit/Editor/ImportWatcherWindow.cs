@@ -1,6 +1,7 @@
 using System.Collections.Generic;
-using System.Linq;
+using io.github.ykysnk.utils;
 using io.github.ykysnk.utils.Editor;
+using io.github.ykysnk.utils.Extensions;
 using io.github.ykysnk.utils.NonUdon;
 using UnityEditor;
 using UnityEditor.UIElements;
@@ -18,7 +19,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         private void OnDestroy()
         {
-            Distinct();
+            fileColors.Rebuild();
             SaveFileColorList();
         }
 
@@ -30,7 +31,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             tree.Bind(serializedObject);
             rootVisualElement.Add(tree);
             LoadFileColorList();
-            Distinct();
+            fileColors.Rebuild();
 
             var colorField = tree.Q<ColorField>("color");
             colorField.value = ColorUtility.TryParseHtmlString(EditorPrefs.GetString(ImportWatcher.ImportHighlightColor),
@@ -59,8 +60,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         {
             var json = EditorPrefs.GetString(ImportWatcher.ImportHighlightFileColor);
 
-            if (string.IsNullOrEmpty(json) ||
-                !JsonUtils.TryFromJson<ListWrapper<ImportWatcherFileColor>>(json, out var colors, out _))
+            if (!JsonUtils.TryFromJson<ListWrapper<ImportWatcherFileColor>>(json, out var colors, out _))
             {
                 fileColors.Clear();
                 fileColors.AddRange(ImportWatcherFileColor.DefaultColors);
@@ -71,17 +71,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             fileColors.AddRange(colors!);
         }
 
-        private void Distinct()
-        {
-            var newList = fileColors.Distinct();
-            fileColors.Clear();
-            fileColors.AddRange(newList);
-        }
-
         private void SaveFileColorList()
         {
             if (!JsonUtils.TryToJson(Wrapper.Create(fileColors), out var json, out _)) return;
             EditorPrefs.SetString(ImportWatcher.ImportHighlightFileColor, json);
+            Utils.Log(nameof(SaveFileColorList), $"Test saved: {json}, {string.Join(',', fileColors)}");
         }
 
         [MenuItem("Tools/YKYToolkit/Import Watcher Window")]
