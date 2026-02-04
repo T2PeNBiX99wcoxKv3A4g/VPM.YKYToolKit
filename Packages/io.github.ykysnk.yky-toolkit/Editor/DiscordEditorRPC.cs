@@ -16,6 +16,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private static ActivityManager? _activityManager;
         private static string? _clientId;
         private static bool _initialized;
+        private static long _startTime;
 
         static DiscordEditorRPC()
         {
@@ -92,6 +93,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
                 _activityManager = _discord.GetActivityManager();
                 _initialized = true;
+                _startTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
 
                 Utils.Log(nameof(DiscordEditorRPC), "Discord SDK initialized.");
             }
@@ -115,7 +117,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var activity = new Activity
             {
                 Details = details,
-                State = state
+                State = state,
+                Timestamps = new()
+                {
+                    Start = _startTime
+                }
             };
 
             if (!string.IsNullOrEmpty(largeImage) || !string.IsNullOrEmpty(smallImage))
