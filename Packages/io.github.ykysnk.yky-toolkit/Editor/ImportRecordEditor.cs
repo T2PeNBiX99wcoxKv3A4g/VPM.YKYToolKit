@@ -30,6 +30,21 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var timeLabel = tree.Q<Label>("time");
             timeLabel.style.display = DisplayStyle.None;
 
+            UpdateUI();
+            tree.TrackPropertyValue(pathProperty, _ => UpdateUI());
+            tree.TrackPropertyValue(nameProperty, _ => UpdateUI());
+
+            tree.RegisterCallback<MouseDownEvent>(evt =>
+            {
+                if (evt.clickCount != 2) return;
+                var asset = AssetDatabase.LoadAssetAtPath<Object>(pathProperty.stringValue);
+                if (asset == null) return;
+                EditorGUIUtility.PingObject(asset);
+                Selection.activeObject = asset;
+            });
+
+            return tree;
+
             void UpdateUI()
             {
                 var path = pathProperty.stringValue;
@@ -48,31 +63,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 else
                 {
                     nameLabel.style.color = Color.red;
-                    if (isFolderProperty.boolValue)
-                        iconImage.image = EditorGUIUtility.IconContent("Folder Icon").image;
-                    else
-                        iconImage.image = InternalEditorUtility.GetIconForFile(path);
+                    iconImage.image = isFolderProperty.boolValue
+                        ? EditorGUIUtils.IconTexture("Folder Icon")
+                        : InternalEditorUtility.GetIconForFile(path);
                 }
             }
-
-            UpdateUI();
-            tree.TrackPropertyValue(pathProperty, _ => UpdateUI());
-            tree.TrackPropertyValue(nameProperty, _ => UpdateUI());
-
-            tree.RegisterCallback<MouseDownEvent>(evt =>
-            {
-                if (evt.clickCount == 2)
-                {
-                    var asset = AssetDatabase.LoadAssetAtPath<Object>(pathProperty.stringValue);
-                    if (asset != null)
-                    {
-                        EditorGUIUtility.PingObject(asset);
-                        Selection.activeObject = asset;
-                    }
-                }
-            });
-
-            return tree;
         }
     }
 }
