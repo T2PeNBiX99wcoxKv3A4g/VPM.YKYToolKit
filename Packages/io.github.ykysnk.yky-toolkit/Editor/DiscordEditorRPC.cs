@@ -12,11 +12,13 @@ namespace io.github.ykysnk.ykyToolkit.Editor
     {
         public const string ApplicationId = "1465547633652138117";
         private const string ToolsMenuPath = "Tools/YKYToolkit/Enable Discord Rich Presence";
+        private const double RetryInterval = 10.0;
         private static Discord.Discord? _discord;
         private static ActivityManager? _activityManager;
         private static string? _clientId;
         private static bool _initialized;
         private static long _startTime;
+        private static double _lastRetryTime;
 
         static DiscordEditorRPC()
         {
@@ -78,7 +80,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         {
             if (_initialized)
             {
-                Utils.LogWarning(nameof(DiscordEditorRPC), "Already initialized.");
                 return;
             }
 
@@ -99,12 +100,13 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             }
             catch (Exception ex)
             {
-                Utils.LogError(nameof(DiscordEditorRPC),
-                    $"Failed to initialize Discord SDK.\n{ex.Message}\n{ex.StackTrace}");
-
                 _discord = null;
                 _activityManager = null;
                 _initialized = false;
+                _lastRetryTime = EditorApplication.timeSinceStartup;
+
+                Utils.LogError(nameof(DiscordEditorRPC),
+                    $"Failed to initialize Discord SDK.\n{ex.Message}\n{ex.StackTrace}");
             }
         }
 
@@ -155,8 +157,17 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         private static void Update()
         {
-            if (!_initialized || _discord == null)
+            if (!EnableDiscordRichPresence) return;
+
+            if (!_initialized)
+            {
+                if (EditorApplication.timeSinceStartup - _lastRetryTime > RetryInterval)
+                    Initialize(ApplicationId);
+
                 return;
+            }
+
+            if (_discord == null) return;
 
             try
             {
@@ -165,7 +176,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             catch (Exception ex)
             {
                 Utils.LogWarning(nameof(DiscordEditorRPC),
-                    $"Discord SDK callbacks failed.\n{ex.Message}\n{ex.StackTrace}");
+                    $"Discord SDK callbacks failed. Attempting to reconnect.\n{ex.Message}");
+                Shutdown();
+                _lastRetryTime = EditorApplication.timeSinceStartup;
             }
         }
 
