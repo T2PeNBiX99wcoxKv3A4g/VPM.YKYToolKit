@@ -107,20 +107,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
                 CleanTransforms();
                 if (globalPositionFieldEditing)
-                {
-                    var xChanged = !Mathf.Approximately(prev.x, next.x);
-                    var yChanged = !Mathf.Approximately(prev.y, next.y);
-                    var zChanged = !Mathf.Approximately(prev.z, next.z);
-
-                    ApplyToTargets(t =>
-                    {
-                        var v = t.position;
-                        if (xChanged) v.x = next.x;
-                        if (yChanged) v.y = next.y;
-                        if (zChanged) v.z = next.z;
-                        t.position = v;
-                    }, "Set World Position");
-                }
+                    ApplyToTargetsInChanged(prev, next, t => t.position, (t, apply) => t.position = apply,
+                        "Set World Position");
 
                 positionField.SetValueWithoutNotify(theTarget.localPosition);
                 globalPositionField.SetValueWithoutNotify(next);
@@ -167,20 +155,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 CleanTransforms();
 
                 if (rotationEditing)
-                {
-                    var xChanged = !Mathf.Approximately(prev.x, next.x);
-                    var yChanged = !Mathf.Approximately(prev.y, next.y);
-                    var zChanged = !Mathf.Approximately(prev.z, next.z);
-
-                    ApplyToTargets(t =>
-                    {
-                        var v = t.eulerAngles.DeltaAngle();
-                        if (xChanged) v.x = next.x;
-                        if (yChanged) v.y = next.y;
-                        if (zChanged) v.z = next.z;
-                        t.localEulerAngles = v;
-                    }, "Set Local Rotation");
-                }
+                    ApplyToTargetsInChanged(prev, next, t => t.localEulerAngles.DeltaAngle(),
+                        (t, apply) => t.localEulerAngles = apply,
+                        "Set Local Rotation");
 
                 rotationField.SetValueWithoutNotify(next);
                 globalRotationField.SetValueWithoutNotify(theTarget.eulerAngles.DeltaAngle());
@@ -199,20 +176,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 CleanTransforms();
 
                 if (globalRotationEditing)
-                {
-                    var xChanged = !Mathf.Approximately(prev.x, next.x);
-                    var yChanged = !Mathf.Approximately(prev.y, next.y);
-                    var zChanged = !Mathf.Approximately(prev.z, next.z);
-
-                    ApplyToTargets(t =>
-                    {
-                        var v = t.eulerAngles.DeltaAngle();
-                        if (xChanged) v.x = next.x;
-                        if (yChanged) v.y = next.y;
-                        if (zChanged) v.z = next.z;
-                        t.eulerAngles = v;
-                    }, "Set World Rotation");
-                }
+                    ApplyToTargetsInChanged(prev, next, t => t.eulerAngles.DeltaAngle(),
+                        (t, apply) => t.eulerAngles = apply,
+                        "Set World Rotation");
 
                 rotationField.SetValueWithoutNotify(theTarget.localEulerAngles.DeltaAngle());
                 globalRotationField.SetValueWithoutNotify(next);
@@ -311,20 +277,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
                 CleanTransforms();
                 if (lossyScaleFieldEditing)
-                {
-                    var xChanged = !Mathf.Approximately(prev.x, next.x);
-                    var yChanged = !Mathf.Approximately(prev.y, next.y);
-                    var zChanged = !Mathf.Approximately(prev.z, next.z);
-
-                    ApplyToTargets(t =>
-                    {
-                        var v = t.lossyScale;
-                        if (xChanged) v.x = next.x;
-                        if (yChanged) v.y = next.y;
-                        if (zChanged) v.z = next.z;
-                        t.SetLossyScale(v);
-                    }, "Set World Lossy Scale");
-                }
+                    ApplyToTargetsInChanged(prev, next, t => t.lossyScale, (t, apply) => t.SetLossyScale(apply),
+                        "Set World Lossy Scale");
 
                 scaleField.SetValueWithoutNotify(theTarget.localScale);
                 lossyScaleField.SetValueWithoutNotify(next);
@@ -745,6 +699,24 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             foreach (var obj in targets)
                 if (obj is Transform t)
                     action(t);
+        }
+
+        private void ApplyToTargetsInChanged(Vector3 prev, Vector3 next, Func<Transform, Vector3> before,
+            Action<Transform, Vector3> after,
+            string undoMessage)
+        {
+            var xChanged = !Mathf.Approximately(prev.x, next.x);
+            var yChanged = !Mathf.Approximately(prev.y, next.y);
+            var zChanged = !Mathf.Approximately(prev.z, next.z);
+
+            ApplyToTargets(t =>
+            {
+                var v = before(t);
+                if (xChanged) v.x = next.x;
+                if (yChanged) v.y = next.y;
+                if (zChanged) v.z = next.z;
+                after(t, v);
+            }, undoMessage);
         }
 
         private bool ApplyParsedInputToAxis(
