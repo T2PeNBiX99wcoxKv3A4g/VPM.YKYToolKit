@@ -295,3 +295,15 @@ MonoBehaviour:
   - key: label.import_watcher.file_extension_colors
     translate: Highlight colors for file extensions
     tooltip: 
+  - key: label.preferences_page.allow_async_compilation
+    translate: Allow Async Compilation
+    tooltip: 
+  - key: label.preferences_page.delete_selected_warn_window
+    translate: Warning Window for Delete Selected
+    tooltip: 
+  - key: label.preferences_page.enable_discord_rich_presence
+    translate: Enable Discord Rich Presence
+    tooltip: 
+  - key: label.preferences_page.import_watcher
+    translate: Import Watcher
+    tooltip: 

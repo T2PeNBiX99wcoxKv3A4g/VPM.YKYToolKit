@@ -13,8 +13,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 {
     internal static class NewDelete
     {
-        private const string ToolsMenuPath = "Tools/YKYToolkit/Delete Selected Warn Window";
-        private const string AssetsMenuPath = "Assets/YKYToolkit/Delete Selected Warn Window";
+        private const string ToolsMenuPath = "Tools/YKYToolkit/Warning Window for Delete Selected";
+        private const string AssetsMenuPath = "Assets/YKYToolkit/Warning Window for Delete Selected";
+        private const string EditorKey = "YKYToolkit/DeleteSelectedWarnWindow";
 
         internal static bool ShowWarnWindow
         {

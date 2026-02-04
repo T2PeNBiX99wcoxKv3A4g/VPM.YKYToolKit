@@ -1,0 +1,19 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <Style src="project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/PreferencesPage.uss?fileID=7433441132597879392&amp;guid=d16273d813d4ff74482b362d3570add2&amp;type=3#PreferencesPage"/>
+    <ui:VisualElement style="padding-top: 1px; padding-right: 8px; padding-bottom: 8px; padding-left: 8px;">
+        <ui:Label tabindex="-1" text="YKY Toolkit" parse-escape-sequences="true" display-tooltip-when-elided="true"
+                  name="title" style="font-size: 20px; -unity-font-style: bold; padding-bottom: 8px;"/>
+        <ui:Toggle label="label.preferences_page.allow_async_compilation" name="allowAsyncCompilation"/>
+        <ui:Toggle label="label.preferences_page.delete_selected_warn_window" name="deleteSelectedWarnWindow"/>
+        <ui:Toggle label="label.preferences_page.enable_discord_rich_presence" name="enableDiscordRichPresence"/>
+        <ui:Label tabindex="-1" text="label.preferences_page.import_watcher" parse-escape-sequences="true"
+                  display-tooltip-when-elided="true" style="-unity-font-style: bold;"/>
+        <uie:ColorField label="label.import_watcher.color" value="RGBA(0.000, 1.000, 1.000, 1.000)"
+                        name="importWatcherColor"/>
+        <ui:DoubleField label="label.import_watcher.duration" value="42.2" name="importWatcherDuration"/>
+        <ui:ListView header-title="label.import_watcher.file_extension_colors" reorder-mode="Animated"
+                     show-add-remove-footer="true" show-foldout-header="true" reorderable="true"
+                     show-alternating-row-backgrounds="ContentOnly" selection-type="Multiple" show-border="true"
+                     virtualization-method="DynamicHeight" name="importWatcherFileExtensionColors"/>
+    </ui:VisualElement>
+</ui:UXML>
