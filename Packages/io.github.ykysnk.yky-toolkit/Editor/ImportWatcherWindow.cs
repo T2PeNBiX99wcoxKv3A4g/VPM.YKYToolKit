@@ -33,19 +33,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             fileColors.Rebuild();
 
             var colorField = tree.Q<ColorField>("color");
-            colorField.value = ColorUtility.TryParseHtmlString(EditorPrefs.GetString(ImportWatcher.ImportHighlightColor),
-                out var color)
-                ? color
-                : ImportWatcher.DefaultHighlightColor;
-            colorField.RegisterValueChangedCallback(evt =>
-                EditorPrefs.SetString(ImportWatcher.ImportHighlightColor,
-                    $"#{ColorUtility.ToHtmlStringRGBA(evt.newValue)}"));
+            colorField.value = ImportWatcher.HighlightColor;
+            colorField.RegisterValueChangedCallback(evt => ImportWatcher.HighlightColor = evt.newValue);
 
             var doubleField = tree.Q<DoubleField>("duration");
-            doubleField.value =
-                EditorPrefs.GetFloat(ImportWatcher.ImportHighlightDuration, (float)ImportWatcher.DefaultDuration);
-            doubleField.RegisterValueChangedCallback(evt =>
-                EditorPrefs.SetFloat(ImportWatcher.ImportHighlightDuration, (float)evt.newValue));
+            doubleField.value = ImportWatcher.Duration;
+            doubleField.RegisterValueChangedCallback(evt => ImportWatcher.Duration = evt.newValue);
 
             var fileColorsField = tree.Q<ListView>("fileColors");
             var addButton = fileColorsField.Q<Button>("unity-list-view__add-button");

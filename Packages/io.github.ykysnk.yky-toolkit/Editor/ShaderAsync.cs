@@ -6,17 +6,18 @@ namespace io.github.ykysnk.ykyToolkit.Editor
     internal static class ShaderAsync
     {
         private const string MenuPath = "Tools/YKYToolkit/Allow Async Compilation";
+        private const string EditorKey = "YKYToolkit/AllowAsyncCompilation";
 
         static ShaderAsync() => ShaderUtil.allowAsyncCompilation = AllowAsyncCompilation;
 
-        private static bool AllowAsyncCompilation
+        internal static bool AllowAsyncCompilation
         {
             set
             {
-                EditorPrefs.SetBool("YKYToolkit/AllowAsyncCompilation", value);
+                EditorPrefs.SetBool(EditorKey, value);
                 ShaderUtil.allowAsyncCompilation = value;
             }
-            get => EditorPrefs.GetBool("YKYToolkit/AllowAsyncCompilation", true);
+            get => EditorPrefs.GetBool(EditorKey, true);
         }
 
         [MenuItem(MenuPath, false, Util.Twe)]

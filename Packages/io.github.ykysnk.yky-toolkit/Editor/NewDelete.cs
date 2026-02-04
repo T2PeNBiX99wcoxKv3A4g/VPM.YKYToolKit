@@ -16,10 +16,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private const string ToolsMenuPath = "Tools/YKYToolkit/Delete Selected Warn Window";
         private const string AssetsMenuPath = "Assets/YKYToolkit/Delete Selected Warn Window";
 
-        private static bool ShowWarnWindow
+        internal static bool ShowWarnWindow
         {
-            set => EditorPrefs.SetBool("YKYToolkit/DeleteSelectedWarnWindow", value);
-            get => EditorPrefs.GetBool("YKYToolkit/DeleteSelectedWarnWindow", true);
+            set => EditorPrefs.SetBool(EditorKey, value);
+            get => EditorPrefs.GetBool(EditorKey, true);
         }
 
         [MenuItem(ToolsMenuPath, false, Util.Twe)]

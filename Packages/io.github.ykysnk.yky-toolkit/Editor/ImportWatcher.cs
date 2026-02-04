@@ -12,10 +12,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
     // TODO: import log, Editor Settings
     internal class ImportWatcher : AssetPostprocessor
     {
-        internal const double DefaultDuration = 120;
+        private const double DefaultDuration = 120;
         private const string ImportHighlights = "YKYToolkit/ImportWatcher/ImportHighlights";
-        internal const string ImportHighlightColor = "YKYToolkit/ImportWatcher/Color";
-        internal const string ImportHighlightDuration = "YKYToolkit/ImportWatcher/Duration";
+        private const string ImportHighlightColor = "YKYToolkit/ImportWatcher/Color";
+        private const string ImportHighlightDuration = "YKYToolkit/ImportWatcher/Duration";
         internal const string ImportHighlightFileColor = "YKYToolkit/ImportWatcher/FileColor";
         private static readonly HashSet<HighlightInfo> Highlights = new();
         internal static readonly Color DefaultHighlightColor = new(1f, 0f, 0f, 0.10f);
@@ -28,12 +28,19 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             Highlights.UnionWith(infos);
         }
 
-        private static Color HighlightColor =>
-            ColorUtility.TryParseHtmlString(EditorPrefs.GetString(ImportHighlightColor), out var color)
+        internal static Color HighlightColor
+        {
+            get => ColorUtility.TryParseHtmlString(EditorPrefs.GetString(ImportHighlightColor), out var color)
                 ? color
                 : DefaultHighlightColor;
+            set => EditorPrefs.SetString(ImportHighlightColor, $"#{ColorUtility.ToHtmlStringRGBA(value)}");
+        }
 
-        private static double Duration => EditorPrefs.GetFloat(ImportHighlightDuration, (float)DefaultDuration);
+        internal static double Duration
+        {
+            get => EditorPrefs.GetFloat(ImportHighlightDuration, (float)DefaultDuration);
+            set => EditorPrefs.SetFloat(ImportHighlightDuration, (float)value);
+        }
 
         private static List<ImportWatcherFileColor> FileColors
         {
