@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="True">
+    <Style src="project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/ImportLogItem.uss"/>
+    <ui:VisualElement class="import-log-item">
+        <ui:Image name="icon" class="import-log-item__icon"/>
+        <ui:Label name="name" class="import-log-item__name"/>
+        <ui:Label name="time" class="import-log-item__time"/>
+    </ui:VisualElement>
+</ui:UXML>

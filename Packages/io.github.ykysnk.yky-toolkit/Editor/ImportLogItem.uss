@@ -1,0 +1,32 @@
+.import-log-item {
+    flex-direction: row;
+    padding: 2px 4px;
+    align-items: center;
+    border-bottom-width: 1px;
+    border-bottom-color: rgba(0, 0, 0, 0.2);
+}
+
+.import-log-item:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.import-log-item__icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 4px;
+    flex-shrink: 0;
+}
+
+.import-log-item__name {
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -unity-text-align: middle-left;
+}
+
+.import-log-item__time {
+    font-size: 10px;
+    color: gray;
+    margin-left: 8px;
+    flex-shrink: 0;
+}
