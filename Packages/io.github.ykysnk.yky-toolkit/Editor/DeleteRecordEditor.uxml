@@ -2,11 +2,20 @@
     <Style src="project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/DeleteHistoryWindow.uss?fileID=7433441132597879392&amp;guid=740dea6a94a94abe8ac59f9a97b81da9&amp;type=3#DeleteHistoryWindow"/>
     <ui:VisualElement class="delete-history-item">
         <ui:VisualElement name="infoContainer">
-            <ui:Label name="path" class="delete-history-item__path"/>
-            <ui:Label name="guid" class="delete-history-item__guid"/>
+            <ui:VisualElement style="flex-direction: row;">
+                <ui:Label text="Path: " class="delete-history-item__path" style="margin-right: 0;"/>
+                <ui:Label name="path" binding-path="path" class="delete-history-item__path"/>
+            </ui:VisualElement>
+            <ui:VisualElement style="flex-direction: row;">
+                <ui:Label text="GUID: " class="delete-history-item__guid" style="margin-right: 0;"/>
+                <ui:Label name="guid" binding-path="guid" class="delete-history-item__guid"/>
+            </ui:VisualElement>
             <ui:VisualElement class="delete-history-item__meta-container">
-                <ui:Label name="ext" class="delete-history-item__ext"/>
-                <ui:Label name="time" class="delete-history-item__time"/>
+                <ui:Label text="Ext: " class="delete-history-item__ext" style="margin-right: 0;"/>
+                <ui:Label name="ext" binding-path="extension" class="delete-history-item__ext"
+                          style="margin-right: 10;"/>
+                <ui:Label text="Time: " class="delete-history-item__time" style="margin-right: 0;"/>
+                <ui:Label name="time" binding-path="unixSeconds" class="delete-history-item__time"/>
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement class="delete-history-item__button-container">

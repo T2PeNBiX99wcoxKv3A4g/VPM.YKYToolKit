@@ -22,7 +22,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             InternalLocalizationExtensions.Helper.UILocalize(tree, false);
             tree.Bind(property.serializedObject);
 
-            var pathProperty = property.FindPropertyRelative("path");
             var guidProperty = property.FindPropertyRelative("guid");
             var extensionProperty = property.FindPropertyRelative("extension");
             var unixSecondsProperty = property.FindPropertyRelative("unixSeconds");
@@ -32,28 +31,15 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var extLabel = tree.Q<Label>("ext");
             var timeLabel = tree.Q<Label>("time");
 
-            void UpdateLabels()
-            {
-                pathLabel.text = $"Path: {pathProperty.stringValue}";
-                guidLabel.text =
-                    $"GUID: {(string.IsNullOrEmpty(guidProperty.stringValue) ? "(unknown)" : guidProperty.stringValue)}";
-                extLabel.text =
-                    $"Ext: {(string.IsNullOrEmpty(extensionProperty.stringValue) ? "(none)" : extensionProperty.stringValue)}";
-
-                var time = DateTimeOffset.FromUnixTimeSeconds(unixSecondsProperty.longValue).LocalDateTime
-                    .ToString("yyyy-MM-dd HH:mm:ss");
-                timeLabel.text = $"Time: {time}";
-            }
-
             UpdateLabels();
             tree.TrackPropertyValue(property, _ => UpdateLabels());
 
-            tree.Q<Button>("copyPath").clicked += () => EditorGUIUtility.systemCopyBuffer = pathProperty.stringValue;
+            tree.Q<Button>("copyPath").clicked += () => EditorGUIUtility.systemCopyBuffer = pathLabel.text;
             tree.Q<Button>("copyGuid").clicked += () => EditorGUIUtility.systemCopyBuffer = guidProperty.stringValue;
 
             tree.Q<Button>("ping").clicked += () =>
             {
-                var path = pathProperty.stringValue;
+                var path = pathLabel.text;
                 var obj = AssetDatabase.LoadMainAssetAtPath(path);
                 if (obj != null)
                 {
@@ -66,7 +52,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             tree.Q<Button>("reveal").clicked += () =>
             {
-                var path = pathProperty.stringValue;
+                var path = pathLabel.text;
                 var dir = Path.GetDirectoryName(path);
                 if (!string.IsNullOrEmpty(dir) && Directory.Exists(dir))
                     EditorUtility.RevealInFinder(dir);
@@ -75,6 +61,18 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             };
 
             return tree;
+
+            void UpdateLabels()
+            {
+                guidLabel.text =
+                    $"{(string.IsNullOrEmpty(guidProperty.stringValue) ? "(unknown)" : guidProperty.stringValue)}";
+                extLabel.text =
+                    $"{(string.IsNullOrEmpty(extensionProperty.stringValue) ? "(none)" : extensionProperty.stringValue)}";
+
+                var time = DateTimeOffset.FromUnixTimeSeconds(unixSecondsProperty.longValue).LocalDateTime
+                    .ToString("yyyy-MM-dd HH:mm:ss");
+                timeLabel.text = time;
+            }
         }
     }
 }
