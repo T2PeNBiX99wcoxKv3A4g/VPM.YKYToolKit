@@ -292,3 +292,6 @@ MonoBehaviour:
   - key: label.delete_record.unknown
     translate: "(\u4E0D\u660E)"
     tooltip: 
+  - key: label.import_watcher.settings
+    translate: "\u8A2D\u5B9A"
+    tooltip: 

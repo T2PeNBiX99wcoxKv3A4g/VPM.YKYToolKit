@@ -337,3 +337,6 @@ MonoBehaviour:
   - key: label.delete_record.none
     translate: (none)
     tooltip: 
+  - key: label.import_watcher.settings
+    translate: Settings
+    tooltip: 
