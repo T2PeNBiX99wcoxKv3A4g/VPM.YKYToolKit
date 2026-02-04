@@ -3,6 +3,7 @@ using System.Linq;
 using io.github.ykysnk.utils;
 using io.github.ykysnk.utils.Editor;
 using io.github.ykysnk.utils.Editor.Extensions;
+using io.github.ykysnk.utils.Extensions;
 using io.github.ykysnk.utils.NonUdon;
 using UnityEditor;
 using UnityEditor.UIElements;
@@ -193,13 +194,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             Instance.SavePackageList();
         }
 
-        private static void RebuildList(List<UpmInstallerPackage> packages)
-        {
-            packages.RemoveAll(x => string.IsNullOrEmpty(x.FullName));
-            var newList = packages.Distinct().ToList();
-            packages.Clear();
-            packages.AddRange(newList);
-        }
+        private static void RebuildList(List<UpmInstallerPackage> packages) =>
+            packages.Rebuild(x => string.IsNullOrEmpty(x.FullName));
 
         [MenuItem("Tools/YKYToolkit/UPM Installer")]
         private static void ShowWindow()
