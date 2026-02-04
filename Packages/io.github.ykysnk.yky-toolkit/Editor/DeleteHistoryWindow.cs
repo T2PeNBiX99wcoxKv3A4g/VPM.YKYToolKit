@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using io.github.ykysnk.utils.Editor;
 using UnityEditor;
 using UnityEditor.UIElements;
@@ -32,7 +33,16 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             _refreshButton.clicked += Refresh;
 
             _clearButton = tree.Q<ToolbarButton>("clearButton");
-            _clearButton.clicked += OnClearClicked;
+            _clearButton.clicked += () => UniTask.Create(async () =>
+            {
+                if (!await EditorUtils.DisplayDialogAsync(
+                        "Clear Delete History",
+                        "Are you sure you want to clear all delete history records?",
+                        "Clear", "Cancel"))
+                    return;
+                DeleteHistoryManager.Clear();
+                Refresh();
+            });
 
             _emptyLabel = tree.Q<Label>("emptyLabel");
             _listView = tree.Q<ListView>("listView");
@@ -58,17 +68,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var window = GetWindow<DeleteHistoryWindow>();
             window.titleContent = EditorGUIUtils.IconContent("Delete History", "undohistory");
             window.minSize = new(520, 280);
-        }
-
-        private void OnClearClicked()
-        {
-            if (!EditorUtility.DisplayDialog(
-                    "Clear Delete History",
-                    "Are you sure you want to clear all delete history records?",
-                    "Clear", "Cancel"))
-                return;
-            DeleteHistoryManager.Clear();
-            Refresh();
         }
 
         private void Refresh()

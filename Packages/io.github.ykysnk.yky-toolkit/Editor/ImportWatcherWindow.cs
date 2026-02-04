@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using io.github.ykysnk.utils.Editor;
 using io.github.ykysnk.utils.Extensions;
 using UnityEditor;
@@ -66,16 +67,19 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var listView = tree.Q<ListView>("importLogList");
 
             refreshButton?.RegisterCallback<ClickEvent>(_ => RefreshImportLog());
-            clearButton?.RegisterCallback<ClickEvent>(_ =>
+            clearButton?.RegisterCallback<ClickEvent>(_ => UniTask.Create(async () =>
             {
-                if (EditorUtility.DisplayDialog("Clear Import Log",
-                        "Are you sure you want to clear all import log records?",
-                        "Clear", "Cancel"))
+                if (await EditorUtils.DisplayDialogAsync("Clear Import Log",
+                        "Are you sure you want to clear all import log records?", "Clear", "Cancel"))
                 {
                     ImportHistoryManager.Clear();
                     RefreshImportLog();
                 }
-            });
+            }));
+
+            UpdateVisibility();
+            rootVisualElement.RegisterCallback<GeometryChangedEvent>(_ => UpdateVisibility());
+            return;
 
             void UpdateVisibility()
             {
@@ -84,9 +88,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 if (listView != null)
                     listView.style.display = sessions.Count > 0 ? DisplayStyle.Flex : DisplayStyle.None;
             }
-
-            UpdateVisibility();
-            rootVisualElement.RegisterCallback<GeometryChangedEvent>(_ => UpdateVisibility());
         }
 
         private void LoadFileColorList()
