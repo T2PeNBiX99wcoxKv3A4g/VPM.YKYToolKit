@@ -29,7 +29,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             tree.Bind(serializedObject);
             rootVisualElement.Add(tree);
             LoadFileColorList();
-            fileColors.Rebuild();
 
             var colorField = tree.Q<ColorField>("color");
             colorField.value = ImportWatcher.HighlightColor;
@@ -51,6 +50,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         {
             fileColors.Clear();
             fileColors.AddRange(ImportWatcher.ColorList);
+            fileColors.Rebuild();
         }
 
         private void SaveFileColorList()

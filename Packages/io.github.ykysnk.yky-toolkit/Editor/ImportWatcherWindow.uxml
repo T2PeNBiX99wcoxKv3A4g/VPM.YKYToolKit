@@ -7,7 +7,7 @@
                            display-tooltip-when-elided="true" name="settings"/>
     </uie:Toolbar>
     <ui:ListView selection-type="Multiple" virtualization-method="DynamicHeight" name="importLogList"
-                 binding-path="records" show-bound-collection-size="false"
+                 binding-path="sessions" show-bound-collection-size="false"
                  show-alternating-row-backgrounds="ContentOnly" style="flex-grow: 1;"/>
     <ui:Label text="No import log." name="importLogEmpty"
               style="unity-font-style: bold; color: rgb(150, 150, 150); margin-top: 6px; margin-left: 6px;"/>

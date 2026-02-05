@@ -27,8 +27,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             var iconImage = tree.Q<Image>("icon");
             var nameLabel = tree.Q<Label>("name");
-            var timeLabel = tree.Q<Label>("time");
-            timeLabel.style.display = DisplayStyle.None;
 
             UpdateUI();
             tree.TrackPropertyValue(property, _ => UpdateUI());
@@ -36,7 +34,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             tree.RegisterCallback<MouseDownEvent>(evt =>
             {
                 if (evt.clickCount != 2) return;
-                var asset = AssetDatabase.LoadAssetAtPath<Object>(guidProperty.stringValue);
+                var asset = AssetDatabase.LoadAssetAtPath<Object>(
+                    AssetDatabase.GUIDToAssetPath(guidProperty.stringValue));
                 if (asset == null) return;
                 EditorGUIUtility.PingObject(asset);
                 Selection.activeObject = asset;
