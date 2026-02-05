@@ -1,9 +1,13 @@
 .import-log-item {
-    flex-direction: row;
+    flex-direction: column;
     padding: 2px 4px;
-    align-items: center;
     border-bottom-width: 1px;
     border-bottom-color: rgba(0, 0, 0, 0.2);
+}
+
+.import-log-item__segment {
+    flex-direction: row;
+    align-items: center;
 }
 
 .import-log-item:hover {
