@@ -43,49 +43,14 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             foldout.value = true;
             foldout.style.unityFontStyleAndWeight = FontStyle.Bold;
 
-            var rootNodes = new List<Node>();
-            var allNodes = new Dictionary<string, Node>();
-            var nextId = 0;
-
-            for (var i = 0; i < recordsProperty.arraySize; i++)
-            {
-                var recordProperty = recordsProperty.GetArrayElementAtIndex(i);
-                var path = recordProperty.FindPropertyRelative("path").stringValue;
-                if (string.IsNullOrEmpty(path)) continue;
-
-                var parts = path.Split('/');
-                var currentPath = "";
-                Node? parent = null;
-
-                for (var j = 0; j < parts.Length; j++)
-                {
-                    var part = parts[j];
-                    if (string.IsNullOrEmpty(part)) continue;
-
-                    if (j > 0) currentPath += "/";
-                    currentPath += part;
-
-                    if (!allNodes.TryGetValue(currentPath, out var node))
-                    {
-                        node = new(part, currentPath, nextId++);
-                        allNodes.Add(currentPath, node);
-
-                        if (parent == null)
-                            rootNodes.Add(node);
-                        else
-                            parent.Children.Add(node);
-                    }
-
-                    parent = node;
-                }
-            }
-
+            var rootNodes = BuildTree(recordsProperty);
             var nodesTreeView = tree.Q<TreeView>("nodes");
             nodesTreeView.makeItem =
                 () => segmentUxml.CloneTree().Q<VisualElement>(className: "import-log-item__segment");
 
-            nodesTreeView.bindItem = (element, id) =>
+            nodesTreeView.bindItem = (element, index) =>
             {
+                var id = nodesTreeView.GetIdForIndex(index);
                 var node = nodesTreeView.GetItemDataForId<Node>(id);
                 if (node == null) return;
 
@@ -93,26 +58,25 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 var label = element.Q<Label>("name");
 
                 label.text = node.Name;
-                label.tooltip = node.Path;
+                label.tooltip = node.FullPath;
 
-                var asset = AssetDatabase.LoadAssetAtPath<Object>(node.Path);
-                if (asset != null)
+                var type = AssetDatabase.GetMainAssetTypeAtPath(node.FullPath);
+                if (type != null || AssetDatabase.IsValidFolder(node.FullPath))
                 {
-                    icon.image = AssetDatabase.GetCachedIcon(node.Path);
+                    icon.image = AssetDatabase.GetCachedIcon(node.FullPath);
                     label.style.color = StyleKeyword.Null;
                 }
-                else if (Folders.Contains(node.Path))
+                else if (Folders.Contains(node.FullPath))
                 {
                     icon.image = EditorGUIUtility.FindTexture("Folder Icon");
                     label.style.color = StyleKeyword.Null;
                 }
                 else
                 {
-                    icon.image = InternalEditorUtility.GetIconForFile(node.Path);
+                    icon.image = InternalEditorUtility.GetIconForFile(node.FullPath);
                     label.style.color = Color.red;
                 }
 
-                element.UnregisterCallback<MouseDownEvent>(OnMouseDown);
                 element.RegisterCallback<MouseDownEvent>(OnMouseDown);
                 return;
 
@@ -120,7 +84,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 {
                     if (e.clickCount != 2) return;
                     e.StopPropagation();
-                    var a = AssetDatabase.LoadAssetAtPath<Object>(node.Path);
+                    var a = AssetDatabase.LoadAssetAtPath<Object>(node.FullPath);
                     if (a == null) return;
                     EditorGUIUtility.PingObject(a);
                     Selection.activeObject = a;
@@ -138,18 +102,71 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             }
         }
 
+        private static List<Node> BuildTree(SerializedProperty records)
+        {
+            var rootNodes = new List<Node>();
+            var map = new Dictionary<string, Node>();
+
+            for (var i = 0; i < records.arraySize; i++)
+            {
+                var path = records.GetArrayElementAtIndex(i)
+                    .FindPropertyRelative("path").stringValue;
+
+                if (string.IsNullOrEmpty(path))
+                    continue;
+
+                var parts = path.Split('/');
+                var current = "";
+                Node? parent = null;
+
+                for (var depth = 0; depth < parts.Length; depth++)
+                {
+                    var part = parts[depth];
+                    if (string.IsNullOrEmpty(part))
+                        continue;
+
+                    current = depth == 0 ? part : $"{current}/{part}";
+
+                    if (!map.TryGetValue(current, out var node))
+                    {
+                        node = new(part, current, depth);
+                        map[current] = node;
+
+                        if (parent == null)
+                            rootNodes.Add(node);
+                        else
+                            parent.Children.Add(node);
+                    }
+
+                    parent = node;
+                }
+            }
+
+            SortTree(rootNodes);
+            return rootNodes;
+        }
+
+        private static void SortTree(List<Node> nodes)
+        {
+            nodes.Sort((a, b) => string.Compare(a.Name, b.Name, StringComparison.Ordinal));
+            foreach (var n in nodes)
+                SortTree(n.Children);
+        }
+
         private class Node
         {
             public readonly List<Node> Children = new();
+            public readonly int Depth;
+            public readonly string FullPath;
             public readonly int Id;
             public readonly string Name;
-            public readonly string Path;
 
-            public Node(string name, string path, int id)
+            public Node(string name, string fullPath, int depth)
             {
                 Name = name;
-                Path = path;
-                Id = id;
+                FullPath = fullPath;
+                Depth = depth;
+                Id = fullPath.GetHashCode();
             }
         }
     }
