@@ -4,8 +4,9 @@
         <uie:ToolbarButton text="label.refresh" name="refreshButton"/>
         <uie:ToolbarButton text="label.clear" name="clearButton"/>
     </uie:Toolbar>
-    <ui:Label text="No delete history." name="emptyLabel" class="delete-history-window__empty-label"/>
     <ui:ListView show-alternating-row-backgrounds="ContentOnly" selection-type="Multiple"
                  virtualization-method="DynamicHeight" name="listView" binding-path="records"
                  show-bound-collection-size="false" style="flex-grow: 1;"/>
+    <ui:Label text="label.delete_record.no_delete_history" name="emptyLabel"
+              class="delete-history-window__empty-label"/>
 </ui:UXML>
