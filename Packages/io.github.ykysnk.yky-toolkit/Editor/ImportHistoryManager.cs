@@ -60,9 +60,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private static List<ImportSession> LoadInternal()
         {
             var json = PlayerPrefs.GetString(EditorKey);
-            if (!JsonUtils.TryFromJson<ListWrapper<ImportSession>>(json, out var list, out _))
-                return new();
-            return list?.items ?? new List<ImportSession>();
+            return !JsonUtils.TryFromJson<ListWrapper<ImportSession>>(json, out var list, out _) ? new() : list!.items;
         }
 
         private static void SaveInternal(List<ImportSession> list)
