@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
-using io.github.ykysnk.utils.Editor;
 using JetBrains.Annotations;
-using UnityEngine;
+using UnityEditor;
 using UnityEngine.UIElements;
 
 namespace io.github.ykysnk.ykyToolkit.Editor.UIElements
@@ -9,16 +8,16 @@ namespace io.github.ykysnk.ykyToolkit.Editor.UIElements
     public class Vector3FieldExtra : Vector3Field
     {
         [PublicAPI] internal static readonly StyleBackground LinkedIcon =
-            new(EditorGUIUtils.IconTexture("linked") as Texture2D);
+            new(EditorGUIUtility.FindTexture("linked"));
 
         [PublicAPI] internal static readonly StyleBackground RandomIcon =
-            new(EditorGUIUtils.IconTexture("preaudioloopoff") as Texture2D);
+            new(EditorGUIUtility.FindTexture("preaudioloopoff"));
 
         [PublicAPI] internal static readonly StyleBackground ResetIcon =
-            new(EditorGUIUtils.IconTexture("refresh") as Texture2D);
+            new(EditorGUIUtility.FindTexture("refresh"));
 
         [PublicAPI] internal static readonly StyleBackground UnlinkedIcon =
-            new(EditorGUIUtils.IconTexture("unlinked") as Texture2D);
+            new(EditorGUIUtility.FindTexture("unlinked"));
 
         private bool _showLinkButton;
 
