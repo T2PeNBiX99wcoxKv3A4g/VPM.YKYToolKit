@@ -24,7 +24,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             var foldout = new Foldout();
             foldout.text = $"{time} ({recordsProperty.arraySize} items)";
-            foldout.value = false;
+            foldout.value = true;
             foldout.style.unityFontStyleAndWeight = FontStyle.Bold;
 
             var listView = new ListView();

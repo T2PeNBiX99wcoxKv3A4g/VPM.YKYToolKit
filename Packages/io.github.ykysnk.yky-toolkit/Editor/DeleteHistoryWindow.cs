@@ -35,6 +35,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             _clearButton = tree.Q<ToolbarButton>("clearButton");
             _clearButton.clicked += () => UniTask.Create(async () =>
             {
+                // TODO: Dialog
                 if (!await EditorUtils.DisplayDialogAsync(
                         "Clear Delete History",
                         "Are you sure you want to clear all delete history records?",

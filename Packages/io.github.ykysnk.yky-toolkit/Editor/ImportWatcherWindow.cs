@@ -69,6 +69,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             refreshButton?.RegisterCallback<ClickEvent>(_ => RefreshImportLog());
             clearButton?.RegisterCallback<ClickEvent>(_ => UniTask.Create(async () =>
             {
+                // TODO: Dialog
                 if (await EditorUtils.DisplayDialogAsync("Clear Import Log",
                         "Are you sure you want to clear all import log records?", "Clear", "Cancel"))
                 {
@@ -104,7 +105,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private void RefreshImportLog()
         {
             sessions.Clear();
-            sessions.AddRange(ImportHistoryManager.AllSessions());
+            sessions.AddRange(ImportHistoryManager.All());
             sessions.Reverse();
             sessions.Rebuild();
 
