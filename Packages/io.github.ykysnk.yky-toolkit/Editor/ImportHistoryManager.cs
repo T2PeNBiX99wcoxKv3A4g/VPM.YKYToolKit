@@ -16,14 +16,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         public string guid;
         public string name;
         public string path;
-        public bool isFolder;
 
         internal ImportRecord(string guid)
         {
             this.guid = guid;
             path = AssetDatabase.GUIDToAssetPath(guid);
             name = Path.GetFileName(path);
-            isFolder = AssetDatabase.IsValidFolder(path);
         }
     }
 
