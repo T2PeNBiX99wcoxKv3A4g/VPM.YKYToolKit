@@ -79,28 +79,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             CleanupExpired();
             CleanupMissingAssets();
 
-            var session = new ImportSession
-            {
-                unixSeconds = DateTimeOffset.UtcNow.ToUnixTimeSeconds()
-            };
+            var session = new ImportSession();
 
             foreach (var path in importedAssets)
             {
                 AddOrUpdate(path);
-
-                var guid = AssetDatabase.AssetPathToGUID(path);
-                var isFolder = AssetDatabase.IsValidFolder(path);
-
-                session.records.Add(new()
-                {
-                    path = path,
-                    guid = guid,
-                    name = Path.GetFileName(path),
-                    isFolder = isFolder,
-                    iconGuid = string.Empty
-                });
-
-                ImportHistoryManager.IsNewGuid(guid);
+                session.records.Add(new(AssetDatabase.AssetPathToGUID(path)));
             }
 
             foreach (var path in movedAssets)

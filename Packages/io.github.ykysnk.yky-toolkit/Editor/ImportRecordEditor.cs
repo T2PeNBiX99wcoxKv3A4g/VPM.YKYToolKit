@@ -21,9 +21,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var tree = uxml.CloneTree();
             InternalLocalizationExtensions.Helper.UILocalize(tree, false);
 
-            var pathProperty = property.FindPropertyRelative("path");
-            var nameProperty = property.FindPropertyRelative("name");
-            var isFolderProperty = property.FindPropertyRelative("isFolder");
+            var guidProperty = property.FindPropertyRelative("guid");
 
             var iconImage = tree.Q<Image>("icon");
             var nameLabel = tree.Q<Label>("name");
@@ -31,13 +29,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             timeLabel.style.display = DisplayStyle.None;
 
             UpdateUI();
-            tree.TrackPropertyValue(pathProperty, _ => UpdateUI());
-            tree.TrackPropertyValue(nameProperty, _ => UpdateUI());
+            tree.TrackPropertyValue(property, _ => UpdateUI());
 
             tree.RegisterCallback<MouseDownEvent>(evt =>
             {
                 if (evt.clickCount != 2) return;
-                var asset = AssetDatabase.LoadAssetAtPath<Object>(pathProperty.stringValue);
+                var asset = AssetDatabase.LoadAssetAtPath<Object>(guidProperty.stringValue);
                 if (asset == null) return;
                 EditorGUIUtility.PingObject(asset);
                 Selection.activeObject = asset;
@@ -47,9 +44,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             void UpdateUI()
             {
-                var path = pathProperty.stringValue;
-                var fileName = nameProperty.stringValue;
-                if (string.IsNullOrEmpty(fileName)) fileName = Path.GetFileName(path);
+                var path = AssetDatabase.GUIDToAssetPath(guidProperty.stringValue);
+                var fileName = Path.GetFileName(path);
 
                 nameLabel.text = fileName;
                 nameLabel.tooltip = path;
@@ -63,9 +59,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 else
                 {
                     nameLabel.style.color = Color.red;
-                    iconImage.image = isFolderProperty.boolValue
-                        ? EditorGUIUtils.IconTexture("Folder Icon")
-                        : InternalEditorUtility.GetIconForFile(path);
+                    iconImage.image = InternalEditorUtility.GetIconForFile(path);
                 }
             }
         }
