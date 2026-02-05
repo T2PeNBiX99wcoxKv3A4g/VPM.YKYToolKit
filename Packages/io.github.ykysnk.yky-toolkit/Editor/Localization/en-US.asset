@@ -82,7 +82,7 @@ MonoBehaviour:
     translate: '{0}
 
 
-      You can undo the delete assets action. (Not 100%)'
+      You cannot undo the delete assets action.'
     tooltip: 
   - key: label.new_delete.ok
     translate: Delete
