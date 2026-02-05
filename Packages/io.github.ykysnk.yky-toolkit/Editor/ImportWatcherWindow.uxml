@@ -9,6 +9,6 @@
     <ui:ListView selection-type="Multiple" virtualization-method="DynamicHeight" name="importLogList"
                  binding-path="sessions" show-bound-collection-size="false"
                  show-alternating-row-backgrounds="ContentOnly" style="flex-grow: 1;"/>
-    <ui:Label text="No import log." name="importLogEmpty"
+    <ui:Label text="label.import_watcher.no_import_log" name="importLogEmpty"
               style="unity-font-style: bold; color: rgb(150, 150, 150); margin-top: 6px; margin-left: 6px;"/>
 </ui:UXML>
