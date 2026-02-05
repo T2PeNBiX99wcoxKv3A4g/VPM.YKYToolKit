@@ -4,6 +4,7 @@ using System.Linq;
 using io.github.ykysnk.utils.NonUdon;
 using JetBrains.Annotations;
 using UnityEditor;
+using UnityEngine;
 
 namespace io.github.ykysnk.ykyToolkit.Editor
 {
@@ -19,8 +20,15 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
     internal static class DeleteHistoryManager
     {
-        private const string EditorKey = "YKYToolkit/DeleteHistory";
-        private const int MaxRecords = 200;
+        private const string DeleteHistoryEditorKey = "YKYToolkit/DeleteHistory";
+        private const string MaxRecordsEditorKey = "YKYToolkit/DeleteHistory/MaxRecords";
+        private const int DefaultMaxRecords = 200;
+
+        internal static int MaxRecords
+        {
+            get => EditorPrefs.GetInt(MaxRecordsEditorKey, DefaultMaxRecords);
+            set => EditorPrefs.SetInt(MaxRecordsEditorKey, value);
+        }
 
         public static void Add(DeleteRecord record)
         {
@@ -39,17 +47,15 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         private static List<DeleteRecord> LoadInternal()
         {
-            var json = EditorPrefs.GetString(EditorKey);
-            if (!JsonUtils.TryFromJson<ListWrapper<DeleteRecord>>(json, out var list, out _))
-                return new();
-            return list?.items ?? new List<DeleteRecord>();
+            var json = PlayerPrefs.GetString(DeleteHistoryEditorKey);
+            return !JsonUtils.TryFromJson<ListWrapper<DeleteRecord>>(json, out var list, out _) ? new() : list!.items;
         }
 
         private static void SaveInternal(List<DeleteRecord> list)
         {
             Trim(list);
             if (!JsonUtils.TryToJson(Wrapper.Create(list), out var json, out _)) return;
-            EditorPrefs.SetString(EditorKey, json);
+            PlayerPrefs.SetString(DeleteHistoryEditorKey, json);
         }
 
         private static void Trim(List<DeleteRecord> list)
