@@ -8,7 +8,7 @@
     </uie:Toolbar>
     <ui:ListView selection-type="Multiple" virtualization-method="DynamicHeight" name="importLogList"
                  binding-path="sessions" show-bound-collection-size="false"
-                 show-alternating-row-backgrounds="ContentOnly" style="flex-grow: 1;"/>
+                 show-alternating-row-backgrounds="ContentOnly" reorder-mode="Animated" style="flex-grow: 1;"/>
     <ui:Label text="label.import_watcher.no_import_log" name="importLogEmpty" class="empty-label"
               style="unity-font-style: bold;"/>
 </ui:UXML>

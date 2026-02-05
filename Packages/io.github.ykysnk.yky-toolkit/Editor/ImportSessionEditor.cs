@@ -14,6 +14,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
     [CustomPropertyDrawer(typeof(ImportSession))]
     public class ImportSessionEditor : PropertyDrawer
     {
+        private static readonly List<string> Folders = new()
+        {
+            "Packages",
+            "ProjectSettings"
+        };
+
         public override VisualElement CreatePropertyGUI(SerializedProperty property)
         {
             var uxml = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(
@@ -95,10 +101,15 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     icon.image = AssetDatabase.GetCachedIcon(node.Path);
                     label.style.color = StyleKeyword.Null;
                 }
+                else if (Folders.Contains(node.Path))
+                {
+                    icon.image = EditorGUIUtility.FindTexture("Folder Icon");
+                    label.style.color = StyleKeyword.Null;
+                }
                 else
                 {
-                    label.style.color = Color.red;
                     icon.image = InternalEditorUtility.GetIconForFile(node.Path);
+                    label.style.color = Color.red;
                 }
 
                 element.UnregisterCallback<MouseDownEvent>(OnMouseDown);
