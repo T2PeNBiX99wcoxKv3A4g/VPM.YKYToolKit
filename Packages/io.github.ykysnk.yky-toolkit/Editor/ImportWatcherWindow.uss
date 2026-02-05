@@ -1,0 +1,6 @@
+.empty-label {
+    margin-top: 20px;
+    align-self: center;
+    -unity-font-style: bold;
+    color: gray;
+}
