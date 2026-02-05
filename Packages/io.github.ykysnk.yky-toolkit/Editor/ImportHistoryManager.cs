@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using io.github.ykysnk.utils.NonUdon;
 using JetBrains.Annotations;
+using UnityEditor;
 using UnityEngine;
 
 namespace io.github.ykysnk.ykyToolkit.Editor
@@ -12,8 +14,17 @@ namespace io.github.ykysnk.ykyToolkit.Editor
     internal class ImportRecord
     {
         public string guid;
+        public string name;
+        public string path;
+        public bool isFolder;
 
-        internal ImportRecord(string guid) => this.guid = guid;
+        internal ImportRecord(string guid)
+        {
+            this.guid = guid;
+            path = AssetDatabase.GUIDToAssetPath(guid);
+            name = Path.GetFileName(path);
+            isFolder = AssetDatabase.IsValidFolder(path);
+        }
     }
 
     [Serializable]

@@ -1,4 +1,3 @@
-using System.IO;
 using io.github.ykysnk.utils.Editor;
 using UnityEditor;
 using UnityEditor.UIElements;
@@ -22,6 +21,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             InternalLocalizationExtensions.Helper.UILocalize(tree, false);
 
             var guidProperty = property.FindPropertyRelative("guid");
+            var nameProperty = property.FindPropertyRelative("name");
+            var pathProperty = property.FindPropertyRelative("path");
+            var isFolderProperty = property.FindPropertyRelative("isFolder");
 
             var iconImage = tree.Q<Image>("icon");
             var nameLabel = tree.Q<Label>("name");
@@ -44,8 +46,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             void UpdateUI()
             {
-                var path = AssetDatabase.GUIDToAssetPath(guidProperty.stringValue);
-                var fileName = Path.GetFileName(path);
+                var path = pathProperty.stringValue;
+                var fileName = nameProperty.stringValue;
 
                 nameLabel.text = fileName;
                 nameLabel.tooltip = path;
