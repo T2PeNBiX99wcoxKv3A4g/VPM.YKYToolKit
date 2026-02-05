@@ -26,6 +26,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     -unity-text-align: middle-left;
+    -unity-font-style: normal;
 }
 
 .import-log-item__time {
