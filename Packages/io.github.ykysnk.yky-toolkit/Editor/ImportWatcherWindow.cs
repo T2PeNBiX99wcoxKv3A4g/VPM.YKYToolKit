@@ -72,7 +72,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 listView.style.display = sessions.Count > 0 ? DisplayStyle.Flex : DisplayStyle.None;
         }
 
-        [MenuItem("Tools/YKYToolkit/Import Watcher Window", false, Util.Three)]
+        [MenuItem("Tools/YKYToolkit/Import Watcher", false, Util.Three)]
         private static void ShowWindow()
         {
             var window = GetWindow<ImportWatcherWindow>();
