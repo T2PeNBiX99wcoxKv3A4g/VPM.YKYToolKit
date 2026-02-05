@@ -262,10 +262,10 @@ MonoBehaviour:
   - key: label.preferences_page.import_watcher
     translate: "\u30A4\u30F3\u30DD\u30FC\u30C8\u30A6\u30A9\u30C3\u30C1\u30E3\u30FC"
     tooltip: 
-  - key: label.delete_record.refresh
+  - key: label.refresh
     translate: "\u518D\u8AAD\u307F\u8FBC\u307F"
     tooltip: 
-  - key: label.delete_record.clear
+  - key: label.clear
     translate: "\u30AF\u30EA\u30A2"
     tooltip: 
   - key: label.delete_record.path

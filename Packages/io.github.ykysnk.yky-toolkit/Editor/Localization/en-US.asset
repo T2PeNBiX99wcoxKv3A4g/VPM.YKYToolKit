@@ -307,10 +307,10 @@ MonoBehaviour:
   - key: label.preferences_page.import_watcher
     translate: Import Watcher
     tooltip: 
-  - key: label.delete_record.refresh
+  - key: label.refresh
     translate: Refresh
     tooltip: 
-  - key: label.delete_record.clear
+  - key: label.clear
     translate: Clear
     tooltip: 
   - key: label.delete_record.path
