@@ -150,11 +150,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                         var guid = AssetDatabase.AssetPathToGUID(path);
                         var success = AssetDatabase.MoveAssetToTrash(path);
                         if (!success)
-                        {
                             Utils.LogWarning(nameof(DeleteSelectedAssetsAsync), $"Failed to delete: {path}");
-                        }
                         else
-                        {
                             DeleteHistoryManager.Add(new()
                             {
                                 path = path,
@@ -162,7 +159,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                                 extension = Path.GetExtension(path),
                                 unixSeconds = DateTimeOffset.UtcNow.ToUnixTimeSeconds()
                             });
-                        }
                     }
                     catch (Exception ex)
                     {
