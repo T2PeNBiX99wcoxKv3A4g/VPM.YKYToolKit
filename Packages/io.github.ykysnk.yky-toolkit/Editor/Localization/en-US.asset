@@ -346,3 +346,6 @@ MonoBehaviour:
   - key: label.delete_record.no_delete_history
     translate: No delete history.
     tooltip: 
+  - key: label.import_watcher.max_sessions
+    translate: Max History Sessions
+    tooltip: 
