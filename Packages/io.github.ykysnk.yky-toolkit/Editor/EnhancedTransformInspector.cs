@@ -130,10 +130,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 var prev = evt.previousValue.Clean();
                 var next = evt.newValue.Clean();
 
-                CleanTransforms();
                 if (globalPositionFieldEditing)
                     ApplyToTargetsInChanged(prev, next, t => t.position, (t, apply) => t.position = apply,
                         "Set World Position");
+
+                CleanTransforms();
 
                 positionField.SetValueWithoutNotify(theTarget.localPosition);
                 globalPositionField.SetValueWithoutNotify(next);
@@ -177,12 +178,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 var prev = evt.previousValue.Clean().DeltaAngle();
                 var next = evt.newValue.Clean().DeltaAngle();
 
-                CleanTransforms();
-
                 if (rotationEditing)
                     ApplyToTargetsInChanged(prev, next, t => t.localEulerAngles.DeltaAngle(),
                         (t, apply) => t.localEulerAngles = apply,
                         "Set Local Rotation");
+
+                CleanTransforms();
 
                 rotationField.SetValueWithoutNotify(next);
                 globalRotationField.SetValueWithoutNotify(theTarget.eulerAngles.DeltaAngle());
@@ -198,12 +199,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 var prev = evt.previousValue.Clean().DeltaAngle();
                 var next = evt.newValue.Clean().DeltaAngle();
 
-                CleanTransforms();
-
                 if (globalRotationEditing)
                     ApplyToTargetsInChanged(prev, next, t => t.eulerAngles.DeltaAngle(),
                         (t, apply) => t.eulerAngles = apply,
                         "Set World Rotation");
+
+                CleanTransforms();
 
                 rotationField.SetValueWithoutNotify(theTarget.localEulerAngles.DeltaAngle());
                 globalRotationField.SetValueWithoutNotify(next);
@@ -271,6 +272,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             globalRotationField.ResetButton.clicked += ResetGlobalRotation;
             globalRotationField.RandomButton.clicked += RandomGlobalRotation;
 
+            var constrainProportionsScaleToggle = tree.Q<Toggle>("constrainProportionsScale");
             var scaleField = tree.Q<Vector3FieldExtra>("scale");
             var lossyScaleField = tree.Q<Vector3FieldExtra>("lossyScale");
 
@@ -282,11 +284,27 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             scaleField.RegisterValueChangedCallback(evt =>
             {
-                var clearVector = evt.newValue.Clean();
+                var prev = evt.previousValue.Clean();
+                var next = evt.newValue.Clean();
+
+                // if (constrainProportionsScaleToggle.value)
+                // {
+                //     var ratioX = prev.x != 0 ? next.x / prev.x : 1f;
+                //     var ratioY = prev.y != 0 ? next.y / prev.y : 1f;
+                //     var ratioZ = prev.z != 0 ? next.z / prev.z : 1f;
+                //
+                //     var ratio = 1f;
+                //
+                //     if (!Mathf.Approximately(ratioX, 1f)) ratio = ratioX;
+                //     if (!Mathf.Approximately(ratioY, 1f)) ratio = ratioY;
+                //     if (!Mathf.Approximately(ratioZ, 1f)) ratio = ratioZ;
+                //
+                //     theTarget.localScale = prev * ratio;
+                // }
 
                 CleanTransforms();
 
-                scaleField.SetValueWithoutNotify(clearVector);
+                scaleField.SetValueWithoutNotify(next);
                 lossyScaleField.SetValueWithoutNotify(theTarget.lossyScale);
             });
 
@@ -300,10 +318,26 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 var prev = evt.previousValue.Clean();
                 var next = evt.newValue.Clean();
 
-                CleanTransforms();
                 if (lossyScaleFieldEditing)
                     ApplyToTargetsInChanged(prev, next, t => t.lossyScale, (t, apply) => t.SetLossyScale(apply),
                         "Set World Lossy Scale");
+
+                // if (constrainProportionsScaleToggle.value)
+                // {
+                //     var ratioX = prev.x != 0 ? next.x / prev.x : 1f;
+                //     var ratioY = prev.y != 0 ? next.y / prev.y : 1f;
+                //     var ratioZ = prev.z != 0 ? next.z / prev.z : 1f;
+                //
+                //     var ratio = 1f;
+                //
+                //     if (!Mathf.Approximately(ratioX, 1f)) ratio = ratioX;
+                //     if (!Mathf.Approximately(ratioY, 1f)) ratio = ratioY;
+                //     if (!Mathf.Approximately(ratioZ, 1f)) ratio = ratioZ;
+                //
+                //     theTarget.SetLossyScale(prev * ratio);
+                // }
+
+                CleanTransforms();
 
                 scaleField.SetValueWithoutNotify(theTarget.localScale);
                 lossyScaleField.SetValueWithoutNotify(next);
@@ -322,8 +356,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             scaleField.RandomButton.clicked += RandomLocalScale;
             lossyScaleField.ResetButton.clicked += ResetGlobalScale;
             lossyScaleField.RandomButton.clicked += RandomGlobalScale;
-
-            var constrainProportionsScaleToggle = tree.Q<Toggle>("constrainProportionsScale");
 
             scaleField.LinkButton.clicked += ChangeLinkButtonState;
             lossyScaleField.LinkButton.clicked += ChangeLinkButtonState;
