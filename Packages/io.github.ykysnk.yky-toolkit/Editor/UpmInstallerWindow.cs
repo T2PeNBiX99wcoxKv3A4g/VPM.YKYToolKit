@@ -29,6 +29,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         private void CreateGUI()
         {
+            _ = isPackageListMakerExpanded;
             Instance = this;
             var serializedObject = new SerializedObject(this);
             var tree = uxml!.CloneTree();
