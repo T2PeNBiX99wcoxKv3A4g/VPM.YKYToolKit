@@ -129,7 +129,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
                     if (!map.TryGetValue(current, out var node))
                     {
-                        node = new(part, current, depth);
+                        node = new(part, current);
                         map[current] = node;
 
                         if (parent == null)
@@ -156,16 +156,14 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private class Node
         {
             public readonly List<Node> Children = new();
-            public readonly int Depth;
             public readonly string FullPath;
             public readonly int Id;
             public readonly string Name;
 
-            public Node(string name, string fullPath, int depth)
+            public Node(string name, string fullPath)
             {
                 Name = name;
                 FullPath = fullPath;
-                Depth = depth;
                 Id = fullPath.GetHashCode();
             }
         }
