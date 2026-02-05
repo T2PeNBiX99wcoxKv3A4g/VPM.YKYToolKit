@@ -1,0 +1,7 @@
+.cell {
+    flex-grow: 1;
+}
+
+.row {
+    flex-direction: row;
+}

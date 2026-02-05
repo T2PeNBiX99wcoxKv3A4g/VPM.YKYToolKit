@@ -34,9 +34,13 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             colorField.value = ImportWatcher.HighlightColor;
             colorField.RegisterValueChangedCallback(evt => ImportWatcher.HighlightColor = evt.newValue);
 
-            var doubleField = tree.Q<DoubleField>("duration");
-            doubleField.value = ImportWatcher.Duration;
-            doubleField.RegisterValueChangedCallback(evt => ImportWatcher.Duration = evt.newValue);
+            var durationField = tree.Q<Slider>("duration");
+            durationField.value = (float)ImportWatcher.Duration;
+            durationField.RegisterValueChangedCallback(evt => ImportWatcher.Duration = evt.newValue);
+
+            var maxSessionsField = tree.Q<SliderInt>("maxSessions");
+            maxSessionsField.value = ImportHistoryManager.MaxSessions;
+            maxSessionsField.RegisterValueChangedCallback(evt => ImportHistoryManager.MaxSessions = evt.newValue);
 
             var fileColorsField = tree.Q<ListView>("fileColors");
             var addButton = fileColorsField.Q<Button>("unity-list-view__add-button");
