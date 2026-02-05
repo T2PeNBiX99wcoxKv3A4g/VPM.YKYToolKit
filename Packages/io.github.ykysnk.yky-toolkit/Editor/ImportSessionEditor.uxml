@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="True">
+    <Style src="project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/ImportSessionEditor.uss?fileID=7433441132597879392&amp;guid=1b86625c21da1ba489730a966c28800a&amp;type=3#ImportSessionEditor"/>
+    <ui:VisualElement
+            style="flex-grow: 1; margin-bottom: 8px; margin-top: 4px; border-bottom-width: 1px; border-bottom-color: rgba(51, 51, 51, 0);">
+        <ui:ListView binding-path="records" reorder-mode="Animated" show-bound-collection-size="true"
+                     show-foldout-header="true" show-alternating-row-backgrounds="ContentOnly"
+                     virtualization-method="DynamicHeight" name="records"/>
+    </ui:VisualElement>
+</ui:UXML>
