@@ -1,7 +1,10 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="True">
     <Style src="project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/ImportSessionEditor.uss?fileID=7433441132597879392&amp;guid=1b86625c21da1ba489730a966c28800a&amp;type=3#ImportSessionEditor"/>
-    <Style src="project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/ImportRecordEditor.uss?fileID=7433441132597879392&amp;guid=ee695c2e1d594a15a63b5f5839f66c4e&amp;type=3#ImportRecordEditor"/>
+    <Style src="project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/ImportRecordSegment.uss?fileID=7433441132597879392&amp;guid=ee695c2e1d594a15a63b5f5839f66c4e&amp;type=3#ImportRecordEditor"/>
     <ui:VisualElement style="flex-grow: 1; margin-bottom: 8px; margin-top: 4px;">
-        <ui:Foldout name="foldout"/>
+        <ui:Foldout name="foldout">
+            <ui:TreeView name="nodes" virtualization-method="DynamicHeight" selection-type="Multiple"
+                         show-alternating-row-backgrounds="ContentOnly" auto-expand="true"/>
+        </ui:Foldout>
     </ui:VisualElement>
 </ui:UXML>

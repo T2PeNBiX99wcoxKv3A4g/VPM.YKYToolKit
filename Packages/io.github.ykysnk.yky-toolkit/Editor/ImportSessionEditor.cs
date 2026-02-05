@@ -74,20 +74,13 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 }
             }
 
-            var treeView = new TreeView
-            {
-                virtualizationMethod = CollectionVirtualizationMethod.DynamicHeight,
-                selectionType = SelectionType.Multiple,
-                showAlternatingRowBackgrounds = AlternatingRowBackground.ContentOnly,
-                autoExpand = true,
-                makeItem = () => segmentUxml != null
-                    ? segmentUxml.CloneTree().Q<VisualElement>(className: "import-log-item__segment")
-                    : new Label("Error Loading Segment")
-            };
+            var nodesTreeView = tree.Q<TreeView>("nodes");
+            nodesTreeView.makeItem =
+                () => segmentUxml.CloneTree().Q<VisualElement>(className: "import-log-item__segment");
 
-            treeView.bindItem = (element, id) =>
+            nodesTreeView.bindItem = (element, id) =>
             {
-                var node = treeView.GetItemDataForId<Node>(id);
+                var node = nodesTreeView.GetItemDataForId<Node>(id);
                 if (node == null) return;
 
                 var icon = element.Q<Image>("icon");
@@ -123,9 +116,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 }
             };
 
-            treeView.SetRootItems(rootNodes.Select(CreateTreeViewItem).ToList());
-
-            foldout.Add(treeView);
+            nodesTreeView.SetRootItems(rootNodes.Select(CreateTreeViewItem).ToList());
 
             return tree;
 
