@@ -74,5 +74,11 @@ namespace Test
         {
             EditorPrefs.DeleteKey("YKYToolkit/ImportWatcher/FileColor");
         }
+
+        [MenuItem("Test/Delete Import Watcher Import History")]
+        private static void DeleteImportWatcherImportHistory()
+        {
+            PlayerPrefs.DeleteKey("YKYToolkit/ImportWatcher/ImportHistory");
+        }
     }
 }
