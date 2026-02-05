@@ -12,23 +12,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
     public class ImportWatcherWindow : EditorWindow
     {
         private const string Title = "Import Watcher";
-        private const string EditorKey = "YKYToolkit/ImportWatcher/Settings";
 
         [SerializeField] private VisualTreeAsset? uxml;
-        [SerializeField] private List<ImportWatcherFileColor> fileColors = new();
         [SerializeField] private List<ImportSession> sessions = new();
-
-        private static bool SettingsExpanded
-        {
-            get => EditorPrefs.GetBool(EditorKey);
-            set => EditorPrefs.SetBool(EditorKey, value);
-        }
-
-        private void OnDestroy()
-        {
-            fileColors.Rebuild();
-            SaveFileColorList();
-        }
 
         private void CreateGUI()
         {
@@ -37,37 +23,16 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             InternalLocalizationExtensions.Helper.UILocalize(tree, false);
             tree.Bind(serializedObject);
             rootVisualElement.Add(tree);
-            LoadFileColorList();
-            fileColors.Rebuild();
-
             RefreshImportLog();
 
-            var settingsFoldout = tree.Q<Foldout>("settings");
-            settingsFoldout.SetValueWithoutNotify(SettingsExpanded);
-            settingsFoldout.RegisterValueChangedCallback(evt => SettingsExpanded = evt.newValue);
-
-            var colorField = tree.Q<ColorField>("color");
-            colorField.value = ImportWatcher.HighlightColor;
-            colorField.RegisterValueChangedCallback(evt => ImportWatcher.HighlightColor = evt.newValue);
-
-            var doubleField = tree.Q<DoubleField>("duration");
-            doubleField.value = ImportWatcher.Duration;
-            doubleField.RegisterValueChangedCallback(evt => ImportWatcher.Duration = evt.newValue);
-
-            var fileColorsField = tree.Q<ListView>("fileColors");
-            var addButton = fileColorsField.Q<Button>("unity-list-view__add-button");
-            var removeButton = fileColorsField.Q<Button>("unity-list-view__remove-button");
-
-            addButton.clicked += SaveFileColorList;
-            removeButton.clicked += SaveFileColorList;
-
-            var refreshButton = tree.Q<ToolbarButton>("importLogRefresh");
-            var clearButton = tree.Q<ToolbarButton>("importLogClear");
+            var refreshButton = tree.Q<ToolbarButton>("refresh");
+            var clearButton = tree.Q<ToolbarButton>("clear");
+            var settingsButton = tree.Q<ToolbarButton>("settings");
             var emptyLabel = tree.Q<Label>("importLogEmpty");
             var listView = tree.Q<ListView>("importLogList");
 
-            refreshButton?.RegisterCallback<ClickEvent>(_ => RefreshImportLog());
-            clearButton?.RegisterCallback<ClickEvent>(_ => UniTask.Create(async () =>
+            refreshButton.clicked += RefreshImportLog;
+            clearButton.clicked += () => UniTask.Create(async () =>
             {
                 // TODO: Dialog
                 if (await EditorUtils.DisplayDialogAsync("Clear Import Log",
@@ -76,7 +41,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     ImportHistoryManager.Clear();
                     RefreshImportLog();
                 }
-            }));
+            });
+            settingsButton.clicked += ImportWatcherSettingsWindow.ShowWindow;
 
             UpdateVisibility();
             rootVisualElement.RegisterCallback<GeometryChangedEvent>(_ => UpdateVisibility());
@@ -89,17 +55,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 if (listView != null)
                     listView.style.display = sessions.Count > 0 ? DisplayStyle.Flex : DisplayStyle.None;
             }
-        }
-
-        private void LoadFileColorList()
-        {
-            fileColors.Clear();
-            fileColors.AddRange(ImportWatcher.ColorList);
-        }
-
-        private void SaveFileColorList()
-        {
-            ImportWatcher.ColorList = fileColors;
         }
 
         private void RefreshImportLog()
@@ -121,7 +76,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private static void ShowWindow()
         {
             var window = GetWindow<ImportWatcherWindow>();
-            window.titleContent = EditorGUIUtils.IconContent(Title, "unityeditor.consolewindow");
+            window.titleContent = EditorGUIUtils.IconContent(Title, "undohistory");
         }
     }
 }
