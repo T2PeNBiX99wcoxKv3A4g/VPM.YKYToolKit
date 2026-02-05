@@ -295,3 +295,6 @@ MonoBehaviour:
   - key: label.import_watcher.settings
     translate: "\u8A2D\u5B9A"
     tooltip: 
+  - key: label.import_watcher.no_import_log
+    translate: "\u30A4\u30F3\u30DD\u30FC\u30C8\u30ED\u30B0\u306F\u3042\u308A\u307E\u305B\u3093\u3002"
+    tooltip: 
