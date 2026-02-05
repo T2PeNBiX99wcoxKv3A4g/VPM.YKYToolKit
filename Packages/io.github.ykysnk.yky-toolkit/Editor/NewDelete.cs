@@ -5,6 +5,8 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using io.github.ykysnk.utils;
 using io.github.ykysnk.utils.Editor;
+using io.github.ykysnk.utils.NonUdon;
+using io.github.ykysnk.utils.NonUdon.Extensions;
 using UnityEditor;
 using Object = UnityEngine.Object;
 using Progress = UnityEditor.Progress;
@@ -68,7 +70,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 return true;
             });
 
-            try
+            var result = await Try.Run(async () =>
             {
                 foreach (var selectedObject in selectedObjects)
                 {
@@ -78,15 +80,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     if (cts.IsCancellationRequested)
                         throw new OperationCanceledException(cts.Token);
 
-                    try
-                    {
-                        Undo.DestroyObjectImmediate(selectedObject);
-                    }
-                    catch (Exception ex)
-                    {
+                    Try.Run(() => Undo.DestroyObjectImmediate(selectedObject)).OnFailure(ex =>
                         Utils.LogError(nameof(DeleteSelectedObjectsAsync),
-                            $"Failed to delete {name}: {ex.Message}\n{ex.StackTrace}");
-                    }
+                            $"Failed to delete {name}: {ex.Message}\n{ex.StackTrace}"));
 
                     current++;
                     var progress = (float)current / total;
@@ -95,21 +91,21 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 }
 
                 Progress.Finish(progressId);
-            }
-            catch (OperationCanceledException)
+            });
+
+            result.OnFailure(ex =>
             {
-                Progress.Finish(progressId, Progress.Status.Canceled);
-                Utils.LogWarning(nameof(DeleteSelectedObjectsAsync), "Delete cancelled.");
-            }
-            catch (Exception ex)
-            {
-                Progress.Finish(progressId, Progress.Status.Failed);
-                Utils.LogError(nameof(DeleteSelectedObjectsAsync), $"Delete Error: {ex.Message}\n{ex.StackTrace}");
-            }
-            finally
-            {
-                Progress.UnregisterCancelCallback(progressId);
-            }
+                if (ex is OperationCanceledException)
+                {
+                    Progress.Finish(progressId, Progress.Status.Canceled);
+                    Utils.LogWarning(nameof(DeleteSelectedObjectsAsync), "Delete cancelled.");
+                }
+                else
+                {
+                    Progress.Finish(progressId, Progress.Status.Failed);
+                    Utils.LogError(nameof(DeleteSelectedObjectsAsync), $"Delete Error: {ex.Message}\n{ex.StackTrace}");
+                }
+            });
         }
 
         private static async UniTask DeleteSelectedAssetsAsync(string[] guids, CancellationToken token)
@@ -128,7 +124,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 return true;
             });
 
-            try
+            var result = await Try.Run(async () =>
             {
                 var paths = guids.Select(AssetDatabase.GUIDToAssetPath).ToList();
 
@@ -145,7 +141,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     if (cts.IsCancellationRequested)
                         throw new OperationCanceledException(cts.Token);
 
-                    try
+                    Try.Run(() =>
                     {
                         var guid = AssetDatabase.AssetPathToGUID(path);
                         var success = AssetDatabase.MoveAssetToTrash(path);
@@ -159,12 +155,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                                 extension = Path.GetExtension(path),
                                 unixSeconds = DateTimeOffset.UtcNow.ToUnixTimeSeconds()
                             });
-                    }
-                    catch (Exception ex)
-                    {
-                        Utils.LogError(nameof(DeleteSelectedAssetsAsync),
-                            $"Failed to delete {path}: {ex.Message}\n{ex.StackTrace}");
-                    }
+                    }).OnFailure(ex => Utils.LogError(nameof(DeleteSelectedAssetsAsync),
+                        $"Failed to delete {path}: {ex.Message}\n{ex.StackTrace}"));
 
                     current++;
                     var progress = (float)current / total;
@@ -173,21 +165,21 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 }
 
                 Progress.Finish(progressId);
-            }
-            catch (OperationCanceledException)
+            });
+
+            result.OnFailure(ex =>
             {
-                Progress.Finish(progressId, Progress.Status.Canceled);
-                Utils.LogWarning(nameof(DeleteSelectedAssetsAsync), "Delete cancelled.");
-            }
-            catch (Exception ex)
-            {
-                Progress.Finish(progressId, Progress.Status.Failed);
-                Utils.LogError(nameof(DeleteSelectedAssetsAsync), $"Delete Error: {ex.Message}\n{ex.StackTrace}");
-            }
-            finally
-            {
-                Progress.UnregisterCancelCallback(progressId);
-            }
+                if (ex is OperationCanceledException)
+                {
+                    Progress.Finish(progressId, Progress.Status.Canceled);
+                    Utils.LogWarning(nameof(DeleteSelectedAssetsAsync), "Delete cancelled.");
+                }
+                else
+                {
+                    Progress.Finish(progressId, Progress.Status.Failed);
+                    Utils.LogError(nameof(DeleteSelectedAssetsAsync), $"Delete Error: {ex.Message}\n{ex.StackTrace}");
+                }
+            });
         }
     }
 }
