@@ -301,3 +301,6 @@ MonoBehaviour:
   - key: label.delete_record.no_delete_history
     translate: "\u524A\u9664\u5C65\u6B74\u306F\u3042\u308A\u307E\u305B\u3093\u3002"
     tooltip: 
+  - key: label.import_watcher.max_sessions
+    translate: "\u6700\u5927\u5C65\u6B74\u30BB\u30C3\u30B7\u30E7\u30F3\u6570"
+    tooltip: 
