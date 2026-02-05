@@ -13,7 +13,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             new(".cs", new(1f, 0.85f, 0.2f, 0.45f)), new(".prefab", new(0.4f, 0.6f, 1f, 0.45f)),
             new(".png", new(0.4f, 1f, 0.4f, 0.45f)), new(".jpg", new(0.4f, 1f, 0.4f, 0.45f)),
             new(".tga", new(0.4f, 1f, 0.4f, 0.45f)), new(".mat", new(0.4f, 1f, 0.4f, 0.45f)),
-            new(".anim", new(0.4f, 1f, 0.4f, 0.45f))
+            new(".anim", new(0.4f, 1f, 0.4f, 0.45f)), new(".uxml", new(1f, 0.2f, 0.2f, 0.45f)),
+            new(".uss", new(1f, 0.2f, 0.2f, 0.45f))
         };
 
         public static readonly Color DefaultColor = new(1, 1, 1, 0.45f);
