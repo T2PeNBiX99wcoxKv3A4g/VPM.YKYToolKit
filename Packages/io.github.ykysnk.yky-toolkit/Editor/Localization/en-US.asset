@@ -343,3 +343,6 @@ MonoBehaviour:
   - key: label.import_watcher.no_import_log
     translate: No import log.
     tooltip: 
+  - key: label.delete_record.no_delete_history
+    translate: No delete history.
+    tooltip: 
