@@ -1,4 +1,4 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="True">
     <Style src="project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/EnhancedTransformInspector.uss?fileID=7433441132597879392&amp;guid=f73a8c4781e128b4180a465abad72513&amp;type=3#EnhancedTransformInspector"/>
     <ui:VisualElement>
         <ui:Foldout text="label.enhanced_transform_inspector.default_ui" value="false" name="defaultGUIFoldout">
@@ -69,21 +69,19 @@
                   display-tooltip-when-elided="true" class="space-title"/>
         <ui:TextField picking-mode="Ignore" label="label.enhanced_transform_inspector.hierarchy_path"
                       value="filler text" name="hierarchyPath" readonly="true"/>
-        <uie:ObjectField label="label.enhanced_transform_inspector.father" binding-path="m_Father" name="father"
-                         type="UnityEngine.Transform, UnityEngine.CoreModule" class="readonly-object-field"/>
-        <ui:ListView virtualization-method="DynamicHeight" show-border="true"
-                     show-alternating-row-backgrounds="ContentOnly" name="childrenList"
-                     header-title="label.enhanced_transform_inspector.children" show-foldout-header="true"/>
+        <ui:SliderInt label="positionDecimal" high-value="6" show-input-field="true" name="positionDecimal"
+                      low-value="-1"/>
+        <ui:SliderInt label="rotationDecimal" high-value="6" show-input-field="true" name="rotationDecimal"
+                      low-value="-1"/>
+        <ui:SliderInt label="scaleDecimal" high-value="6" show-input-field="true" name="scaleDecimal" low-value="-1"/>
+        <ui:EnumField label="label.enhanced_transform_inspector.align_mode"
+                      type="io.github.ykysnk.ykyToolkit.Editor.AlignMode, io.github.ykysnk.yky-toolkit.Editor"
+                      name="alignMode"/>
         <ui:VisualElement class="row">
             <ui:Button text="label.enhanced_transform_inspector.align_to_parent" parse-escape-sequences="true"
                        display-tooltip-when-elided="true" name="alignToParent" class="cell"/>
             <ui:Button text="label.enhanced_transform_inspector.align_to_ground" parse-escape-sequences="true"
                        display-tooltip-when-elided="true" name="alignToGround" class="cell"/>
-        </ui:VisualElement>
-        <ui:EnumField label="label.enhanced_transform_inspector.align_mode"
-                      type="io.github.ykysnk.ykyToolkit.Editor.AlignMode, io.github.ykysnk.yky-toolkit.Editor"
-                      name="alignMode"/>
-        <ui:VisualElement class="row" style="flex-grow: 1;">
             <ui:Button text="label.enhanced_transform_inspector.clear_parent" parse-escape-sequences="true"
                        display-tooltip-when-elided="true" name="clearParent" class="cell"/>
         </ui:VisualElement>

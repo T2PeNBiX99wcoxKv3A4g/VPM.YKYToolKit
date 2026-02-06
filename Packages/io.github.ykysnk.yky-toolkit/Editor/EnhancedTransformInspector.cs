@@ -9,7 +9,6 @@ using UnityEditor.Search;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ObjectField = UnityEditor.UIElements.ObjectField;
 using Random = UnityEngine.Random;
 
 namespace io.github.ykysnk.ykyToolkit.Editor
@@ -25,6 +24,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
     [CanEditMultipleObjects]
     public class EnhancedTransformInspector : BasicEditor
     {
+        private static int _positionDecimalPrecision = -1;
+        private static int _rotationDecimalPrecision = -1;
+        private static int _scaleDecimalPrecision = -1;
         [SerializeField] private VisualTreeAsset? uxml;
         private UnityEditor.Editor? _defaultEditor;
         private VisualElement? _root;
@@ -33,12 +35,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         {
             get => EditorPrefs.GetBool("YKYToolkit/TransformDefaultUIExpanded");
             set => EditorPrefs.SetBool("YKYToolkit/TransformDefaultUIExpanded", value);
-        }
-
-        private static bool IsChildrenListExpanded
-        {
-            get => EditorPrefs.GetBool("YKYToolkit/TransformChildrenListExpanded");
-            set => EditorPrefs.SetBool("YKYToolkit/TransformChildrenListExpanded", value);
         }
 
         private static bool IsHelpExpanded
@@ -93,6 +89,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             InternalLocalizationExtensions.Helper.UILocalize(tree);
             tree.Bind(serializedObject);
 
+            _positionDecimalPrecision = -1;
+            _rotationDecimalPrecision = -1;
+            _scaleDecimalPrecision = -1;
+
             var defaultUIFoldOut = tree.Q<Foldout>("defaultGUIFoldout");
             defaultUIFoldOut.SetValueWithoutNotify(IsDefaultUIExpanded);
             defaultUIFoldOut.RegisterValueChangedCallback(evt => IsDefaultUIExpanded = evt.newValue);
@@ -113,6 +113,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             {
                 var clearVector = evt.newValue.Clean();
 
+                if (_positionDecimalPrecision > -1)
+                    clearVector = clearVector.Round(_positionDecimalPrecision);
+
                 CleanTransforms();
 
                 positionField.SetValueWithoutNotify(clearVector);
@@ -128,6 +131,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             {
                 var prev = evt.previousValue.Clean();
                 var next = evt.newValue.Clean();
+
+                if (_positionDecimalPrecision > -1)
+                {
+                    prev = prev.Round(_positionDecimalPrecision);
+                    next = next.Round(_positionDecimalPrecision);
+                }
 
                 if (globalPositionFieldEditing)
                     ApplyToTargetsInChanged(prev, next, t => t.position, (t, apply) => t.position = apply,
@@ -177,6 +186,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 var prev = evt.previousValue.Clean().DeltaAngle();
                 var next = evt.newValue.Clean().DeltaAngle();
 
+                if (_rotationDecimalPrecision > -1)
+                {
+                    prev = prev.Round(_rotationDecimalPrecision);
+                    next = next.Round(_rotationDecimalPrecision);
+                }
+
                 if (rotationEditing)
                     ApplyToTargetsInChanged(prev, next, t => t.localEulerAngles.DeltaAngle(),
                         (t, apply) => t.localEulerAngles = apply,
@@ -197,6 +212,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             {
                 var prev = evt.previousValue.Clean().DeltaAngle();
                 var next = evt.newValue.Clean().DeltaAngle();
+
+                if (_rotationDecimalPrecision > -1)
+                {
+                    prev = prev.Round(_rotationDecimalPrecision);
+                    next = next.Round(_rotationDecimalPrecision);
+                }
 
                 if (globalRotationEditing)
                     ApplyToTargetsInChanged(prev, next, t => t.eulerAngles.DeltaAngle(),
@@ -342,6 +363,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             {
                 var clear = evt.newValue.Clean();
 
+                if (_scaleDecimalPrecision > -1)
+                    clear = clear.Round(_scaleDecimalPrecision);
+
                 CleanTransforms();
 
                 scaleField.SetValueWithoutNotify(clear);
@@ -368,6 +392,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             {
                 var prev = evt.previousValue.Clean();
                 var next = evt.newValue.Clean();
+
+                if (_scaleDecimalPrecision > -1)
+                {
+                    prev = prev.Round(_scaleDecimalPrecision);
+                    next = next.Round(_scaleDecimalPrecision);
+                }
 
                 if (lossyScaleFieldEditing)
                     ApplyToTargetsInChanged(prev, next, t => t.lossyScale, (t, apply) => t.SetLossyScale(apply),
@@ -496,38 +526,17 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     _ => EditorGUIUtility.systemCopyBuffer = hierarchyPathField.value);
             }));
 
-            var fatherField = tree.Q<ObjectField>("father");
-            fatherField.SetEnabled(false);
+            var positionDecimalField = tree.Q<SliderInt>("positionDecimal");
+            positionDecimalField.value = _positionDecimalPrecision;
+            positionDecimalField.RegisterValueChangedCallback(evt => _positionDecimalPrecision = evt.newValue);
 
-            var childrenList = tree.Q<ListView>("childrenList");
-            var childrenSizeTextField = childrenList.Q<TextField>("unity-list-view__size-field");
-            childrenSizeTextField.isReadOnly = true;
+            var rotationDecimalField = tree.Q<SliderInt>("rotationDecimal");
+            rotationDecimalField.value = _rotationDecimalPrecision;
+            rotationDecimalField.RegisterValueChangedCallback(evt => _rotationDecimalPrecision = evt.newValue);
 
-            var childrenListFoldout = childrenList.Q<Foldout>();
-            childrenListFoldout.value = IsChildrenListExpanded;
-            childrenListFoldout.RegisterValueChangedCallback(evt => IsChildrenListExpanded = evt.newValue);
-
-            var children = theTarget.GetComponentsInChildren<Transform>(true)
-                .Where(t => t != theTarget.transform)
-                .ToList();
-
-            childrenList.itemsSource = children;
-            childrenList.makeItem = () =>
-            {
-                var field = new ObjectField
-                {
-                    objectType = typeof(Transform),
-                    allowSceneObjects = true
-                };
-                field.SetEnabled(false);
-                return field;
-            };
-
-            childrenList.bindItem = (element, index) =>
-            {
-                var field = (ObjectField)element;
-                field.SetValueWithoutNotify(children[index]);
-            };
+            var scaleDecimalField = tree.Q<SliderInt>("scaleDecimal");
+            scaleDecimalField.value = _scaleDecimalPrecision;
+            scaleDecimalField.RegisterValueChangedCallback(evt => _scaleDecimalPrecision = evt.newValue);
 
             var alignToParentButton = tree.Q<Button>("alignToParent");
             alignToParentButton.clicked += () =>
@@ -800,9 +809,22 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
                 Undo.RecordObject(t, "Clean Transform");
 
-                t.localPosition = t.localPosition.Clean(threshold);
-                t.localEulerAngles = t.localEulerAngles.Clean(threshold).DeltaAngle();
-                t.localScale = t.localScale.Clean(threshold);
+                var oldPosition = t.localPosition.Clean(threshold);
+                var oldRotation = t.localEulerAngles.Clean(threshold).DeltaAngle();
+                var oldScale = t.localScale.Clean(threshold);
+
+                if (_positionDecimalPrecision > -1)
+                    oldPosition = oldPosition.Round(_positionDecimalPrecision);
+
+                if (_rotationDecimalPrecision > -1)
+                    oldRotation = oldRotation.Round(_rotationDecimalPrecision);
+
+                if (_scaleDecimalPrecision > -1)
+                    oldScale = oldScale.Round(_scaleDecimalPrecision);
+
+                t.localPosition = oldPosition;
+                t.localEulerAngles = oldRotation;
+                t.localScale = oldScale;
             }
         }
 
@@ -814,9 +836,22 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
                 Undo.RecordObject(t, "Clean World Transform");
 
-                t.position = t.position.Clean(threshold);
-                t.eulerAngles = t.eulerAngles.Clean(threshold).DeltaAngle();
-                t.SetLossyScale(t.lossyScale.Clean(threshold));
+                var oldPosition = t.position.Clean(threshold);
+                var oldRotation = t.eulerAngles.Clean(threshold).DeltaAngle();
+                var oldScale = t.lossyScale.Clean(threshold);
+
+                if (_positionDecimalPrecision > -1)
+                    oldPosition = oldPosition.Round(_positionDecimalPrecision);
+
+                if (_rotationDecimalPrecision > -1)
+                    oldRotation = oldRotation.Round(_rotationDecimalPrecision);
+
+                if (_scaleDecimalPrecision > -1)
+                    oldScale = oldScale.Round(_scaleDecimalPrecision);
+
+                t.position = oldPosition;
+                t.eulerAngles = oldRotation;
+                t.SetLossyScale(oldScale);
             }
         }
 
