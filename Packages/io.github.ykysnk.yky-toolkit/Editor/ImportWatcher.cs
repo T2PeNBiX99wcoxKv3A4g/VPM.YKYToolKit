@@ -11,7 +11,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 {
     internal class ImportWatcher : AssetPostprocessor
     {
-        private const double DefaultDuration = 120;
+        private const int DefaultDuration = 120;
         private const string ImportHighlights = "YKYToolkit/ImportWatcher/ImportHighlights";
         private const string ImportHighlightColor = "YKYToolkit/ImportWatcher/Color";
         private const string ImportHighlightDuration = "YKYToolkit/ImportWatcher/Duration";
@@ -35,10 +35,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             set => EditorPrefs.SetString(ImportHighlightColor, $"#{ColorUtility.ToHtmlStringRGBA(value)}");
         }
 
-        internal static double Duration
+        internal static int Duration
         {
-            get => EditorPrefs.GetFloat(ImportHighlightDuration, (float)DefaultDuration);
-            set => EditorPrefs.SetFloat(ImportHighlightDuration, (float)value);
+            get => EditorPrefs.GetInt(ImportHighlightDuration, DefaultDuration);
+            set => EditorPrefs.SetInt(ImportHighlightDuration, value);
         }
 
         internal static List<ImportWatcherFileColor> ColorList

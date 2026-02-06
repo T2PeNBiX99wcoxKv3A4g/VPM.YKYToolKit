@@ -51,7 +51,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     importWatcherColorField.RegisterValueChangedCallback(evt =>
                         ImportWatcher.HighlightColor = evt.newValue);
 
-                    var importWatcherDurationField = tree.Q<DoubleField>("importWatcherDuration");
+                    var importWatcherDurationField = tree.Q<SliderInt>("importWatcherDuration");
                     importWatcherDurationField.value = ImportWatcher.Duration;
                     importWatcherDurationField.RegisterValueChangedCallback(evt => ImportWatcher.Duration = evt.newValue);
 
