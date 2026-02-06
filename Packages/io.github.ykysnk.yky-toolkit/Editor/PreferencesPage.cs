@@ -55,6 +55,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     importWatcherDurationField.value = ImportWatcher.Duration;
                     importWatcherDurationField.RegisterValueChangedCallback(evt => ImportWatcher.Duration = evt.newValue);
 
+                    var importWatcherMaxSessionsFieldField = tree.Q<SliderInt>("importWatcherMaxSessionsField");
+                    importWatcherMaxSessionsFieldField.value = ImportHistoryManager.MaxSessions;
+                    importWatcherMaxSessionsFieldField.RegisterValueChangedCallback(evt =>
+                        ImportHistoryManager.MaxSessions = evt.newValue);
+
                     var importWatcherFileExtensionColorsListView = tree.Q<ListView>("importWatcherFileExtensionColors");
                     var newColorList = new List<ImportWatcherFileColor>(ImportWatcher.ColorList);
                     importWatcherFileExtensionColorsListView.itemsSource = newColorList;

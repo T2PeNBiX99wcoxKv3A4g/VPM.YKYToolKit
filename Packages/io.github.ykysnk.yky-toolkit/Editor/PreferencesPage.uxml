@@ -11,6 +11,8 @@
         <uie:ColorField label="label.import_watcher.color" value="RGBA(0.000, 1.000, 1.000, 1.000)"
                         name="importWatcherColor"/>
         <ui:DoubleField label="label.import_watcher.duration" value="42.2" name="importWatcherDuration"/>
+        <ui:SliderInt label="label.import_watcher.max_sessions" high-value="1000" name="importWatcherMaxSessionsField"
+                      show-input-field="true"/>
         <ui:ListView header-title="label.import_watcher.file_extension_colors" reorder-mode="Animated"
                      show-add-remove-footer="true" show-foldout-header="true" reorderable="true"
                      show-alternating-row-backgrounds="ContentOnly" selection-type="Multiple" show-border="true"
