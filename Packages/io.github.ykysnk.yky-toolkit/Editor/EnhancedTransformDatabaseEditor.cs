@@ -14,7 +14,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         protected override VisualElement? CreateErrorHandleInspectorGUI()
         {
             var tree = uxml!.CloneTree();
-            InternalLocalizationExtensions.Helper.UILocalize(tree, false);
+            InternalLocalizationExtensions.Helper.UILocalize(tree);
             tree.Bind(serializedObject);
             return tree;
         }

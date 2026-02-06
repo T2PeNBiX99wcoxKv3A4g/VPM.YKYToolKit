@@ -69,11 +69,12 @@
                   display-tooltip-when-elided="true" class="space-title"/>
         <ui:TextField picking-mode="Ignore" label="label.enhanced_transform_inspector.hierarchy_path"
                       value="filler text" name="hierarchyPath" readonly="true"/>
-        <ui:SliderInt label="positionDecimal" high-value="6" show-input-field="true" name="positionDecimal"
-                      low-value="-1"/>
-        <ui:SliderInt label="rotationDecimal" high-value="6" show-input-field="true" name="rotationDecimal"
-                      low-value="-1"/>
-        <ui:SliderInt label="scaleDecimal" high-value="6" show-input-field="true" name="scaleDecimal" low-value="-1"/>
+        <ui:SliderInt label="label.enhanced_transform_inspector.position_decimal_precision" high-value="6"
+                      show-input-field="true" name="positionDecimal" low-value="-1"/>
+        <ui:SliderInt label="label.enhanced_transform_inspector.rotation_decimal_precision" high-value="6"
+                      show-input-field="true" name="rotationDecimal" low-value="-1"/>
+        <ui:SliderInt label="label.enhanced_transform_inspector.scale_decimal_precision" high-value="6"
+                      show-input-field="true" name="scaleDecimal" low-value="-1"/>
         <ui:EnumField label="label.enhanced_transform_inspector.align_mode"
                       type="io.github.ykysnk.ykyToolkit.Editor.AlignMode, io.github.ykysnk.yky-toolkit.Editor"
                       name="alignMode"/>
