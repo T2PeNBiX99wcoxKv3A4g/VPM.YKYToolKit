@@ -527,16 +527,28 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             }));
 
             var positionDecimalField = tree.Q<SliderInt>("positionDecimal");
-            positionDecimalField.value = _positionDecimalPrecision;
-            positionDecimalField.RegisterValueChangedCallback(evt => _positionDecimalPrecision = evt.newValue);
+            positionDecimalField.value = exData.positionDecimalPrecision;
+            positionDecimalField.RegisterValueChangedCallback(evt =>
+            {
+                exData.positionDecimalPrecision = evt.newValue;
+                EnhancedTransformDatabase.Save();
+            });
 
             var rotationDecimalField = tree.Q<SliderInt>("rotationDecimal");
-            rotationDecimalField.value = _rotationDecimalPrecision;
-            rotationDecimalField.RegisterValueChangedCallback(evt => _rotationDecimalPrecision = evt.newValue);
+            rotationDecimalField.value = exData.rotationDecimalPrecision;
+            rotationDecimalField.RegisterValueChangedCallback(evt =>
+            {
+                exData.rotationDecimalPrecision = evt.newValue;
+                EnhancedTransformDatabase.Save();
+            });
 
             var scaleDecimalField = tree.Q<SliderInt>("scaleDecimal");
-            scaleDecimalField.value = _scaleDecimalPrecision;
-            scaleDecimalField.RegisterValueChangedCallback(evt => _scaleDecimalPrecision = evt.newValue);
+            scaleDecimalField.value = exData.scaleDecimalPrecision;
+            scaleDecimalField.RegisterValueChangedCallback(evt =>
+            {
+                exData.scaleDecimalPrecision = evt.newValue;
+                EnhancedTransformDatabase.Save();
+            });
 
             var alignToParentButton = tree.Q<Button>("alignToParent");
             alignToParentButton.clicked += () =>
