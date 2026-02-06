@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <ui:VisualElement>
+        <ui:HelpBox name="info" message-type="Warning" text="label.enhanced_transform_database.info"/>
+        <ui:ListView binding-path="entries" name="entries" virtualization-method="DynamicHeight"
+                     show-alternating-row-backgrounds="ContentOnly" reorder-mode="Animated"
+                     show-bound-collection-size="false" selection-type="Multiple" show-border="true"
+                     style="margin-top: 2px;"/>
+    </ui:VisualElement>
+</ui:UXML>
