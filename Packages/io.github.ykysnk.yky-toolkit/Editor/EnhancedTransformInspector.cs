@@ -517,7 +517,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             }).Every(100);
 
             var hierarchyPathField = tree.Q<TextField>("hierarchyPath");
-            hierarchyPathField.schedule.Execute(() => hierarchyPathField.SetValueWithoutNotify(theTarget.FullName()))
+            hierarchyPathField.schedule.Execute(() =>
+                {
+                    if (theTarget == null) return;
+                    hierarchyPathField.SetValueWithoutNotify(theTarget.FullName());
+                })
                 .Every(1000);
 
             hierarchyPathField.AddManipulator(new ContextualMenuManipulator(evt =>
