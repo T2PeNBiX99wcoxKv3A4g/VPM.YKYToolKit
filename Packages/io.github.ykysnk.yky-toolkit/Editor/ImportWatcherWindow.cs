@@ -34,9 +34,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             refreshButton.clicked += RefreshImportLog;
             clearButton.clicked += () => UniTask.Create(async () =>
             {
-                // TODO: Dialog
-                if (await EditorUtils.DisplayDialogAsync("Clear Import Log",
-                        "Are you sure you want to clear all import log records?", "Clear", "Cancel"))
+                if (await EditorUtils.DisplayDialogAsync("label.import_watcher.clear_import_log_title".S(),
+                        "label.import_watcher.clear_import_log_message".S(),
+                        "label.clear".S(),
+                        "label.cancel".S()))
                 {
                     ImportHistoryManager.Clear();
                     RefreshImportLog();

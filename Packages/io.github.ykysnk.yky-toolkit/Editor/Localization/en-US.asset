@@ -361,3 +361,21 @@ MonoBehaviour:
   - key: label.enhanced_transform_inspector.scale_decimal_precision
     translate: Scale Decimal Places
     tooltip: 
+  - key: label.import_watcher.clear_import_log_title
+    translate: Clear Import Log
+    tooltip: 
+  - key: label.import_watcher.clear_import_log_message
+    translate: Are you sure you want to clear all import log records?
+    tooltip: 
+  - key: label.clear
+    translate: Clear
+    tooltip: 
+  - key: label.cancel
+    translate: Cancel
+    tooltip: 
+  - key: label.delete_history_window.clear_delete_history_title
+    translate: Clear Delete History
+    tooltip: 
+  - key: label.delete_history_window.clear_delete_history_message
+    translate: Are you sure you want to clear all delete history records?
+    tooltip: 
