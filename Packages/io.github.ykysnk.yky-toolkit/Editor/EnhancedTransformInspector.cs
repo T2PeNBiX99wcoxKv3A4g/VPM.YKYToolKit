@@ -76,6 +76,36 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             globalRotationField?.SetValueWithoutNotify(theTarget.eulerAngles.DeltaAngle());
         }
 
+        protected override void OnErrorHandleInspectorGUI()
+        {
+            var type = ReflectionWrapper.GetType("UnityEditor.TransformInspector, UnityEditor");
+            var theTarget = (Transform)target;
+            var exData = EnhancedTransformDatabase.Get(theTarget);
+            _defaultEditor ??= CreateEditor(targets, type);
+            GUI.enabled = !exData.lockTransform;
+            _defaultEditor?.OnInspectorGUI();
+            GUI.enabled = false;
+            EditorGUILayout.TextField("label.enhanced_transform_inspector.hierarchy_path".G(), theTarget.FullName());
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("label.enhanced_transform_inspector.position_decimal_precision".G(),
+                GUILayout.Width(100));
+            EditorGUILayout.IntSlider(exData.positionDecimalPrecision, -1, 6);
+            EditorGUILayout.EndHorizontal();
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("label.enhanced_transform_inspector.rotation_decimal_precision".G(),
+                GUILayout.Width(100));
+            EditorGUILayout.IntSlider(exData.rotationDecimalPrecision, -1, 6);
+            EditorGUILayout.EndHorizontal();
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("label.enhanced_transform_inspector.scale_decimal_precision".G(),
+                GUILayout.Width(100));
+            EditorGUILayout.IntSlider(exData.scaleDecimalPrecision, -1, 6);
+            EditorGUILayout.EndHorizontal();
+            EditorGUILayout.Toggle("label.enhanced_transform_inspector.lock_transform".G(), exData.lockTransform);
+            GUI.enabled = true;
+            EditorGUILayout.HelpBox("label.enhanced_transform_inspector.imgui".S(), MessageType.Warning);
+        }
+
         protected override VisualElement? CreateErrorHandleInspectorGUI()
         {
             var type = ReflectionWrapper.GetType("UnityEditor.TransformInspector, UnityEditor");
