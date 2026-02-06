@@ -308,3 +308,12 @@ MonoBehaviour:
     translate: "\u3053\u306E\u30A2\u30BB\u30C3\u30C8\u306F\u3001Enhanced Transform
       \u306E\u8FFD\u52A0\u30C7\u30FC\u30BF\u3092\u4FDD\u5B58\u3057\u307E\u3059\u3002"
     tooltip: 
+  - key: label.enhanced_transform_inspector.position_decimal_precision
+    translate: "\u4F4D\u7F6E\u306E\u5C0F\u6570\u6841"
+    tooltip: 
+  - key: label.enhanced_transform_inspector.rotation_decimal_precision
+    translate: "\u56DE\u8EE2\u306E\u5C0F\u6570\u6841"
+    tooltip: 
+  - key: label.enhanced_transform_inspector.scale_decimal_precision
+    translate: "\u30B9\u30B1\u30FC\u30EB\u306E\u5C0F\u6570\u6841"
+    tooltip: 

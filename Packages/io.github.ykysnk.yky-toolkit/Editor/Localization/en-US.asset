@@ -352,3 +352,12 @@ MonoBehaviour:
   - key: label.enhanced_transform_database.info
     translate: This asset stores extra data for the enhanced transform.
     tooltip: 
+  - key: label.enhanced_transform_inspector.position_decimal_precision
+    translate: Position Decimal Places
+    tooltip: 
+  - key: label.enhanced_transform_inspector.rotation_decimal_precision
+    translate: Rotation Decimal Places
+    tooltip: 
+  - key: label.enhanced_transform_inspector.scale_decimal_precision
+    translate: Scale Decimal Places
+    tooltip: 
