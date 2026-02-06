@@ -21,7 +21,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         Center
     }
 
-    // TODO: Scale Link function
     [CustomEditor(typeof(Transform))]
     [CanEditMultipleObjects]
     public class EnhancedTransformInspector : BasicEditor
@@ -278,33 +277,74 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             lossyScaleField.SetValueWithoutNotify(theTarget.lossyScale);
 
-            Vector3FieldApplyParsedInput(scaleField, t => t.localScale, (t, newVector) => t.localScale = newVector);
+            Vector3FieldApplyParsedInput(scaleField, t => t.localScale, (t, newVector) =>
+            {
+                if (constrainProportionsScaleToggle.value)
+                {
+                    var prev = t.localScale;
+                    var ratio = 1f;
+                    if (!Mathf.Approximately(newVector.x, prev.x))
+                        ratio = !Mathf.Approximately(prev.x, 0f) ? newVector.x / prev.x : 1f;
+                    else if (!Mathf.Approximately(newVector.y, prev.y))
+                        ratio = !Mathf.Approximately(prev.y, 0f) ? newVector.y / prev.y : 1f;
+                    else if (!Mathf.Approximately(newVector.z, prev.z))
+                        ratio = !Mathf.Approximately(prev.z, 0f) ? newVector.z / prev.z : 1f;
+
+                    if (!Mathf.Approximately(ratio, 1f))
+                        t.localScale = prev * ratio;
+                }
+                else
+                    t.localScale = newVector;
+            }, () =>
+            {
+                scaleField.SetValueWithoutNotify(theTarget.localScale);
+                lossyScaleField.SetValueWithoutNotify(theTarget.lossyScale);
+            });
             Vector3FieldApplyParsedInput(lossyScaleField, t => t.lossyScale,
-                (t, newVector) => t.SetLossyScale(newVector));
+                (t, newVector) =>
+                {
+                    if (constrainProportionsScaleToggle.value)
+                    {
+                        var prev = t.lossyScale;
+                        var ratio = 1f;
+                        if (!Mathf.Approximately(newVector.x, prev.x))
+                            ratio = !Mathf.Approximately(prev.x, 0f) ? newVector.x / prev.x : 1f;
+                        else if (!Mathf.Approximately(newVector.y, prev.y))
+                            ratio = !Mathf.Approximately(prev.y, 0f) ? newVector.y / prev.y : 1f;
+                        else if (!Mathf.Approximately(newVector.z, prev.z))
+                            ratio = !Mathf.Approximately(prev.z, 0f) ? newVector.z / prev.z : 1f;
+
+                        if (!Mathf.Approximately(ratio, 1f))
+                            t.SetLossyScale(prev * ratio);
+                    }
+                    else
+                        t.SetLossyScale(newVector);
+                }, () =>
+                {
+                    scaleField.SetValueWithoutNotify(theTarget.localScale);
+                    lossyScaleField.SetValueWithoutNotify(theTarget.lossyScale);
+                });
+
+            var scaleFieldEditing = false;
+
+            scaleField.RegisterCallback<FocusInEvent>(_ => scaleFieldEditing = true);
+            scaleField.RegisterCallback<FocusOutEvent>(_ => scaleFieldEditing = false);
+
+            var scaleXField = scaleField.Q<FloatField>("unity-x-input");
+            var scaleYField = scaleField.Q<FloatField>("unity-y-input");
+            var scaleZField = scaleField.Q<FloatField>("unity-z-input");
+
+            scaleXField.RegisterValueChangedCallback(evt => OnEditScaleAxis(0, scaleFieldEditing, scaleField, evt));
+            scaleYField.RegisterValueChangedCallback(evt => OnEditScaleAxis(1, scaleFieldEditing, scaleField, evt));
+            scaleZField.RegisterValueChangedCallback(evt => OnEditScaleAxis(2, scaleFieldEditing, scaleField, evt));
 
             scaleField.RegisterValueChangedCallback(evt =>
             {
-                var prev = evt.previousValue.Clean();
-                var next = evt.newValue.Clean();
-
-                // if (constrainProportionsScaleToggle.value)
-                // {
-                //     var ratioX = prev.x != 0 ? next.x / prev.x : 1f;
-                //     var ratioY = prev.y != 0 ? next.y / prev.y : 1f;
-                //     var ratioZ = prev.z != 0 ? next.z / prev.z : 1f;
-                //
-                //     var ratio = 1f;
-                //
-                //     if (!Mathf.Approximately(ratioX, 1f)) ratio = ratioX;
-                //     if (!Mathf.Approximately(ratioY, 1f)) ratio = ratioY;
-                //     if (!Mathf.Approximately(ratioZ, 1f)) ratio = ratioZ;
-                //
-                //     theTarget.localScale = prev * ratio;
-                // }
+                var clear = evt.newValue.Clean();
 
                 CleanTransforms();
 
-                scaleField.SetValueWithoutNotify(next);
+                scaleField.SetValueWithoutNotify(clear);
                 lossyScaleField.SetValueWithoutNotify(theTarget.lossyScale);
             });
 
@@ -312,6 +352,17 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             lossyScaleField.RegisterCallback<FocusInEvent>(_ => lossyScaleFieldEditing = true);
             lossyScaleField.RegisterCallback<FocusOutEvent>(_ => lossyScaleFieldEditing = false);
+
+            var lossyScaleXField = lossyScaleField.Q<FloatField>("unity-x-input");
+            var lossyScaleYField = lossyScaleField.Q<FloatField>("unity-y-input");
+            var lossyScaleZField = lossyScaleField.Q<FloatField>("unity-z-input");
+
+            lossyScaleXField.RegisterValueChangedCallback(evt =>
+                OnEditScaleAxis(0, lossyScaleFieldEditing, lossyScaleField, evt));
+            lossyScaleYField.RegisterValueChangedCallback(evt =>
+                OnEditScaleAxis(1, lossyScaleFieldEditing, lossyScaleField, evt));
+            lossyScaleZField.RegisterValueChangedCallback(evt =>
+                OnEditScaleAxis(2, lossyScaleFieldEditing, lossyScaleField, evt));
 
             lossyScaleField.RegisterValueChangedCallback(evt =>
             {
@@ -321,21 +372,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 if (lossyScaleFieldEditing)
                     ApplyToTargetsInChanged(prev, next, t => t.lossyScale, (t, apply) => t.SetLossyScale(apply),
                         "Set World Lossy Scale");
-
-                // if (constrainProportionsScaleToggle.value)
-                // {
-                //     var ratioX = prev.x != 0 ? next.x / prev.x : 1f;
-                //     var ratioY = prev.y != 0 ? next.y / prev.y : 1f;
-                //     var ratioZ = prev.z != 0 ? next.z / prev.z : 1f;
-                //
-                //     var ratio = 1f;
-                //
-                //     if (!Mathf.Approximately(ratioX, 1f)) ratio = ratioX;
-                //     if (!Mathf.Approximately(ratioY, 1f)) ratio = ratioY;
-                //     if (!Mathf.Approximately(ratioZ, 1f)) ratio = ratioZ;
-                //
-                //     theTarget.SetLossyScale(prev * ratio);
-                // }
 
                 CleanTransforms();
 
@@ -534,6 +570,37 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             return tree;
 
+            void OnEditScaleAxis(int axis, bool editing, Vector3FieldExtra theScaleField, ChangeEvent<float> evt)
+            {
+                if (!editing || !constrainProportionsScaleToggle.value) return;
+
+                var prev = evt.previousValue;
+                var next = evt.newValue;
+                var ratio = !Mathf.Approximately(prev, 0f) ? next / prev : 1f;
+
+                if (Mathf.Approximately(ratio, 1f)) return;
+
+                var scale = theScaleField.value;
+
+                switch (axis)
+                {
+                    case 0:
+                        scale.y *= ratio;
+                        scale.z *= ratio;
+                        break;
+                    case 1:
+                        scale.x *= ratio;
+                        scale.z *= ratio;
+                        break;
+                    case 2:
+                        scale.x *= ratio;
+                        scale.y *= ratio;
+                        break;
+                }
+
+                theScaleField.value = scale;
+            }
+
             void CleanField()
             {
                 positionField.value = positionField.value.Clean();
@@ -557,6 +624,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             void ResetLocalScale()
             {
+                if (constrainProportionsScaleToggle.value)
+                    constrainProportionsScaleToggle.value = false;
                 ApplyToTargets(t => t.localScale = Vector3.one, "Reset Local Scale");
                 scaleField.value = Vector3.one;
             }
@@ -577,6 +646,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             void ResetGlobalScale()
             {
+                if (constrainProportionsScaleToggle.value)
+                    constrainProportionsScaleToggle.value = false;
                 ApplyToTargets(t => t.SetLossyScale(Vector3.one), "Reset World Scale");
                 lossyScaleField.value = Vector3.one;
             }
