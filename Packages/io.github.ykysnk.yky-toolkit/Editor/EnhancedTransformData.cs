@@ -11,6 +11,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         public int positionDecimalPrecision = -1;
         public int rotationDecimalPrecision = -1;
         public int scaleDecimalPrecision = -1;
+        public bool lockTransform;
 
         public EnhancedTransformData(Object obj) => id = GlobalObjectId.GetGlobalObjectIdSlow(obj).ToString();
 

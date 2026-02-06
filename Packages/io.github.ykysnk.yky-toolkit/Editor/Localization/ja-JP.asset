@@ -335,3 +335,6 @@ MonoBehaviour:
   - key: label.delete_history_window.clear_delete_history_message
     translate: "\u3059\u3079\u3066\u306E\u524A\u9664\u5C65\u6B74\u3092\u672C\u5F53\u306B\u6D88\u53BB\u3057\u307E\u3059\u304B\uFF1F"
     tooltip: 
+  - key: label.enhanced_transform_inspector.lock_transform
+    translate: "Transform \u3092\u30ED\u30C3\u30AF"
+    tooltip: 

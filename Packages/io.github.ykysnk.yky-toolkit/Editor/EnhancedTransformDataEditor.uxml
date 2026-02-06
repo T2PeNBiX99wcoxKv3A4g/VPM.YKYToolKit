@@ -1,11 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
     <ui:VisualElement>
         <ui:TextField picking-mode="Ignore" value="filler text" binding-path="id" readonly="true" name="id"/>
-        <ui:IntegerField label="label.enhanced_transform_inspector.position_decimal_precision" value="42"
-                         name="positionDecimalPrecision" binding-path="positionDecimalPrecision" readonly="true"/>
-        <ui:IntegerField label="label.enhanced_transform_inspector.rotation_decimal_precision" value="42"
-                         name="rotationDecimalPrecision" binding-path="rotationDecimalPrecision" readonly="true"/>
-        <ui:IntegerField label="label.enhanced_transform_inspector.scale_decimal_precision" value="42"
-                         name="scaleDecimalPrecision" binding-path="scaleDecimalPrecision" readonly="true"/>
     </ui:VisualElement>
 </ui:UXML>

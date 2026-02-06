@@ -94,7 +94,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             defaultUIFoldOut.RegisterValueChangedCallback(evt => IsDefaultUIExpanded = evt.newValue);
 
             var defaultGUI = tree.Q<IMGUIContainer>("defaultGUI");
-            defaultGUI.onGUIHandler = () => _defaultEditor?.OnInspectorGUI();
+            defaultGUI.onGUIHandler = () =>
+            {
+                GUI.enabled = !exData.lockTransform;
+                _defaultEditor?.OnInspectorGUI();
+            };
 
             var positionField = tree.Q<Vector3FieldExtra>("position");
             var globalPositionField = tree.Q<Vector3FieldExtra>("globalPosition");
@@ -585,7 +589,39 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             helpText.AddManipulator(new ContextualMenuManipulator(evt =>
                 evt.menu.AppendAction("label.copy".S(), _ => EditorGUIUtility.systemCopyBuffer = helpText.text)));
 
+            var lockTransformToggle = tree.Q<Toggle>("lockTransform");
+            lockTransformToggle.value = exData.lockTransform;
+            lockTransformToggle.RegisterValueChangedCallback(evt =>
+            {
+                exData.lockTransform = evt.newValue;
+                UpdateLockTransformToggle();
+                EnhancedTransformDatabase.Save();
+            });
+
+            UpdateLockTransformToggle();
+
             return tree;
+
+            void UpdateLockTransformToggle()
+            {
+                positionField.SetEnabled(!exData.lockTransform);
+                rotationField.SetEnabled(!exData.lockTransform);
+                scaleField.SetEnabled(!exData.lockTransform);
+                globalPositionField.SetEnabled(!exData.lockTransform);
+                globalRotationField.SetEnabled(!exData.lockTransform);
+                lossyScaleField.SetEnabled(!exData.lockTransform);
+                alignToGroundButton.SetEnabled(!exData.lockTransform);
+                alignToParentButton.SetEnabled(!exData.lockTransform);
+                clearParentButton.SetEnabled(!exData.lockTransform);
+                resetLocalAllButton.SetEnabled(!exData.lockTransform);
+                resetGlobalAllButton.SetEnabled(!exData.lockTransform);
+                copyLocalTransformButton.SetEnabled(!exData.lockTransform);
+                pasteLocalTransformButton.SetEnabled(!exData.lockTransform);
+                copyGlobalTransformButton.SetEnabled(!exData.lockTransform);
+                pasteGlobalTransformButton.SetEnabled(!exData.lockTransform);
+                randomLocalAllButton.SetEnabled(!exData.lockTransform);
+                randomGlobalAllButton.SetEnabled(!exData.lockTransform);
+            }
 
             void OnEditScaleAxis(int axis, bool editing, Vector3FieldExtra theScaleField, ChangeEvent<float> evt)
             {
