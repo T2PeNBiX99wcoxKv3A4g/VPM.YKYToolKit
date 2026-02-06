@@ -24,10 +24,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
     [CanEditMultipleObjects]
     public class EnhancedTransformInspector : BasicEditor
     {
-        private static int _positionDecimalPrecision = -1;
-        private static int _rotationDecimalPrecision = -1;
-        private static int _scaleDecimalPrecision = -1;
         [SerializeField] private VisualTreeAsset? uxml;
+
         private UnityEditor.Editor? _defaultEditor;
         private VisualElement? _root;
 
@@ -89,9 +87,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             InternalLocalizationExtensions.Helper.UILocalize(tree);
             tree.Bind(serializedObject);
 
-            _positionDecimalPrecision = -1;
-            _rotationDecimalPrecision = -1;
-            _scaleDecimalPrecision = -1;
+            var exData = EnhancedTransformDatabase.Get(theTarget);
 
             var defaultUIFoldOut = tree.Q<Foldout>("defaultGUIFoldout");
             defaultUIFoldOut.SetValueWithoutNotify(IsDefaultUIExpanded);
@@ -113,8 +109,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             {
                 var clearVector = evt.newValue.Clean();
 
-                if (_positionDecimalPrecision > -1)
-                    clearVector = clearVector.Round(_positionDecimalPrecision);
+                if (exData.positionDecimalPrecision > -1)
+                    clearVector = clearVector.Round(exData.positionDecimalPrecision);
 
                 CleanTransforms();
 
@@ -132,10 +128,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 var prev = evt.previousValue.Clean();
                 var next = evt.newValue.Clean();
 
-                if (_positionDecimalPrecision > -1)
+                if (exData.positionDecimalPrecision > -1)
                 {
-                    prev = prev.Round(_positionDecimalPrecision);
-                    next = next.Round(_positionDecimalPrecision);
+                    prev = prev.Round(exData.positionDecimalPrecision);
+                    next = next.Round(exData.positionDecimalPrecision);
                 }
 
                 if (globalPositionFieldEditing)
@@ -186,10 +182,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 var prev = evt.previousValue.Clean().DeltaAngle();
                 var next = evt.newValue.Clean().DeltaAngle();
 
-                if (_rotationDecimalPrecision > -1)
+                if (exData.rotationDecimalPrecision > -1)
                 {
-                    prev = prev.Round(_rotationDecimalPrecision);
-                    next = next.Round(_rotationDecimalPrecision);
+                    prev = prev.Round(exData.rotationDecimalPrecision);
+                    next = next.Round(exData.rotationDecimalPrecision);
                 }
 
                 if (rotationEditing)
@@ -213,10 +209,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 var prev = evt.previousValue.Clean().DeltaAngle();
                 var next = evt.newValue.Clean().DeltaAngle();
 
-                if (_rotationDecimalPrecision > -1)
+                if (exData.rotationDecimalPrecision > -1)
                 {
-                    prev = prev.Round(_rotationDecimalPrecision);
-                    next = next.Round(_rotationDecimalPrecision);
+                    prev = prev.Round(exData.rotationDecimalPrecision);
+                    next = next.Round(exData.rotationDecimalPrecision);
                 }
 
                 if (globalRotationEditing)
@@ -363,8 +359,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             {
                 var clear = evt.newValue.Clean();
 
-                if (_scaleDecimalPrecision > -1)
-                    clear = clear.Round(_scaleDecimalPrecision);
+                if (exData.scaleDecimalPrecision > -1)
+                    clear = clear.Round(exData.scaleDecimalPrecision);
 
                 CleanTransforms();
 
@@ -393,10 +389,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 var prev = evt.previousValue.Clean();
                 var next = evt.newValue.Clean();
 
-                if (_scaleDecimalPrecision > -1)
+                if (exData.scaleDecimalPrecision > -1)
                 {
-                    prev = prev.Round(_scaleDecimalPrecision);
-                    next = next.Round(_scaleDecimalPrecision);
+                    prev = prev.Round(exData.scaleDecimalPrecision);
+                    next = next.Round(exData.scaleDecimalPrecision);
                 }
 
                 if (lossyScaleFieldEditing)
@@ -821,18 +817,19 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
                 Undo.RecordObject(t, "Clean Transform");
 
+                var exData = EnhancedTransformDatabase.Get(t);
                 var oldPosition = t.localPosition.Clean(threshold);
                 var oldRotation = t.localEulerAngles.Clean(threshold).DeltaAngle();
                 var oldScale = t.localScale.Clean(threshold);
 
-                if (_positionDecimalPrecision > -1)
-                    oldPosition = oldPosition.Round(_positionDecimalPrecision);
+                if (exData.positionDecimalPrecision > -1)
+                    oldPosition = oldPosition.Round(exData.positionDecimalPrecision);
 
-                if (_rotationDecimalPrecision > -1)
-                    oldRotation = oldRotation.Round(_rotationDecimalPrecision);
+                if (exData.rotationDecimalPrecision > -1)
+                    oldRotation = oldRotation.Round(exData.rotationDecimalPrecision);
 
-                if (_scaleDecimalPrecision > -1)
-                    oldScale = oldScale.Round(_scaleDecimalPrecision);
+                if (exData.scaleDecimalPrecision > -1)
+                    oldScale = oldScale.Round(exData.scaleDecimalPrecision);
 
                 t.localPosition = oldPosition;
                 t.localEulerAngles = oldRotation;
@@ -848,18 +845,19 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
                 Undo.RecordObject(t, "Clean World Transform");
 
+                var exData = EnhancedTransformDatabase.Get(t);
                 var oldPosition = t.position.Clean(threshold);
                 var oldRotation = t.eulerAngles.Clean(threshold).DeltaAngle();
                 var oldScale = t.lossyScale.Clean(threshold);
 
-                if (_positionDecimalPrecision > -1)
-                    oldPosition = oldPosition.Round(_positionDecimalPrecision);
+                if (exData.positionDecimalPrecision > -1)
+                    oldPosition = oldPosition.Round(exData.positionDecimalPrecision);
 
-                if (_rotationDecimalPrecision > -1)
-                    oldRotation = oldRotation.Round(_rotationDecimalPrecision);
+                if (exData.rotationDecimalPrecision > -1)
+                    oldRotation = oldRotation.Round(exData.rotationDecimalPrecision);
 
-                if (_scaleDecimalPrecision > -1)
-                    oldScale = oldScale.Round(_scaleDecimalPrecision);
+                if (exData.scaleDecimalPrecision > -1)
+                    oldScale = oldScale.Round(exData.scaleDecimalPrecision);
 
                 t.position = oldPosition;
                 t.eulerAngles = oldRotation;
