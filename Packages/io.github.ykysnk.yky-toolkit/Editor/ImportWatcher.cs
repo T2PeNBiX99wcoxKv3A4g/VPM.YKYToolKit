@@ -98,7 +98,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         private static void AddOrUpdate(string path)
         {
-            var add = new HighlightInfo(path, EditorApplication.timeSinceStartup + Duration);
+            var add = new HighlightInfo(path);
 
             if (Highlights.Contains(add))
                 Highlights.Remove(add);
@@ -126,7 +126,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         private static void CleanupExpired()
         {
-            var now = EditorApplication.timeSinceStartup;
+            var now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
             Highlights.RemoveWhere(h => now > h.expireTime);
         }
 
@@ -158,12 +158,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private class HighlightInfo : IEquatable<HighlightInfo>
         {
             public string path;
-            public double expireTime;
+            public long expireTime;
 
-            public HighlightInfo(string path, double expireTime)
+            public HighlightInfo(string path)
             {
                 this.path = path;
-                this.expireTime = expireTime;
+                expireTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds() + Duration;
             }
 
             public bool Equals(HighlightInfo? other)
