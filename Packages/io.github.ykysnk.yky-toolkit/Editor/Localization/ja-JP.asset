@@ -341,3 +341,9 @@ MonoBehaviour:
   - key: label.enhanced_transform_inspector.imgui
     translate: "Unity \u306F Prefab Overrides \u3067\u306F IMGUI \u306E\u307F\u3092\u30B5\u30DD\u30FC\u30C8\u3057\u3066\u3044\u308B\u305F\u3081\u3001\u57FA\u672C\u7684\u306A\u6A5F\u80FD\u3057\u304B\u5229\u7528\u3067\u304D\u307E\u305B\u3093\u3002"
     tooltip: 
+  - key: label.delete_history_manager.max_records
+    translate: "\u6700\u5927\u30EC\u30B3\u30FC\u30C9\u6570"
+    tooltip: 
+  - key: label.delete_history_manager
+    translate: "\u5C65\u6B74\u524A\u9664\u30DE\u30CD\u30FC\u30B8\u30E3\u30FC"
+    tooltip: 

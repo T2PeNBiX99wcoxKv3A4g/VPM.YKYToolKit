@@ -386,3 +386,9 @@ MonoBehaviour:
     translate: Because Unity only supports imgui in prefab overrides. So only basic
       features are supported.
     tooltip: 
+  - key: label.delete_history_manager.max_records
+    translate: Max Records
+    tooltip: 
+  - key: label.delete_history_manager
+    translate: Delete History Manager
+    tooltip: 
