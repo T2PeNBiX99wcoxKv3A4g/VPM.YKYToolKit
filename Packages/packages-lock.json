@@ -260,6 +260,12 @@
       "source": "embedded",
       "dependencies": {}
     },
+    "jp.lilxyzw.liltoon": {
+      "version": "file:jp.lilxyzw.liltoon",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "net.nekobako.editor-patcher": {
       "version": "file:net.nekobako.editor-patcher",
       "depth": 0,
