@@ -165,9 +165,13 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             globalPositionField.schedule.Execute(() =>
             {
                 if (theTarget == null || stage == null) return;
-                var parentCheck = theTarget.parent != null && stage.IsPartOfPrefabContents(theTarget.parent.gameObject);
-                globalPositionField.SetEnabled(stage.IsPartOfPrefabContents(theTarget.gameObject) && parentCheck &&
-                                               !exData.lockTransform);
+                var shouldEnable = stage.IsPartOfPrefabContents(theTarget.gameObject);
+
+                if (theTarget.parent != null)
+                    shouldEnable = stage.mode == PrefabStage.Mode.InContext &&
+                                   stage.IsPartOfPrefabContents(theTarget.parent.gameObject);
+
+                globalPositionField.SetEnabled(shouldEnable && !exData.lockTransform);
             }).Every(500);
 
             globalPositionField.RegisterValueChangedCallback(evt =>
