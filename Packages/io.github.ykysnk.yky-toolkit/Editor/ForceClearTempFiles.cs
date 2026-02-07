@@ -17,7 +17,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private static readonly List<string> ClearFolders = new()
         {
             "../Packages/com.vrcfury.temp/Builds",
-            "../Packages/nadena.dev.ndmf/__Generated"
+            "../Packages/nadena.dev.ndmf/__Generated",
+            "ZZZ_GeneratedAssets"
         };
 
         [MenuItem("Tools/YKYToolkit/Force Clear Temp Files")]
@@ -39,12 +40,13 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             var result = await Try.Run(async () =>
             {
-                foreach (var clearFolder in ClearFolders)
+                foreach (var path in ClearFolders)
                 {
-                    var path = Path.Combine(Application.dataPath, clearFolder);
-
-                    if (!Directory.Exists(path)) continue;
-                    var dirs = Directory.GetDirectories(path);
+                    var full = Path.GetFullPath(Path.Combine(Application.dataPath, path));
+                    var projectRoot = Path.GetFullPath(Path.Combine(Application.dataPath, ".."));
+                    var trimmed = full.Replace(projectRoot + Path.DirectorySeparatorChar, "");
+                    if (!Directory.Exists(trimmed)) continue;
+                    var dirs = Directory.GetDirectories(trimmed);
                     var count = 0;
 
                     foreach (var dir in dirs)
@@ -59,6 +61,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     }
                 }
 
+                AssetDatabase.Refresh();
                 Progress.Finish(progressId);
             });
 
