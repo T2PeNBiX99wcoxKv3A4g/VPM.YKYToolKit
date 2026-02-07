@@ -6,6 +6,10 @@
         <ui:Toggle label="label.preferences_page.allow_async_compilation" name="allowAsyncCompilation"/>
         <ui:Toggle label="label.preferences_page.delete_selected_warn_window" name="deleteSelectedWarnWindow"/>
         <ui:Toggle label="label.preferences_page.enable_discord_rich_presence" name="enableDiscordRichPresence"/>
+        <ui:Label tabindex="-1" text="label.delete_history_manager" parse-escape-sequences="true"
+                  display-tooltip-when-elided="true" style="-unity-font-style: bold;"/>
+        <ui:SliderInt label="label.delete_history_manager.max_records" high-value="1000" low-value="1"
+                      show-input-field="true" name="deleteHistoryManagerMaxRecords"/>
         <ui:Label tabindex="-1" text="label.preferences_page.import_watcher" parse-escape-sequences="true"
                   display-tooltip-when-elided="true" style="-unity-font-style: bold;"/>
         <uie:ColorField label="label.import_watcher.color" value="RGBA(0.000, 1.000, 1.000, 1.000)"
@@ -13,7 +17,7 @@
         <ui:SliderInt label="label.import_watcher.duration" high-value="500" name="importWatcherDuration"
                       show-input-field="true"/>
         <ui:SliderInt label="label.import_watcher.max_sessions" high-value="1000" name="importWatcherMaxSessionsField"
-                      show-input-field="true"/>
+                      show-input-field="true" low-value="1"/>
         <ui:ListView header-title="label.import_watcher.file_extension_colors" reorder-mode="Animated"
                      show-add-remove-footer="true" show-foldout-header="true" reorderable="true"
                      show-alternating-row-backgrounds="ContentOnly" selection-type="Multiple" show-border="true"

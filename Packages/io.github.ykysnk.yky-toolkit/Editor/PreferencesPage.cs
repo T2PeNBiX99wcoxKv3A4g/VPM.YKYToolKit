@@ -46,6 +46,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     enableDiscordRichPresenceToggle.RegisterValueChangedCallback(evt =>
                         DiscordEditorRPC.EnableDiscordRichPresence = evt.newValue);
 
+                    var deleteHistoryManagerMaxRecordsField = tree.Q<SliderInt>("deleteHistoryManagerMaxRecords");
+                    deleteHistoryManagerMaxRecordsField.value = DeleteHistoryManager.MaxRecords;
+                    deleteHistoryManagerMaxRecordsField.RegisterValueChangedCallback(evt =>
+                        DeleteHistoryManager.MaxRecords = evt.newValue);
+
                     var importWatcherColorField = tree.Q<ColorField>("importWatcherColor");
                     importWatcherColorField.value = ImportWatcher.HighlightColor;
                     importWatcherColorField.RegisterValueChangedCallback(evt =>
