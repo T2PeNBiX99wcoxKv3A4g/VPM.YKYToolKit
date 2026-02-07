@@ -17,7 +17,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         {
             if (!await EditorUtils.DisplayDialogAsync("label.clear_shader_cache.title".S(),
                     "label.clear_shader_cache.message".S(), "label.clear_shader_cache.ok".S(),
-                    "label.clear_shader_cache.cancel".S(), 5)) return;
+                    "label.clear_shader_cache.cancel".S(), 3)) return;
             var shaderCachePath = Path.Combine(Directory.GetParent(Application.dataPath)?.FullName ?? "",
                 "Library/ShaderCache");
             Utils.Log(nameof(ClearShaderCache), $"Shader Cache Path: {shaderCachePath}");
