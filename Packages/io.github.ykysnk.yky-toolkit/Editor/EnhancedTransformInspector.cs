@@ -5,6 +5,7 @@ using io.github.ykysnk.utils.Extensions;
 using io.github.ykysnk.utils.NonUdon;
 using io.github.ykysnk.ykyToolkit.Editor.UIElements;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEditor.Search;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -118,6 +119,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             tree.Bind(serializedObject);
 
             var exData = EnhancedTransformDatabase.Get(theTarget);
+            var stage = PrefabStageUtility.GetCurrentPrefabStage();
 
             var defaultUIFoldOut = tree.Q<Foldout>("defaultGUIFoldout");
             defaultUIFoldOut.SetValueWithoutNotify(IsDefaultUIExpanded);
@@ -141,6 +143,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             positionField.RegisterValueChangedCallback(evt =>
             {
+                if (theTarget == null) return;
+                if (!stage?.IsPartOfPrefabContents(theTarget.gameObject) ?? false) return;
+
                 var clearVector = evt.newValue.Clean();
 
                 if (exData.positionDecimalPrecision > -1)
@@ -157,8 +162,19 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             globalPositionField.RegisterCallback<FocusInEvent>(_ => globalPositionFieldEditing = true);
             globalPositionField.RegisterCallback<FocusOutEvent>(_ => globalPositionFieldEditing = false);
 
+            globalPositionField.schedule.Execute(() =>
+            {
+                if (theTarget == null || stage == null) return;
+                var parentCheck = theTarget.parent != null && stage.IsPartOfPrefabContents(theTarget.parent.gameObject);
+                globalPositionField.SetEnabled(stage.IsPartOfPrefabContents(theTarget.gameObject) && parentCheck &&
+                                               !exData.lockTransform);
+            }).Every(500);
+
             globalPositionField.RegisterValueChangedCallback(evt =>
             {
+                if (theTarget == null) return;
+                if (!stage?.IsPartOfPrefabContents(theTarget.gameObject) ?? false) return;
+
                 var prev = evt.previousValue.Clean();
                 var next = evt.newValue.Clean();
 
@@ -213,6 +229,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             rotationField.RegisterValueChangedCallback(evt =>
             {
+                if (theTarget == null) return;
+                if (!stage?.IsPartOfPrefabContents(theTarget.gameObject) ?? false) return;
+
                 var prev = evt.previousValue.Clean().DeltaAngle();
                 var next = evt.newValue.Clean().DeltaAngle();
 
@@ -238,8 +257,18 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             globalRotationField.RegisterCallback<FocusInEvent>(_ => globalRotationEditing = true);
             globalRotationField.RegisterCallback<FocusOutEvent>(_ => globalRotationEditing = false);
 
+            globalRotationField.schedule.Execute(() =>
+            {
+                if (theTarget == null || stage == null) return;
+                globalRotationField.SetEnabled(
+                    stage.IsPartOfPrefabContents(theTarget.gameObject) && !exData.lockTransform);
+            }).Every(500);
+
             globalRotationField.RegisterValueChangedCallback(evt =>
             {
+                if (theTarget == null) return;
+                if (!stage?.IsPartOfPrefabContents(theTarget.gameObject) ?? false) return;
+
                 var prev = evt.previousValue.Clean().DeltaAngle();
                 var next = evt.newValue.Clean().DeltaAngle();
 
@@ -391,6 +420,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             scaleField.RegisterValueChangedCallback(evt =>
             {
+                if (theTarget == null) return;
+                if (!stage?.IsPartOfPrefabContents(theTarget.gameObject) ?? false) return;
+
                 var clear = evt.newValue.Clean();
 
                 if (exData.scaleDecimalPrecision > -1)
@@ -407,6 +439,13 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             lossyScaleField.RegisterCallback<FocusInEvent>(_ => lossyScaleFieldEditing = true);
             lossyScaleField.RegisterCallback<FocusOutEvent>(_ => lossyScaleFieldEditing = false);
 
+            lossyScaleField.schedule.Execute(() =>
+            {
+                if (theTarget == null || stage == null) return;
+                lossyScaleField.SetEnabled(
+                    stage.IsPartOfPrefabContents(theTarget.gameObject) && !exData.lockTransform);
+            }).Every(500);
+
             var lossyScaleXField = lossyScaleField.Q<FloatField>("unity-x-input");
             var lossyScaleYField = lossyScaleField.Q<FloatField>("unity-y-input");
             var lossyScaleZField = lossyScaleField.Q<FloatField>("unity-z-input");
@@ -420,6 +459,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             lossyScaleField.RegisterValueChangedCallback(evt =>
             {
+                if (theTarget == null) return;
+                if (!stage?.IsPartOfPrefabContents(theTarget.gameObject) ?? false) return;
+
                 var prev = evt.previousValue.Clean();
                 var next = evt.newValue.Clean();
 
@@ -613,7 +655,16 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             };
 
             var clearParentButton = tree.Q<Button>("clearParent");
-            clearParentButton.clicked += () => ApplyToTargets(t => t.SetParent(null, true), "Clear Parent");
+            clearParentButton.clicked += () =>
+            {
+                if (stage != null) return;
+                ApplyToTargets(t => t.SetParent(null, true), "Clear Parent");
+            };
+            clearParentButton.schedule.Execute(() =>
+            {
+                if (theTarget == null) return;
+                clearParentButton.SetEnabled(theTarget.parent != null && stage == null);
+            });
 
             var helpFoldout = tree.Q<Foldout>("helpFoldout");
             helpFoldout.value = IsHelpExpanded;
