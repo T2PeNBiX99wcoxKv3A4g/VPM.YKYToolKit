@@ -112,6 +112,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             _defaultEditor ??= CreateEditor(targets, type);
 
             var theTarget = (Transform)target;
+            var positionProperty = serializedObject.FindProperty("m_LocalPosition");
+            var rotationProperty = serializedObject.FindProperty("m_LocalRotation");
+            var eulerAnglesHintProperty = serializedObject.FindProperty("m_LocalEulerAnglesHint");
+            var scaleProperty = serializedObject.FindProperty("m_LocalScale");
             var tree = uxml!.CloneTree();
             _root = tree;
             InternalLocalizationExtensions.Helper.UILocalize(tree);
@@ -657,9 +661,56 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 EnhancedTransformDatabase.Save();
             });
 
+            tree.schedule.Execute(ClearOverride).Every(1000);
+            ClearOverride();
             UpdateLockTransformToggle();
 
             return tree;
+
+            void ClearOverride()
+            {
+                if (theTarget == null) return;
+                var prefabTarget = PrefabUtility.GetCorrespondingObjectFromSource(theTarget);
+                if (prefabTarget == null) return;
+                var prefabTargetSerializedObject = new SerializedObject(prefabTarget);
+                var prefabTargetPos = prefabTargetSerializedObject.FindProperty("m_LocalPosition");
+                var prefabTargetRot = prefabTargetSerializedObject.FindProperty("m_LocalRotation");
+                var prefabTargetEulerHint = prefabTargetSerializedObject.FindProperty("m_LocalEulerAnglesHint");
+                var prefabTargetScale = prefabTargetSerializedObject.FindProperty("m_LocalScale");
+                var isChanged = false;
+
+                if (positionProperty != null && prefabTargetPos != null && positionProperty.prefabOverride &&
+                    positionField.value.IsNearly(prefabTargetPos.vector3Value))
+                {
+                    PrefabUtility.RevertPropertyOverride(positionProperty, InteractionMode.AutomatedAction);
+                    isChanged = true;
+                }
+
+                if (rotationProperty != null && prefabTargetRot != null && rotationProperty.prefabOverride &&
+                    Quaternion.Dot(rotationProperty.quaternionValue, prefabTargetRot.quaternionValue) > 0.999999f)
+                {
+                    PrefabUtility.RevertPropertyOverride(rotationProperty, InteractionMode.AutomatedAction);
+                    isChanged = true;
+                }
+
+                if (eulerAnglesHintProperty != null && prefabTargetEulerHint != null &&
+                    eulerAnglesHintProperty.prefabOverride &&
+                    rotationField.value.IsNearly(prefabTargetEulerHint.vector3Value))
+                {
+                    PrefabUtility.RevertPropertyOverride(eulerAnglesHintProperty, InteractionMode.AutomatedAction);
+                    isChanged = true;
+                }
+
+                if (scaleProperty != null && prefabTargetScale != null && scaleProperty.prefabOverride &&
+                    scaleField.value.IsNearly(prefabTargetScale.vector3Value))
+                {
+                    PrefabUtility.RevertPropertyOverride(scaleProperty, InteractionMode.AutomatedAction);
+                    isChanged = true;
+                }
+
+                if (!isChanged) return;
+                serializedObject.ApplyModifiedPropertiesWithoutUndo();
+            }
 
             void UpdateLockTransformToggle()
             {
@@ -929,7 +980,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         {
             foreach (var obj in targets)
             {
-                if (obj is not Transform t) continue;
+                if (obj == null || obj is not Transform t) continue;
 
                 Undo.RecordObject(t, "Clean Transform");
 
@@ -961,7 +1012,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         {
             foreach (var obj in targets)
             {
-                if (obj is not Transform t) continue;
+                if (obj == null || obj is not Transform t) continue;
 
                 Undo.RecordObject(t, "Clean World Transform");
 
@@ -990,7 +1041,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             Undo.RecordObjects(targets, undoMessage);
 
             foreach (var obj in targets)
-                if (obj is Transform t)
+                if (obj != null && obj is Transform t)
                     action(t);
         }
 
@@ -1028,7 +1079,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             foreach (var obj in targets)
             {
-                if (obj is not Transform t) continue;
+                if (obj == null || obj is not Transform t) continue;
 
                 Undo.RecordObject(t, "Transform Edit");
 
