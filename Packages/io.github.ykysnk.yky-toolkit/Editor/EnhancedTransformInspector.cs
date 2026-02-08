@@ -553,9 +553,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 if (!TryParsePRSData(EditorGUIUtility.systemCopyBuffer, out var data)) return;
                 ApplyToTargets(t =>
                 {
-                    t.localPosition = data.position;
-                    t.localEulerAngles = data.eulerAngles;
-                    t.localScale = data.scale;
+                    ApplyVector3WhenChanged(t.localPosition, data.position, v => t.localPosition = v);
+                    ApplyVector3WhenChanged(t.localEulerAngles, data.eulerAngles, v => t.localEulerAngles = v);
+                    ApplyVector3WhenChanged(t.localScale, data.scale, v => t.localScale = v);
                 }, "Paste Local Transform");
                 positionField.value = data.position;
                 rotationField.value = data.eulerAngles;
@@ -576,9 +576,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 if (!TryParsePRSData(EditorGUIUtility.systemCopyBuffer, out var data)) return;
                 ApplyToTargets(t =>
                 {
-                    t.position = data.position;
-                    t.eulerAngles = data.eulerAngles;
-                    t.SetLossyScale(data.scale);
+                    ApplyVector3WhenChanged(t.position, data.position, v => t.position = v);
+                    ApplyVector3WhenChanged(t.eulerAngles, data.eulerAngles, v => t.eulerAngles = v);
+                    ApplyVector3WhenChanged(t.lossyScale, data.scale, t.SetLossyScale);
                 }, "Paste Global Transform");
                 globalPositionField.value = data.position;
                 globalRotationField.value = data.eulerAngles;
@@ -752,14 +752,17 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             void ResetLocalPosition()
             {
-                ApplyToTargets(t => t.localPosition = Vector3.zero, "Reset Local Position");
+                ApplyToTargets(t => ApplyVector3WhenChanged(t.localPosition, Vector3.zero, v => t.localPosition = v),
+                    "Reset Local Position");
                 positionField.value = Vector3.zero;
             }
 
             void ResetLocalRotation()
             {
                 rotationEditing = true;
-                ApplyToTargets(t => t.localEulerAngles = Vector3.zero, "Reset Local Rotation");
+                ApplyToTargets(
+                    t => ApplyVector3WhenChanged(t.localEulerAngles, Vector3.zero, v => t.localEulerAngles = v),
+                    "Reset Local Rotation");
                 rotationField.value = Vector3.zero;
                 rotationField.schedule.Execute(() => rotationEditing = false);
             }
@@ -768,20 +771,23 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             {
                 if (constrainProportionsScaleToggle.value)
                     constrainProportionsScaleToggle.value = false;
-                ApplyToTargets(t => t.localScale = Vector3.one, "Reset Local Scale");
+                ApplyToTargets(t => ApplyVector3WhenChanged(t.localScale, Vector3.one, v => t.localScale = v),
+                    "Reset Local Scale");
                 scaleField.value = Vector3.one;
             }
 
             void ResetGlobalPosition()
             {
-                ApplyToTargets(t => t.position = Vector3.zero, "Reset World Position");
+                ApplyToTargets(t => ApplyVector3WhenChanged(t.position, Vector3.zero, v => t.position = v),
+                    "Reset World Position");
                 globalPositionField.value = Vector3.zero;
             }
 
             void ResetGlobalRotation()
             {
                 rotationEditing = true;
-                ApplyToTargets(t => t.eulerAngles = Vector3.zero, "Reset World Rotation");
+                ApplyToTargets(t => ApplyVector3WhenChanged(t.eulerAngles, Vector3.zero, v => t.eulerAngles = v),
+                    "Reset World Rotation");
                 globalRotationField.value = Vector3.zero;
                 globalPositionField.schedule.Execute(() => rotationEditing = false);
             }
@@ -790,7 +796,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             {
                 if (constrainProportionsScaleToggle.value)
                     constrainProportionsScaleToggle.value = false;
-                ApplyToTargets(t => t.SetLossyScale(Vector3.one), "Reset World Scale");
+                ApplyToTargets(t => ApplyVector3WhenChanged(t.lossyScale, Vector3.one, t.SetLossyScale),
+                    "Reset World Scale");
                 lossyScaleField.value = Vector3.one;
             }
 
@@ -934,6 +941,20 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             return true;
         }
 
+        private static void ApplyVector3WhenChanged(Vector3 prev, Vector3 next, Action<Vector3> after)
+        {
+            var xChanged = !Mathf.Approximately(prev.x, next.x);
+            var yChanged = !Mathf.Approximately(prev.y, next.y);
+            var zChanged = !Mathf.Approximately(prev.z, next.z);
+            if (!xChanged && !yChanged && !zChanged) return;
+
+            var v = prev;
+            if (xChanged) v.x = next.x;
+            if (yChanged) v.y = next.y;
+            if (zChanged) v.z = next.z;
+            after(v);
+        }
+
         private void CleanTransforms(float threshold = 0.0001f)
         {
             foreach (var obj in targets)
@@ -943,22 +964,26 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 Undo.RecordObject(t, "Clean Transform");
 
                 var exData = EnhancedTransformDatabase.Get(t);
-                var oldPosition = t.localPosition.Clean(threshold);
-                var oldRotation = t.localEulerAngles.Clean(threshold).DeltaAngle();
-                var oldScale = t.localScale.Clean(threshold);
+                var newPosition = t.localPosition.Clean(threshold);
+                var newRotation = t.localEulerAngles.Clean(threshold).DeltaAngle();
+                var newScale = t.localScale.Clean(threshold);
 
                 if (exData.positionDecimalPrecision > -1)
-                    oldPosition = oldPosition.Round(exData.positionDecimalPrecision);
+                    newPosition = newPosition.Round(exData.positionDecimalPrecision);
 
                 if (exData.rotationDecimalPrecision > -1)
-                    oldRotation = oldRotation.Round(exData.rotationDecimalPrecision);
+                    newRotation = newRotation.Round(exData.rotationDecimalPrecision);
 
                 if (exData.scaleDecimalPrecision > -1)
-                    oldScale = oldScale.Round(exData.scaleDecimalPrecision);
+                    newScale = newScale.Round(exData.scaleDecimalPrecision);
 
-                t.localPosition = oldPosition;
-                t.localEulerAngles = oldRotation;
-                t.localScale = oldScale;
+                // https://issuetracker.unity3d.com/issues/prefab-mode-in-context-in-the-hierarchy-disappears-when-undoing-the-changes
+                // Before 6000.0.40f1, undoing the changes in the prefab context view of nested Prefab (Like Variant) makes "Prefab Mode in Context" disappear
+                // If also installed Editor Patcher with auto fix prefab override, Clean Transform without check will trigger prefab override fix
+                // So only set transform when clean transform is actually changed values
+                ApplyVector3WhenChanged(t.localPosition, newPosition, v => t.localPosition = v);
+                ApplyVector3WhenChanged(t.localEulerAngles, newRotation, v => t.localEulerAngles = v);
+                ApplyVector3WhenChanged(t.localScale, newScale, v => t.localScale = v);
             }
         }
 
@@ -971,22 +996,22 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 Undo.RecordObject(t, "Clean World Transform");
 
                 var exData = EnhancedTransformDatabase.Get(t);
-                var oldPosition = t.position.Clean(threshold);
-                var oldRotation = t.eulerAngles.Clean(threshold).DeltaAngle();
-                var oldScale = t.lossyScale.Clean(threshold);
+                var newPosition = t.position.Clean(threshold);
+                var newRotation = t.eulerAngles.Clean(threshold).DeltaAngle();
+                var newScale = t.lossyScale.Clean(threshold);
 
                 if (exData.positionDecimalPrecision > -1)
-                    oldPosition = oldPosition.Round(exData.positionDecimalPrecision);
+                    newPosition = newPosition.Round(exData.positionDecimalPrecision);
 
                 if (exData.rotationDecimalPrecision > -1)
-                    oldRotation = oldRotation.Round(exData.rotationDecimalPrecision);
+                    newRotation = newRotation.Round(exData.rotationDecimalPrecision);
 
                 if (exData.scaleDecimalPrecision > -1)
-                    oldScale = oldScale.Round(exData.scaleDecimalPrecision);
+                    newScale = newScale.Round(exData.scaleDecimalPrecision);
 
-                t.position = oldPosition;
-                t.eulerAngles = oldRotation;
-                t.SetLossyScale(oldScale);
+                ApplyVector3WhenChanged(t.position, newPosition, v => t.position = v);
+                ApplyVector3WhenChanged(t.eulerAngles, newRotation, v => t.eulerAngles = v);
+                ApplyVector3WhenChanged(t.lossyScale, newScale, v => t.SetLossyScale(v));
             }
         }
 
@@ -1006,14 +1031,16 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var xChanged = !Mathf.Approximately(prev.x, next.x);
             var yChanged = !Mathf.Approximately(prev.y, next.y);
             var zChanged = !Mathf.Approximately(prev.z, next.z);
+            if (!xChanged && !yChanged && !zChanged) return;
 
             ApplyToTargets(t =>
             {
                 var v = before(t);
+                var old = v;
                 if (xChanged) v.x = next.x;
                 if (yChanged) v.y = next.y;
                 if (zChanged) v.z = next.z;
-                after(t, v);
+                ApplyVector3WhenChanged(old, v, v2 => after(t, v2));
             }, undoMessage);
         }
 
@@ -1152,8 +1179,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     (t, v) =>
                     {
                         var p = getter(t);
+                        var old = p;
                         p.x = v;
-                        setter(t, p);
+                        ApplyVector3WhenChanged(old, p, v2 => setter(t, v2));
                     });
                 if (parsed) onParsed?.Invoke();
             }).Every(1000);
@@ -1167,8 +1195,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     (t, v) =>
                     {
                         var p = getter(t);
+                        var old = p;
                         p.y = v;
-                        setter(t, p);
+                        ApplyVector3WhenChanged(old, p, v2 => setter(t, v2));
                     });
                 if (parsed) onParsed?.Invoke();
             }).Every(1000);
@@ -1182,8 +1211,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     (t, v) =>
                     {
                         var p = getter(t);
+                        var old = p;
                         p.z = v;
-                        setter(t, p);
+                        ApplyVector3WhenChanged(old, p, v2 => setter(t, v2));
                     });
                 if (parsed) onParsed?.Invoke();
             }).Every(1000);
@@ -1244,11 +1274,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 _ => 0f
             };
 
-            t.position = new(
-                t.position.x,
-                groundPoint.y - offset,
-                t.position.z
-            );
+            ApplyVector3WhenChanged(t.position, new(t.position.x, groundPoint.y - offset, t.position.z),
+                v => t.position = v);
         }
     }
 }
