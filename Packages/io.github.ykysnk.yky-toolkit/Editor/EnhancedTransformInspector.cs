@@ -6,7 +6,6 @@ using io.github.ykysnk.utils.NonUdon;
 using io.github.ykysnk.ykyToolkit.Editor.UIElements;
 using UnityEditor;
 using UnityEditor.SceneManagement;
-using UnityEditor.Search;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -295,40 +294,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 rotationField.SetValueWithoutNotify(theTarget.localEulerAngles.DeltaAngle());
                 globalRotationField.SetValueWithoutNotify(next);
             });
-
-            rotationField.AddManipulator(new ContextualMenuManipulator(evt =>
-            {
-                evt.menu.AppendAction("label.copy_property_path".S(),
-                    _ => EditorGUIUtility.systemCopyBuffer = "m_LocalRotation");
-                evt.menu.AppendAction("label.search_for_same_property".S(), _ =>
-                {
-                    var rot = theTarget.localEulerAngles;
-                    var context = SearchService.CreateContext("scene",
-                        $"h:t:Transform #m_LocalRotation=({rot.x},{rot.y},{rot.z})");
-
-                    SearchService.ShowWindow(context);
-                });
-                evt.menu.AppendSeparator();
-                evt.menu.AppendAction("label.copy_euler_angles".S(),
-                    _ => EditorGUIUtility.systemCopyBuffer = FormatVector3LikeUnity(theTarget.localEulerAngles));
-                evt.menu.AppendAction("label.copy_quaternion".S(),
-                    _ => EditorGUIUtility.systemCopyBuffer = FormatQuaternionLikeUnity(theTarget.localRotation));
-
-                var canBePasteToVector3 = TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer, out var pasteVector3);
-                var canBePasteToQuaternion =
-                    TryParseUnityQuaternion(EditorGUIUtility.systemCopyBuffer, out var pasteQuaternion);
-
-                evt.menu.AppendAction("label.paste".S(), _ =>
-                    {
-                        if (canBePasteToVector3)
-                            rotationField.value = pasteVector3;
-                        else if (canBePasteToQuaternion)
-                            theTarget.localRotation = pasteQuaternion;
-                    },
-                    canBePasteToVector3 || canBePasteToQuaternion
-                        ? DropdownMenuAction.Status.Normal
-                        : DropdownMenuAction.Status.Disabled);
-            }));
 
             globalRotationField.AddManipulator(new ContextualMenuManipulator(evt =>
             {
