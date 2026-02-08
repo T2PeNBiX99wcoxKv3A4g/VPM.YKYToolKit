@@ -218,7 +218,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             rotationField.SetValueWithoutNotify(theTarget.localEulerAngles.Clean());
             // Fix the dumb issue of rotation field input
             rotationField.schedule.Execute(() =>
-                rotationField.SetValueWithoutNotify(theTarget.localEulerAngles.Clean()));
+            {
+                if (theTarget == null) return;
+                rotationField.SetValueWithoutNotify(theTarget.localEulerAngles.Clean());
+            });
             globalRotationField.SetValueWithoutNotify(theTarget.eulerAngles.Clean());
 
             Vector3FieldApplyParsedInput(rotationField, t => t.localEulerAngles,
@@ -542,6 +545,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var copyLocalTransformButton = tree.Q<Button>("copyLocalTransform");
             copyLocalTransformButton.clicked += () =>
             {
+                if (theTarget == null) return;
                 var data = new PRSData(theTarget.localPosition, theTarget.localEulerAngles, theTarget.localScale);
                 if (!JsonUtils.TryToJson(data, out var json, out _)) return;
                 EditorGUIUtility.systemCopyBuffer = json;
@@ -565,6 +569,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var copyGlobalTransformButton = tree.Q<Button>("copyGlobalTransform");
             copyGlobalTransformButton.clicked += () =>
             {
+                if (theTarget == null) return;
                 var data = new PRSData(theTarget.position, theTarget.eulerAngles, theTarget.lossyScale);
                 if (!JsonUtils.TryToJson(data, out var json, out _)) return;
                 EditorGUIUtility.systemCopyBuffer = json;
