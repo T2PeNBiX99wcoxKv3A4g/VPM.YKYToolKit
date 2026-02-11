@@ -680,7 +680,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 var isChanged = false;
 
                 if (positionProperty != null && prefabTargetPos != null && positionProperty.prefabOverride &&
-                    positionField.value.IsNearly(prefabTargetPos.vector3Value))
+                    positionProperty.vector3Value.IsNearly(prefabTargetPos.vector3Value))
                 {
                     PrefabUtility.RevertPropertyOverride(positionProperty, InteractionMode.AutomatedAction);
                     isChanged = true;
@@ -695,14 +695,14 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
                 if (eulerAnglesHintProperty != null && prefabTargetEulerHint != null &&
                     eulerAnglesHintProperty.prefabOverride &&
-                    rotationField.value.IsNearly(prefabTargetEulerHint.vector3Value))
+                    eulerAnglesHintProperty.vector3Value.IsNearly(prefabTargetEulerHint.vector3Value))
                 {
                     PrefabUtility.RevertPropertyOverride(eulerAnglesHintProperty, InteractionMode.AutomatedAction);
                     isChanged = true;
                 }
 
                 if (scaleProperty != null && prefabTargetScale != null && scaleProperty.prefabOverride &&
-                    scaleField.value.IsNearly(prefabTargetScale.vector3Value))
+                    scaleProperty.vector3Value.IsNearly(prefabTargetScale.vector3Value))
                 {
                     PrefabUtility.RevertPropertyOverride(scaleProperty, InteractionMode.AutomatedAction);
                     isChanged = true;
