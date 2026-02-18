@@ -177,6 +177,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 globalPositionField.SetEnabled(shouldEnable && !exData.lockTransform);
             }).Every(500);
 
+            globalPositionField.schedule.Execute(() =>
+            {
+                if (theTarget == null) return;
+                globalPositionField.SetValueWithoutNotify(theTarget.position.Clean());
+            }).Every(1000);
+
             globalPositionField.RegisterValueChangedCallback(evt =>
             {
                 if (theTarget == null) return;
@@ -219,12 +225,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var globalRotationField = tree.Q<Vector3FieldExtra>("globalRotation");
 
             rotationField.SetValueWithoutNotify(theTarget.localEulerAngles.Clean());
-            // Fix the dumb issue of rotation field input
-            rotationField.schedule.Execute(() =>
-            {
-                if (theTarget == null) return;
-                rotationField.SetValueWithoutNotify(theTarget.localEulerAngles.Clean());
-            });
             globalRotationField.SetValueWithoutNotify(theTarget.eulerAngles.Clean());
 
             Vector3FieldApplyParsedInput(rotationField, t => t.localEulerAngles,
@@ -236,6 +236,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             rotationField.RegisterCallback<FocusInEvent>(_ => rotationEditing = true);
             rotationField.RegisterCallback<FocusOutEvent>(_ => rotationEditing = false);
+
+            // Fix the dumb issue of rotation field input
+            rotationField.schedule.Execute(UpdateLocalRotation).ExecuteLater(100);
+            rotationField.schedule.Execute(UpdateLocalRotation).Every(1000);
 
             rotationField.RegisterValueChangedCallback(evt =>
             {
@@ -273,6 +277,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 globalRotationField.SetEnabled(
                     stage.IsPartOfPrefabContents(theTarget.gameObject) && !exData.lockTransform);
             }).Every(500);
+
+            globalRotationField.schedule.Execute(() =>
+            {
+                if (theTarget == null) return;
+                globalRotationField.SetValueWithoutNotify(theTarget.eulerAngles.Clean());
+            }).Every(1000);
 
             globalRotationField.RegisterValueChangedCallback(evt =>
             {
@@ -386,13 +396,22 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             scaleField.RegisterCallback<FocusInEvent>(_ => scaleFieldEditing = true);
             scaleField.RegisterCallback<FocusOutEvent>(_ => scaleFieldEditing = false);
 
+            scaleField.schedule.Execute(() =>
+            {
+                if (theTarget == null) return;
+                scaleField.SetValueWithoutNotify(theTarget.localScale.Clean());
+            }).Every(1000);
+
             var scaleXField = scaleField.Q<FloatField>("unity-x-input");
             var scaleYField = scaleField.Q<FloatField>("unity-y-input");
             var scaleZField = scaleField.Q<FloatField>("unity-z-input");
 
-            scaleXField.RegisterValueChangedCallback(evt => OnEditScaleAxis(0, scaleFieldEditing, scaleField, evt));
-            scaleYField.RegisterValueChangedCallback(evt => OnEditScaleAxis(1, scaleFieldEditing, scaleField, evt));
-            scaleZField.RegisterValueChangedCallback(evt => OnEditScaleAxis(2, scaleFieldEditing, scaleField, evt));
+            scaleXField.RegisterValueChangedCallback(evt =>
+                OnEditScaleAxis(0, scaleFieldEditing, scaleField, evt, false));
+            scaleYField.RegisterValueChangedCallback(evt =>
+                OnEditScaleAxis(1, scaleFieldEditing, scaleField, evt, false));
+            scaleZField.RegisterValueChangedCallback(evt =>
+                OnEditScaleAxis(2, scaleFieldEditing, scaleField, evt, false));
 
             scaleField.RegisterValueChangedCallback(evt =>
             {
@@ -422,16 +441,22 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     stage.IsPartOfPrefabContents(theTarget.gameObject) && !exData.lockTransform);
             }).Every(500);
 
+            lossyScaleField.schedule.Execute(() =>
+            {
+                if (theTarget == null) return;
+                lossyScaleField.SetValueWithoutNotify(theTarget.lossyScale.Clean());
+            }).Every(1000);
+
             var lossyScaleXField = lossyScaleField.Q<FloatField>("unity-x-input");
             var lossyScaleYField = lossyScaleField.Q<FloatField>("unity-y-input");
             var lossyScaleZField = lossyScaleField.Q<FloatField>("unity-z-input");
 
             lossyScaleXField.RegisterValueChangedCallback(evt =>
-                OnEditScaleAxis(0, lossyScaleFieldEditing, lossyScaleField, evt));
+                OnEditScaleAxis(0, lossyScaleFieldEditing, lossyScaleField, evt, true));
             lossyScaleYField.RegisterValueChangedCallback(evt =>
-                OnEditScaleAxis(1, lossyScaleFieldEditing, lossyScaleField, evt));
+                OnEditScaleAxis(1, lossyScaleFieldEditing, lossyScaleField, evt, true));
             lossyScaleZField.RegisterValueChangedCallback(evt =>
-                OnEditScaleAxis(2, lossyScaleFieldEditing, lossyScaleField, evt));
+                OnEditScaleAxis(2, lossyScaleFieldEditing, lossyScaleField, evt, true));
 
             lossyScaleField.RegisterValueChangedCallback(evt =>
             {
@@ -667,6 +692,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             return tree;
 
+            void UpdateLocalRotation()
+            {
+                if (theTarget == null) return;
+                rotationField.SetValueWithoutNotify(theTarget.localEulerAngles.Clean());
+            }
+
             void ClearOverride()
             {
                 if (theTarget == null) return;
@@ -733,7 +764,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 randomGlobalAllButton.SetEnabled(!exData.lockTransform);
             }
 
-            void OnEditScaleAxis(int axis, bool editing, Vector3FieldExtra theScaleField, ChangeEvent<float> evt)
+            void OnEditScaleAxis(int axis, bool editing, Vector3FieldExtra theScaleField, ChangeEvent<float> evt,
+                bool isGlobal)
             {
                 if (!editing || !constrainProportionsScaleToggle.value) return;
 
@@ -762,6 +794,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 }
 
                 theScaleField.value = scale;
+
+                if (isGlobal)
+                    theTarget.SetLossyScale(scale);
+                else
+                    theTarget.localScale = scale;
             }
 
             void CleanField()
