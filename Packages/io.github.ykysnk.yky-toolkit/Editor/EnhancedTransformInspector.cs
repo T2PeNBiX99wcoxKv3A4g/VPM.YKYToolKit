@@ -531,8 +531,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 RandomGlobalScale();
             };
 
-            var copyLocalTransformButton = tree.Q<Button>("copyLocalTransform");
-            copyLocalTransformButton.clicked += () =>
+            var copyLocalAllButton = tree.Q<IconButton>("copyLocalAll");
+            copyLocalAllButton.clicked += () =>
             {
                 if (theTarget == null) return;
                 var data = new PRSData(theTarget.localPosition, theTarget.localEulerAngles, theTarget.localScale);
@@ -540,8 +540,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 EditorGUIUtility.systemCopyBuffer = json;
             };
 
-            var pasteLocalTransformButton = tree.Q<Button>("pasteLocalTransform");
-            pasteLocalTransformButton.clicked += () =>
+            var pasteLocalAllButton = tree.Q<IconButton>("pasteLocalAll");
+            pasteLocalAllButton.clicked += () =>
             {
                 if (!TryParsePRSData(EditorGUIUtility.systemCopyBuffer, out var data)) return;
                 ApplyToTargets(t =>
@@ -555,8 +555,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 scaleField.value = data.scale;
             };
 
-            var copyGlobalTransformButton = tree.Q<Button>("copyGlobalTransform");
-            copyGlobalTransformButton.clicked += () =>
+            var copyGlobalAllButton = tree.Q<IconButton>("copyGlobalAll");
+            copyGlobalAllButton.clicked += () =>
             {
                 if (theTarget == null) return;
                 var data = new PRSData(theTarget.position, theTarget.eulerAngles, theTarget.lossyScale);
@@ -564,8 +564,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 EditorGUIUtility.systemCopyBuffer = json;
             };
 
-            var pasteGlobalTransformButton = tree.Q<Button>("pasteGlobalTransform");
-            pasteGlobalTransformButton.clicked += () =>
+            var pasteGlobalAllButton = tree.Q<IconButton>("pasteGlobalAll");
+            pasteGlobalAllButton.clicked += () =>
             {
                 if (!TryParsePRSData(EditorGUIUtility.systemCopyBuffer, out var data)) return;
                 ApplyToTargets(t =>
@@ -579,11 +579,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 lossyScaleField.value = data.scale;
             };
 
-            pasteLocalTransformButton.schedule.Execute(() =>
+            pasteLocalAllButton.schedule.Execute(() =>
             {
                 var canBePaste = TryParsePRSData(EditorGUIUtility.systemCopyBuffer, out _);
-                pasteLocalTransformButton.SetEnabled(canBePaste);
-                pasteGlobalTransformButton.SetEnabled(canBePaste);
+                pasteLocalAllButton.SetEnabled(canBePaste);
+                pasteGlobalAllButton.SetEnabled(canBePaste);
             }).Every(100);
 
             var hierarchyPathField = tree.Q<TextField>("hierarchyPath");
@@ -751,10 +751,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 clearParentButton.SetEnabled(!exData.lockTransform);
                 resetLocalAllButton.SetEnabled(!exData.lockTransform);
                 resetGlobalAllButton.SetEnabled(!exData.lockTransform);
-                copyLocalTransformButton.SetEnabled(!exData.lockTransform);
-                pasteLocalTransformButton.SetEnabled(!exData.lockTransform);
-                copyGlobalTransformButton.SetEnabled(!exData.lockTransform);
-                pasteGlobalTransformButton.SetEnabled(!exData.lockTransform);
+                copyLocalAllButton.SetEnabled(!exData.lockTransform);
+                pasteLocalAllButton.SetEnabled(!exData.lockTransform);
+                copyGlobalAllButton.SetEnabled(!exData.lockTransform);
+                pasteGlobalAllButton.SetEnabled(!exData.lockTransform);
                 randomLocalAllButton.SetEnabled(!exData.lockTransform);
                 randomGlobalAllButton.SetEnabled(!exData.lockTransform);
             }
