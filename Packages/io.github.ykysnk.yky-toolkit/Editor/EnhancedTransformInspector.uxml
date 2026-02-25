@@ -8,6 +8,14 @@
             <ui:Label text="label.enhanced_transform_inspector.local_space" parse-escape-sequences="true"
                       display-tooltip-when-elided="true" class="space-title"/>
             <ui:VisualElement class="row">
+                <io.github.ykysnk.ykyToolkit.Editor.UIElements.IconButton name="copyLocalAll"
+                                                                          tooltip="label.enhanced_transform_inspector.copy_transform"
+                                                                          class="cell"
+                                                                          style="background-image: url(&quot;project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/Icons/copy.png?fileID=2800000&amp;guid=f8379f706ae3d4841838ff5cc924da0a&amp;type=3#copy&quot;);"/>
+                <io.github.ykysnk.ykyToolkit.Editor.UIElements.IconButton name="pasteLocalAll"
+                                                                          tooltip="label.enhanced_transform_inspector.paste_transform"
+                                                                          class="cell"
+                                                                          style="background-image: url(&quot;project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/Icons/paste.png?fileID=2800000&amp;guid=3d32b439cc5c09f4f93312cf317a8019&amp;type=3#paste&quot;);"/>
                 <io.github.ykysnk.ykyToolkit.Editor.UIElements.IconButton name="randomLocalAll"
                                                                           tooltip="label.enhanced_transform_inspector.random_all"
                                                                           class="cell"/>
@@ -15,31 +23,50 @@
                                                                           tooltip="label.enhanced_transform_inspector.reset_all"
                                                                           class="cell"/>
                 <ui:Button text="label.enhanced_transform_inspector.copy_transform" parse-escape-sequences="true"
-                           display-tooltip-when-elided="true" name="copyLocalTransform" class="cell"/>
+                           display-tooltip-when-elided="true" name="copyLocalTransform" class="cell"
+                           style="display: none;"/>
                 <ui:Button text="label.enhanced_transform_inspector.paste_transform" parse-escape-sequences="true"
-                           display-tooltip-when-elided="true" name="pasteLocalTransform" class="cell"/>
+                           display-tooltip-when-elided="true" name="pasteLocalTransform" class="cell"
+                           style="display: none;"/>
             </ui:VisualElement>
         </ui:VisualElement>
         <io.github.ykysnk.ykyToolkit.Editor.UIElements.Vector3FieldExtra name="position" binding-path="m_LocalPosition"
                                                                          label="unity:label.position"
                                                                          reset-button-tooltip="label.enhanced_transform_inspector.reset_position"
                                                                          random-button-tooltip="label.enhanced_transform_inspector.random_position"
+                                                                         show-copy-paste-buttons="true"
+                                                                         copy-button-tooltip="label.enhanced_transform_inspector.copy_transform"
+                                                                         paste-button-tooltip="label.enhanced_transform_inspector.paste_transform"
                                                                          class="localize-tooltip"/>
         <io.github.ykysnk.ykyToolkit.Editor.UIElements.Vector3FieldExtra name="rotation"
                                                                          binding-path="m_LocalEulerAnglesHint"
                                                                          label="unity:label.rotation"
                                                                          reset-button-tooltip="label.enhanced_transform_inspector.reset_rotation"
-                                                                         random-button-tooltip="label.enhanced_transform_inspector.random_rotation"/>
+                                                                         random-button-tooltip="label.enhanced_transform_inspector.random_rotation"
+                                                                         show-copy-paste-buttons="true"
+                                                                         copy-button-tooltip="label.enhanced_transform_inspector.copy_transform"
+                                                                         paste-button-tooltip="label.enhanced_transform_inspector.paste_transform"/>
         <io.github.ykysnk.ykyToolkit.Editor.UIElements.Vector3FieldExtra name="scale" binding-path="m_LocalScale"
                                                                          label="unity:label.scale"
                                                                          show-link-button="true"
                                                                          random-button-tooltip="label.enhanced_transform_inspector.random_scale"
                                                                          reset-button-tooltip="label.enhanced_transform_inspector.reset_scale"
-                                                                         link-button-binding-path="m_ConstrainProportionsScale"/>
+                                                                         link-button-binding-path="m_ConstrainProportionsScale"
+                                                                         show-copy-paste-buttons="true"
+                                                                         copy-button-tooltip="label.enhanced_transform_inspector.copy_transform"
+                                                                         paste-button-tooltip="label.enhanced_transform_inspector.paste_transform"/>
         <ui:VisualElement class="row" style="justify-content: space-between;">
             <ui:Label text="label.enhanced_transform_inspector.global_space" parse-escape-sequences="true"
                       display-tooltip-when-elided="true" class="space-title"/>
             <ui:VisualElement class="row">
+                <io.github.ykysnk.ykyToolkit.Editor.UIElements.IconButton name="copyGlobalAll"
+                                                                          tooltip="label.enhanced_transform_inspector.copy_transform"
+                                                                          class="cell"
+                                                                          style="background-image: url(&quot;project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/Icons/copy.png?fileID=2800000&amp;guid=f8379f706ae3d4841838ff5cc924da0a&amp;type=3#copy&quot;);"/>
+                <io.github.ykysnk.ykyToolkit.Editor.UIElements.IconButton name="pasteGlobalAll"
+                                                                          tooltip="label.enhanced_transform_inspector.paste_transform"
+                                                                          class="cell"
+                                                                          style="background-image: url(&quot;project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/Icons/paste.png?fileID=2800000&amp;guid=3d32b439cc5c09f4f93312cf317a8019&amp;type=3#paste&quot;);"/>
                 <io.github.ykysnk.ykyToolkit.Editor.UIElements.IconButton name="randomGlobalAll"
                                                                           tooltip="label.enhanced_transform_inspector.random_all"
                                                                           class="cell"/>
@@ -47,25 +74,36 @@
                                                                           tooltip="label.enhanced_transform_inspector.reset_all"
                                                                           class="cell"/>
                 <ui:Button text="label.enhanced_transform_inspector.copy_transform" parse-escape-sequences="true"
-                           display-tooltip-when-elided="true" name="copyGlobalTransform" class="cell"/>
+                           display-tooltip-when-elided="true" name="copyGlobalTransform" class="cell"
+                           style="display: none;"/>
                 <ui:Button text="label.enhanced_transform_inspector.paste_transform" parse-escape-sequences="true"
-                           display-tooltip-when-elided="true" name="pasteGlobalTransform" class="cell"/>
+                           display-tooltip-when-elided="true" name="pasteGlobalTransform" class="cell"
+                           style="display: none;"/>
             </ui:VisualElement>
         </ui:VisualElement>
         <io.github.ykysnk.ykyToolkit.Editor.UIElements.Vector3FieldExtra name="globalPosition"
                                                                          reset-button-tooltip="label.enhanced_transform_inspector.reset_position"
                                                                          random-button-tooltip="label.enhanced_transform_inspector.random_position"
-                                                                         label="label.enhanced_transform_inspector.global_position"/>
+                                                                         label="label.enhanced_transform_inspector.global_position"
+                                                                         show-copy-paste-buttons="true"
+                                                                         copy-button-tooltip="label.enhanced_transform_inspector.copy_transform"
+                                                                         paste-button-tooltip="label.enhanced_transform_inspector.paste_transform"/>
         <io.github.ykysnk.ykyToolkit.Editor.UIElements.Vector3FieldExtra name="globalRotation"
                                                                          label="label.enhanced_transform_inspector.global_rotation"
                                                                          reset-button-tooltip="label.enhanced_transform_inspector.reset_rotation"
-                                                                         random-button-tooltip="label.enhanced_transform_inspector.random_rotation"/>
+                                                                         random-button-tooltip="label.enhanced_transform_inspector.random_rotation"
+                                                                         show-copy-paste-buttons="true"
+                                                                         copy-button-tooltip="label.enhanced_transform_inspector.copy_transform"
+                                                                         paste-button-tooltip="label.enhanced_transform_inspector.paste_transform"/>
         <io.github.ykysnk.ykyToolkit.Editor.UIElements.Vector3FieldExtra name="lossyScale"
                                                                          label="label.enhanced_transform_inspector.global_scale"
                                                                          show-link-button="true"
                                                                          reset-button-tooltip="label.enhanced_transform_inspector.reset_scale"
                                                                          random-button-tooltip="label.enhanced_transform_inspector.random_scale"
-                                                                         link-button-binding-path="m_ConstrainProportionsScale"/>
+                                                                         link-button-binding-path="m_ConstrainProportionsScale"
+                                                                         show-copy-paste-buttons="true"
+                                                                         copy-button-tooltip="label.enhanced_transform_inspector.copy_transform"
+                                                                         paste-button-tooltip="label.enhanced_transform_inspector.paste_transform"/>
         <ui:Label text="label.enhanced_transform_inspector.other" parse-escape-sequences="true"
                   display-tooltip-when-elided="true" class="space-title"/>
         <ui:TextField picking-mode="Ignore" label="label.enhanced_transform_inspector.hierarchy_path"
