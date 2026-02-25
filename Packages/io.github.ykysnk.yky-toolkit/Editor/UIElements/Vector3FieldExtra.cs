@@ -117,8 +117,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor.UIElements
             set => LinkButton.bindingPath = value;
         }
 
-        [PublicAPI]
-        public void SetLinked(bool linked)
+        private void SetLinked(bool linked)
         {
             LinkButton.style.backgroundImage = linked ? LinkedIcon : UnlinkedIcon;
             LinkButton.tooltip = linked
