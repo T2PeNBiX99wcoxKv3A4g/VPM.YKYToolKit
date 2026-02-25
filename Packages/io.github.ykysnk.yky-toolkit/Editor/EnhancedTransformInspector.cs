@@ -160,6 +160,17 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 globalPositionField.SetValueWithoutNotify(theTarget.position);
             });
 
+            positionField.CopyButton.clicked += () =>
+                EditorGUIUtility.systemCopyBuffer = FormatVector3LikeUnity(positionField.value);
+            positionField.PasteButton.clicked += () =>
+            {
+                if (!TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer, out var pasteVector3)) return;
+                positionField.value = pasteVector3;
+            };
+            positionField.schedule.Execute(() =>
+                    positionField.PasteButton.SetEnabled(TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer, out _)))
+                .Every(100);
+
             var globalPositionFieldEditing = false;
 
             globalPositionField.RegisterCallback<FocusInEvent>(_ => globalPositionFieldEditing = true);
@@ -216,6 +227,17 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     canBePaste ? DropdownMenuAction.Status.Normal : DropdownMenuAction.Status.Disabled);
             }));
 
+            globalPositionField.CopyButton.clicked += () =>
+                EditorGUIUtility.systemCopyBuffer = FormatVector3LikeUnity(globalPositionField.value);
+            globalPositionField.PasteButton.clicked += () =>
+            {
+                if (!TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer, out var pasteVector3)) return;
+                globalPositionField.value = pasteVector3;
+            };
+            globalPositionField.schedule.Execute(() =>
+                globalPositionField.PasteButton.SetEnabled(TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer,
+                    out _))).Every(100);
+
             positionField.ResetButton.clicked += ResetLocalPosition;
             positionField.RandomButton.clicked += RandomLocalPosition;
             globalPositionField.ResetButton.clicked += ResetGlobalPosition;
@@ -265,6 +287,17 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 rotationField.SetValueWithoutNotify(next);
                 globalRotationField.SetValueWithoutNotify(theTarget.eulerAngles.DeltaAngle());
             });
+
+            rotationField.CopyButton.clicked += () =>
+                EditorGUIUtility.systemCopyBuffer = FormatVector3LikeUnity(rotationField.value);
+            rotationField.PasteButton.clicked += () =>
+            {
+                if (!TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer, out var pasteVector3)) return;
+                rotationField.value = pasteVector3;
+            };
+            rotationField.schedule.Execute(() =>
+                    rotationField.PasteButton.SetEnabled(TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer, out _)))
+                .Every(100);
 
             var globalRotationEditing = false;
 
@@ -331,6 +364,18 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                         ? DropdownMenuAction.Status.Normal
                         : DropdownMenuAction.Status.Disabled);
             }));
+
+            globalRotationField.CopyButton.clicked += () =>
+                EditorGUIUtility.systemCopyBuffer = FormatVector3LikeUnity(globalRotationField.value);
+            globalRotationField.PasteButton.clicked += () =>
+            {
+                if (!TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer, out var pasteVector3)) return;
+                globalRotationField.value = pasteVector3;
+            };
+            globalRotationField.schedule.Execute(() =>
+                    globalRotationField.PasteButton.SetEnabled(TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer,
+                        out _)))
+                .Every(100);
 
             rotationField.ResetButton.clicked += ResetLocalRotation;
             rotationField.RandomButton.clicked += RandomLocalRotation;
@@ -428,6 +473,17 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 lossyScaleField.SetValueWithoutNotify(theTarget.lossyScale);
             });
 
+            scaleField.CopyButton.clicked += () =>
+                EditorGUIUtility.systemCopyBuffer = FormatVector3LikeUnity(scaleField.value);
+            scaleField.PasteButton.clicked += () =>
+            {
+                if (!TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer, out var pasteVector3)) return;
+                scaleField.value = pasteVector3;
+            };
+            scaleField.schedule.Execute(() =>
+                    scaleField.PasteButton.SetEnabled(TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer, out _)))
+                .Every(100);
+
             var lossyScaleFieldEditing = false;
 
             lossyScaleField.RegisterCallback<FocusInEvent>(_ => lossyScaleFieldEditing = true);
@@ -489,6 +545,18 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 evt.menu.AppendAction("label.paste".S(), _ => lossyScaleField.value = pasteVector3,
                     canBePaste ? DropdownMenuAction.Status.Normal : DropdownMenuAction.Status.Disabled);
             }));
+
+            lossyScaleField.CopyButton.clicked += () =>
+                EditorGUIUtility.systemCopyBuffer = FormatVector3LikeUnity(lossyScaleField.value);
+            lossyScaleField.PasteButton.clicked += () =>
+            {
+                if (!TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer, out var pasteVector3)) return;
+                lossyScaleField.value = pasteVector3;
+            };
+            lossyScaleField.schedule.Execute(() =>
+                    lossyScaleField.PasteButton.SetEnabled(TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer,
+                        out _)))
+                .Every(100);
 
             scaleField.ResetButton.clicked += ResetLocalScale;
             scaleField.RandomButton.clicked += RandomLocalScale;
