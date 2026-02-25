@@ -4,7 +4,6 @@
         <ui:Foldout text="label.enhanced_transform_inspector.default_ui" value="false" name="defaultGUIFoldout">
             <ui:IMGUIContainer name="defaultGUI"/>
         </ui:Foldout>
-        <ui:Toggle binding-path="m_ConstrainProportionsScale" name="constrainProportionsScale" style="display: none;"/>
         <ui:VisualElement class="row" style="justify-content: space-between;">
             <ui:Label text="label.enhanced_transform_inspector.local_space" parse-escape-sequences="true"
                       display-tooltip-when-elided="true" class="space-title"/>
@@ -35,7 +34,8 @@
                                                                          label="unity:label.scale"
                                                                          show-link-button="true"
                                                                          random-button-tooltip="label.enhanced_transform_inspector.random_scale"
-                                                                         reset-button-tooltip="label.enhanced_transform_inspector.reset_scale"/>
+                                                                         reset-button-tooltip="label.enhanced_transform_inspector.reset_scale"
+                                                                         link-button-binding-path="m_ConstrainProportionsScale"/>
         <ui:VisualElement class="row" style="justify-content: space-between;">
             <ui:Label text="label.enhanced_transform_inspector.global_space" parse-escape-sequences="true"
                       display-tooltip-when-elided="true" class="space-title"/>
@@ -64,7 +64,8 @@
                                                                          label="label.enhanced_transform_inspector.global_scale"
                                                                          show-link-button="true"
                                                                          reset-button-tooltip="label.enhanced_transform_inspector.reset_scale"
-                                                                         random-button-tooltip="label.enhanced_transform_inspector.random_scale"/>
+                                                                         random-button-tooltip="label.enhanced_transform_inspector.random_scale"
+                                                                         link-button-binding-path="m_ConstrainProportionsScale"/>
         <ui:Label text="label.enhanced_transform_inspector.other" parse-escape-sequences="true"
                   display-tooltip-when-elided="true" class="space-title"/>
         <ui:TextField picking-mode="Ignore" label="label.enhanced_transform_inspector.hierarchy_path"

@@ -106,7 +106,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             EditorGUILayout.HelpBox("label.enhanced_transform_inspector.imgui".S(), MessageType.Warning);
         }
 
-        protected override VisualElement? CreateErrorHandleInspectorGUI()
+        protected override VisualElement CreateErrorHandleInspectorGUI()
         {
             var type = ReflectionWrapper.GetType("UnityEditor.TransformInspector, UnityEditor");
             _defaultEditor ??= CreateEditor(targets, type);
@@ -337,7 +337,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             globalRotationField.ResetButton.clicked += ResetGlobalRotation;
             globalRotationField.RandomButton.clicked += RandomGlobalRotation;
 
-            var constrainProportionsScaleToggle = tree.Q<Toggle>("constrainProportionsScale");
             var scaleField = tree.Q<Vector3FieldExtra>("scale");
             var lossyScaleField = tree.Q<Vector3FieldExtra>("lossyScale");
 
@@ -345,7 +344,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             Vector3FieldApplyParsedInput(scaleField, t => t.localScale, (t, newVector) =>
             {
-                if (constrainProportionsScaleToggle.value)
+                if (scaleField.LinkButton.value)
                 {
                     var prev = t.localScale;
                     var ratio = 1f;
@@ -369,7 +368,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             Vector3FieldApplyParsedInput(lossyScaleField, t => t.lossyScale,
                 (t, newVector) =>
                 {
-                    if (constrainProportionsScaleToggle.value)
+                    if (scaleField.LinkButton.value)
                     {
                         var prev = t.lossyScale;
                         var ratio = 1f;
@@ -495,10 +494,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             scaleField.RandomButton.clicked += RandomLocalScale;
             lossyScaleField.ResetButton.clicked += ResetGlobalScale;
             lossyScaleField.RandomButton.clicked += RandomGlobalScale;
-
-            scaleField.LinkButton.clicked += ChangeLinkButtonState;
-            lossyScaleField.LinkButton.clicked += ChangeLinkButtonState;
-            constrainProportionsScaleToggle.RegisterValueChangedCallback(_ => UpdateLinkButtonState());
 
             var resetLocalAllButton = tree.Q<IconButton>("resetLocalAll");
             resetLocalAllButton.style.backgroundImage = Vector3FieldExtra.ResetIcon;
@@ -767,7 +762,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             void OnEditScaleAxis(int axis, bool editing, Vector3FieldExtra theScaleField, ChangeEvent<float> evt,
                 bool isGlobal)
             {
-                if (!editing || !constrainProportionsScaleToggle.value) return;
+                if (!editing || !scaleField.LinkButton.value) return;
 
                 var prev = evt.previousValue;
                 var next = evt.newValue;
@@ -827,8 +822,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             void ResetLocalScale()
             {
-                if (constrainProportionsScaleToggle.value)
-                    constrainProportionsScaleToggle.value = false;
+                if (scaleField.LinkButton.value)
+                    scaleField.LinkButton.value = false;
                 ApplyToTargets(t => ApplyVector3WhenChanged(t.localScale, Vector3.one, v => t.localScale = v),
                     "Reset Local Scale");
                 scaleField.value = Vector3.one;
@@ -852,8 +847,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             void ResetGlobalScale()
             {
-                if (constrainProportionsScaleToggle.value)
-                    constrainProportionsScaleToggle.value = false;
+                if (lossyScaleField.LinkButton.value)
+                    lossyScaleField.LinkButton.value = false;
                 ApplyToTargets(t => ApplyVector3WhenChanged(t.lossyScale, Vector3.one, t.SetLossyScale),
                     "Reset World Scale");
                 lossyScaleField.value = Vector3.one;
@@ -903,17 +898,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 var randomVector = (Random.insideUnitSphere * 2).Clean();
                 ApplyToTargets(t => t.SetLossyScale(t.lossyScale + randomVector), "Random World Scale");
                 lossyScaleField.value += randomVector;
-            }
-
-            void UpdateLinkButtonState()
-            {
-                scaleField.SetLinked(constrainProportionsScaleToggle.value);
-                lossyScaleField.SetLinked(constrainProportionsScaleToggle.value);
-            }
-
-            void ChangeLinkButtonState()
-            {
-                constrainProportionsScaleToggle.value = !constrainProportionsScaleToggle.value;
             }
         }
 

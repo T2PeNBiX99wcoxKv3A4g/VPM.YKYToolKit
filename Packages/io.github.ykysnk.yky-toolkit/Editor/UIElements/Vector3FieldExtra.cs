@@ -41,6 +41,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor.UIElements
                     backgroundImage = UnlinkedIcon
                 }
             };
+            LinkButton.RegisterValueChangedCallback(_ => SetLinked(LinkButton.value));
 
             ExtraSlot.Add(LinkButton);
 
@@ -109,6 +110,14 @@ namespace io.github.ykysnk.ykyToolkit.Editor.UIElements
         }
 
         [PublicAPI]
+        [SuppressMessage("ReSharper", "InconsistentNaming")]
+        public string linkedIconBindingPath
+        {
+            get => LinkButton.bindingPath;
+            set => LinkButton.bindingPath = value;
+        }
+
+        [PublicAPI]
         public void SetLinked(bool linked)
         {
             LinkButton.style.backgroundImage = linked ? LinkedIcon : UnlinkedIcon;
@@ -123,6 +132,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor.UIElements
 
         public new class UxmlTraits : Vector3Field.UxmlTraits
         {
+            private readonly UxmlStringAttributeDescription _linkButtonBindingPathAttr = new()
+            {
+                name = "link-button-binding-path"
+            };
+
             private readonly UxmlStringAttributeDescription _linkedIconTooltipAttr = new()
             {
                 name = "linked-icon-tooltip"
@@ -152,6 +166,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor.UIElements
                 field.resetButtonTooltip = _resetButtonTooltipAttr.GetValueFromBag(bag, cc);
                 field.randomButtonTooltip = _randomButtonTooltipAttr.GetValueFromBag(bag, cc);
                 field.linkedIconTooltip = _linkedIconTooltipAttr.GetValueFromBag(bag, cc);
+                field.linkedIconBindingPath = _linkButtonBindingPathAttr.GetValueFromBag(bag, cc);
             }
         }
     }
