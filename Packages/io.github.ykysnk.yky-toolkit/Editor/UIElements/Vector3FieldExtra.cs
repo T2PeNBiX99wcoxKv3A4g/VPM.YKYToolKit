@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 using UnityEditor;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace io.github.ykysnk.ykyToolkit.Editor.UIElements
@@ -18,6 +19,16 @@ namespace io.github.ykysnk.ykyToolkit.Editor.UIElements
 
         [PublicAPI] internal static readonly StyleBackground UnlinkedIcon =
             new(EditorGUIUtility.FindTexture("unlinked"));
+
+        [PublicAPI] internal static readonly StyleBackground CopyIcon =
+            new(AssetDatabase.LoadAssetAtPath<Texture2D>(
+                AssetDatabase.GUIDToAssetPath("f8379f706ae3d4841838ff5cc924da0a")));
+
+        [PublicAPI] internal static readonly StyleBackground PasteIcon =
+            new(AssetDatabase.LoadAssetAtPath<Texture2D>(
+                AssetDatabase.GUIDToAssetPath("3d32b439cc5c09f4f93312cf317a8019")));
+
+        private bool _showCopyPasteButtons;
 
         private bool _showLinkButton;
 
@@ -44,6 +55,28 @@ namespace io.github.ykysnk.ykyToolkit.Editor.UIElements
             LinkButton.RegisterValueChangedCallback(_ => SetLinked(LinkButton.value));
 
             ExtraSlot.Add(LinkButton);
+
+            CopyButton = new()
+            {
+                name = "copyButton",
+                style =
+                {
+                    backgroundImage = CopyIcon
+                }
+            };
+
+            ExtraSlot.Add(CopyButton);
+
+            PasteButton = new()
+            {
+                name = "pasteButton",
+                style =
+                {
+                    backgroundImage = PasteIcon
+                }
+            };
+
+            ExtraSlot.Add(PasteButton);
 
             RandomButton = new()
             {
@@ -72,6 +105,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor.UIElements
         [PublicAPI] public IconButton ResetButton { get; }
         [PublicAPI] public IconButton RandomButton { get; }
         [PublicAPI] public IconButton LinkButton { get; }
+        [PublicAPI] public IconButton CopyButton { get; }
+        [PublicAPI] public IconButton PasteButton { get; }
 
         [PublicAPI]
         [SuppressMessage("ReSharper", "InconsistentNaming")]
@@ -82,6 +117,19 @@ namespace io.github.ykysnk.ykyToolkit.Editor.UIElements
             {
                 _showLinkButton = value;
                 LinkButton.style.visibility = value ? Visibility.Visible : Visibility.Hidden;
+            }
+        }
+
+        [PublicAPI]
+        [SuppressMessage("ReSharper", "InconsistentNaming")]
+        public bool showCopyPasteButtons
+        {
+            get => _showCopyPasteButtons;
+            set
+            {
+                _showCopyPasteButtons = value;
+                CopyButton.style.display = value ? DisplayStyle.Flex : DisplayStyle.None;
+                PasteButton.style.display = value ? DisplayStyle.Flex : DisplayStyle.None;
             }
         }
 
@@ -103,7 +151,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor.UIElements
 
         [PublicAPI]
         [SuppressMessage("ReSharper", "InconsistentNaming")]
-        public string linkedIconTooltip
+        public string linkedButtonTooltip
         {
             get => LinkButton.tooltip;
             set => LinkButton.tooltip = value;
@@ -111,7 +159,23 @@ namespace io.github.ykysnk.ykyToolkit.Editor.UIElements
 
         [PublicAPI]
         [SuppressMessage("ReSharper", "InconsistentNaming")]
-        public string linkedIconBindingPath
+        public string copyButtonTooltip
+        {
+            get => CopyButton.tooltip;
+            set => CopyButton.tooltip = value;
+        }
+
+        [PublicAPI]
+        [SuppressMessage("ReSharper", "InconsistentNaming")]
+        public string pasteButtonTooltip
+        {
+            get => PasteButton.tooltip;
+            set => PasteButton.tooltip = value;
+        }
+
+        [PublicAPI]
+        [SuppressMessage("ReSharper", "InconsistentNaming")]
+        public string linkedButtonBindingPath
         {
             get => LinkButton.bindingPath;
             set => LinkButton.bindingPath = value;
@@ -131,6 +195,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor.UIElements
 
         public new class UxmlTraits : Vector3Field.UxmlTraits
         {
+            private readonly UxmlStringAttributeDescription _copyButtonTooltipAttr = new()
+            {
+                name = "copy-button-tooltip"
+            };
+
             private readonly UxmlStringAttributeDescription _linkButtonBindingPathAttr = new()
             {
                 name = "link-button-binding-path"
@@ -141,6 +210,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor.UIElements
                 name = "linked-icon-tooltip"
             };
 
+            private readonly UxmlStringAttributeDescription _pasteButtonTooltipAttr = new()
+            {
+                name = "paste-button-tooltip"
+            };
+
             private readonly UxmlStringAttributeDescription _randomButtonTooltipAttr = new()
             {
                 name = "random-button-tooltip"
@@ -149,6 +223,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor.UIElements
             private readonly UxmlStringAttributeDescription _resetButtonTooltipAttr = new()
             {
                 name = "reset-button-tooltip"
+            };
+
+            private readonly UxmlBoolAttributeDescription _showCopyPasteButtonsAttr = new()
+            {
+                name = "show-copy-paste-buttons"
             };
 
             private readonly UxmlBoolAttributeDescription _showLinkButtonAttr = new()
@@ -162,10 +241,13 @@ namespace io.github.ykysnk.ykyToolkit.Editor.UIElements
 
                 var field = (Vector3FieldExtra)ve;
                 field.showLinkButton = _showLinkButtonAttr.GetValueFromBag(bag, cc);
+                field.showCopyPasteButtons = _showCopyPasteButtonsAttr.GetValueFromBag(bag, cc);
                 field.resetButtonTooltip = _resetButtonTooltipAttr.GetValueFromBag(bag, cc);
                 field.randomButtonTooltip = _randomButtonTooltipAttr.GetValueFromBag(bag, cc);
-                field.linkedIconTooltip = _linkedIconTooltipAttr.GetValueFromBag(bag, cc);
-                field.linkedIconBindingPath = _linkButtonBindingPathAttr.GetValueFromBag(bag, cc);
+                field.linkedButtonTooltip = _linkedIconTooltipAttr.GetValueFromBag(bag, cc);
+                field.linkedButtonBindingPath = _linkButtonBindingPathAttr.GetValueFromBag(bag, cc);
+                field.copyButtonTooltip = _copyButtonTooltipAttr.GetValueFromBag(bag, cc);
+                field.pasteButtonTooltip = _pasteButtonTooltipAttr.GetValueFromBag(bag, cc);
             }
         }
     }
