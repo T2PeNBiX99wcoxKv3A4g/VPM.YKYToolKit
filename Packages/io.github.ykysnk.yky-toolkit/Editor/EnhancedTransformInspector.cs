@@ -72,8 +72,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var rotationField = tree.Q<Vector3FieldExtra>("rotation");
             var globalRotationField = tree.Q<Vector3FieldExtra>("globalRotation");
 
-            rotationField?.SetValueWithoutNotify(theTarget.localEulerAngles.DeltaAngle());
-            globalRotationField?.SetValueWithoutNotify(theTarget.eulerAngles.DeltaAngle());
+            rotationField?.SetValueWithoutNotify(theTarget.localEulerAngles);
+            globalRotationField?.SetValueWithoutNotify(theTarget.eulerAngles);
         }
 
         protected override void OnErrorHandleInspectorGUI()
@@ -268,8 +268,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 if (theTarget == null) return;
                 if (!stage?.IsPartOfPrefabContents(theTarget.gameObject) ?? false) return;
 
-                var prev = evt.previousValue.Clean().DeltaAngle();
-                var next = evt.newValue.Clean().DeltaAngle();
+                var prev = evt.previousValue.Clean();
+                var next = evt.newValue.Clean();
 
                 if (exData.rotationDecimalPrecision > -1)
                 {
@@ -278,14 +278,13 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 }
 
                 if (rotationEditing)
-                    ApplyToTargetsInChanged(prev, next, t => t.localEulerAngles.DeltaAngle(),
-                        (t, apply) => t.localEulerAngles = apply,
+                    ApplyToTargetsInChanged(prev, next, t => t.localEulerAngles, (t, apply) => t.localEulerAngles = apply,
                         "Set Local Rotation");
 
                 CleanTransforms();
 
                 rotationField.SetValueWithoutNotify(next);
-                globalRotationField.SetValueWithoutNotify(theTarget.eulerAngles.DeltaAngle());
+                globalRotationField.SetValueWithoutNotify(theTarget.eulerAngles);
             });
 
             rotationField.CopyButton.clicked += () =>
@@ -322,8 +321,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 if (theTarget == null) return;
                 if (!stage?.IsPartOfPrefabContents(theTarget.gameObject) ?? false) return;
 
-                var prev = evt.previousValue.Clean().DeltaAngle();
-                var next = evt.newValue.Clean().DeltaAngle();
+                var prev = evt.previousValue.Clean();
+                var next = evt.newValue.Clean();
 
                 if (exData.rotationDecimalPrecision > -1)
                 {
@@ -332,13 +331,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 }
 
                 if (globalRotationEditing)
-                    ApplyToTargetsInChanged(prev, next, t => t.eulerAngles.DeltaAngle(),
-                        (t, apply) => t.eulerAngles = apply,
+                    ApplyToTargetsInChanged(prev, next, t => t.eulerAngles, (t, apply) => t.eulerAngles = apply,
                         "Set World Rotation");
 
                 CleanTransforms();
 
-                rotationField.SetValueWithoutNotify(theTarget.localEulerAngles.DeltaAngle());
+                rotationField.SetValueWithoutNotify(theTarget.localEulerAngles);
                 globalRotationField.SetValueWithoutNotify(next);
             });
 
@@ -867,7 +865,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             void CleanField()
             {
                 positionField.value = positionField.value.Clean();
-                rotationField.value = rotationField.value.Clean().DeltaAngle();
+                rotationField.value = rotationField.value.Clean();
                 scaleField.value = scaleField.value.Clean();
             }
 
@@ -932,7 +930,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             void RandomLocalRotation()
             {
                 rotationEditing = true;
-                var randomVector = (Random.insideUnitSphere * 360).Clean().DeltaAngle();
+                var randomVector = (Random.insideUnitSphere * 360).Clean();
                 ApplyToTargets(t => t.localEulerAngles = randomVector, "Random Local Rotation");
                 rotationField.value = randomVector;
                 rotationField.schedule.Execute(() => rotationEditing = false);
@@ -955,7 +953,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             void RandomGlobalRotation()
             {
                 rotationEditing = true;
-                var randomVector = (Random.insideUnitSphere * 360).Clean().DeltaAngle();
+                var randomVector = (Random.insideUnitSphere * 360).Clean();
                 ApplyToTargets(t => t.eulerAngles = randomVector, "Random World Rotation");
                 globalRotationField.value = randomVector;
                 globalPositionField.schedule.Execute(() => rotationEditing = false);
@@ -1075,7 +1073,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
                 var exData = EnhancedTransformDatabase.Get(t);
                 var newPosition = t.localPosition.Clean(threshold);
-                var newRotation = t.localEulerAngles.Clean(threshold).DeltaAngle();
+                var newRotation = t.localEulerAngles.Clean(threshold);
                 var newScale = t.localScale.Clean(threshold);
 
                 if (exData.positionDecimalPrecision > -1)
@@ -1107,7 +1105,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
                 var exData = EnhancedTransformDatabase.Get(t);
                 var newPosition = t.position.Clean(threshold);
-                var newRotation = t.eulerAngles.Clean(threshold).DeltaAngle();
+                var newRotation = t.eulerAngles.Clean(threshold);
                 var newScale = t.lossyScale.Clean(threshold);
 
                 if (exData.positionDecimalPrecision > -1)
