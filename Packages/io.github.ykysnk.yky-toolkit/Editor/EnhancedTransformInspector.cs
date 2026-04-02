@@ -1066,6 +1066,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         private void CleanTransforms(float threshold = 0.0001f)
         {
+            if (AnimationMode.InAnimationMode()) return;
+
             foreach (var obj in targets)
             {
                 if (obj == null || obj is not Transform t) continue;
@@ -1098,6 +1100,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         private void CleanWorldTransforms(float threshold = 0.0001f)
         {
+            if (AnimationMode.InAnimationMode()) return;
+
             foreach (var obj in targets)
             {
                 if (obj == null || obj is not Transform t) continue;
