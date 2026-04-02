@@ -762,6 +762,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             void ClearOverride()
             {
                 if (theTarget == null) return;
+                if (AnimationMode.InAnimationMode()) return;
                 var prefabTarget = PrefabUtility.GetCorrespondingObjectFromSource(theTarget);
                 if (prefabTarget == null) return;
                 var prefabTargetSerializedObject = new SerializedObject(prefabTarget);
