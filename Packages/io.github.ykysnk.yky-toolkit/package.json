@@ -1,7 +1,7 @@
 {
   "name": "io.github.ykysnk.yky-toolkit",
   "displayName": "YKY Toolkit",
-  "version": "0.18.1",
+  "version": "0.18.2",
   "unity": "2022.3",
   "description": "Toolkit for Unity",
   "gitDependencies": {},
@@ -16,6 +16,6 @@
   },
   "legacyFolders": {},
   "legacyFiles": {},
-  "changelogUrl": "https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.Localization/blob/main/CHANGELOG.md",
+  "changelogUrl": "https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/blob/main/CHANGELOG.md",
   "license": "MIT"
 }
