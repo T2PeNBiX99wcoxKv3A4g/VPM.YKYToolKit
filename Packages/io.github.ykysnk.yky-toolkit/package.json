@@ -2,6 +2,7 @@
   "name": "io.github.ykysnk.yky-toolkit",
   "displayName": "YKY Toolkit",
   "version": "0.18.1",
+  "unity": "2022.3",
   "description": "Toolkit for Unity",
   "gitDependencies": {},
   "vpmDependencies": {
@@ -15,5 +16,6 @@
   },
   "legacyFolders": {},
   "legacyFiles": {},
-  "localPath": "L:\\VRChatProjects\\VPM.YKYToolKit\\Packages\\io.github.ykysnk.yky-toolkit"
+  "changelogUrl": "https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.Localization/blob/main/CHANGELOG.md",
+  "license": "MIT"
 }
