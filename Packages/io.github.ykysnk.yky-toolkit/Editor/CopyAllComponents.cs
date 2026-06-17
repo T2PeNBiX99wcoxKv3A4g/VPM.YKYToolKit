@@ -12,7 +12,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 {
     internal static class CopyAllComponents
     {
-        [MenuItem("GameObject/YKYToolkit/Copy All Components")]
+        [MenuItem("GameObject/YKYToolkit/Copy All Components", false, Util.Three)]
         [MenuItem("CONTEXT/Component/YKYToolkit/Copy All Components")]
         private static void Copy()
         {
@@ -29,7 +29,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     $"Failed to copy components. {exception!.Message}\n{exception.StackTrace}");
         }
 
-        [MenuItem("GameObject/YKYToolkit/Paste All Components")]
+        [MenuItem("GameObject/YKYToolkit/Paste All Components", false, Util.Three)]
         [MenuItem("CONTEXT/Component/YKYToolkit/Paste All Components")]
         private static void Paste()
         {
@@ -42,7 +42,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             PasteAsync(copyDataJson, pasteObject).Forget();
         }
 
-        [MenuItem("GameObject/YKYToolkit/Paste All Components With Transform")]
+        [MenuItem("GameObject/YKYToolkit/Paste All Components With Transform", false, Util.Three)]
         [MenuItem("CONTEXT/Component/YKYToolkit/Paste All Components With Transform")]
         private static void PasteWithTransform()
         {
