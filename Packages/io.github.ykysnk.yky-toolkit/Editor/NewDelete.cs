@@ -21,8 +21,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         internal static bool ShowWarnWindow
         {
-            set => EditorPrefs.SetBool(EditorKey, value);
             get => EditorPrefs.GetBool(EditorKey, true);
+            set => EditorPrefs.SetBool(EditorKey, value);
         }
 
         [MenuItem(ToolsMenuPath, false, Util.Twe)]
