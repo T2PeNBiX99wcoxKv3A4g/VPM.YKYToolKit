@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 using Cysharp.Threading.Tasks;
 using UnityEditor;
@@ -20,6 +21,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         private static async UniTask BackupAsync(string date, string[] guids)
         {
+            var stopwatch = Stopwatch.StartNew();
+
             foreach (var guid in guids)
             {
                 var path = AssetDatabase.GUIDToAssetPath(guid);
@@ -32,7 +35,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     ? newPath
                     : GetNewPathUntilNotExist(pathDir, newName, ext));
 
-                await UniTask.DelayFrame(10);
+                if (stopwatch.ElapsedMilliseconds <= 30) continue;
+                await UniTask.Yield();
+                stopwatch.Restart();
             }
         }
 

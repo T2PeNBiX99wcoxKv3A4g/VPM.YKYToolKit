@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using Cysharp.Threading.Tasks;
 using io.github.ykysnk.utils;
 using io.github.ykysnk.utils.Extensions;
@@ -60,6 +61,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             {
                 if (copyData!.Count < 2) return;
 
+                var stopwatch = Stopwatch.StartNew();
+
                 for (var i = 1; i < copyData.Count; i++)
                 {
                     var componentData = copyData[i];
@@ -78,7 +81,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                             Utils.LogError(nameof(CopyAllComponents),
                                 $"Overwrite component failed: {ex!.Message}\n{ex.StackTrace}"));
 
-                    await UniTask.DelayFrame(10);
+                    if (stopwatch.ElapsedMilliseconds <= 30) continue;
+                    await UniTask.Yield();
+                    stopwatch.Restart();
                 }
             }
             else
@@ -88,6 +93,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private static async UniTask PasteAsyncWithTransform(string copyDataJson, GameObject pasteObject)
         {
             if (JsonUtils.TryFromJson<ListWrapper<ComponentData>>(copyDataJson, out var copyData, out var exception))
+            {
+                var stopwatch = Stopwatch.StartNew();
+
                 for (var i = 0; i < copyData!.Count; i++)
                 {
                     var componentData = copyData[i];
@@ -106,8 +114,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                             Utils.LogError(nameof(CopyAllComponents),
                                 $"Overwrite component failed: {ex!.Message}\n{ex.StackTrace}"));
 
-                    await UniTask.DelayFrame(10);
+                    if (stopwatch.ElapsedMilliseconds <= 30) continue;
+                    await UniTask.Yield();
+                    stopwatch.Restart();
                 }
+            }
             else
                 Utils.LogError(nameof(CopyAllComponents), $"Paste failed: {exception!.Message}\n{exception.StackTrace}");
         }
