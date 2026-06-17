@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using Cysharp.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
@@ -24,6 +25,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         private static async UniTask ToggleInactiveAndTagAsync(GameObject[] selectedObjects)
         {
+            var stopwatch = Stopwatch.StartNew();
+
             foreach (var obj in selectedObjects)
             {
                 var id = obj.GetInstanceID();
@@ -57,7 +60,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 }
 
                 EditorUtility.SetDirty(obj);
-                await UniTask.DelayFrame(10);
+                if (stopwatch.ElapsedMilliseconds <= 30) continue;
+                await UniTask.Yield();
+                stopwatch.Restart();
             }
         }
     }

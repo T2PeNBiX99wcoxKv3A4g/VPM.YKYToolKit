@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -57,6 +58,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     return;
                 }
 
+                var stopwatch = Stopwatch.StartNew();
+
                 while (reportPaths.Count > 0)
                 {
                     var count = 0;
@@ -69,7 +72,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                         Progress.Report(progressId, (float)count / reportPaths.Count, $"Deleting: {cutPath}");
                         AssetDatabase.DeleteAsset(path);
                         count++;
-                        await UniTask.DelayFrame(10, cancellationToken: cts.Token);
+                        if (stopwatch.ElapsedMilliseconds <= 30) continue;
+                        await UniTask.Yield(cts.Token);
+                        stopwatch.Restart();
                     }
 
                     reportPaths = await GetEmptyFolders();

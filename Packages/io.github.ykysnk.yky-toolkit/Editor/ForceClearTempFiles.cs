@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using Cysharp.Threading.Tasks;
@@ -40,6 +41,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             var result = await Try.Run(async () =>
             {
+                var stopwatch = Stopwatch.StartNew();
+
                 foreach (var path in ClearFolders)
                 {
                     var full = Path.GetFullPath(Path.Combine(Application.dataPath, path));
@@ -57,7 +60,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                         Progress.Report(progressId, (float)count / dirs.Length, $"Deleting: {dir}");
                         Utils.Log(nameof(ForceClearTempFiles), $"Deleted folder: {dir}");
                         count++;
-                        await UniTask.DelayFrame(10, cancellationToken: cts.Token);
+                        if (stopwatch.ElapsedMilliseconds <= 30) continue;
+                        await UniTask.Yield(cts.Token);
+                        stopwatch.Restart();
                     }
                 }
 

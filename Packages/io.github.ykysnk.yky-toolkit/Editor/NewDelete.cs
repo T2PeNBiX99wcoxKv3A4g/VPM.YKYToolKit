@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -72,6 +73,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             var result = await Try.Run(async () =>
             {
+                var stopwatch = Stopwatch.StartNew();
+
                 foreach (var selectedObject in selectedObjects)
                 {
                     if (selectedObject == null) continue;
@@ -87,7 +90,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     current++;
                     var progress = (float)current / total;
                     Progress.Report(progressId, progress, $"Deleted: {name}");
-                    await UniTask.DelayFrame(10, cancellationToken: cts.Token);
+                    if (stopwatch.ElapsedMilliseconds <= 30) continue;
+                    await UniTask.Yield(cts.Token);
+                    stopwatch.Restart();
                 }
 
                 Progress.Finish(progressId);
@@ -136,6 +141,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     return;
                 }
 
+                var stopwatch = Stopwatch.StartNew();
+
                 foreach (var path in paths)
                 {
                     if (cts.IsCancellationRequested)
@@ -161,7 +168,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     current++;
                     var progress = (float)current / total;
                     Progress.Report(progressId, progress, $"Deleted: {path}");
-                    await UniTask.DelayFrame(10, cancellationToken: cts.Token);
+                    if (stopwatch.ElapsedMilliseconds <= 30) continue;
+                    await UniTask.Yield(cts.Token);
+                    stopwatch.Restart();
                 }
 
                 Progress.Finish(progressId);
