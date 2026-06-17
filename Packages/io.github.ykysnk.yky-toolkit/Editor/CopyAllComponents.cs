@@ -13,7 +13,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
     internal static class CopyAllComponents
     {
         [MenuItem("GameObject/YKYToolkit/Copy All Components", false, Util.Three)]
-        [MenuItem("CONTEXT/Component/YKYToolkit/Copy All Components")]
+        [MenuItem("CONTEXT/Component/YKYToolkit/Copy All Components", false, Util.One2)]
         private static void Copy()
         {
             var selectedObjects = Selection.gameObjects;
@@ -30,7 +30,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         }
 
         [MenuItem("GameObject/YKYToolkit/Paste All Components", false, Util.Three)]
-        [MenuItem("CONTEXT/Component/YKYToolkit/Paste All Components")]
+        [MenuItem("CONTEXT/Component/YKYToolkit/Paste All Components", false, Util.One2)]
         private static void Paste()
         {
             var selectedObjects = Selection.gameObjects;
@@ -43,7 +43,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         }
 
         [MenuItem("GameObject/YKYToolkit/Paste All Components With Transform", false, Util.Three)]
-        [MenuItem("CONTEXT/Component/YKYToolkit/Paste All Components With Transform")]
+        [MenuItem("CONTEXT/Component/YKYToolkit/Paste All Components With Transform", false, Util.One2)]
         private static void PasteWithTransform()
         {
             var selectedObjects = Selection.gameObjects;
