@@ -1,5 +1,44 @@
 # Changelog
 
+## [0.19.0](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/compare/0.18.2..0.19.0) - 2026-06-17
+
+### ⛰️  Features
+
+- Add new constants `One2` and `Twe2` in `Util` - ([443a146](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/443a14604ce9afaf5be626fddbf63829bf8467af))
+- Add Copy/Paste Transform Tree functionality to YKYToolkit - ([792f104](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/792f1049353ca2e4f42e90cbbc15c889ebe86070))
+- Optimize async operations in editor scripts - ([6545b9c](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/6545b9c98fa7b2fc19ed06e9027a6c4d204aa0e8))
+- Improve async performance in editor scripts - ([6409f38](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/6409f385b19f8d6d46719e7949ef52268ceb4c07))
+
+### 🐛 Bug Fixes
+
+- Handle deleted assets in ImportWatcher - ([0620355](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/0620355a43b5dac44d4c02217c718246ebb654db))
+- Reorder setter placement in ShowWarnWindow property - ([cb692c7](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/cb692c7a4a48770241452b971bda91f3b83448d7))
+- Reorder property methods to ensure correct getter placement - ([37c14fc](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/37c14fcc316c075b19f94c42635a4f0ab9c139c5))
+
+### 🚜 Refactor
+
+- Replace `List` with `Dictionary` in `CopyTransformTree` for improved access efficiency - ([e840baa](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/e840baac8f83627817bd475b0c9b084d0f465ee1))
+- Add priority to YKYToolkit menu items in CopyTransformTree - ([9d3799c](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/9d3799c43a857e3c737b03518175399506d38fe7))
+- Add priority to context menu items in CopyAllComponents - ([d4fd07e](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/d4fd07e3cb38a4d764c915bc9edfd98f4b6f2a09))
+- Add priority to YKYToolkit menu items in CopyAllComponents - ([40ebf0f](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/40ebf0f74a569bc89f2877799a9b2fab045987ae))
+- Remove redundant blank lines in `TransformInputParser` for improved readability - ([5dbc719](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/5dbc71951ece4b40ae1f53099c503b9fc6494d45))
+- Make `TransformInputParseResult` a readonly struct and simplify object initialization - ([49ea7a5](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/49ea7a57840daf5ffb3bbf29d3f6fb437a29aa47))
+- Convert `ComponentData` from struct to class in `CopyAllComponents` - ([bddf0dd](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/bddf0dd3ce63e6c4a7fedc3d63f68291ec791aa6))
+
+### ⚙️ Miscellaneous Tasks
+
+- Bump package version to 0.19.0 - ([a0176db](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/a0176dbb552cb4647f6a379ca1d0ef9166384fab))
+- Update Unity package dependencies and embedded modules - ([b909c61](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/b909c619f883d5e12c7c3f18354fdde5eb828735))
+- Fix capitalization in README title - ([4859386](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/4859386953a45a63299fcbe517feafffbe56af31))
+
+### Action
+
+- Update `CHANGELOG.md` - ([5bd0a33](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/5bd0a3367c726edb63f0b09b75572110060bee76))
+
+## New Contributors ❤️
+
+* @github-actions[bot] made their first contribution
+
 ## [0.18.2](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/compare/0.18.1..0.18.2) - 2026-05-07
 
 ### ⚙️ Miscellaneous Tasks
