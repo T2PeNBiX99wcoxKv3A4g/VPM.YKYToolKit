@@ -12,6 +12,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         internal const int Three = Twe + Separator;
         internal const int Four = Three + Separator;
 
+        internal const int One2 = 1000;
+        internal const int Twe2 = One2 + Separator;
+
         // Refs: https://discussions.unity.com/t/how-to-execute-menuitem-for-multiple-objects-once/91492/5
         internal static bool ShouldExecute(MenuCommand menuCommand)
         {
