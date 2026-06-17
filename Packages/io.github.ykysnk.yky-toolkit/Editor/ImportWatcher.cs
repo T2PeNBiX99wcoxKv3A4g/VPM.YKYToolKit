@@ -74,26 +74,38 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets,
             string[] movedFromAssetPaths)
         {
-            if (importedAssets.Length < 1 && movedAssets.Length < 1) return;
-
-            CleanupExpired();
-            CleanupMissingAssets();
-
-            var session = new ImportSession();
-
-            foreach (var path in importedAssets)
+            if (importedAssets.Length > 0 || movedAssets.Length > 0)
             {
-                AddOrUpdate(path);
-                session.records.Add(new(AssetDatabase.AssetPathToGUID(path)));
+                CleanupExpired();
+                CleanupMissingAssets();
+
+                var session = new ImportSession();
+
+                foreach (var path in importedAssets)
+                {
+                    AddOrUpdate(path);
+                    session.records.Add(new(AssetDatabase.AssetPathToGUID(path)));
+                }
+
+                foreach (var path in movedAssets)
+                    AddOrUpdate(path);
+
+                if (session.records.Count > 0)
+                    ImportHistoryManager.AddSession(session);
+
+                Save();
             }
 
-            foreach (var path in movedAssets)
-                AddOrUpdate(path);
+            if (deletedAssets.Length <= 0) return;
 
-            if (session.records.Count > 0)
-                ImportHistoryManager.AddSession(session);
-
-            Save();
+            foreach (var path in deletedAssets)
+                DeleteHistoryManager.Add(new()
+                {
+                    path = path,
+                    guid = AssetDatabase.AssetPathToGUID(path),
+                    extension = Path.GetExtension(path),
+                    unixSeconds = DateTimeOffset.UtcNow.ToUnixTimeSeconds()
+                });
         }
 
         private static void AddOrUpdate(string path)
