@@ -32,6 +32,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         public static bool EnableDiscordRichPresence
         {
+            get => EditorPrefs.GetBool("YKYToolkit/EnableDiscordRichPresence", true);
             [PublicAPI]
             set
             {
@@ -47,7 +48,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     EditorPrefs.GetBool("YKYToolkit/EnableDiscordRichPresence", true));
                 EditorPrefs.SetBool("YKYToolkit/EnableDiscordRichPresence", value);
             }
-            get => EditorPrefs.GetBool("YKYToolkit/EnableDiscordRichPresence", true);
         }
 
         [MenuItem(ToolsMenuPath, false, Util.Twe)]

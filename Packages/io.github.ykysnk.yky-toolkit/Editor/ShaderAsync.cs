@@ -12,12 +12,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         internal static bool AllowAsyncCompilation
         {
+            get => EditorPrefs.GetBool(EditorKey, true);
             set
             {
                 EditorPrefs.SetBool(EditorKey, value);
                 ShaderUtil.allowAsyncCompilation = value;
             }
-            get => EditorPrefs.GetBool(EditorKey, true);
         }
 
         [MenuItem(MenuPath, false, Util.Twe)]
