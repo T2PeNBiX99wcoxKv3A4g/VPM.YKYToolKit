@@ -19,7 +19,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             if (selectedObjects.Length < 1) return;
 
             var copyObject = selectedObjects[0];
-            var result = new List<TransformTreeData>();
+            var result = new Dictionary<string, TransformTreeData>();
             var stack = new Stack<(string path, Transform transform)>();
 
             stack.Push(new("", copyObject.transform));
@@ -28,7 +28,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             {
                 var (path, current) = stack.Pop();
 
-                result.Add(new(path, current));
+                result.TryAdd(path, new(current));
 
                 foreach (Transform child in current)
                     stack.Push(new(string.IsNullOrEmpty(path) ? child.name : $"{path}/{child.name}", child));
@@ -56,19 +56,20 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         private static async UniTask PasteAsync(string copyDataJson, GameObject pasteObject)
         {
-            if (JsonUtils.TryFromJson<ListWrapper<TransformTreeData>>(copyDataJson, out var copyData, out var exception))
+            if (JsonUtils.TryFromJson<DictionaryWrapper<string, TransformTreeData>>(copyDataJson, out var copyData,
+                    out var exception))
             {
                 var stopwatch = Stopwatch.StartNew();
 
-                foreach (var data in copyData!)
+                foreach (var (path, data) in copyData!)
                 {
-                    var found = string.IsNullOrEmpty(data.path)
+                    var found = string.IsNullOrEmpty(path)
                         ? pasteObject.transform
-                        : pasteObject.transform.Find(data.path);
+                        : pasteObject.transform.Find(path);
                     if (found == null)
                     {
                         Utils.LogWarning(nameof(CopyTransformTree),
-                            $"Paste failed: {pasteObject.name} does not have a child named {data.path}");
+                            $"Paste failed: {pasteObject.name} does not have a child named {path}");
                         continue;
                     }
 
@@ -88,14 +89,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         [Serializable]
         private class TransformTreeData
         {
-            public string path;
             public Vector3 position;
             public Vector3 rotation;
             public Vector3 scale;
 
-            public TransformTreeData(string path, Transform transform)
+            public TransformTreeData(Transform transform)
             {
-                this.path = path;
                 position = transform.localPosition;
                 rotation = transform.localEulerAngles;
                 scale = transform.localScale;
