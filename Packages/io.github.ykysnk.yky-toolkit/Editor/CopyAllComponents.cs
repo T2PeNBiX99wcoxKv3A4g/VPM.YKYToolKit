@@ -124,7 +124,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         }
 
         [Serializable]
-        private struct ComponentData
+        private class ComponentData
         {
             public string componentAssemblyQualifiedName;
             public string componentJson;
