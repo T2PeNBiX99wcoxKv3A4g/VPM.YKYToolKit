@@ -31,12 +31,20 @@ namespace io.github.ykysnk.ykyToolkit.Editor
     }
 
     [PublicAPI]
-    public struct TransformInputParseResult
+    public readonly struct TransformInputParseResult
     {
-        public TransformInputMode Mode;
-        public float A, B, C;
+        public readonly TransformInputMode Mode;
+        public readonly float A, B, C;
 
         public bool Success => Mode != TransformInputMode.None;
+
+        public TransformInputParseResult(TransformInputMode mode, float a, float b = 0, float c = 0)
+        {
+            Mode = mode;
+            A = a;
+            B = b;
+            C = c;
+        }
     }
 
     [PublicAPI]
@@ -54,126 +62,54 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 // Basic
                 _ when s.StartsWith("=") && float.TryParse(s[1..], out var v) ||
                        s.StartsWith("E(") && float.TryParse(s.MiddlePath('(', ')'), out v)
-                    => new()
-                    {
-                        Mode = TransformInputMode.Absolute,
-                        A = v
-                    },
+                    => new(TransformInputMode.Absolute, v),
 
                 _ when s.StartsWith("+") && float.TryParse(s[1..], out var v) ||
                        s.StartsWith("A(") && float.TryParse(s.MiddlePath('(', ')'), out v)
-                    => new()
-                    {
-                        Mode = TransformInputMode.Additive,
-                        A = v
-                    },
+                    => new(TransformInputMode.Additive, v),
 
                 _ when s.StartsWith("*") && float.TryParse(s[1..], out var v) ||
                        s.StartsWith("M(") && float.TryParse(s.MiddlePath('(', ')'), out v)
-                    => new()
-                    {
-                        Mode = TransformInputMode.Multiply,
-                        A = v
-                    },
+                    => new(TransformInputMode.Multiply, v),
 
                 _ when s.StartsWith("/") && float.TryParse(s[1..], out var v) ||
                        s.StartsWith("D(") && float.TryParse(s.MiddlePath('(', ')'), out v)
-                    => new()
-                    {
-                        Mode = TransformInputMode.Division,
-                        A = v
-                    },
+                    => new(TransformInputMode.Division, v),
 
                 // Unity-like
                 _ when TryParseTwo("L", s, out var a, out var b)
-                    => new()
-                    {
-                        Mode = TransformInputMode.Linear,
-                        A = a,
-                        B = b
-                    },
+                    => new(TransformInputMode.Linear, a, b),
 
                 _ when TryParseTwo("R", s, out var a, out var b)
-                    => new()
-                    {
-                        Mode = TransformInputMode.Random,
-                        A = a,
-                        B = b
-                    },
+                    => new(TransformInputMode.Random, a, b),
 
                 _ when TryParseTwo("I", s, out var a, out var b)
-                    => new()
-                    {
-                        Mode = TransformInputMode.Interpolate,
-                        A = a,
-                        B = b
-                    },
+                    => new(TransformInputMode.Interpolate, a, b),
 
                 _ when TryParseTwo("i", s, out var a, out var b)
-                    => new()
-                    {
-                        Mode = TransformInputMode.InterpolateRev,
-                        A = a,
-                        B = b
-                    },
+                    => new(TransformInputMode.InterpolateRev, a, b),
 
                 // Extended
                 _ when TryParseTwo("LL", s, out var a, out var b)
-                    => new()
-                    {
-                        Mode = TransformInputMode.Clamp,
-                        A = a,
-                        B = b
-                    },
+                    => new(TransformInputMode.Clamp, a, b),
 
                 _ when TryParseTwo("RR", s, out var a, out var b)
-                    => new()
-                    {
-                        Mode = TransformInputMode.Mirror,
-                        A = a,
-                        B = b
-                    },
+                    => new(TransformInputMode.Mirror, a, b),
 
                 _ when TryParseTwo("TT", s, out var a, out var b)
-                    => new()
-                    {
-                        Mode = TransformInputMode.Step,
-                        A = a,
-                        B = b
-                    },
+                    => new(TransformInputMode.Step, a, b),
 
                 _ when TryParseTwo("P", s, out var a, out var b)
-                    => new()
-                    {
-                        Mode = TransformInputMode.PingPong,
-                        A = a,
-                        B = b
-                    },
+                    => new(TransformInputMode.PingPong, a, b),
 
                 _ when TryParseTwo("NN", s, out var a, out var b)
-                    => new()
-                    {
-                        Mode = TransformInputMode.Distance,
-                        A = a,
-                        B = b
-                    },
+                    => new(TransformInputMode.Distance, a, b),
 
                 _ when TryParseTwo("AA", s, out var a, out var b)
-                    => new()
-                    {
-                        Mode = TransformInputMode.Angle,
-                        A = a,
-                        B = b
-                    },
+                    => new(TransformInputMode.Angle, a, b),
 
                 _ when TryParseThree("N", s, out var a, out var b, out var c)
-                    => new()
-                    {
-                        Mode = TransformInputMode.Noise,
-                        A = a,
-                        B = b,
-                        C = c
-                    },
+                    => new(TransformInputMode.Noise, a, b, c),
 
                 _ => default
             };
