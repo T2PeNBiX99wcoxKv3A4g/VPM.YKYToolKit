@@ -11,8 +11,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 {
     internal static class CopyTransformTree
     {
-        [MenuItem("GameObject/YKYToolkit/Copy Transform Tree")]
-        [MenuItem("CONTEXT/Component/YKYToolkit/Copy Transform Tree")]
+        [MenuItem("GameObject/YKYToolkit/Copy Transform Tree", false, Util.Four)]
+        [MenuItem("CONTEXT/Component/YKYToolkit/Copy Transform Tree", false, Util.Twe2)]
         private static void Copy()
         {
             var selectedObjects = Selection.gameObjects;
@@ -28,8 +28,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             {
                 var (path, current) = stack.Pop();
 
-                if (!string.IsNullOrEmpty(path))
-                    result.Add(new(path, current));
+                result.Add(new(path, current));
 
                 foreach (Transform child in current)
                     stack.Push(new(string.IsNullOrEmpty(path) ? child.name : $"{path}/{child.name}", child));
@@ -42,8 +41,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     $"Failed to copy transform tree. {exception!.Message}\n{exception.StackTrace}");
         }
 
-        [MenuItem("GameObject/YKYToolkit/Paste Transform Tree")]
-        [MenuItem("CONTEXT/Component/YKYToolkit/Paste Transform Tree")]
+        [MenuItem("GameObject/YKYToolkit/Paste Transform Tree", false, Util.Four)]
+        [MenuItem("CONTEXT/Component/YKYToolkit/Paste Transform Tree", false, Util.Twe2)]
         private static void Paste()
         {
             var selectedObjects = Selection.gameObjects;
@@ -63,7 +62,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
                 foreach (var data in copyData!)
                 {
-                    var found = pasteObject.transform.Find(data.path);
+                    var found = string.IsNullOrEmpty(data.path)
+                        ? pasteObject.transform
+                        : pasteObject.transform.Find(data.path);
                     if (found == null)
                     {
                         Utils.LogWarning(nameof(CopyTransformTree),
