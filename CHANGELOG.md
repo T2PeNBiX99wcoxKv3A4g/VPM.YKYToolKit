@@ -1,5 +1,33 @@
 # Changelog
 
+## [0.20.0](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/compare/0.19.0..0.20.0) - 2026-06-19
+
+### ⛰️  Features
+
+- Refine `ShouldExecute` to improve context comparison for menu commands using GameObject and Component switches - ([1c19d45](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/1c19d4532c30f702151451cb61c669d7cf078f9c))
+- Add Undo operations for GameObject state changes in VRC and Unity constraint conversions - ([95b183b](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/95b183bd99c5e40a8d0977299c14630e9cc7f906))
+- Add multiple GameObjects with constraints and components, including navigation mesh data adjustments and MonoBehaviour setups - ([40c95d9](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/40c95d9cc4b7559abdf97e011ef95a10089ec9a0))
+- Add bidirectional conversion between Unity and VRC constraint types with extended support for nested data and menu commands - ([3bbeb03](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/3bbeb03c582aed7d648a90e5df0f66e5776a5ea1))
+- Enhance `ConvertToVRCConstraint` with menu command filter, duplicate handling, and child traversal fixes - ([9c065c4](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/9c065c430cb0718789bc482266b64dc5a2c1b306))
+- Add `Five` constant to `Util` and include new menu item for `ConvertToVRCConstraint` in GameObject menu - ([4286232](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/428623200c914bce5de42fa38e1d470d62fa1342))
+- Add `ConvertToVRCConstraint` utility with support for multiple constraint types in context menu - ([74595f2](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/74595f235f5865ff99c5f02ace3406951e5a82ce))
+
+### 🚜 Refactor
+
+- Use `Util.StopwatchWaitElapsedMilliseconds` constant across all scripts for consistency - ([8ce3474](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/8ce34743fcc2f5787c049ab4e1d7cdbd143c8dfd))
+
+### ⚙️ Miscellaneous Tasks
+
+- Bump package version to 0.20.0 in `package.json` - ([1c42d42](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/1c42d422c2c1c28cc69b5447056e407b7ae922b7))
+- Adjust default shader chunk size to 4MB in project settings - ([fbc7fc5](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/fbc7fc5249b3be2b488efa1635432295a4db1d45))
+- Update asmdef references to include `VRC.SDKBase` and add `YKYTOOLKIT_VRCBASE` define constraint - ([74987d3](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/74987d393b69388a8f35e0d8a178bff2a3e8765a))
+- Add `dev.onevr.vrworldtoolkit` package (v3.4.1) and update dependencies - ([0762ffa](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/0762ffa6066edb968efa3a0396de0cd11a3fa564))
+
+### Action
+
+- Update `CHANGELOG.md` - ([5c5e364](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/5c5e364238cc4b0aae1117faa961694435ef9a67))
+
+
 ## [0.19.0](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/compare/0.18.2..0.19.0) - 2026-06-17
 
 ### ⛰️  Features
