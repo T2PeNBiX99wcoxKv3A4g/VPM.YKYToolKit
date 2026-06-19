@@ -1,4 +1,5 @@
 using UnityEditor;
+using UnityEngine;
 
 namespace io.github.ykysnk.ykyToolkit.Editor
 {
@@ -23,7 +24,19 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         internal static bool ShouldExecute(MenuCommand menuCommand)
         {
             if (menuCommand.context == null) return true;
-            return menuCommand.context == Selection.activeObject;
+            var obj1 = menuCommand.context switch
+            {
+                GameObject gameObject => gameObject,
+                Component component => component.gameObject,
+                _ => null
+            };
+            var obj2 = Selection.activeObject switch
+            {
+                GameObject gameObject => gameObject,
+                Component component => component.gameObject,
+                _ => null
+            };
+            return obj1 == obj2;
         }
     }
 }
