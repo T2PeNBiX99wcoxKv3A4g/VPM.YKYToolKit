@@ -79,6 +79,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     var found = string.IsNullOrEmpty(path) ? selected.transform : selected.transform.Find(path);
                     if (found == null || doneFound.Contains(found)) continue;
 
+                    Undo.RecordObject(found.gameObject, "Convert to VRC Constraint");
+
                     found.ComponentsForeach((_, comp) =>
                     {
                         if (comp is not IConstraint) return;
@@ -324,6 +326,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 {
                     var found = string.IsNullOrEmpty(path) ? selected.transform : selected.transform.Find(path);
                     if (found == null || doneFound.Contains(found)) continue;
+
+                    Undo.RecordObject(found.gameObject, "Convert to Unity Constraint");
 
                     found.ComponentsForeach((_, comp) =>
                     {
