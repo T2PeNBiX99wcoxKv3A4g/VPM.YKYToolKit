@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.0](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/compare/0.20.0..1.0.0) - 2026-06-19
+
+### ⚙️ Miscellaneous Tasks
+
+- Release version 1.0.0 in `package.json` - ([1c7a4b3](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/1c7a4b3a4a055a27338de2dafb88e4a638353ca2))
+
+### Action
+
+- Update `CHANGELOG.md` - ([7cb43cd](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/7cb43cd5807fc2f83ae73ee102a2f9c307fbae4d))
+
+
 ## [0.20.0](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/compare/0.19.0..0.20.0) - 2026-06-19
 
 ### ⛰️  Features
