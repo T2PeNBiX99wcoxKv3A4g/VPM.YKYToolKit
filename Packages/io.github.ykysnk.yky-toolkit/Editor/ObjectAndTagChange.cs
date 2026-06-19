@@ -60,7 +60,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 }
 
                 EditorUtility.SetDirty(obj);
-                if (stopwatch.ElapsedMilliseconds <= 30) continue;
+                if (stopwatch.ElapsedMilliseconds <= Util.StopwatchWaitElapsedMilliseconds) continue;
                 await UniTask.Yield();
                 stopwatch.Restart();
             }

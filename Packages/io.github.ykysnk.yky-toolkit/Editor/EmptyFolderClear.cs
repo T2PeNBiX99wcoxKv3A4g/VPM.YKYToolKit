@@ -72,7 +72,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                         Progress.Report(progressId, (float)count / reportPaths.Count, $"Deleting: {cutPath}");
                         AssetDatabase.DeleteAsset(path);
                         count++;
-                        if (stopwatch.ElapsedMilliseconds <= 30) continue;
+                        if (stopwatch.ElapsedMilliseconds <= Util.StopwatchWaitElapsedMilliseconds) continue;
                         await UniTask.Yield(cts.Token);
                         stopwatch.Restart();
                     }

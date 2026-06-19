@@ -35,7 +35,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     ? newPath
                     : GetNewPathUntilNotExist(pathDir, newName, ext));
 
-                if (stopwatch.ElapsedMilliseconds <= 30) continue;
+                if (stopwatch.ElapsedMilliseconds <= Util.StopwatchWaitElapsedMilliseconds) continue;
                 await UniTask.Yield();
                 stopwatch.Restart();
             }

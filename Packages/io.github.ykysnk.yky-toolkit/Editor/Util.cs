@@ -14,6 +14,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         internal const int One2 = 1000;
         internal const int Twe2 = One2 + Separator;
+        internal const int Three2 = Twe2 + Separator;
+
+        internal const long StopwatchWaitElapsedMilliseconds = 30;
 
         // Refs: https://discussions.unity.com/t/how-to-execute-menuitem-for-multiple-objects-once/91492/5
         internal static bool ShouldExecute(MenuCommand menuCommand)

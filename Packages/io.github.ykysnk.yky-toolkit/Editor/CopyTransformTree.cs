@@ -77,7 +77,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     found.localRotation = Quaternion.Euler(data.rotation);
                     found.localScale = data.scale;
 
-                    if (stopwatch.ElapsedMilliseconds <= 30) continue;
+                    if (stopwatch.ElapsedMilliseconds <= Util.StopwatchWaitElapsedMilliseconds) continue;
                     await UniTask.Yield();
                     stopwatch.Restart();
                 }

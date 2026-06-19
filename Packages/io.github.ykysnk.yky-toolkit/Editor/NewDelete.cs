@@ -90,7 +90,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     current++;
                     var progress = (float)current / total;
                     Progress.Report(progressId, progress, $"Deleted: {name}");
-                    if (stopwatch.ElapsedMilliseconds <= 30) continue;
+                    if (stopwatch.ElapsedMilliseconds <= Util.StopwatchWaitElapsedMilliseconds) continue;
                     await UniTask.Yield(cts.Token);
                     stopwatch.Restart();
                 }
@@ -168,7 +168,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     current++;
                     var progress = (float)current / total;
                     Progress.Report(progressId, progress, $"Deleted: {path}");
-                    if (stopwatch.ElapsedMilliseconds <= 30) continue;
+                    if (stopwatch.ElapsedMilliseconds <= Util.StopwatchWaitElapsedMilliseconds) continue;
                     await UniTask.Yield(cts.Token);
                     stopwatch.Restart();
                 }

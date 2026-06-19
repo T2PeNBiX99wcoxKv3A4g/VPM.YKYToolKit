@@ -81,7 +81,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                             Utils.LogError(nameof(CopyAllComponents),
                                 $"Overwrite component failed: {ex!.Message}\n{ex.StackTrace}"));
 
-                    if (stopwatch.ElapsedMilliseconds <= 30) continue;
+                    if (stopwatch.ElapsedMilliseconds <= Util.StopwatchWaitElapsedMilliseconds) continue;
                     await UniTask.Yield();
                     stopwatch.Restart();
                 }
@@ -114,7 +114,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                             Utils.LogError(nameof(CopyAllComponents),
                                 $"Overwrite component failed: {ex!.Message}\n{ex.StackTrace}"));
 
-                    if (stopwatch.ElapsedMilliseconds <= 30) continue;
+                    if (stopwatch.ElapsedMilliseconds <= Util.StopwatchWaitElapsedMilliseconds) continue;
                     await UniTask.Yield();
                     stopwatch.Restart();
                 }
