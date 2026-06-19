@@ -26,6 +26,9 @@
     },
     "com.amari-noa.blm-integration-core": {
       "version": "1.2.0"
+    },
+    "dev.onevr.vrworldtoolkit": {
+      "version": "3.4.1"
     }
   },
   "locked": {
@@ -34,7 +37,7 @@
       "dependencies": {}
     },
     "com.vrchat.base": {
-      "version": "3.10.3",
+      "version": "3.10.4",
       "dependencies": {}
     },
     "jp.lilxyzw.editortoolbox": {
@@ -87,6 +90,10 @@
     },
     "com.amari-noa.unity-editor-localization-core": {
       "version": "1.0.0",
+      "dependencies": {}
+    },
+    "dev.onevr.vrworldtoolkit": {
+      "version": "3.4.1",
       "dependencies": {}
     }
   }

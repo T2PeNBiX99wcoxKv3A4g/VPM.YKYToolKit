@@ -281,6 +281,14 @@
         "com.unity.nuget.newtonsoft-json": "3.0.2"
       }
     },
+    "dev.onevr.vrworldtoolkit": {
+      "version": "file:dev.onevr.vrworldtoolkit",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.postprocessing": "3.1.1"
+      }
+    },
     "io.github.ykysnk.localization": {
       "version": "file:io.github.ykysnk.localization",
       "depth": 0,
