@@ -11,6 +11,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         internal const int Twe = One + Separator;
         internal const int Three = Twe + Separator;
         internal const int Four = Three + Separator;
+        internal const int Five = Four + Separator;
 
         internal const int One2 = 1000;
         internal const int Twe2 = One2 + Separator;

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using io.github.ykysnk.utils;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Animations;
@@ -14,11 +15,13 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 {
     internal static class ConvertToVRCConstraint
     {
+        [MenuItem("GameObject/YKYToolkit/Convert To VRC Constraint", false, Util.Five)]
         [MenuItem("CONTEXT/Component/YKYToolkit/Convert To VRC Constraint", false, Util.Three2)]
         private static void Convert()
         {
             var selectedObjects = Selection.gameObjects;
             if (selectedObjects.Length < 1) return;
+            Utils.Log(nameof(ConvertToVRCConstraint), "Test Run");
             ConvertAsync(selectedObjects).Forget();
         }
 
