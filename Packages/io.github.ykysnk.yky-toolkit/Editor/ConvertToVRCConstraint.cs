@@ -16,17 +16,17 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 {
     internal static class ConvertToVRCConstraint
     {
-        [MenuItem("GameObject/YKYToolkit/Convert To VRC Constraint", false, Util.Five)]
-        [MenuItem("CONTEXT/Component/YKYToolkit/Convert To VRC Constraint", false, Util.Three2)]
-        private static void Convert(MenuCommand menuCommand)
+        [MenuItem("GameObject/YKYToolkit/Convert Unity Constraint To VRC Constraint", false, Util.Five)]
+        [MenuItem("CONTEXT/Component/YKYToolkit/Convert Unity Constraint To VRC Constraint", false, Util.Three2)]
+        private static void ConvertToVRC(MenuCommand menuCommand)
         {
             if (!Util.ShouldExecute(menuCommand)) return;
             var selectedObjects = Selection.gameObjects;
             if (selectedObjects.Length < 1) return;
-            ConvertAsync(selectedObjects).Forget();
+            ConvertToVRCAsync(selectedObjects).Forget();
         }
 
-        private static async UniTask ConvertAsync(GameObject[] selectedObjects)
+        private static async UniTask ConvertToVRCAsync(GameObject[] selectedObjects)
         {
             var stopwatch = Stopwatch.StartNew();
             var searchResult = new Dictionary<GameObject, Dictionary<string, ConstraintData[]>>();
@@ -263,6 +263,311 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             }
         }
 
+        [MenuItem("GameObject/YKYToolkit/Convert VRC Constraint To Unity Constraint", false, Util.Five)]
+        [MenuItem("CONTEXT/Component/YKYToolkit/Convert VRC Constraint To Unity Constraint", false, Util.Three2)]
+        private static void ConvertToUnity(MenuCommand menuCommand)
+        {
+            if (!Util.ShouldExecute(menuCommand)) return;
+            var selectedObjects = Selection.gameObjects;
+            if (selectedObjects.Length < 1) return;
+            ConvertToUnity(selectedObjects).Forget();
+        }
+
+        private static async UniTask ConvertToUnity(GameObject[] selectedObjects)
+        {
+            var stopwatch = Stopwatch.StartNew();
+            var searchResult = new Dictionary<GameObject, Dictionary<string, ConstraintData[]>>();
+            var doneResult = new HashSet<Transform>();
+            var doneFound = new HashSet<Transform>();
+
+            foreach (var selected in selectedObjects)
+            {
+                var result = new Dictionary<string, ConstraintData[]>();
+                var stack = new Stack<(string path, Transform transform)>();
+
+                stack.Push(new("", selected.transform));
+
+                while (stack.Count > 0)
+                {
+                    var (path, current) = stack.Pop();
+
+                    if (!doneResult.Contains(current))
+                    {
+                        var constraints = current.GetComponents<VRCConstraintBase>().Where(x => x).ToArray();
+
+                        if (constraints.Length > 0)
+                            result.TryAdd(path, constraints.Select(x => new ConstraintData(x)).ToArray());
+
+                        foreach (Transform child in current)
+                            stack.Push(new(string.IsNullOrEmpty(path) ? child.name : $"{path}/{child.name}", child));
+
+                        doneResult.Add(current);
+                    }
+
+                    if (stopwatch.ElapsedMilliseconds <= Util.StopwatchWaitElapsedMilliseconds) continue;
+                    await UniTask.Yield();
+                    stopwatch.Restart();
+                }
+
+                searchResult.TryAdd(selected, result);
+
+                if (stopwatch.ElapsedMilliseconds <= Util.StopwatchWaitElapsedMilliseconds) continue;
+                await UniTask.Yield();
+                stopwatch.Restart();
+            }
+
+            foreach (var (selected, result) in searchResult)
+            {
+                if (!selected || result == null) continue;
+
+                foreach (var (path, datas) in result)
+                {
+                    var found = string.IsNullOrEmpty(path) ? selected.transform : selected.transform.Find(path);
+                    if (found == null || doneFound.Contains(found)) continue;
+
+                    found.ComponentsForeach((_, comp) =>
+                    {
+                        if (comp is not VRCConstraintBase) return;
+                        Object.DestroyImmediate(comp);
+                    });
+
+                    foreach (var data in datas)
+                        switch (data.Type)
+                        {
+                            case ConstraintType.Position:
+                            {
+                                var positionConstraint = found.gameObject.AddComponent<PositionConstraint>();
+                                positionConstraint.constraintActive = data.IsActive;
+                                positionConstraint.locked = data.Locked;
+                                positionConstraint.weight = data.GlobalWeight;
+
+                                if (data.ExtraData is PositionExtraData extraData)
+                                {
+                                    positionConstraint.translationAtRest = extraData.PositionAtRest;
+                                    positionConstraint.translationOffset = extraData.PositionOffset;
+
+                                    var axis = Axis.None;
+
+                                    if (extraData.AffectsPositionX) axis |= Axis.X;
+                                    if (extraData.AffectsPositionY) axis |= Axis.Y;
+                                    if (extraData.AffectsPositionZ) axis |= Axis.Z;
+
+                                    positionConstraint.translationAxis = axis;
+                                }
+
+                                foreach (var sourceData in data.SourceDatas)
+                                {
+                                    var source = new ConstraintSource
+                                    {
+                                        sourceTransform = sourceData.SourceTransform,
+                                        weight = sourceData.Weight
+                                    };
+                                    positionConstraint.AddSource(source);
+                                }
+
+                                break;
+                            }
+                            case ConstraintType.Rotation:
+                            {
+                                var rotationConstraint = found.gameObject.AddComponent<RotationConstraint>();
+                                rotationConstraint.constraintActive = data.IsActive;
+                                rotationConstraint.locked = data.Locked;
+                                rotationConstraint.weight = data.GlobalWeight;
+
+                                if (data.ExtraData is RotationExtraData extraData)
+                                {
+                                    rotationConstraint.rotationAtRest = extraData.RotationAtRest;
+                                    rotationConstraint.rotationOffset = extraData.RotationOffset;
+
+                                    var axis = Axis.None;
+
+                                    if (extraData.AffectsRotationX) axis |= Axis.X;
+                                    if (extraData.AffectsRotationY) axis |= Axis.Y;
+                                    if (extraData.AffectsRotationZ) axis |= Axis.Z;
+
+                                    rotationConstraint.rotationAxis = axis;
+                                }
+
+                                foreach (var sourceData in data.SourceDatas)
+                                {
+                                    var source = new ConstraintSource
+                                    {
+                                        sourceTransform = sourceData.SourceTransform,
+                                        weight = sourceData.Weight
+                                    };
+                                    rotationConstraint.AddSource(source);
+                                }
+
+                                break;
+                            }
+                            case ConstraintType.Scale:
+                            {
+                                var scaleConstraint = found.gameObject.AddComponent<ScaleConstraint>();
+                                scaleConstraint.constraintActive = data.IsActive;
+                                scaleConstraint.locked = data.Locked;
+                                scaleConstraint.weight = data.GlobalWeight;
+
+                                if (data.ExtraData is ScaleExtraData extraData)
+                                {
+                                    scaleConstraint.scaleAtRest = extraData.ScaleAtRest;
+                                    scaleConstraint.scaleOffset = extraData.ScaleOffset;
+
+                                    var axis = Axis.None;
+
+                                    if (extraData.AffectsScaleX) axis |= Axis.X;
+                                    if (extraData.AffectsScaleY) axis |= Axis.Y;
+                                    if (extraData.AffectsScaleZ) axis |= Axis.Z;
+
+                                    scaleConstraint.scalingAxis = axis;
+                                }
+
+                                foreach (var sourceData in data.SourceDatas)
+                                {
+                                    var source = new ConstraintSource
+                                    {
+                                        sourceTransform = sourceData.SourceTransform,
+                                        weight = sourceData.Weight
+                                    };
+                                    scaleConstraint.AddSource(source);
+                                }
+
+                                break;
+                            }
+                            case ConstraintType.Parent:
+                            {
+                                var parentConstraint = found.gameObject.AddComponent<ParentConstraint>();
+                                parentConstraint.constraintActive = data.IsActive;
+                                parentConstraint.locked = data.Locked;
+                                parentConstraint.weight = data.GlobalWeight;
+
+                                if (data.ExtraData is ParentExtraData extraData)
+                                {
+                                    parentConstraint.translationAtRest = extraData.PositionAtRest;
+                                    parentConstraint.rotationAtRest = extraData.RotationAtRest;
+
+                                    var positionAxis = Axis.None;
+
+                                    if (extraData.AffectsPositionX) positionAxis |= Axis.X;
+                                    if (extraData.AffectsPositionY) positionAxis |= Axis.Y;
+                                    if (extraData.AffectsPositionZ) positionAxis |= Axis.Z;
+
+                                    parentConstraint.translationAxis = positionAxis;
+
+                                    var rotationAxis = Axis.None;
+
+                                    if (extraData.AffectsRotationX) rotationAxis |= Axis.X;
+                                    if (extraData.AffectsRotationY) rotationAxis |= Axis.Y;
+                                    if (extraData.AffectsRotationZ) rotationAxis |= Axis.Z;
+
+                                    parentConstraint.rotationAxis = rotationAxis;
+
+                                    var positionOffsets = new List<Vector3>();
+                                    var rotationOffsets = new List<Vector3>();
+
+                                    foreach (var sourceData in data.SourceDatas)
+                                    {
+                                        positionOffsets.Add(sourceData.ParentPositionOffset);
+                                        rotationOffsets.Add(sourceData.ParentRotationOffset);
+
+                                        var source = new ConstraintSource
+                                        {
+                                            sourceTransform = sourceData.SourceTransform,
+                                            weight = sourceData.Weight
+                                        };
+                                        parentConstraint.AddSource(source);
+                                    }
+
+                                    parentConstraint.translationOffsets = positionOffsets.ToArray();
+                                    parentConstraint.rotationOffsets = rotationOffsets.ToArray();
+                                }
+
+                                break;
+                            }
+                            case ConstraintType.LookAt:
+                            {
+                                var lookAtConstraint = found.gameObject.AddComponent<LookAtConstraint>();
+                                lookAtConstraint.constraintActive = data.IsActive;
+                                lookAtConstraint.locked = data.Locked;
+                                lookAtConstraint.weight = data.GlobalWeight;
+
+                                if (data.ExtraData is LookAtExtraData extraData)
+                                {
+                                    lookAtConstraint.rotationAtRest = extraData.RotationAtRest;
+                                    lookAtConstraint.rotationOffset = extraData.RotationOffset;
+                                    lookAtConstraint.roll = extraData.Roll;
+                                    lookAtConstraint.useUpObject = extraData.UseUpTransform;
+                                    lookAtConstraint.worldUpObject = extraData.WorldUpTransform;
+                                }
+
+                                foreach (var sourceData in data.SourceDatas)
+                                {
+                                    var source = new ConstraintSource
+                                    {
+                                        sourceTransform = sourceData.SourceTransform,
+                                        weight = sourceData.Weight
+                                    };
+                                    lookAtConstraint.AddSource(source);
+                                }
+
+                                break;
+                            }
+                            case ConstraintType.Aim:
+                            {
+                                var aimConstraint = found.gameObject.AddComponent<AimConstraint>();
+                                aimConstraint.constraintActive = data.IsActive;
+                                aimConstraint.locked = data.Locked;
+                                aimConstraint.weight = data.GlobalWeight;
+
+                                if (data.ExtraData is AimExtraData extraData)
+                                {
+                                    aimConstraint.rotationAtRest = extraData.RotationAtRest;
+                                    aimConstraint.rotationOffset = extraData.RotationOffset;
+
+                                    var axis = Axis.None;
+
+                                    if (extraData.AffectsRotationX) axis |= Axis.X;
+                                    if (extraData.AffectsRotationY) axis |= Axis.Y;
+                                    if (extraData.AffectsRotationZ) axis |= Axis.Z;
+
+                                    aimConstraint.rotationAxis = axis;
+
+                                    aimConstraint.aimVector = extraData.AimAxis;
+                                    aimConstraint.upVector = extraData.UpAxis;
+                                    aimConstraint.worldUpType = (AimConstraint.WorldUpType)(int)extraData.WorldUp;
+                                    aimConstraint.worldUpVector = extraData.WorldUpVector;
+                                    aimConstraint.worldUpObject = extraData.WorldUpTransform;
+                                }
+
+                                foreach (var sourceData in data.SourceDatas)
+                                {
+                                    var source = new ConstraintSource
+                                    {
+                                        sourceTransform = sourceData.SourceTransform,
+                                        weight = sourceData.Weight
+                                    };
+                                    aimConstraint.AddSource(source);
+                                }
+
+                                break;
+                            }
+                            default:
+                                throw new ArgumentOutOfRangeException(nameof(data.Type), data.Type,
+                                    "Constraint type isn't supported");
+                        }
+
+                    doneFound.Add(found);
+
+                    if (stopwatch.ElapsedMilliseconds <= Util.StopwatchWaitElapsedMilliseconds) continue;
+                    await UniTask.Yield();
+                    stopwatch.Restart();
+                }
+
+                if (stopwatch.ElapsedMilliseconds <= Util.StopwatchWaitElapsedMilliseconds) continue;
+                await UniTask.Yield();
+                stopwatch.Restart();
+            }
+        }
+
         private class ConstraintData
         {
             public readonly IConstraintExtraData ExtraData;
@@ -304,10 +609,43 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     _ => throw new ArgumentOutOfRangeException(nameof(Type), Type, "Constraint type isn't supported")
                 };
             }
+
+            public ConstraintData(VRCConstraintBase constraint)
+            {
+                Type = constraint switch
+                {
+                    VRCPositionConstraint => ConstraintType.Position,
+                    VRCRotationConstraint => ConstraintType.Rotation,
+                    VRCScaleConstraint => ConstraintType.Scale,
+                    VRCParentConstraint => ConstraintType.Parent,
+                    VRCLookAtConstraint => ConstraintType.LookAt,
+                    VRCAimConstraint => ConstraintType.Aim,
+                    _ => throw new ArgumentOutOfRangeException(nameof(constraint), constraint,
+                        "Constraint type isn't supported")
+                };
+                GlobalWeight = constraint.GlobalWeight;
+                IsActive = constraint.IsActive;
+                Locked = constraint.Locked;
+
+                SourceDatas = constraint.Sources.Select(source => new ConstraintSourceData(source)).ToArray();
+
+                ExtraData = Type switch
+                {
+                    ConstraintType.Position => new PositionExtraData(constraint),
+                    ConstraintType.Rotation => new RotationExtraData(constraint),
+                    ConstraintType.Scale => new ScaleExtraData(constraint),
+                    ConstraintType.Parent => new ParentExtraData(constraint),
+                    ConstraintType.LookAt => new LookAtExtraData(constraint),
+                    ConstraintType.Aim => new AimExtraData(constraint),
+                    _ => throw new ArgumentOutOfRangeException(nameof(Type), Type, "Constraint type isn't supported")
+                };
+            }
         }
 
         private class ConstraintSourceData
         {
+            public readonly Vector3 ParentPositionOffset;
+            public readonly Vector3 ParentRotationOffset;
             public readonly Transform SourceTransform;
             public readonly float Weight;
 
@@ -315,6 +653,14 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             {
                 SourceTransform = source.sourceTransform;
                 Weight = source.weight;
+            }
+
+            public ConstraintSourceData(VRCConstraintSource source)
+            {
+                SourceTransform = source.SourceTransform;
+                Weight = source.Weight;
+                ParentPositionOffset = source.ParentPositionOffset;
+                ParentRotationOffset = source.ParentRotationOffset;
             }
         }
 
@@ -341,6 +687,18 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 AffectsPositionY = (positionConstraint.translationAxis & Axis.Y) != 0;
                 AffectsPositionZ = (positionConstraint.translationAxis & Axis.Z) != 0;
             }
+
+            public PositionExtraData(VRCConstraintBase constraint)
+            {
+                if (constraint is not VRCPositionConstraint positionConstraint)
+                    throw new ArgumentException($"Constraint must be a {nameof(VRCPositionConstraint)}");
+
+                PositionOffset = positionConstraint.PositionOffset;
+                PositionAtRest = positionConstraint.PositionAtRest;
+                AffectsPositionX = positionConstraint.AffectsPositionX;
+                AffectsPositionY = positionConstraint.AffectsPositionY;
+                AffectsPositionZ = positionConstraint.AffectsPositionZ;
+            }
         }
 
         private class RotationExtraData : IConstraintExtraData
@@ -362,6 +720,18 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 AffectsRotationY = (rotationConstraint.rotationAxis & Axis.Y) != 0;
                 AffectsRotationZ = (rotationConstraint.rotationAxis & Axis.Z) != 0;
             }
+
+            public RotationExtraData(VRCConstraintBase constraint)
+            {
+                if (constraint is not VRCRotationConstraint rotationConstraint)
+                    throw new ArgumentException($"Constraint must be a {nameof(VRCRotationConstraint)}");
+
+                RotationOffset = rotationConstraint.RotationOffset;
+                RotationAtRest = rotationConstraint.RotationAtRest;
+                AffectsRotationX = rotationConstraint.AffectsRotationX;
+                AffectsRotationY = rotationConstraint.AffectsRotationY;
+                AffectsRotationZ = rotationConstraint.AffectsRotationZ;
+            }
         }
 
         private class ScaleExtraData : IConstraintExtraData
@@ -382,6 +752,18 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 AffectsScaleX = (scaleConstraint.scalingAxis & Axis.X) != 0;
                 AffectsScaleY = (scaleConstraint.scalingAxis & Axis.Y) != 0;
                 AffectsScaleZ = (scaleConstraint.scalingAxis & Axis.Z) != 0;
+            }
+
+            public ScaleExtraData(VRCConstraintBase constraint)
+            {
+                if (constraint is not VRCScaleConstraint scaleConstraint)
+                    throw new ArgumentException($"Constraint must be a {nameof(VRCScaleConstraint)}");
+
+                ScaleOffset = scaleConstraint.ScaleOffset;
+                ScaleAtRest = scaleConstraint.ScaleAtRest;
+                AffectsScaleX = scaleConstraint.AffectsScaleX;
+                AffectsScaleY = scaleConstraint.AffectsScaleY;
+                AffectsScaleZ = scaleConstraint.AffectsScaleZ;
             }
         }
 
@@ -415,6 +797,24 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 AffectsRotationY = (parentConstraint.rotationAxis & Axis.Y) != 0;
                 AffectsRotationZ = (parentConstraint.rotationAxis & Axis.Z) != 0;
             }
+
+            public ParentExtraData(VRCConstraintBase constraint)
+            {
+                if (constraint is not VRCParentConstraint parentConstraint)
+                    throw new ArgumentException($"Constraint must be a {nameof(VRCParentConstraint)}");
+
+                PositionAtRest = parentConstraint.PositionAtRest;
+                PositionOffsets = Array.Empty<Vector3>();
+                AffectsPositionX = parentConstraint.AffectsPositionX;
+                AffectsPositionY = parentConstraint.AffectsPositionY;
+                AffectsPositionZ = parentConstraint.AffectsPositionZ;
+
+                RotationAtRest = parentConstraint.RotationAtRest;
+                RotationOffsets = Array.Empty<Vector3>();
+                AffectsRotationX = parentConstraint.AffectsRotationX;
+                AffectsRotationY = parentConstraint.AffectsRotationY;
+                AffectsRotationZ = parentConstraint.AffectsRotationZ;
+            }
         }
 
         private class LookAtExtraData : IConstraintExtraData
@@ -435,6 +835,18 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 Roll = lookAtConstraint.roll;
                 UseUpTransform = lookAtConstraint.useUpObject;
                 WorldUpTransform = lookAtConstraint.worldUpObject;
+            }
+
+            public LookAtExtraData(VRCConstraintBase constraint)
+            {
+                if (constraint is not VRCLookAtConstraint lookAtConstraint)
+                    throw new ArgumentException($"Constraint must be a {nameof(VRCLookAtConstraint)}");
+
+                RotationAtRest = lookAtConstraint.RotationAtRest;
+                RotationOffset = lookAtConstraint.RotationOffset;
+                Roll = lookAtConstraint.Roll;
+                UseUpTransform = lookAtConstraint.UseUpTransform;
+                WorldUpTransform = lookAtConstraint.WorldUpTransform;
             }
         }
 
@@ -466,6 +878,23 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 WorldUpVector = aimConstraint.worldUpVector;
                 AimAxis = aimConstraint.aimVector;
                 UpAxis = aimConstraint.upVector;
+            }
+
+            public AimExtraData(VRCConstraintBase constraint)
+            {
+                if (constraint is not VRCAimConstraint aimConstraint)
+                    throw new ArgumentException($"Constraint must be a {nameof(VRCAimConstraint)}");
+
+                RotationAtRest = aimConstraint.RotationAtRest;
+                RotationOffset = aimConstraint.RotationOffset;
+                AffectsRotationX = aimConstraint.AffectsRotationX;
+                AffectsRotationY = aimConstraint.AffectsRotationY;
+                AffectsRotationZ = aimConstraint.AffectsRotationZ;
+                WorldUp = aimConstraint.WorldUp;
+                WorldUpTransform = aimConstraint.WorldUpTransform;
+                WorldUpVector = aimConstraint.WorldUpVector;
+                AimAxis = aimConstraint.AimAxis;
+                UpAxis = aimConstraint.UpAxis;
             }
         }
 
