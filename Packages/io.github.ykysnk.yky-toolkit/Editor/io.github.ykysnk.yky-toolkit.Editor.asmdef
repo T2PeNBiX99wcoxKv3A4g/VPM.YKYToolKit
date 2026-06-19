@@ -2,12 +2,13 @@
   "name": "io.github.ykysnk.yky-toolkit.Editor",
   "rootNamespace": "io.github.ykysnk.ykyToolkit",
   "references": [
+    "UniTask",
     "io.github.ykysnk.utils",
     "io.github.ykysnk.utils.Editor",
     "io.github.ykysnk.utils.non-udon",
-    "UniTask",
     "io.github.ykysnk.localization.Editor",
-    "io.github.ykysnk.yky-toolkit"
+    "io.github.ykysnk.yky-toolkit",
+    "VRC.SDKBase"
   ],
   "includePlatforms": [
     "Editor"
@@ -18,6 +19,12 @@
   "precompiledReferences": [],
   "autoReferenced": true,
   "defineConstraints": [],
-  "versionDefines": [],
+  "versionDefines": [
+    {
+      "name": "com.vrchat.base",
+      "expression": "",
+      "define": "YKYTOOLKIT_VRCBASE"
+    }
+  ],
   "noEngineReferences": false
 }
