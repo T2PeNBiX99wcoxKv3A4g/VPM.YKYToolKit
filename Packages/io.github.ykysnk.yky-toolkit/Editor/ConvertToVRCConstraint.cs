@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Cysharp.Threading.Tasks;
-using io.github.ykysnk.utils;
+using io.github.ykysnk.utils.Extensions;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Animations;
 using VRC.Dynamics;
 using VRC.SDK3.Dynamics.Constraint.Components;
+using Object = UnityEngine.Object;
 
 namespace io.github.ykysnk.ykyToolkit.Editor
 {
@@ -17,11 +18,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
     {
         [MenuItem("GameObject/YKYToolkit/Convert To VRC Constraint", false, Util.Five)]
         [MenuItem("CONTEXT/Component/YKYToolkit/Convert To VRC Constraint", false, Util.Three2)]
-        private static void Convert()
+        private static void Convert(MenuCommand menuCommand)
         {
+            if (!Util.ShouldExecute(menuCommand)) return;
             var selectedObjects = Selection.gameObjects;
             if (selectedObjects.Length < 1) return;
-            Utils.Log(nameof(ConvertToVRCConstraint), "Test Run");
             ConvertAsync(selectedObjects).Forget();
         }
 
@@ -29,6 +30,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         {
             var stopwatch = Stopwatch.StartNew();
             var searchResult = new Dictionary<GameObject, Dictionary<string, ConstraintData[]>>();
+            var doneResult = new HashSet<Transform>();
+            var doneFound = new HashSet<Transform>();
 
             foreach (var selected in selectedObjects)
             {
@@ -41,14 +44,19 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 {
                     var (path, current) = stack.Pop();
 
-                    var constraints = current.GetComponents<Component>().Where(x => x && x is IConstraint)
-                        .Cast<IConstraint>().ToArray();
+                    if (!doneResult.Contains(current))
+                    {
+                        var constraints = current.GetComponents<Component>().Where(x => x && x is IConstraint)
+                            .Cast<IConstraint>().ToArray();
 
-                    if (constraints.Length > 0)
-                        result.TryAdd(path, constraints.Select(x => new ConstraintData(x)).ToArray());
+                        if (constraints.Length > 0)
+                            result.TryAdd(path, constraints.Select(x => new ConstraintData(x)).ToArray());
 
-                    foreach (Transform child in current)
-                        stack.Push(new(string.IsNullOrEmpty(path) ? child.name : $"{path}/{child.name}", child));
+                        foreach (Transform child in current)
+                            stack.Push(new(string.IsNullOrEmpty(path) ? child.name : $"{path}/{child.name}", child));
+
+                        doneResult.Add(current);
+                    }
 
                     if (stopwatch.ElapsedMilliseconds <= Util.StopwatchWaitElapsedMilliseconds) continue;
                     await UniTask.Yield();
@@ -65,12 +73,17 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             foreach (var (selected, result) in searchResult)
             {
                 if (!selected || result == null) continue;
-                if (!selected.GetComponents<Component>().Any(x => x && x is IConstraint)) continue;
 
                 foreach (var (path, datas) in result)
                 {
                     var found = string.IsNullOrEmpty(path) ? selected.transform : selected.transform.Find(path);
-                    if (found == null) continue;
+                    if (found == null || doneFound.Contains(found)) continue;
+
+                    found.ComponentsForeach((_, comp) =>
+                    {
+                        if (comp is not IConstraint) return;
+                        Object.DestroyImmediate(comp);
+                    });
 
                     foreach (var data in datas)
                         switch (data.Type)
@@ -236,6 +249,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                                 throw new ArgumentOutOfRangeException(nameof(data.Type), data.Type,
                                     "Constraint type isn't supported");
                         }
+
+                    doneFound.Add(found);
 
                     if (stopwatch.ElapsedMilliseconds <= Util.StopwatchWaitElapsedMilliseconds) continue;
                     await UniTask.Yield();
