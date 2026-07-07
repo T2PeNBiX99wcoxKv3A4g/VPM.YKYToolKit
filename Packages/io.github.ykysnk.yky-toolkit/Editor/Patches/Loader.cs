@@ -13,7 +13,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor.Patches
 {
     internal class Loader : PatchLoader<Loader>
     {
-        internal static readonly MethodInfo MaterialCheckMethod = AccessTools.Method(ThisType, nameof(MaterialCheck));
+        private static readonly MethodInfo MaterialCheckMethod = AccessTools.Method(ThisType, nameof(MaterialCheck));
         public override string QualifiedName => "io.github.ykysnk.yky-toolkit.patches";
         public override string DisplayName => "YKY Toolkit Patches";
 
