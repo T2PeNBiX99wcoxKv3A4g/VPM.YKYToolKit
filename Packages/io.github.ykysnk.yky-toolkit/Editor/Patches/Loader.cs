@@ -21,6 +21,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor.Patches
         {
 #if YKYTOOLKIT_LILEDITORTOOLBOX
             MaterialQueuePatch.Instance.Run();
+            MaterialShaderPatch.Instance.Run();
+            MaterialVariantPatch.Instance.Run();
 #endif
         }
 
