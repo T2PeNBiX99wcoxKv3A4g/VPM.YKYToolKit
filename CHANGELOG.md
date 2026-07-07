@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.1.1](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/compare/1.1.0..1.1.1) - 2026-07-07
+
+### 🚜 Refactor
+
+- Replace transpilers with prefix methods in material patches and clean up unused methods in `Loader` - ([c142a8e](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/c142a8ee719f7d2ed918ed6259384b008f20b2df))
+
+### ⚙️ Miscellaneous Tasks
+
+- Bump package version to 1.1.1 in `package.json` - ([1fb2ff1](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/1fb2ff1a5819d8ede4da539bb81ff61d53db643a))
+
+### Action
+
+- Update `CHANGELOG.md` - ([efdb837](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/efdb8376f8d5a3ab56926107b7a229b4a890235d))
+
+
 ## [1.1.0](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/compare/1.0.0..1.1.0) - 2026-07-07
 
 ### ⛰️  Features
