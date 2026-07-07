@@ -1,11 +1,10 @@
 #if YKYTOOLKIT_LILEDITORTOOLBOX
 using System;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Reflection.Emit;
 using HarmonyLib;
 using io.github.ykysnk.utils.Editor.Patches;
 using JetBrains.Annotations;
+using UnityEngine;
 
 namespace io.github.ykysnk.ykyToolkit.Editor.Patches
 {
@@ -25,9 +24,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor.Patches
 
             private static MethodBase TargetMethod() => Method;
 
-            [HarmonyTranspiler]
-            private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions,
-                ILGenerator il) => Loader.MaterialCheckTranspiler(instructions, il);
+            private static bool Prefix(ref Rect currentRect, string guid, string path, string name, string extension,
+                Rect fullRect) => Loader.MaterialCheckPrefix(guid, extension);
         }
     }
 }
