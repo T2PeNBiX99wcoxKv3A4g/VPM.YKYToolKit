@@ -9,9 +9,10 @@ using JetBrains.Annotations;
 
 namespace io.github.ykysnk.ykyToolkit.Editor.Patches
 {
-    internal class MaterialQueuePatch : Patch<MaterialQueuePatch>
+    internal class MaterialShaderPatch : Patch<MaterialShaderPatch>
     {
-        private static readonly Type MaterialQueueType = AccessTools.TypeByName("jp.lilxyzw.editortoolbox.MaterialQueue");
+        private static readonly Type MaterialShaderType =
+            AccessTools.TypeByName("jp.lilxyzw.editortoolbox.MaterialShader");
 
         protected override void Execute()
         {
@@ -21,7 +22,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor.Patches
         [PublicAPI]
         private static class OnGUI
         {
-            private static readonly MethodInfo Method = AccessTools.Method(MaterialQueueType, nameof(OnGUI));
+            private static readonly MethodInfo Method = AccessTools.Method(MaterialShaderType, nameof(OnGUI));
 
             private static MethodBase TargetMethod() => Method;
 
