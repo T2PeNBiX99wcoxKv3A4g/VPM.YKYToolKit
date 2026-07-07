@@ -1,5 +1,30 @@
 # Changelog
 
+## [1.1.0](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/compare/1.0.0..1.1.0) - 2026-07-07
+
+### ⛰️  Features
+
+- Integrate `MaterialShaderPatch` and `MaterialVariantPatch` execution in `Loader` under conditional compilation - ([6780822](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/6780822a3d58bdcd199514c1cb5957f03251d07b))
+- Add `MaterialVariantPatch` with transpiler for `OnGUI` and conditional compilation support - ([6992c15](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/6992c1547140a0d3538c44461b24d3d07f6b1f30))
+- Refactor `MaterialQueuePatch`, introduce `MaterialShaderPatch` with transpiler logic, and centralize `MaterialCheckTranspiler` in `Loader` - ([b3519b1](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/b3519b1e1bae752f9ecbf26f05f72365bcdef90a))
+- Add `MaterialQueuePatch` with transpiler for `OnGUI` and patch loader system integration - ([3e532c6](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/3e532c638ac9c2559e20dc5e7598892b69a65dd6))
+
+### 🚜 Refactor
+
+- Change `MaterialCheckMethod` visibility from internal to private in `Loader` - ([307ac50](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/307ac508145bc0f77f4365b58d6a03cad45f0298))
+
+### ⚙️ Miscellaneous Tasks
+
+- Bump package version to 1.1.0 in `package.json` - ([1d215c1](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/1d215c17ff9d0dffb5a04ccae392049589d39a5c))
+- Bump `io.github.ykysnk.utils` to version 1.3.1 in `vpm-manifest.json` - ([b2011b0](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/b2011b00b990934460a82993069e1eb97a30195f))
+- Add `jp.lilxyzw.editortoolbox` version define to asmdef - ([3c2daca](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/3c2daca67eb0a24e6fcb5e812632a3287e0ec3f6))
+- Remove unused `jp.lilxyzw.liltoon` dependency and update `jp.lilxyzw.editortoolbox` version in manifest files - ([771e841](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/771e841b808b27566a81eedde863494e549dca48))
+
+### Action
+
+- Update `CHANGELOG.md` - ([258f8d5](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/258f8d5d91017619526efbe4ec19ce104929196e))
+
+
 ## [1.0.0](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/compare/0.20.0..1.0.0) - 2026-06-19
 
 ### ⚙️ Miscellaneous Tasks
