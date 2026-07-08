@@ -15,9 +15,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor.Patches
         public override void Load()
         {
 #if YKYTOOLKIT_LILEDITORTOOLBOX
-            MaterialQueuePatch.Instance.Run();
-            MaterialShaderPatch.Instance.Run();
-            MaterialVariantPatch.Instance.Run();
+            Run(MaterialQueuePatch.Instance);
+            Run(MaterialShaderPatch.Instance);
+            Run(MaterialVariantPatch.Instance);
 #endif
         }
 
