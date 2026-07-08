@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.1.2](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/compare/1.1.1..1.1.2) - 2026-07-08
+
+### 🚜 Refactor
+
+- Replace `TargetPrefix` with `PrefixMethod` in material patches for consistency - ([e7565fc](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/e7565fccb24605c853b9b1027473562b765b319e))
+- Simplify patch structure, replace redundant references with `TargetType`, and improve `Loader` execution readability - ([21b5621](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/21b562180c6907cc36212a3f53a13592a28b3682))
+
+### ⚙️ Miscellaneous Tasks
+
+- Bump package version to 1.1.2 in `package.json` - ([d9ac1ad](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/d9ac1adce1ec738428112bec85d4f2ecadcb9264))
+- Bump `io.github.ykysnk.utils` to version 1.4.2 in `vpm-manifest.json` - ([90f3915](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/90f3915effb6dfb3cff6967fae7a485336d348da))
+- Bump `io.github.ykysnk.utils` to version 1.4.1 in `vpm-manifest.json` - ([019e4e1](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/019e4e17443b9acef40637a1f88f793d5a840980))
+
+### Action
+
+- Update `CHANGELOG.md` - ([333710b](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/333710be3bc5e5b7ce2e7869082d070aa3a82abc))
+
+
 ## [1.1.1](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/compare/1.1.0..1.1.1) - 2026-07-07
 
 ### 🚜 Refactor
