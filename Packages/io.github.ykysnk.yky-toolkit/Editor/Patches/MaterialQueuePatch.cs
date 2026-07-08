@@ -21,7 +21,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor.Patches
         private class OnGUI : PatchMethod<OnGUI>
         {
             public override MethodInfo? TargetMethod { get; } = AccessTools.Method(TargetType, nameof(OnGUI));
-            public override MethodInfo? TargetPrefix { get; } = Method(nameof(Prefix));
+            public override string PrefixMethod => nameof(Prefix);
 
             [SuppressMessage("ReSharper", "UnusedParameter.Local")]
             private static bool Prefix(ref Rect currentRect, string guid, string path, string name, string extension,
