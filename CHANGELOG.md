@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.1.3](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/compare/1.1.2..1.1.3) - 2026-07-09
+
+### 🚜 Refactor
+
+- Update `Execute` methods to accept `Harmony` parameter and adjust `Loader.Load` accordingly - ([9a9fc6d](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/9a9fc6d8ef698abbcbc7402aa3af828692d80824))
+
+### ⚙️ Miscellaneous Tasks
+
+- Bump package version to 1.1.3 in `package.json` - ([e047802](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/e047802ce7e147d5ca015a62bdfc7ff67ea2c939))
+- Bump `io.github.ykysnk.utils` to version 1.5.0 in `vpm-manifest.json` - ([4f518f1](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/4f518f1aea0250045a91a94a4d917668a310738a))
+
+### Action
+
+- Update `CHANGELOG.md` - ([dd09232](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/dd0923204a066ca76de2a538bd974b84276b0467))
+
+
 ## [1.1.2](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/compare/1.1.1..1.1.2) - 2026-07-08
 
 ### 🚜 Refactor
