@@ -1,3 +1,4 @@
+using HarmonyLib;
 using io.github.ykysnk.utils.Editor.Patches;
 using io.github.ykysnk.ykyToolkit.Editor.Patches;
 using jp.lilxyzw.editortoolbox;
@@ -12,7 +13,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor.Patches
         public override string QualifiedName => "io.github.ykysnk.yky-toolkit.patches";
         public override string DisplayName => "YKY Toolkit Patches";
 
-        public override void Load()
+        public override void Load(Harmony harmony)
         {
 #if YKYTOOLKIT_LILEDITORTOOLBOX
             Run(MaterialQueuePatch.Instance);

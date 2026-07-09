@@ -13,7 +13,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor.Patches
     {
         private static readonly Type TargetType = AccessTools.TypeByName("jp.lilxyzw.editortoolbox.MaterialShader");
 
-        protected override void Execute()
+        protected override void Execute(Harmony harmony)
         {
         }
 
