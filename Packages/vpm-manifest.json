@@ -34,7 +34,7 @@
       "dependencies": {}
     },
     "com.vrchat.base": {
-      "version": "3.10.4",
+      "version": "3.10.6",
       "dependencies": {}
     },
     "jp.lilxyzw.editortoolbox": {
@@ -52,17 +52,17 @@
       }
     },
     "yueby.tools.mirror-tool": {
-      "version": "1.1.0",
+      "version": "1.1.1",
       "dependencies": {
         "yueby.tools.editor-core": ">=1.0.0"
       }
     },
     "yueby.tools.editor-core": {
-      "version": "1.0.6",
+      "version": "1.0.7",
       "dependencies": {}
     },
     "io.github.ykysnk.utils": {
-      "version": "1.5.0",
+      "version": "1.6.0",
       "dependencies": {}
     },
     "com.amari-noa.sqlite-net-vpm": {
@@ -74,7 +74,7 @@
       "dependencies": {}
     },
     "com.amari-noa.blm-integration-core": {
-      "version": "1.2.0",
+      "version": "1.3.0",
       "dependencies": {
         "com.amari-noa.sqlite-net-vpm": "^1.0.0",
         "com.amari-noa.unity-editor-localization-core": "^1.0.0",
@@ -82,11 +82,11 @@
       }
     },
     "com.amari-noa.unity-editor-localization-core": {
-      "version": "1.0.0",
+      "version": "1.0.1",
       "dependencies": {}
     },
     "dev.onevr.vrworldtoolkit": {
-      "version": "3.4.1",
+      "version": "3.5.1",
       "dependencies": {}
     }
   }
