@@ -1,8 +1,10 @@
 using HarmonyLib;
 using io.github.ykysnk.utils.Editor.Patches;
 using io.github.ykysnk.ykyToolkit.Editor.Patches;
-using jp.lilxyzw.editortoolbox;
 using UnityEngine;
+#if YKYTOOLKIT_LILEDITORTOOLBOX
+using jp.lilxyzw.editortoolbox;
+#endif
 
 [assembly: ExportsPatchLoader(typeof(Loader))]
 
@@ -22,7 +24,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor.Patches
 #endif
         }
 
+#if YKYTOOLKIT_LILEDITORTOOLBOX
         internal static bool MaterialCheckPrefix(string guid, string extension) => !ProjectExtension.isIconGUI &&
             extension == ".mat" && ProjectExtension.GUIDToObject(guid) is Material material && material;
+#endif
     }
 }
