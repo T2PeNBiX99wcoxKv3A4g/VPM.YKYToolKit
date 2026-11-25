@@ -44,30 +44,33 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             rootVisualElement.Add(tree);
             LoadPackageList();
 
+            var packagesField = tree.Q<ListView>("packages");
+            var makerField = tree.Q<ListView>("packageListMaker");
+            var packageListsField = tree.Q<ListView>("packageLists");
+
             var installButton = tree.Q<Button>("install");
             installButton.clicked += () =>
             {
-                RebuildList(packages);
-                if (!packages.Any()) return;
-                UpmInstaller.Install(packages.Select(x => x.FullName).ToArray());
+                var entries = ReadEntries("packages");
+                if (entries.Count == 0) return;
+                UpmInstaller.Install(entries.Select(x => x.FullName).ToArray());
             };
 
             var removeButton = tree.Q<Button>("remove");
             removeButton.clicked += () =>
             {
-                RebuildList(packages);
-                if (!packages.Any()) return;
-                UpmInstaller.Remove(packages.Select(x => x.FullName).ToArray());
+                var entries = ReadEntries("packages");
+                if (entries.Count == 0) return;
+                UpmInstaller.Remove(entries.Select(x => x.FullName).ToArray());
             };
 
             var updateButton = tree.Q<Button>("update");
             updateButton.clicked += () =>
             {
-                RebuildList(packages);
                 UpmInstaller.UpdateAsync().WaitEditor(updatePackage =>
                 {
-                    packages.AddRange(updatePackage.Select(x => new UpmInstallerPackage(x)));
-                    RebuildList(packages);
+                    AppendEntries("packages", updatePackage.Select(x => new UpmInstallerPackage(x)));
+                    packagesField.Rebuild();
                 });
             };
 
@@ -75,13 +78,18 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             upgradeButton.clicked += UpmInstaller.Upgrade;
 
             var clearButton = tree.Q<Button>("clear");
-            clearButton.clicked += () => packages.Clear();
+            clearButton.clicked += () =>
+            {
+                PackagesProperty.ClearArray();
+                _serializedObject!.ApplyModifiedProperties();
+                packagesField.Rebuild();
+            };
 
             var importToMakerButton = tree.Q<Button>("importToMaker");
             importToMakerButton.clicked += () =>
             {
-                packageListMaker.AddRange(packages);
-                RebuildList(packageListMaker);
+                AppendEntries("packageListMaker", ReadEntries("packages"));
+                makerField.Rebuild();
             };
 
             var createListNameField = tree.Q<TextField>("createListName");
@@ -94,7 +102,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                         ? "New Package List"
                         : createListNameField.value
                 };
-                wrapper.wrapPackages.AddRange(packageListMaker);
+                wrapper.wrapPackages.AddRange(ReadEntries("packageListMaker"));
                 packageLists.Add(wrapper);
                 SavePackageList();
 
@@ -107,7 +115,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     return;
                 }
 
-                packageListMaker.Clear();
+                MakerProperty.ClearArray();
+                _serializedObject!.ApplyModifiedProperties();
+                makerField.Rebuild();
                 createListNameField.value = "";
             };
 
@@ -131,36 +141,29 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 }
             };
 
-            var packageListsField = tree.Q<ListView>("packageLists");
             var removeSelectedButton = tree.Q<Button>("removeSelected");
 
             // Own add/remove rows: the built-in ListView footer floats over whatever comes next inside a card.
-            var packagesField = tree.Q<ListView>("packages");
             tree.Q<Button>("addPackage").clicked += () =>
             {
-                packages.Add(new("", ""));
-                RebuildList(packages);
+                AppendEntries("packages", new[] { new UpmInstallerPackage("", "") });
+                packagesField.Rebuild();
             };
             tree.Q<Button>("removePackage").clicked += () =>
             {
-                foreach (var index in packagesField.selectedIndices.OrderByDescending(i => i).ToList())
-                    if (index >= 0 && index < packages.Count)
-                        packages.RemoveAt(index);
-                RebuildList(packages);
+                RemoveEntries("packages", packagesField.selectedIndices);
+                packagesField.Rebuild();
             };
 
-            var makerField = tree.Q<ListView>("packageListMaker");
             tree.Q<Button>("addMaker").clicked += () =>
             {
-                packageListMaker.Add(new("", ""));
-                RebuildList(packageListMaker);
+                AppendEntries("packageListMaker", new[] { new UpmInstallerPackage("", "") });
+                makerField.Rebuild();
             };
             tree.Q<Button>("removeMaker").clicked += () =>
             {
-                foreach (var index in makerField.selectedIndices.OrderByDescending(i => i).ToList())
-                    if (index >= 0 && index < packageListMaker.Count)
-                        packageListMaker.RemoveAt(index);
-                RebuildList(packageListMaker);
+                RemoveEntries("packageListMaker", makerField.selectedIndices);
+                makerField.Rebuild();
             };
 
             packageListsField.AddManipulator(new ContextualMenuManipulator(evt =>
@@ -196,7 +199,64 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             }
         }
 
+        private SerializedProperty PackagesProperty => _serializedObject!.FindProperty("packages");
+
+        private SerializedProperty MakerProperty => _serializedObject!.FindProperty("packageListMaker");
+
+        /// <summary>
+        ///     The lists are bound to their SerializedProperty, so they have to be edited through it; changing the
+        ///     managed list directly never reaches the ListView.
+        /// </summary>
+        private List<UpmInstallerPackage> ReadEntries(string propertyName)
+        {
+            var property = _serializedObject!.FindProperty(propertyName);
+            var entries = new List<UpmInstallerPackage>(property.arraySize);
+
+            for (var i = 0; i < property.arraySize; i++)
+            {
+                var element = property.GetArrayElementAtIndex(i);
+                entries.Add(new(
+                    element.FindPropertyRelative("packageName").stringValue,
+                    element.FindPropertyRelative("version").stringValue));
+            }
+
+            return entries;
+        }
+
+        private void AppendEntries(string propertyName, IEnumerable<UpmInstallerPackage> entries)
+        {
+            var property = _serializedObject!.FindProperty(propertyName);
+
+            foreach (var entry in entries)
+            {
+                property.arraySize++;
+                var element = property.GetArrayElementAtIndex(property.arraySize - 1);
+                element.FindPropertyRelative("packageName").stringValue = entry.packageName;
+                element.FindPropertyRelative("version").stringValue = entry.version;
+            }
+
+            _serializedObject.ApplyModifiedProperties();
+        }
+
+        private void RemoveEntries(string propertyName, IEnumerable<int> indices)
+        {
+            var property = _serializedObject!.FindProperty(propertyName);
+
+            foreach (var index in indices.OrderByDescending(i => i))
+            {
+                if (index < 0 || index >= property.arraySize) continue;
+
+                var size = property.arraySize;
+                property.DeleteArrayElementAtIndex(index);
+                // A class element is nulled first; the second call removes the entry itself.
+                if (property.arraySize == size) property.DeleteArrayElementAtIndex(index);
+            }
+
+            _serializedObject.ApplyModifiedProperties();
+        }
+
         private void SavePackageList()
+
         {
             if (!JsonUtils.TryToJson(Wrapper.Create(packageLists), out var json, out _)) return;
 
