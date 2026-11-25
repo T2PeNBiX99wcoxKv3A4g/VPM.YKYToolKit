@@ -1,0 +1,341 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja-JP\n"
+
+msgid "label.language"
+msgstr "言語"
+
+msgid "label.unity_resource_monitor.type"
+msgstr "種類"
+
+msgid "label.unity_resource_monitor.value"
+msgstr "値"
+
+msgid "label.upm_installer_window.install"
+msgstr "インストール"
+
+msgid "label.upm_installer_window.remove"
+msgstr "削除"
+
+msgid "label.upm_installer_window.update"
+msgstr "更新"
+
+msgid "label.upm_installer_window.clear"
+msgstr "クリア"
+
+msgid "label.upm_installer_window.check_and_upgrade"
+msgstr "更新を確認し、すべてのUPMパッケージをアップグレードする"
+
+msgid "label.upm_installer_package.name"
+msgstr "名前"
+
+msgid "label.upm_installer_package.version"
+msgstr "バージョン（オプション）"
+
+msgid "label.upm_installer_window.create_and_copy"
+msgstr "作成してコピー"
+
+msgid "label.upm_installer_window.package_list_name"
+msgstr "パッケージリスト名"
+
+msgid "label.upm_installer_window.package_list_maker"
+msgstr "パッケージリストメーカー"
+
+msgid "label.upm_installer_window.package_list"
+msgstr "パッケージリスト"
+
+msgid "label.upm_installer_window.import"
+msgstr "インポート"
+
+msgid "label.upm_installer_window.remove_selected"
+msgstr "選択した項目を削除"
+
+msgid "label.upm_package_list_wrapper.packages"
+msgstr "パッケージ"
+
+msgid "label.upm_installer_window.import_to_maker"
+msgstr "メーカーへインポート"
+
+msgid "label.upm_installer_window.copy"
+msgstr "コピー"
+
+msgid "label.new_delete.title"
+msgstr "選択したアセットを削除"
+
+msgid "label.new_delete.message"
+msgstr "{0}\n\n削除操作は元に戻せません。"
+
+msgid "label.new_delete.ok"
+msgstr "削除"
+
+msgid "label.new_delete.cancel"
+msgstr "キャンセル"
+
+msgid "label.empty_folder_clear.no_empty_folders"
+msgstr "空のフォルダは見つかりませんでした。"
+
+msgid "label.empty_folder_clear.has_empty_folders"
+msgstr "{0}個の空フォルダが見つかりました。"
+
+msgid "label.empty_folder_clear.ok"
+msgstr "クリア"
+
+msgid "label.empty_folder_clear.cancel"
+msgstr "キャンセル"
+
+msgid "label.empty_folder_clear.title"
+msgstr "空のフォルダを削除"
+
+msgid "label.clear_shader_cache.title"
+msgstr "シェーダーキャッシュをクリア"
+
+msgid "label.clear_shader_cache.message"
+msgstr "シェーダーキャッシュをクリアしますか？\nUnity エディターの起動時に、シェーダーキャッシュがすべて再構築される場合があります。\n\nこの操作は元に戻せません。"
+
+msgid "label.clear_shader_cache.ok"
+msgstr "クリア"
+
+msgid "label.clear_shader_cache.cancel"
+msgstr "キャンセル"
+
+msgid "label.clear_shader_cache.title2"
+msgstr "シェーダーキャッシュがクリアされました"
+
+msgid "label.clear_shader_cache.message2"
+msgstr "シェーダーキャッシュがクリアされました。"
+
+msgid "label.enhanced_transform_inspector.local_position"
+msgstr "位置"
+
+msgid "label.enhanced_transform_inspector.local_rotation"
+msgstr "回転"
+
+msgid "label.enhanced_transform_inspector.local_scale"
+msgstr "スケール"
+
+msgid "label.enhanced_transform_inspector.local_space"
+msgstr "ローカル座標系"
+
+msgid "label.enhanced_transform_inspector.global_space"
+msgstr "ワールド座標系"
+
+msgid "label.enhanced_transform_inspector.global_position"
+msgstr "位置"
+
+msgid "label.enhanced_transform_inspector.global_rotation"
+msgstr "回転"
+
+msgid "label.enhanced_transform_inspector.global_scale"
+msgstr "スケール"
+
+msgid "label.enhanced_transform_inspector.reset_position"
+msgstr "位置をリセット"
+
+msgid "label.enhanced_transform_inspector.reset_rotation"
+msgstr "回転をリセット"
+
+msgid "label.enhanced_transform_inspector.reset_scale"
+msgstr "スケールをリセット"
+
+msgid "label.enhanced_transform_inspector.reset_all"
+msgstr "すべてリセット"
+
+msgid "label.enhanced_transform_inspector.copy_transform"
+msgstr "コピー"
+
+msgid "label.enhanced_transform_inspector.paste_transform"
+msgstr "貼り付け"
+
+msgid "label.enhanced_transform_inspector.random_position"
+msgstr "ランダム位置"
+
+msgid "label.enhanced_transform_inspector.random_rotation"
+msgstr "ランダム回転"
+
+msgid "label.enhanced_transform_inspector.random_scale"
+msgstr "ランダムスケール"
+
+msgid "label.enhanced_transform_inspector.random_all"
+msgstr "すべてランダム"
+
+msgid "label.enhanced_transform_inspector.default_ui"
+msgstr "デフォルトUI"
+
+msgid "label.enhanced_transform_inspector.other"
+msgstr "その他"
+
+msgid "label.enhanced_transform_inspector.father"
+msgstr "親"
+
+msgid "label.enhanced_transform_inspector.align_to_parent"
+msgstr "親に合わせる"
+
+msgid "label.enhanced_transform_inspector.align_to_ground"
+msgstr "地面に合わせる"
+
+msgid "label.enhanced_transform_inspector.hierarchy_path"
+msgstr "ヒエラルキーパス"
+
+msgid "label.enhanced_transform_inspector.children"
+msgstr "子"
+
+msgid "label.enhanced_transform_inspector.bounds_size"
+msgstr "バウンズサイズ"
+
+msgid "label.enhanced_transform_inspector.align_mode"
+msgstr "整列モード"
+
+msgid "label.enhanced_transform_inspector.clear_parent"
+msgstr "親を解除"
+
+msgid "label.enhanced_transform_inspector.help"
+msgstr "ヘルプ"
+
+msgid "label.enhanced_transform_inspector.helpText"
+msgstr "=x, E(x) -> 絶対値設定\n+x, A(x) -> 加算\n*x, M(x) -> 乗算\n/x, D(x) -> 除算\nL(start, step) -> 線形シーケンス\nR(min, max) -> ランダム\nI(start, end) -> 補間\ni(start, end) -> 逆補間\nLL(min, max) -> クランプ\nRR(center, step) -> ミラー\nTT(start, count) -> ステップシーケンス\nP(start, end) -> ピンポン\nNN(origin, step) -> 距離ベース\nAA(centerAngle, step) -> 角度ベース\nN(scale, min, max) -> ノイズ"
+
+msgid "label.copy"
+msgstr "コピー"
+
+msgid "label.paste"
+msgstr "貼り付け"
+
+msgid "label.copy_euler_angles"
+msgstr "オイラー角をコピー"
+
+msgid "label.copy_quaternion"
+msgstr "クォータニオンをコピー"
+
+msgid "label.copy_property_path"
+msgstr "プロパティパスをコピー"
+
+msgid "label.search_for_same_property"
+msgstr "同じプロパティを検索"
+
+msgid "unity:label.position"
+msgstr "Position"
+
+msgid "unity:label.rotation"
+msgstr "Rotation"
+
+msgid "unity:label.scale"
+msgstr "Scale"
+
+msgid "label.enhanced_transform_inspector.scale_link_enable"
+msgstr "比率を固定する"
+
+msgid "label.enhanced_transform_inspector.scale_link_disable"
+msgstr "比率の固定を解除する"
+
+msgid "label.import_watcher.color"
+msgstr "ハイライト色"
+
+msgid "label.import_watcher.duration"
+msgstr "ハイライトの持続時間"
+
+msgid "label.import_watcher.file_extension_colors"
+msgstr "ファイル拡張子のハイライト色"
+
+msgid "label.preferences_page.allow_async_compilation"
+msgstr "非同期コンパイルを許可"
+
+msgid "label.preferences_page.delete_selected_warn_window"
+msgstr "選択項目削除の警告ウィンドウ"
+
+msgid "label.preferences_page.enable_discord_rich_presence"
+msgstr "Discord リッチプレゼンスを有効にする"
+
+msgid "label.preferences_page.import_watcher"
+msgstr "インポートウォッチャー"
+
+msgid "label.refresh"
+msgstr "再読み込み"
+
+msgid "label.clear"
+msgstr "クリア"
+
+msgid "label.delete_record.path"
+msgstr "パス: "
+
+msgid "label.delete_record.guid"
+msgstr "GUID: "
+
+msgid "label.delete_record.ext"
+msgstr "拡張子: "
+
+msgid "label.delete_record.time"
+msgstr "時間: "
+
+msgid "label.delete_record.copy_path"
+msgstr "パスをコピー"
+
+msgid "label.delete_record.copy_guid"
+msgstr "GUID をコピー"
+
+msgid "label.delete_record.unknown"
+msgstr "(不明)"
+
+msgid "label.delete_record.none"
+msgstr "(なし)"
+
+msgid "label.import_watcher.settings"
+msgstr "設定"
+
+msgid "label.import_watcher.no_import_log"
+msgstr "インポートログはありません。"
+
+msgid "label.delete_record.no_delete_history"
+msgstr "削除履歴はありません。"
+
+msgid "label.import_watcher.max_sessions"
+msgstr "最大履歴セッション数"
+
+msgid "label.enhanced_transform_database.info"
+msgstr "このアセットは、Enhanced Transform の追加データを保存します。"
+
+msgid "label.enhanced_transform_inspector.position_decimal_precision"
+msgstr "位置の小数点以下の桁数"
+
+msgid "label.enhanced_transform_inspector.rotation_decimal_precision"
+msgstr "回転の小数点以下の桁数"
+
+msgid "label.enhanced_transform_inspector.scale_decimal_precision"
+msgstr "スケールの小数点以下の桁数"
+
+msgid "label.import_watcher.clear_import_log_title"
+msgstr "インポートログをクリア"
+
+msgid "label.import_watcher.clear_import_log_message"
+msgstr "すべてのインポートログを消去しますか？"
+
+msgid "label.cancel"
+msgstr "キャンセル"
+
+msgid "label.delete_history_window.clear_delete_history_title"
+msgstr "削除履歴をクリア"
+
+msgid "label.delete_history_window.clear_delete_history_message"
+msgstr "すべての削除履歴を消去しますか？"
+
+msgid "label.enhanced_transform_inspector.lock_transform"
+msgstr "Transform をロック"
+
+msgid "label.enhanced_transform_inspector.imgui"
+msgstr "Unity はプレハブのオーバーライドで IMGUI しかサポートしていないため、基本機能のみ利用できます。"
+
+msgid "label.delete_history_manager.max_records"
+msgstr "最大記録数"
+
+msgid "label.delete_history_manager"
+msgstr "削除履歴"
+
+msgid "label.upm_installer_window.packages"
+msgstr "パッケージ"
+
+msgid "label.list_empty"
+msgstr "項目がありません"
+

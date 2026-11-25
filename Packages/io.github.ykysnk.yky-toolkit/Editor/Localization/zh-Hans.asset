@@ -1,0 +1,582 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6d4aceda1b14230b2aad2be71d6691b, type: 3}
+  m_Name: zh-Hans
+  m_EditorClassIdentifier: 
+  localizationID: io.github.ykysnk.yky-toolkit
+  displayName: "\u7B80\u4F53\u4E2D\u6587"
+  translates:
+  - key: label.language
+    translate: "\u8BED\u8A00"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.unity_resource_monitor.type
+    translate: "\u7C7B\u578B"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.unity_resource_monitor.value
+    translate: "\u503C"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.upm_installer_window.install
+    translate: "\u5B89\u88C5"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.upm_installer_window.remove
+    translate: "\u5220\u9664"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.upm_installer_window.update
+    translate: "\u66F4\u65B0"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.upm_installer_window.clear
+    translate: "\u6E05\u9664"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.upm_installer_window.check_and_upgrade
+    translate: "\u68C0\u67E5\u66F4\u65B0\u5E76\u5347\u7EA7\u6240\u6709 UPM \u5305"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.upm_installer_package.name
+    translate: "\u540D\u79F0"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.upm_installer_package.version
+    translate: "\u7248\u672C\uFF08\u53EF\u9009\uFF09"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.upm_installer_window.create_and_copy
+    translate: "\u521B\u5EFA\u5E76\u590D\u5236"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.upm_installer_window.package_list_name
+    translate: "\u5305\u5217\u8868\u540D\u79F0"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.upm_installer_window.package_list_maker
+    translate: "\u5305\u5217\u8868\u751F\u6210\u5668"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.upm_installer_window.package_list
+    translate: "\u5305\u5217\u8868"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.upm_installer_window.import
+    translate: "\u5BFC\u5165"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.upm_installer_window.remove_selected
+    translate: "\u5220\u9664\u6240\u9009"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.upm_package_list_wrapper.packages
+    translate: "\u5305"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.upm_installer_window.import_to_maker
+    translate: "\u5BFC\u5165\u5230\u751F\u6210\u5668"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.upm_installer_window.copy
+    translate: "\u590D\u5236"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.new_delete.title
+    translate: "\u5220\u9664\u6240\u9009\u8D44\u6E90"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.new_delete.message
+    translate: "{0}\n\n\u5220\u9664\u8D44\u6E90\u540E\u65E0\u6CD5\u64A4\u9500\u3002"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.new_delete.ok
+    translate: "\u5220\u9664"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.new_delete.cancel
+    translate: "\u53D6\u6D88"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.empty_folder_clear.no_empty_folders
+    translate: "\u672A\u627E\u5230\u7A7A\u6587\u4EF6\u5939\u3002"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.empty_folder_clear.has_empty_folders
+    translate: "\u627E\u5230 {0} \u4E2A\u7A7A\u6587\u4EF6\u5939\u3002"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.empty_folder_clear.ok
+    translate: "\u6E05\u9664"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.empty_folder_clear.cancel
+    translate: "\u53D6\u6D88"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.empty_folder_clear.title
+    translate: "\u6E05\u9664\u7A7A\u6587\u4EF6\u5939"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.clear_shader_cache.title
+    translate: "\u6E05\u9664\u7740\u8272\u5668\u7F13\u5B58"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.clear_shader_cache.message
+    translate: "\u8981\u6E05\u9664\u7740\u8272\u5668\u7F13\u5B58\u5417\uFF1F\nUnity
+      \u7F16\u8F91\u5668\u542F\u52A8\u65F6\u53EF\u80FD\u4F1A\u91CD\u65B0\u6784\u5EFA\u5168\u90E8\u7740\u8272\u5668\u7F13\u5B58\u3002\n\n\u6B64\u64CD\u4F5C\u65E0\u6CD5\u64A4\u9500\u3002"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.clear_shader_cache.ok
+    translate: "\u6E05\u9664"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.clear_shader_cache.cancel
+    translate: "\u53D6\u6D88"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.clear_shader_cache.title2
+    translate: "\u7740\u8272\u5668\u7F13\u5B58\u5DF2\u6E05\u9664"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.clear_shader_cache.message2
+    translate: "\u7740\u8272\u5668\u7F13\u5B58\u5DF2\u6E05\u9664\u3002"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.local_position
+    translate: "\u4F4D\u7F6E"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.local_rotation
+    translate: "\u65CB\u8F6C"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.local_scale
+    translate: "\u7F29\u653E"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.local_space
+    translate: "\u5C40\u90E8\u7A7A\u95F4"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.global_space
+    translate: "\u4E16\u754C\u7A7A\u95F4"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.global_position
+    translate: "\u4F4D\u7F6E"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.global_rotation
+    translate: "\u65CB\u8F6C"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.global_scale
+    translate: "\u7F29\u653E"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.reset_position
+    translate: "\u91CD\u7F6E\u4F4D\u7F6E"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.reset_rotation
+    translate: "\u91CD\u7F6E\u65CB\u8F6C"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.reset_scale
+    translate: "\u91CD\u7F6E\u7F29\u653E"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.reset_all
+    translate: "\u5168\u90E8\u91CD\u7F6E"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.copy_transform
+    translate: "\u590D\u5236"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.paste_transform
+    translate: "\u7C98\u8D34"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.random_position
+    translate: "\u968F\u673A\u4F4D\u7F6E"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.random_rotation
+    translate: "\u968F\u673A\u65CB\u8F6C"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.random_scale
+    translate: "\u968F\u673A\u7F29\u653E"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.random_all
+    translate: "\u5168\u90E8\u968F\u673A"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.default_ui
+    translate: "\u9ED8\u8BA4 UI"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.other
+    translate: "\u5176\u4ED6"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.father
+    translate: "\u7236\u7EA7"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.align_to_parent
+    translate: "\u5BF9\u9F50\u5230\u7236\u7EA7"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.align_to_ground
+    translate: "\u5BF9\u9F50\u5230\u5730\u9762"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.hierarchy_path
+    translate: "\u5C42\u7EA7\u8DEF\u5F84"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.children
+    translate: "\u5B50\u7EA7"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.bounds_size
+    translate: "\u8FB9\u754C\u5927\u5C0F"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.align_mode
+    translate: "\u5BF9\u9F50\u6A21\u5F0F"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.clear_parent
+    translate: "\u6E05\u9664\u7236\u7EA7"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help
+    translate: "\u5E2E\u52A9"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.helpText
+    translate: "=x, E(x) -> \u7EDD\u5BF9\u503C\n+x, A(x) -> \u52A0\u6CD5\n*x, M(x)
+      -> \u4E58\u6CD5\n/x, D(x) -> \u9664\u6CD5\nL(start, step) -> \u7EBF\u6027\u5E8F\u5217\nR(min,
+      max) -> \u968F\u673A\nI(start, end) -> \u63D2\u503C\ni(start, end) -> \u53CD\u5411\u63D2\u503C\nLL(min,
+      max) -> \u9650\u5236\nRR(center, step) -> \u955C\u50CF\nTT(start, count) ->
+      \u6B65\u8FDB\u5E8F\u5217\nP(start, end) -> \u4E52\u4E53\nNN(origin, step) ->
+      \u57FA\u4E8E\u8DDD\u79BB\nAA(centerAngle, step) -> \u57FA\u4E8E\u89D2\u5EA6\nN(scale,
+      min, max) -> \u566A\u58F0"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.copy
+    translate: "\u590D\u5236"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.paste
+    translate: "\u7C98\u8D34"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.copy_euler_angles
+    translate: "\u590D\u5236\u6B27\u62C9\u89D2"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.copy_quaternion
+    translate: "\u590D\u5236\u56DB\u5143\u6570"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.copy_property_path
+    translate: "\u590D\u5236\u5C5E\u6027\u8DEF\u5F84"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.search_for_same_property
+    translate: "\u641C\u7D22\u76F8\u540C\u5C5E\u6027"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: unity:label.position
+    translate: Position
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: unity:label.rotation
+    translate: Rotation
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: unity:label.scale
+    translate: Scale
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.scale_link_enable
+    translate: "\u542F\u7528\u6BD4\u4F8B\u7EA6\u675F"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.scale_link_disable
+    translate: "\u7981\u7528\u6BD4\u4F8B\u7EA6\u675F"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.import_watcher.color
+    translate: "\u9AD8\u4EAE\u989C\u8272"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.import_watcher.duration
+    translate: "\u9AD8\u4EAE\u6301\u7EED\u65F6\u95F4"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.import_watcher.file_extension_colors
+    translate: "\u6587\u4EF6\u6269\u5C55\u540D\u7684\u9AD8\u4EAE\u989C\u8272"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.preferences_page.allow_async_compilation
+    translate: "\u5141\u8BB8\u5F02\u6B65\u7F16\u8BD1"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.preferences_page.delete_selected_warn_window
+    translate: "\u5220\u9664\u6240\u9009\u65F6\u7684\u8B66\u544A\u7A97\u53E3"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.preferences_page.enable_discord_rich_presence
+    translate: "\u542F\u7528 Discord Rich Presence"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.preferences_page.import_watcher
+    translate: "\u5BFC\u5165\u76D1\u89C6\u5668"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.refresh
+    translate: "\u5237\u65B0"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.clear
+    translate: "\u6E05\u9664"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.delete_record.path
+    translate: "\u8DEF\u5F84: "
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.delete_record.guid
+    translate: 'GUID: '
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.delete_record.ext
+    translate: "\u6269\u5C55\u540D: "
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.delete_record.time
+    translate: "\u65F6\u95F4: "
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.delete_record.copy_path
+    translate: "\u590D\u5236\u8DEF\u5F84"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.delete_record.copy_guid
+    translate: "\u590D\u5236 GUID"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.delete_record.unknown
+    translate: "\uFF08\u672A\u77E5\uFF09"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.delete_record.none
+    translate: "\uFF08\u65E0\uFF09"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.import_watcher.settings
+    translate: "\u8BBE\u7F6E"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.import_watcher.no_import_log
+    translate: "\u6CA1\u6709\u5BFC\u5165\u65E5\u5FD7\u3002"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.delete_record.no_delete_history
+    translate: "\u6CA1\u6709\u5220\u9664\u5386\u53F2\u3002"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.import_watcher.max_sessions
+    translate: "\u6700\u5927\u5386\u53F2\u4F1A\u8BDD\u6570"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_database.info
+    translate: "\u6B64\u8D44\u6E90\u4FDD\u5B58\u589E\u5F3A\u53D8\u6362\u7684\u989D\u5916\u6570\u636E\u3002"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.position_decimal_precision
+    translate: "\u4F4D\u7F6E\u5C0F\u6570\u4F4D\u6570"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.rotation_decimal_precision
+    translate: "\u65CB\u8F6C\u5C0F\u6570\u4F4D\u6570"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.scale_decimal_precision
+    translate: "\u7F29\u653E\u5C0F\u6570\u4F4D\u6570"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.import_watcher.clear_import_log_title
+    translate: "\u6E05\u9664\u5BFC\u5165\u65E5\u5FD7"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.import_watcher.clear_import_log_message
+    translate: "\u786E\u5B9A\u8981\u6E05\u9664\u6240\u6709\u5BFC\u5165\u65E5\u5FD7\u8BB0\u5F55\u5417\uFF1F"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.cancel
+    translate: "\u53D6\u6D88"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.delete_history_window.clear_delete_history_title
+    translate: "\u6E05\u9664\u5220\u9664\u5386\u53F2"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.delete_history_window.clear_delete_history_message
+    translate: "\u786E\u5B9A\u8981\u6E05\u9664\u6240\u6709\u5220\u9664\u5386\u53F2\u8BB0\u5F55\u5417\uFF1F"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.lock_transform
+    translate: "\u9501\u5B9A\u53D8\u6362"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.imgui
+    translate: "Unity \u4EC5\u5728\u9884\u5236\u4F53\u8986\u76D6\u4E2D\u652F\u6301
+      IMGUI\uFF0C\u56E0\u6B64\u53EA\u80FD\u4F7F\u7528\u57FA\u672C\u529F\u80FD\u3002"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.delete_history_manager.max_records
+    translate: "\u6700\u5927\u8BB0\u5F55\u6570"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.delete_history_manager
+    translate: "\u5220\u9664\u5386\u53F2"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.upm_installer_window.packages
+    translate: "\u5305"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.list_empty
+    translate: "\u65E0\u9879\u76EE"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  jsonFile: {fileID: 0}
+  poFile: {fileID: 0}

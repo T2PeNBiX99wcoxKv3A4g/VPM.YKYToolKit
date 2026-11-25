@@ -17,7 +17,7 @@ MonoBehaviour:
   translates:
   - key: label.language
     translate: Language
-    tooltip: Change your target language in the editor.
+    tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
   - key: label.unity_resource_monitor.type
@@ -110,13 +110,8 @@ MonoBehaviour:
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
-  - key: label.upm_installer_window.remove
-    translate: Remove
-    tooltip: 
-    useTooltip: 0
-    tooltipSuffix: :tooltip
   - key: label.new_delete.title
-    translate: Delete select assets
+    translate: Delete selected assets
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
@@ -124,7 +119,7 @@ MonoBehaviour:
     translate: '{0}
 
 
-      You cannot undo the delete assets action.'
+      Deleting assets cannot be undone.'
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
@@ -169,13 +164,13 @@ MonoBehaviour:
     useTooltip: 0
     tooltipSuffix: :tooltip
   - key: label.clear_shader_cache.message
-    translate: 'Are you sure want to clear the shader cache?
+    translate: 'Do you want to clear the shader cache?
 
-      Unity may rebuild
-      all shader cache when unity editor is start.
+      Unity may rebuild the
+      whole shader cache when the editor starts.
 
 
-      You cannot undo the action.'
+      This cannot be undone.'
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
@@ -201,17 +196,17 @@ MonoBehaviour:
     tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.local_position
     translate: Position
-    tooltip: The local position of this GameObject relative to the parent.
+    tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.local_rotation
     translate: Rotation
-    tooltip: The local rotation of this GameObject relative to the parent.
+    tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.local_scale
     translate: Scale
-    tooltip: The local scale of this GameObject relative to the parent.
+    tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.local_space
@@ -226,17 +221,17 @@ MonoBehaviour:
     tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.global_position
     translate: Position
-    tooltip: The global position of this GameObject.
+    tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.global_rotation
     translate: Rotation
-    tooltip: The global rotation of this GameObject.
+    tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.global_scale
     translate: Scale
-    tooltip: The lossy global scale of this GameObject. (Is lossy)
+    tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.reset_position
@@ -349,7 +344,7 @@ MonoBehaviour:
 
       +x, A(x) -> Additive
 
-      *x, M(X)
+      *x, M(x)
       -> Multiply
 
       /x, D(x) -> Division
@@ -409,23 +404,23 @@ MonoBehaviour:
     useTooltip: 0
     tooltipSuffix: :tooltip
   - key: label.search_for_same_property
-    translate: Search for same Property
+    translate: Search for Same Property
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
   - key: unity:label.position
     translate: Position
-    tooltip: The local position of this GameObject relative to the parent.
+    tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
   - key: unity:label.rotation
     translate: Rotation
-    tooltip: The local rotation of this Game Object relative to the parent.
+    tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
   - key: unity:label.scale
     translate: Scale
-    tooltip: The local scaling of this GameObject relative to the parent.
+    tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.scale_link_enable
@@ -573,11 +568,6 @@ MonoBehaviour:
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
-  - key: label.clear
-    translate: Clear
-    tooltip: 
-    useTooltip: 0
-    tooltipSuffix: :tooltip
   - key: label.cancel
     translate: Cancel
     tooltip: 
@@ -599,8 +589,8 @@ MonoBehaviour:
     useTooltip: 0
     tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.imgui
-    translate: Because Unity only supports imgui in prefab overrides. So only basic
-      features are supported.
+    translate: Unity only supports IMGUI for prefab overrides, so only the basic
+      features are available.
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
@@ -610,7 +600,7 @@ MonoBehaviour:
     useTooltip: 0
     tooltipSuffix: :tooltip
   - key: label.delete_history_manager
-    translate: Delete History Manager
+    translate: Delete History
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
@@ -624,5 +614,5 @@ MonoBehaviour:
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
-  jsonFile: {fileID: 0}
-  poFile: {fileID: 0}
+  jsonFile: {fileID: 4900000, guid: 6e72198484143e7449ee76937982b4cc, type: 3}
+  poFile: {fileID: 9010515335742159986, guid: 220dc13c173d4294c93efe037715c538, type: 3}

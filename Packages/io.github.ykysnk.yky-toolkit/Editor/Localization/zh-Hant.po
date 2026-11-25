@@ -1,0 +1,341 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh-Hant\n"
+
+msgid "label.language"
+msgstr "語言"
+
+msgid "label.unity_resource_monitor.type"
+msgstr "類型"
+
+msgid "label.unity_resource_monitor.value"
+msgstr "值"
+
+msgid "label.upm_installer_window.install"
+msgstr "安裝"
+
+msgid "label.upm_installer_window.remove"
+msgstr "刪除"
+
+msgid "label.upm_installer_window.update"
+msgstr "更新"
+
+msgid "label.upm_installer_window.clear"
+msgstr "清除"
+
+msgid "label.upm_installer_window.check_and_upgrade"
+msgstr "檢查更新並升級所有 UPM 套件"
+
+msgid "label.upm_installer_package.name"
+msgstr "名稱"
+
+msgid "label.upm_installer_package.version"
+msgstr "版本（選填）"
+
+msgid "label.upm_installer_window.create_and_copy"
+msgstr "建立並複製"
+
+msgid "label.upm_installer_window.package_list_name"
+msgstr "套件清單名稱"
+
+msgid "label.upm_installer_window.package_list_maker"
+msgstr "套件清單產生器"
+
+msgid "label.upm_installer_window.package_list"
+msgstr "套件清單"
+
+msgid "label.upm_installer_window.import"
+msgstr "匯入"
+
+msgid "label.upm_installer_window.remove_selected"
+msgstr "刪除選取項目"
+
+msgid "label.upm_package_list_wrapper.packages"
+msgstr "套件"
+
+msgid "label.upm_installer_window.import_to_maker"
+msgstr "匯入至產生器"
+
+msgid "label.upm_installer_window.copy"
+msgstr "複製"
+
+msgid "label.new_delete.title"
+msgstr "刪除所選資產"
+
+msgid "label.new_delete.message"
+msgstr "{0}\n\n刪除資產後無法復原。"
+
+msgid "label.new_delete.ok"
+msgstr "刪除"
+
+msgid "label.new_delete.cancel"
+msgstr "取消"
+
+msgid "label.empty_folder_clear.no_empty_folders"
+msgstr "找不到空資料夾。"
+
+msgid "label.empty_folder_clear.has_empty_folders"
+msgstr "找到 {0} 個空資料夾。"
+
+msgid "label.empty_folder_clear.ok"
+msgstr "清除"
+
+msgid "label.empty_folder_clear.cancel"
+msgstr "取消"
+
+msgid "label.empty_folder_clear.title"
+msgstr "清除空資料夾"
+
+msgid "label.clear_shader_cache.title"
+msgstr "清除著色器快取"
+
+msgid "label.clear_shader_cache.message"
+msgstr "要清除著色器快取嗎？\nUnity 編輯器啟動時可能會重新建置全部著色器快取。\n\n此操作無法復原。"
+
+msgid "label.clear_shader_cache.ok"
+msgstr "清除"
+
+msgid "label.clear_shader_cache.cancel"
+msgstr "取消"
+
+msgid "label.clear_shader_cache.title2"
+msgstr "著色器快取已清除"
+
+msgid "label.clear_shader_cache.message2"
+msgstr "著色器快取已清除。"
+
+msgid "label.enhanced_transform_inspector.local_position"
+msgstr "位置"
+
+msgid "label.enhanced_transform_inspector.local_rotation"
+msgstr "旋轉"
+
+msgid "label.enhanced_transform_inspector.local_scale"
+msgstr "縮放"
+
+msgid "label.enhanced_transform_inspector.local_space"
+msgstr "局部空間"
+
+msgid "label.enhanced_transform_inspector.global_space"
+msgstr "世界空間"
+
+msgid "label.enhanced_transform_inspector.global_position"
+msgstr "位置"
+
+msgid "label.enhanced_transform_inspector.global_rotation"
+msgstr "旋轉"
+
+msgid "label.enhanced_transform_inspector.global_scale"
+msgstr "縮放"
+
+msgid "label.enhanced_transform_inspector.reset_position"
+msgstr "重設位置"
+
+msgid "label.enhanced_transform_inspector.reset_rotation"
+msgstr "重設旋轉"
+
+msgid "label.enhanced_transform_inspector.reset_scale"
+msgstr "重設縮放"
+
+msgid "label.enhanced_transform_inspector.reset_all"
+msgstr "全部重設"
+
+msgid "label.enhanced_transform_inspector.copy_transform"
+msgstr "複製"
+
+msgid "label.enhanced_transform_inspector.paste_transform"
+msgstr "貼上"
+
+msgid "label.enhanced_transform_inspector.random_position"
+msgstr "隨機位置"
+
+msgid "label.enhanced_transform_inspector.random_rotation"
+msgstr "隨機旋轉"
+
+msgid "label.enhanced_transform_inspector.random_scale"
+msgstr "隨機縮放"
+
+msgid "label.enhanced_transform_inspector.random_all"
+msgstr "全部隨機"
+
+msgid "label.enhanced_transform_inspector.default_ui"
+msgstr "預設 UI"
+
+msgid "label.enhanced_transform_inspector.other"
+msgstr "其他"
+
+msgid "label.enhanced_transform_inspector.father"
+msgstr "父物件"
+
+msgid "label.enhanced_transform_inspector.align_to_parent"
+msgstr "對齊至父物件"
+
+msgid "label.enhanced_transform_inspector.align_to_ground"
+msgstr "對齊至地面"
+
+msgid "label.enhanced_transform_inspector.hierarchy_path"
+msgstr "階層路徑"
+
+msgid "label.enhanced_transform_inspector.children"
+msgstr "子物件"
+
+msgid "label.enhanced_transform_inspector.bounds_size"
+msgstr "邊界大小"
+
+msgid "label.enhanced_transform_inspector.align_mode"
+msgstr "對齊模式"
+
+msgid "label.enhanced_transform_inspector.clear_parent"
+msgstr "清除父物件"
+
+msgid "label.enhanced_transform_inspector.help"
+msgstr "說明"
+
+msgid "label.enhanced_transform_inspector.helpText"
+msgstr "=x, E(x) -> 絕對值\n+x, A(x) -> 加法\n*x, M(x) -> 乘法\n/x, D(x) -> 除法\nL(start, step) -> 線性序列\nR(min, max) -> 隨機\nI(start, end) -> 插值\ni(start, end) -> 反向插值\nLL(min, max) -> 限制\nRR(center, step) -> 鏡像\nTT(start, count) -> 步進序列\nP(start, end) -> 乒乓\nNN(origin, step) -> 基於距離\nAA(centerAngle, step) -> 基於角度\nN(scale, min, max) -> 雜訊"
+
+msgid "label.copy"
+msgstr "複製"
+
+msgid "label.paste"
+msgstr "貼上"
+
+msgid "label.copy_euler_angles"
+msgstr "複製歐拉角"
+
+msgid "label.copy_quaternion"
+msgstr "複製四元數"
+
+msgid "label.copy_property_path"
+msgstr "複製屬性路徑"
+
+msgid "label.search_for_same_property"
+msgstr "搜尋相同屬性"
+
+msgid "unity:label.position"
+msgstr "Position"
+
+msgid "unity:label.rotation"
+msgstr "Rotation"
+
+msgid "unity:label.scale"
+msgstr "Scale"
+
+msgid "label.enhanced_transform_inspector.scale_link_enable"
+msgstr "啟用比例約束"
+
+msgid "label.enhanced_transform_inspector.scale_link_disable"
+msgstr "停用比例約束"
+
+msgid "label.import_watcher.color"
+msgstr "醒目提示顏色"
+
+msgid "label.import_watcher.duration"
+msgstr "醒目提示持續時間"
+
+msgid "label.import_watcher.file_extension_colors"
+msgstr "副檔名的醒目提示顏色"
+
+msgid "label.preferences_page.allow_async_compilation"
+msgstr "允許非同步編譯"
+
+msgid "label.preferences_page.delete_selected_warn_window"
+msgstr "刪除選取項目時的警告視窗"
+
+msgid "label.preferences_page.enable_discord_rich_presence"
+msgstr "啟用 Discord Rich Presence"
+
+msgid "label.preferences_page.import_watcher"
+msgstr "匯入監視器"
+
+msgid "label.refresh"
+msgstr "重新整理"
+
+msgid "label.clear"
+msgstr "清除"
+
+msgid "label.delete_record.path"
+msgstr "路徑: "
+
+msgid "label.delete_record.guid"
+msgstr "GUID: "
+
+msgid "label.delete_record.ext"
+msgstr "副檔名: "
+
+msgid "label.delete_record.time"
+msgstr "時間: "
+
+msgid "label.delete_record.copy_path"
+msgstr "複製路徑"
+
+msgid "label.delete_record.copy_guid"
+msgstr "複製 GUID"
+
+msgid "label.delete_record.unknown"
+msgstr "（未知）"
+
+msgid "label.delete_record.none"
+msgstr "（無）"
+
+msgid "label.import_watcher.settings"
+msgstr "設定"
+
+msgid "label.import_watcher.no_import_log"
+msgstr "沒有匯入記錄。"
+
+msgid "label.delete_record.no_delete_history"
+msgstr "沒有刪除記錄。"
+
+msgid "label.import_watcher.max_sessions"
+msgstr "最大歷史工作階段數"
+
+msgid "label.enhanced_transform_database.info"
+msgstr "此資產儲存增強變換的額外資料。"
+
+msgid "label.enhanced_transform_inspector.position_decimal_precision"
+msgstr "位置小數位數"
+
+msgid "label.enhanced_transform_inspector.rotation_decimal_precision"
+msgstr "旋轉小數位數"
+
+msgid "label.enhanced_transform_inspector.scale_decimal_precision"
+msgstr "縮放小數位數"
+
+msgid "label.import_watcher.clear_import_log_title"
+msgstr "清除匯入記錄"
+
+msgid "label.import_watcher.clear_import_log_message"
+msgstr "確定要清除所有匯入記錄嗎？"
+
+msgid "label.cancel"
+msgstr "取消"
+
+msgid "label.delete_history_window.clear_delete_history_title"
+msgstr "清除刪除記錄"
+
+msgid "label.delete_history_window.clear_delete_history_message"
+msgstr "確定要清除所有刪除記錄嗎？"
+
+msgid "label.enhanced_transform_inspector.lock_transform"
+msgstr "鎖定變換"
+
+msgid "label.enhanced_transform_inspector.imgui"
+msgstr "Unity 僅在預製體覆寫中支援 IMGUI，因此只能使用基本功能。"
+
+msgid "label.delete_history_manager.max_records"
+msgstr "最大記錄數"
+
+msgid "label.delete_history_manager"
+msgstr "刪除歷史"
+
+msgid "label.upm_installer_window.packages"
+msgstr "套件"
+
+msgid "label.list_empty"
+msgstr "沒有項目"
+

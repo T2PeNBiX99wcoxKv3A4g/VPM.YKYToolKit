@@ -1,0 +1,341 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en-US\n"
+
+msgid "label.language"
+msgstr "Language"
+
+msgid "label.unity_resource_monitor.type"
+msgstr "Type"
+
+msgid "label.unity_resource_monitor.value"
+msgstr "Value"
+
+msgid "label.upm_installer_window.install"
+msgstr "Install"
+
+msgid "label.upm_installer_window.remove"
+msgstr "Remove"
+
+msgid "label.upm_installer_window.update"
+msgstr "Update"
+
+msgid "label.upm_installer_window.clear"
+msgstr "Clear"
+
+msgid "label.upm_installer_window.check_and_upgrade"
+msgstr "Check update then upgrade all UPM packages"
+
+msgid "label.upm_installer_package.name"
+msgstr "Name"
+
+msgid "label.upm_installer_package.version"
+msgstr "Version (opt.)"
+
+msgid "label.upm_installer_window.create_and_copy"
+msgstr "Create and copy"
+
+msgid "label.upm_installer_window.package_list_name"
+msgstr "Package List Name"
+
+msgid "label.upm_installer_window.package_list_maker"
+msgstr "Package List Maker"
+
+msgid "label.upm_installer_window.package_list"
+msgstr "Package List"
+
+msgid "label.upm_installer_window.import"
+msgstr "Import"
+
+msgid "label.upm_installer_window.remove_selected"
+msgstr "Remove Selected"
+
+msgid "label.upm_package_list_wrapper.packages"
+msgstr "Packages"
+
+msgid "label.upm_installer_window.import_to_maker"
+msgstr "Import to maker"
+
+msgid "label.upm_installer_window.copy"
+msgstr "Copy"
+
+msgid "label.new_delete.title"
+msgstr "Delete selected assets"
+
+msgid "label.new_delete.message"
+msgstr "{0}\n\nDeleting assets cannot be undone."
+
+msgid "label.new_delete.ok"
+msgstr "Delete"
+
+msgid "label.new_delete.cancel"
+msgstr "Cancel"
+
+msgid "label.empty_folder_clear.no_empty_folders"
+msgstr "No empty folders found."
+
+msgid "label.empty_folder_clear.has_empty_folders"
+msgstr "Found {0} empty folders."
+
+msgid "label.empty_folder_clear.ok"
+msgstr "Clear"
+
+msgid "label.empty_folder_clear.cancel"
+msgstr "Cancel"
+
+msgid "label.empty_folder_clear.title"
+msgstr "Clear Empty Folder"
+
+msgid "label.clear_shader_cache.title"
+msgstr "Clear Shader Cache"
+
+msgid "label.clear_shader_cache.message"
+msgstr "Do you want to clear the shader cache?\nUnity may rebuild the whole shader cache when the editor starts.\n\nThis cannot be undone."
+
+msgid "label.clear_shader_cache.ok"
+msgstr "Clear"
+
+msgid "label.clear_shader_cache.cancel"
+msgstr "Cancel"
+
+msgid "label.clear_shader_cache.title2"
+msgstr "Shader Cache Cleared"
+
+msgid "label.clear_shader_cache.message2"
+msgstr "Shader Cache has been cleared."
+
+msgid "label.enhanced_transform_inspector.local_position"
+msgstr "Position"
+
+msgid "label.enhanced_transform_inspector.local_rotation"
+msgstr "Rotation"
+
+msgid "label.enhanced_transform_inspector.local_scale"
+msgstr "Scale"
+
+msgid "label.enhanced_transform_inspector.local_space"
+msgstr "Local Space"
+
+msgid "label.enhanced_transform_inspector.global_space"
+msgstr "World Space"
+
+msgid "label.enhanced_transform_inspector.global_position"
+msgstr "Position"
+
+msgid "label.enhanced_transform_inspector.global_rotation"
+msgstr "Rotation"
+
+msgid "label.enhanced_transform_inspector.global_scale"
+msgstr "Scale"
+
+msgid "label.enhanced_transform_inspector.reset_position"
+msgstr "Reset Position"
+
+msgid "label.enhanced_transform_inspector.reset_rotation"
+msgstr "Reset Rotation"
+
+msgid "label.enhanced_transform_inspector.reset_scale"
+msgstr "Reset Scale"
+
+msgid "label.enhanced_transform_inspector.reset_all"
+msgstr "Reset All"
+
+msgid "label.enhanced_transform_inspector.copy_transform"
+msgstr "Copy"
+
+msgid "label.enhanced_transform_inspector.paste_transform"
+msgstr "Paste"
+
+msgid "label.enhanced_transform_inspector.random_position"
+msgstr "Random Position"
+
+msgid "label.enhanced_transform_inspector.random_rotation"
+msgstr "Random Rotation"
+
+msgid "label.enhanced_transform_inspector.random_scale"
+msgstr "Random Scale"
+
+msgid "label.enhanced_transform_inspector.random_all"
+msgstr "Random All"
+
+msgid "label.enhanced_transform_inspector.default_ui"
+msgstr "Default UI"
+
+msgid "label.enhanced_transform_inspector.other"
+msgstr "Other"
+
+msgid "label.enhanced_transform_inspector.father"
+msgstr "Parent"
+
+msgid "label.enhanced_transform_inspector.align_to_parent"
+msgstr "Align to Parent"
+
+msgid "label.enhanced_transform_inspector.align_to_ground"
+msgstr "Align to Ground"
+
+msgid "label.enhanced_transform_inspector.hierarchy_path"
+msgstr "Hierarchy Path"
+
+msgid "label.enhanced_transform_inspector.children"
+msgstr "Children"
+
+msgid "label.enhanced_transform_inspector.bounds_size"
+msgstr "Bounds Size"
+
+msgid "label.enhanced_transform_inspector.align_mode"
+msgstr "Align Mode"
+
+msgid "label.enhanced_transform_inspector.clear_parent"
+msgstr "Clear Parent"
+
+msgid "label.enhanced_transform_inspector.help"
+msgstr "Help"
+
+msgid "label.enhanced_transform_inspector.helpText"
+msgstr "=x, E(x) -> Absolute\n+x, A(x) -> Additive\n*x, M(x) -> Multiply\n/x, D(x) -> Division\nL(start, step) -> Linear\nR(min, max) -> Random\nI(start, end) -> Interpolate\ni(start, end) -> Interpolate Reverse\nLL(min, max) -> Clamp\nRR(center, step) -> Mirror\nTT(start, count) -> Step\nP(start, end) -> Ping Pong\nNN(origin, step) -> Distance\nAA(centerAngle, step) -> Angle\nN(scale, min, max) -> Noise"
+
+msgid "label.copy"
+msgstr "Copy"
+
+msgid "label.paste"
+msgstr "Paste"
+
+msgid "label.copy_euler_angles"
+msgstr "Copy Euler Angles"
+
+msgid "label.copy_quaternion"
+msgstr "Copy Quaternion"
+
+msgid "label.copy_property_path"
+msgstr "Copy Property Path"
+
+msgid "label.search_for_same_property"
+msgstr "Search for Same Property"
+
+msgid "unity:label.position"
+msgstr "Position"
+
+msgid "unity:label.rotation"
+msgstr "Rotation"
+
+msgid "unity:label.scale"
+msgstr "Scale"
+
+msgid "label.enhanced_transform_inspector.scale_link_enable"
+msgstr "Enable constrained proportions"
+
+msgid "label.enhanced_transform_inspector.scale_link_disable"
+msgstr "Disable constrained proportions"
+
+msgid "label.import_watcher.color"
+msgstr "Highlight Color"
+
+msgid "label.import_watcher.duration"
+msgstr "Highlight Duration"
+
+msgid "label.import_watcher.file_extension_colors"
+msgstr "Highlight colors for file extensions"
+
+msgid "label.preferences_page.allow_async_compilation"
+msgstr "Allow Async Compilation"
+
+msgid "label.preferences_page.delete_selected_warn_window"
+msgstr "Warning Window for Delete Selected"
+
+msgid "label.preferences_page.enable_discord_rich_presence"
+msgstr "Enable Discord Rich Presence"
+
+msgid "label.preferences_page.import_watcher"
+msgstr "Import Watcher"
+
+msgid "label.refresh"
+msgstr "Refresh"
+
+msgid "label.clear"
+msgstr "Clear"
+
+msgid "label.delete_record.path"
+msgstr "Path: "
+
+msgid "label.delete_record.guid"
+msgstr "GUID: "
+
+msgid "label.delete_record.ext"
+msgstr "Ext: "
+
+msgid "label.delete_record.time"
+msgstr "Time: "
+
+msgid "label.delete_record.copy_path"
+msgstr "Copy Path"
+
+msgid "label.delete_record.copy_guid"
+msgstr "Copy GUID"
+
+msgid "label.delete_record.unknown"
+msgstr "(unknown)"
+
+msgid "label.delete_record.none"
+msgstr "(none)"
+
+msgid "label.import_watcher.settings"
+msgstr "Settings"
+
+msgid "label.import_watcher.no_import_log"
+msgstr "No import log."
+
+msgid "label.delete_record.no_delete_history"
+msgstr "No delete history."
+
+msgid "label.import_watcher.max_sessions"
+msgstr "Max History Sessions"
+
+msgid "label.enhanced_transform_database.info"
+msgstr "This asset stores extra data for the enhanced transform."
+
+msgid "label.enhanced_transform_inspector.position_decimal_precision"
+msgstr "Position Decimal Places"
+
+msgid "label.enhanced_transform_inspector.rotation_decimal_precision"
+msgstr "Rotation Decimal Places"
+
+msgid "label.enhanced_transform_inspector.scale_decimal_precision"
+msgstr "Scale Decimal Places"
+
+msgid "label.import_watcher.clear_import_log_title"
+msgstr "Clear Import Log"
+
+msgid "label.import_watcher.clear_import_log_message"
+msgstr "Are you sure you want to clear all import log records?"
+
+msgid "label.cancel"
+msgstr "Cancel"
+
+msgid "label.delete_history_window.clear_delete_history_title"
+msgstr "Clear Delete History"
+
+msgid "label.delete_history_window.clear_delete_history_message"
+msgstr "Are you sure you want to clear all delete history records?"
+
+msgid "label.enhanced_transform_inspector.lock_transform"
+msgstr "Transform Lock"
+
+msgid "label.enhanced_transform_inspector.imgui"
+msgstr "Unity only supports IMGUI for prefab overrides, so only the basic features are available."
+
+msgid "label.delete_history_manager.max_records"
+msgstr "Max Records"
+
+msgid "label.delete_history_manager"
+msgstr "Delete History"
+
+msgid "label.upm_installer_window.packages"
+msgstr "Packages"
+
+msgid "label.list_empty"
+msgstr "No items"
+
