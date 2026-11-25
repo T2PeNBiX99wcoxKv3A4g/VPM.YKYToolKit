@@ -12,6 +12,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 {
     internal static class CopyAllComponents
     {
+        private const string UndoName = "Paste All Components";
+
         [MenuItem("GameObject/YKYToolkit/Copy All Components", false, Util.Three)]
         [MenuItem("CONTEXT/Component/YKYToolkit/Copy All Components", false, Util.One2)]
         private static void Copy()
@@ -39,7 +41,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var pasteObject = selectedObjects[0];
             var copyDataJson = EditorGUIUtility.systemCopyBuffer;
             if (string.IsNullOrEmpty(copyDataJson)) return;
-            PasteAsync(copyDataJson, pasteObject).Forget();
+            PasteAsync(copyDataJson, pasteObject, false).Forget();
         }
 
         [MenuItem("GameObject/YKYToolkit/Paste All Components With Transform", false, Util.Three)]
@@ -52,75 +54,60 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var pasteObject = selectedObjects[0];
             var copyDataJson = EditorGUIUtility.systemCopyBuffer;
             if (string.IsNullOrEmpty(copyDataJson)) return;
-            PasteAsyncWithTransform(copyDataJson, pasteObject).Forget();
+            PasteAsync(copyDataJson, pasteObject, true).Forget();
         }
 
-        private static async UniTask PasteAsync(string copyDataJson, GameObject pasteObject)
+        private static async UniTask PasteAsync(string copyDataJson, GameObject pasteObject, bool includeTransform)
         {
-            if (JsonUtils.TryFromJson<ListWrapper<ComponentData>>(copyDataJson, out var copyData, out var exception))
+            if (!JsonUtils.TryFromJson<ListWrapper<ComponentData>>(copyDataJson, out var copyData, out var exception))
             {
-                if (copyData!.Count < 2) return;
-
-                var stopwatch = Stopwatch.StartNew();
-
-                for (var i = 1; i < copyData.Count; i++)
-                {
-                    var componentData = copyData[i];
-
-                    if (!pasteObject.TryGetComponentAtIndex(i, out var component))
-                    {
-                        if (string.IsNullOrEmpty(componentData.componentAssemblyQualifiedName)) continue;
-                        var type = Type.GetType(componentData.componentAssemblyQualifiedName);
-                        if (type == null) continue;
-                        if (!pasteObject.TryGetComponent(type, out component))
-                            component = pasteObject.AddComponent(type);
-                    }
-
-                    Try.Run(() => EditorJsonUtility.FromJsonOverwrite(componentData.componentJson, component))
-                        .OnFailure(ex =>
-                            Utils.LogError(nameof(CopyAllComponents),
-                                $"Overwrite component failed: {ex!.Message}\n{ex.StackTrace}"));
-
-                    if (stopwatch.ElapsedMilliseconds <= Util.StopwatchWaitElapsedMilliseconds) continue;
-                    await UniTask.Yield();
-                    stopwatch.Restart();
-                }
+                Utils.LogError(nameof(CopyAllComponents),
+                    $"Paste failed: {exception!.Message}\n{exception.StackTrace}");
+                return;
             }
-            else
-                Utils.LogError(nameof(CopyAllComponents), $"Paste failed: {exception!.Message}\n{exception.StackTrace}");
+
+            // The Transform is the first entry that ComponentsSelect produced; pasting without it starts after that.
+            var start = includeTransform ? 0 : 1;
+            if (copyData!.Count <= start) return;
+
+            Undo.IncrementCurrentGroup();
+            Undo.SetCurrentGroupName(UndoName);
+
+            var stopwatch = Stopwatch.StartNew();
+
+            for (var i = start; i < copyData.Count; i++)
+            {
+                var componentData = copyData[i];
+                if (!TryResolveComponent(pasteObject, i, componentData, out var component)) continue;
+
+                Undo.RecordObject(component, UndoName);
+
+                Try.Run(() => EditorJsonUtility.FromJsonOverwrite(componentData.componentJson, component))
+                    .OnFailure(ex =>
+                        Utils.LogError(nameof(CopyAllComponents),
+                            $"Overwrite component failed: {ex!.Message}\n{ex.StackTrace}"));
+
+                if (stopwatch.ElapsedMilliseconds <= Util.StopwatchWaitElapsedMilliseconds) continue;
+                await UniTask.Yield();
+                stopwatch.Restart();
+            }
         }
 
-        private static async UniTask PasteAsyncWithTransform(string copyDataJson, GameObject pasteObject)
+        private static bool TryResolveComponent(GameObject target, int index, ComponentData componentData,
+            out Component? component)
         {
-            if (JsonUtils.TryFromJson<ListWrapper<ComponentData>>(copyDataJson, out var copyData, out var exception))
-            {
-                var stopwatch = Stopwatch.StartNew();
+            // Matching by type keeps the paste correct when the component order differs from the source object; the
+            // index is only a fallback for entries without a type name.
+            var type = string.IsNullOrEmpty(componentData.componentAssemblyQualifiedName)
+                ? null
+                : Type.GetType(componentData.componentAssemblyQualifiedName);
 
-                for (var i = 0; i < copyData!.Count; i++)
-                {
-                    var componentData = copyData[i];
+            if (type == null) return target.TryGetComponentAtIndex(index, out component);
 
-                    if (!pasteObject.TryGetComponentAtIndex(i, out var component))
-                    {
-                        if (string.IsNullOrEmpty(componentData.componentAssemblyQualifiedName)) continue;
-                        var type = Type.GetType(componentData.componentAssemblyQualifiedName);
-                        if (type == null) continue;
-                        if (!pasteObject.TryGetComponent(type, out component))
-                            component = pasteObject.AddComponent(type);
-                    }
+            if (!target.TryGetComponent(type, out component))
+                component = Undo.AddComponent(target, type);
 
-                    Try.Run(() => EditorJsonUtility.FromJsonOverwrite(componentData.componentJson, component))
-                        .OnFailure(ex =>
-                            Utils.LogError(nameof(CopyAllComponents),
-                                $"Overwrite component failed: {ex!.Message}\n{ex.StackTrace}"));
-
-                    if (stopwatch.ElapsedMilliseconds <= Util.StopwatchWaitElapsedMilliseconds) continue;
-                    await UniTask.Yield();
-                    stopwatch.Restart();
-                }
-            }
-            else
-                Utils.LogError(nameof(CopyAllComponents), $"Paste failed: {exception!.Message}\n{exception.StackTrace}");
+            return component != null;
         }
 
         [Serializable]

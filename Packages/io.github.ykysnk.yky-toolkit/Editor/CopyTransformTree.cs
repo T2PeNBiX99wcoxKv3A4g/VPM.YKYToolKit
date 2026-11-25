@@ -12,7 +12,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
     internal static class CopyTransformTree
     {
         [MenuItem("GameObject/YKYToolkit/Copy Transform Tree", false, Util.Four)]
-        [MenuItem("CONTEXT/Component/YKYToolkit/Copy Transform Tree", false, Util.Twe2)]
+        [MenuItem("CONTEXT/Component/YKYToolkit/Copy Transform Tree", false, Util.Two2)]
         private static void Copy()
         {
             var selectedObjects = Selection.gameObjects;
@@ -42,7 +42,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         }
 
         [MenuItem("GameObject/YKYToolkit/Paste Transform Tree", false, Util.Four)]
-        [MenuItem("CONTEXT/Component/YKYToolkit/Paste Transform Tree", false, Util.Twe2)]
+        [MenuItem("CONTEXT/Component/YKYToolkit/Paste Transform Tree", false, Util.Two2)]
         private static void Paste()
         {
             var selectedObjects = Selection.gameObjects;
@@ -59,6 +59,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             if (JsonUtils.TryFromJson<DictionaryWrapper<string, TransformTreeData>>(copyDataJson, out var copyData,
                     out var exception))
             {
+                Undo.IncrementCurrentGroup();
+                Undo.SetCurrentGroupName("Paste Transform Tree");
+
                 var stopwatch = Stopwatch.StartNew();
 
                 foreach (var (path, data) in copyData!)
@@ -72,6 +75,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                             $"Paste failed: {pasteObject.name} does not have a child named {path}");
                         continue;
                     }
+
+                    Undo.RecordObject(found, "Paste Transform Tree");
 
                     found.localPosition = data.position;
                     found.localRotation = Quaternion.Euler(data.rotation);

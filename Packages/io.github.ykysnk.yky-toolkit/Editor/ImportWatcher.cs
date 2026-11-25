@@ -17,6 +17,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private const string ImportHighlightDuration = "YKYToolkit/ImportWatcher/Duration";
         private const string ImportHighlightFileColor = "YKYToolkit/ImportWatcher/FileColor";
         private static readonly HashSet<HighlightInfo> Highlights = new();
+        private static readonly HashSet<string> HighlightPaths = new();
+        private static readonly HashSet<string> HighlightFolders = new();
         private static readonly Color DefaultHighlightColor = new(1f, 0f, 0f, 0.10f);
 
         static ImportWatcher()
@@ -25,6 +27,24 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             if (!Load(out var infos)) return;
             Highlights.UnionWith(infos);
+            RebuildPathCache();
+        }
+
+        // The project window item callback runs for every visible item on every repaint, so the lookups use sets
+        // instead of walking the highlight list (and building "path/" strings) each time.
+        private static void RebuildPathCache()
+        {
+            HighlightPaths.Clear();
+            HighlightFolders.Clear();
+
+            foreach (var highlight in Highlights)
+            {
+                HighlightPaths.Add(highlight.path);
+
+                var folder = Path.GetDirectoryName(highlight.path);
+                while (!string.IsNullOrEmpty(folder) && HighlightFolders.Add(folder))
+                    folder = Path.GetDirectoryName(folder);
+            }
         }
 
         internal static Color HighlightColor
@@ -93,6 +113,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 if (session.records.Count > 0)
                     ImportHistoryManager.AddSession(session);
 
+                RebuildPathCache();
                 Save();
             }
 
@@ -122,7 +143,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         {
             var path = AssetDatabase.GUIDToAssetPath(guid);
 
-            if (!Highlights.Any(h => h.path == path || h.path.StartsWith(path + "/"))) return;
+            if (!HighlightPaths.Contains(path) && !HighlightFolders.Contains(path)) return;
             EditorGUI.DrawRect(rect, HighlightColor);
 
             var tint = GetColorForAsset(path);
@@ -153,13 +174,13 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private static void Save()
         {
             if (!JsonUtils.TryToJson(Wrapper.Create(Highlights), out var json, out _)) return;
-            PlayerPrefs.SetString(ImportHighlights, json);
+            EditorPrefs.SetString(ImportHighlights, json);
         }
 
         private static bool Load(out List<HighlightInfo> infos)
         {
             infos = new();
-            if (!JsonUtils.TryFromJson<ListWrapper<HighlightInfo>>(PlayerPrefs.GetString(ImportHighlights, ""),
+            if (!JsonUtils.TryFromJson<ListWrapper<HighlightInfo>>(EditorPrefs.GetString(ImportHighlights, ""),
                     out var get, out _)) return false;
             infos.AddRange(get!);
             return true;

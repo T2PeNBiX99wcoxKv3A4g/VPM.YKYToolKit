@@ -10,7 +10,6 @@ using UnityEngine;
 namespace io.github.ykysnk.ykyToolkit.Editor
 {
     [Serializable]
-    [PublicAPI]
     internal class ImportRecord
     {
         public string guid;
@@ -26,7 +25,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
     }
 
     [Serializable]
-    [PublicAPI]
     internal class ImportSession
     {
         public long unixSeconds;
@@ -64,7 +62,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         private static List<ImportSession> LoadInternal()
         {
-            var json = PlayerPrefs.GetString(ImportHistoryEditorKey);
+            var json = EditorPrefs.GetString(ImportHistoryEditorKey);
             return !JsonUtils.TryFromJson<ListWrapper<ImportSession>>(json, out var list, out _) ? new() : list!.items;
         }
 
@@ -72,7 +70,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         {
             Trim(list);
             if (!JsonUtils.TryToJson(Wrapper.Create(list), out var json, out _)) return;
-            PlayerPrefs.SetString(ImportHistoryEditorKey, json);
+            EditorPrefs.SetString(ImportHistoryEditorKey, json);
         }
 
         private static void Trim(List<ImportSession> list)

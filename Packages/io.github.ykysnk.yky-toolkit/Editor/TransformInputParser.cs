@@ -1,3 +1,4 @@
+using System.Globalization;
 using io.github.ykysnk.utils.Extensions;
 using JetBrains.Annotations;
 
@@ -60,17 +61,17 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             return s switch
             {
                 // Basic
-                _ when s.StartsWith("=") && float.TryParse(s[1..], out var v) ||
-                       s.StartsWith("E(") && float.TryParse(s.MiddlePath('(', ')'), out v)
+                _ when s.StartsWith("=") && float.TryParse(s[1..], NumberStyles.Float, CultureInfo.InvariantCulture, out var v) ||
+                       s.StartsWith("E(") && float.TryParse(s.MiddlePath('(', ')'), NumberStyles.Float, CultureInfo.InvariantCulture, out v)
                     => new(TransformInputMode.Absolute, v),
-                _ when s.StartsWith("+") && float.TryParse(s[1..], out var v) ||
-                       s.StartsWith("A(") && float.TryParse(s.MiddlePath('(', ')'), out v)
+                _ when s.StartsWith("+") && float.TryParse(s[1..], NumberStyles.Float, CultureInfo.InvariantCulture, out var v) ||
+                       s.StartsWith("A(") && float.TryParse(s.MiddlePath('(', ')'), NumberStyles.Float, CultureInfo.InvariantCulture, out v)
                     => new(TransformInputMode.Additive, v),
-                _ when s.StartsWith("*") && float.TryParse(s[1..], out var v) ||
-                       s.StartsWith("M(") && float.TryParse(s.MiddlePath('(', ')'), out v)
+                _ when s.StartsWith("*") && float.TryParse(s[1..], NumberStyles.Float, CultureInfo.InvariantCulture, out var v) ||
+                       s.StartsWith("M(") && float.TryParse(s.MiddlePath('(', ')'), NumberStyles.Float, CultureInfo.InvariantCulture, out v)
                     => new(TransformInputMode.Multiply, v),
-                _ when s.StartsWith("/") && float.TryParse(s[1..], out var v) ||
-                       s.StartsWith("D(") && float.TryParse(s.MiddlePath('(', ')'), out v)
+                _ when s.StartsWith("/") && float.TryParse(s[1..], NumberStyles.Float, CultureInfo.InvariantCulture, out var v) ||
+                       s.StartsWith("D(") && float.TryParse(s.MiddlePath('(', ')'), NumberStyles.Float, CultureInfo.InvariantCulture, out v)
                     => new(TransformInputMode.Division, v),
 
                 // Unity-like
@@ -116,8 +117,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             if (parts.Length != 2)
                 return false;
 
-            return float.TryParse(parts[0], out a) &&
-                   float.TryParse(parts[1], out b);
+            return float.TryParse(parts[0], NumberStyles.Float, CultureInfo.InvariantCulture, out a) &&
+                   float.TryParse(parts[1], NumberStyles.Float, CultureInfo.InvariantCulture, out b);
         }
 
         private static bool TryParseThree(string prefix, string s, out float a, out float b, out float c)
@@ -133,9 +134,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             if (parts.Length != 3)
                 return false;
 
-            return float.TryParse(parts[0], out a) &&
-                   float.TryParse(parts[1], out b) &&
-                   float.TryParse(parts[2], out c);
+            return float.TryParse(parts[0], NumberStyles.Float, CultureInfo.InvariantCulture, out a) &&
+                   float.TryParse(parts[1], NumberStyles.Float, CultureInfo.InvariantCulture, out b) &&
+                   float.TryParse(parts[2], NumberStyles.Float, CultureInfo.InvariantCulture, out c);
         }
     }
 }

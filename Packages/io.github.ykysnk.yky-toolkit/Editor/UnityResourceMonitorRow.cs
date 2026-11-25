@@ -23,10 +23,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             text = "- / -";
         }
 
-        public void Update(long newValue, long newNaxValue, ValueHandle valueHandler)
+        public void Update(long newValue, long newMaxValue, ValueHandle valueHandler)
         {
             value = newValue;
-            maxValue = newNaxValue;
+            maxValue = newMaxValue;
             text = $"{valueHandler(value)} / {valueHandler(maxValue)}";
         }
     }

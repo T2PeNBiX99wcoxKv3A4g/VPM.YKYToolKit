@@ -89,12 +89,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 if (ex is OperationCanceledException)
                 {
                     Progress.Finish(progressId, Progress.Status.Canceled);
-                    Utils.LogWarning(nameof(EmptyFolderClear), "Installation cancelled.");
+                    Utils.LogWarning(nameof(EmptyFolderClear), "Cancelled.");
                 }
                 else
                 {
                     Progress.Finish(progressId, Progress.Status.Failed);
-                    Utils.LogError(nameof(EmptyFolderClear), $"Installation Error: {ex.Message}\n{ex.StackTrace}");
+                    Utils.LogError(nameof(EmptyFolderClear), $"Error: {ex.Message}\n{ex.StackTrace}");
                 }
             });
 

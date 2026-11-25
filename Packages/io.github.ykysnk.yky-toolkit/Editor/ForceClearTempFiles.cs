@@ -75,7 +75,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 if (ex is OperationCanceledException)
                 {
                     Progress.Finish(progressId, Progress.Status.Canceled);
-                    Utils.LogWarning(nameof(ForceClearTempFiles), "Installation cancelled.");
+                    Utils.LogWarning(nameof(ForceClearTempFiles), "Cancelled.");
                 }
                 else
                 {

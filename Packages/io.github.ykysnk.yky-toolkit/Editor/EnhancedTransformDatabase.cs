@@ -13,10 +13,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         public List<EnhancedTransformData> entries = new();
 
         private Dictionary<string, EnhancedTransformData>? _cache;
+        private static EnhancedTransformDatabase? _instance;
 
         private EnhancedTransformData GetOrCreate(string id)
         {
-            _cache ??= entries.ToDictionary(e => e.id);
+            _cache ??= BuildCache();
             if (_cache.TryGetValue(id, out var entry)) return entry;
             entry = new(id);
             entries.Add(entry);
@@ -25,14 +26,29 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             return entry;
         }
 
+        private Dictionary<string, EnhancedTransformData> BuildCache()
+        {
+            // Indexer loop instead of ToDictionary: a duplicated id in the asset threw and broke the whole inspector.
+            var cache = new Dictionary<string, EnhancedTransformData>(entries.Count);
+
+            foreach (var entry in entries)
+                if (entry != null)
+                    cache[entry.id] = entry;
+
+            return cache;
+        }
+
         private static EnhancedTransformDatabase GetDataBase()
         {
-            var db = AssetDatabase.LoadAssetAtPath<EnhancedTransformDatabase>(Path);
-            if (db != null) return db;
-            db = CreateInstance<EnhancedTransformDatabase>();
-            AssetDatabase.CreateAsset(db, Path);
+            if (_instance != null) return _instance;
+
+            _instance = AssetDatabase.LoadAssetAtPath<EnhancedTransformDatabase>(Path);
+            if (_instance != null) return _instance;
+
+            _instance = CreateInstance<EnhancedTransformDatabase>();
+            AssetDatabase.CreateAsset(_instance, Path);
             AssetDatabase.SaveAssets();
-            return db;
+            return _instance;
         }
 
         [PublicAPI]

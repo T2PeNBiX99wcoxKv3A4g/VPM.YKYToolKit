@@ -33,15 +33,16 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 var maxValue = property.FindPropertyRelative("maxValue").intValue;
                 bar.highValue = maxValue;
 
-                if (bar.value > (float)maxValue * 0.6)
-                {
-                    valueLabel.style.color = new Color(1f, 0.5f, 0);
-                    progressFill.style.backgroundColor = new Color(1f, 0.5f, 0);
-                }
-                else if (bar.value >= (float)maxValue * 0.8)
+                // Checked from the highest threshold down; the other order made the > 0.8 case unreachable.
+                if (bar.value >= (float)maxValue * 0.8)
                 {
                     valueLabel.style.color = new Color(0.5f, 0, 0);
                     progressFill.style.backgroundColor = new Color(0.5f, 0, 0);
+                }
+                else if (bar.value > (float)maxValue * 0.6)
+                {
+                    valueLabel.style.color = new Color(1f, 0.5f, 0);
+                    progressFill.style.backgroundColor = new Color(1f, 0.5f, 0);
                 }
                 else
                 {

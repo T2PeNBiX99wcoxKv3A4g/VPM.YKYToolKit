@@ -195,7 +195,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 positionField.value = pasteVector3;
             };
             positionField.schedule.Execute(() =>
-                    positionField.PasteButton.SetEnabled(TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer, out _)))
+                    positionField.PasteButton.SetEnabled(!exData.lockTransform && TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer, out _)))
                 .Every(100);
 
             var globalPositionFieldEditing = false;
@@ -270,7 +270,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 globalPositionFieldEditing = false;
             };
             globalPositionField.schedule.Execute(() =>
-                globalPositionField.PasteButton.SetEnabled(TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer,
+                globalPositionField.PasteButton.SetEnabled(!exData.lockTransform && TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer,
                     out _))).Every(100);
 
             positionField.ResetButton.clicked += ResetLocalPosition;
@@ -330,7 +330,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 rotationField.value = pasteVector3;
             };
             rotationField.schedule.Execute(() =>
-                    rotationField.PasteButton.SetEnabled(TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer, out _)))
+                    rotationField.PasteButton.SetEnabled(!exData.lockTransform && TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer, out _)))
                 .Every(100);
 
             var globalRotationEditing = false;
@@ -417,7 +417,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 globalRotationEditing = false;
             };
             globalRotationField.schedule.Execute(() =>
-                    globalRotationField.PasteButton.SetEnabled(TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer,
+                    globalRotationField.PasteButton.SetEnabled(!exData.lockTransform && TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer,
                         out _)))
                 .Every(100);
 
@@ -525,7 +525,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 scaleField.value = pasteVector3;
             };
             scaleField.schedule.Execute(() =>
-                    scaleField.PasteButton.SetEnabled(TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer, out _)))
+                    scaleField.PasteButton.SetEnabled(!exData.lockTransform && TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer, out _)))
                 .Every(100);
 
             var lossyScaleFieldEditing = false;
@@ -606,7 +606,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 lossyScaleFieldEditing = false;
             };
             lossyScaleField.schedule.Execute(() =>
-                    lossyScaleField.PasteButton.SetEnabled(TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer,
+                    lossyScaleField.PasteButton.SetEnabled(!exData.lockTransform && TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer,
                         out _)))
                 .Every(100);
 
@@ -701,7 +701,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             pasteLocalAllButton.schedule.Execute(() =>
             {
-                var canBePaste = TryParsePRSData(EditorGUIUtility.systemCopyBuffer, out _);
+                var canBePaste = !exData.lockTransform && TryParsePRSData(EditorGUIUtility.systemCopyBuffer, out _);
                 pasteLocalAllButton.SetEnabled(canBePaste);
                 pasteGlobalAllButton.SetEnabled(canBePaste);
             }).Every(100);
@@ -781,8 +781,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             clearParentButton.schedule.Execute(() =>
             {
                 if (theTarget == null) return;
-                clearParentButton.SetEnabled(theTarget.parent != null && stage == null);
-            });
+                clearParentButton.SetEnabled(theTarget.parent != null && stage == null && !exData.lockTransform);
+            }).Every(500);
 
             var helpFoldout = tree.Q<Foldout>("helpFoldout");
             helpFoldout.value = IsHelpExpanded;
@@ -801,6 +801,28 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 EnhancedTransformDatabase.Save();
             });
 
+            // Reused by the once-per-second override check; creating a SerializedObject there every second was the
+            // expensive part.
+            SerializedObject? prefabTargetSerializedObject = null;
+            SerializedProperty? prefabTargetPos = null;
+            SerializedProperty? prefabTargetRot = null;
+            SerializedProperty? prefabTargetEulerHint = null;
+            SerializedProperty? prefabTargetScale = null;
+
+            void EnsurePrefabProperties()
+            {
+                if (prefabTargetSerializedObject != null || theTarget == null) return;
+
+                var prefabTarget = PrefabUtility.GetCorrespondingObjectFromSource(theTarget);
+                if (prefabTarget == null) return;
+
+                prefabTargetSerializedObject = new SerializedObject(prefabTarget);
+                prefabTargetPos = prefabTargetSerializedObject.FindProperty("m_LocalPosition");
+                prefabTargetRot = prefabTargetSerializedObject.FindProperty("m_LocalRotation");
+                prefabTargetEulerHint = prefabTargetSerializedObject.FindProperty("m_LocalEulerAnglesHint");
+                prefabTargetScale = prefabTargetSerializedObject.FindProperty("m_LocalScale");
+            }
+
             tree.schedule.Execute(ClearOverride).Every(1000);
             ClearOverride();
             UpdateLockTransformToggle();
@@ -817,13 +839,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             {
                 if (theTarget == null) return;
                 if (AnimationMode.InAnimationMode()) return;
-                var prefabTarget = PrefabUtility.GetCorrespondingObjectFromSource(theTarget);
-                if (prefabTarget == null) return;
-                var prefabTargetSerializedObject = new SerializedObject(prefabTarget);
-                var prefabTargetPos = prefabTargetSerializedObject.FindProperty("m_LocalPosition");
-                var prefabTargetRot = prefabTargetSerializedObject.FindProperty("m_LocalRotation");
-                var prefabTargetEulerHint = prefabTargetSerializedObject.FindProperty("m_LocalEulerAnglesHint");
-                var prefabTargetScale = prefabTargetSerializedObject.FindProperty("m_LocalScale");
+
+                EnsurePrefabProperties();
+                if (prefabTargetSerializedObject == null) return;
+
                 var isChanged = false;
 
                 if (positionProperty != null && prefabTargetPos != null && positionProperty.prefabOverride &&
@@ -856,6 +875,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 }
 
                 if (!isChanged) return;
+                serializedObject.Update();
                 serializedObject.ApplyModifiedPropertiesWithoutUndo();
             }
 

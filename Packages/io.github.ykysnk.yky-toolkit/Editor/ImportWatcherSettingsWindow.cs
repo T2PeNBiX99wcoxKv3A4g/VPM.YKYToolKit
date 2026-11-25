@@ -9,7 +9,7 @@ using UnityEngine.UIElements;
 
 namespace io.github.ykysnk.ykyToolkit.Editor
 {
-    public class ImportWatcherSettingsWindow : EditorWindow
+    internal class ImportWatcherSettingsWindow : EditorWindow
     {
         private const string Title = "Import Watcher Settings";
 

@@ -12,48 +12,56 @@ namespace io.github.ykysnk.ykyToolkit.Editor
     public static class DiscordEditorRPC
     {
         public const string ApplicationId = "1465547633652138117";
+        private const string EnableKey = "YKYToolkit/EnableDiscordRichPresence";
         private const string ToolsMenuPath = "Tools/YKYToolkit/Enable Discord Rich Presence";
         private const double RetryInterval = 3.0;
         private static Discord.Discord? _discord;
         private static ActivityManager? _activityManager;
         private static string? _clientId;
         private static bool _initialized;
+        private static bool _updateSubscribed;
         private static long _startTime;
         private static double _lastRetryTime;
 
         static DiscordEditorRPC()
         {
             if (!EnableDiscordRichPresence) return;
-            EditorApplication.update += Update;
+            EnsureUpdateSubscribed();
             EditorApplication.quitting += Shutdown;
             AssemblyReloadEvents.beforeAssemblyReload += Shutdown;
             Initialize(ApplicationId);
         }
 
-        public static bool EnableDiscordRichPresence
+        private static void EnsureUpdateSubscribed()
         {
-            get => EditorPrefs.GetBool("YKYToolkit/EnableDiscordRichPresence", true);
-            [PublicAPI]
+            if (_updateSubscribed) return;
+            _updateSubscribed = true;
+            EditorApplication.update += Update;
+        }
+
+        internal static bool EnableDiscordRichPresence
+        {
+            get => EditorPrefs.GetBool(EnableKey, true);
             set
             {
-                if (EditorPrefs.GetBool("YKYToolkit/LastEnableDiscordRichPresence", true) != value)
-                {
-                    if (value)
-                        EditorApplication.delayCall += () => Initialize(ApplicationId);
-                    else
-                        Shutdown();
-                }
+                var previous = EnableDiscordRichPresence;
+                EditorPrefs.SetBool(EnableKey, value);
+                if (previous == value) return;
 
-                EditorPrefs.SetBool("YKYToolkit/LastEnableDiscordRichPresence",
-                    EditorPrefs.GetBool("YKYToolkit/EnableDiscordRichPresence", true));
-                EditorPrefs.SetBool("YKYToolkit/EnableDiscordRichPresence", value);
+                if (value)
+                {
+                    EnsureUpdateSubscribed();
+                    EditorApplication.delayCall += () => Initialize(ApplicationId);
+                }
+                else
+                    Shutdown();
             }
         }
 
-        [MenuItem(ToolsMenuPath, false, Util.Twe)]
+        [MenuItem(ToolsMenuPath, false, Util.Two)]
         private static void EnableDiscordRichPresenceShowMenu() => EnableDiscordRichPresence = !EnableDiscordRichPresence;
 
-        [MenuItem(ToolsMenuPath, true, Util.Twe)]
+        [MenuItem(ToolsMenuPath, true, Util.Two)]
         private static bool EnableDiscordRichPresenceShowMenuValidate()
         {
             Menu.SetChecked(ToolsMenuPath, EnableDiscordRichPresence);

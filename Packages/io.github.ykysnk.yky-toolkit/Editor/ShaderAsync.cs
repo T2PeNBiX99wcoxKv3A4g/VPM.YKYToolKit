@@ -20,10 +20,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             }
         }
 
-        [MenuItem(MenuPath, false, Util.Twe)]
+        [MenuItem(MenuPath, false, Util.Two)]
         private static void Toggle() => AllowAsyncCompilation = !AllowAsyncCompilation;
 
-        [MenuItem(MenuPath, true, Util.Twe)]
+        [MenuItem(MenuPath, true, Util.Two)]
         private static bool ToggleValidate()
         {
             Menu.SetChecked(MenuPath, AllowAsyncCompilation);

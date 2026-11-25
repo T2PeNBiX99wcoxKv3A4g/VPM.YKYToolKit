@@ -26,7 +26,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         private static UpmInstallerWindow? Instance { get; set; }
 
-        private void OnDestroy() => SavePackageList();
+        private void OnDestroy()
+        {
+            if (Instance == this) Instance = null;
+            SavePackageList();
+        }
 
         private void CreateGUI()
         {

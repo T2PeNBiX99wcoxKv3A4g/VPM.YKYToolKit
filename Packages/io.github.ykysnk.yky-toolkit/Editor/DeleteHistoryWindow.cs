@@ -10,7 +10,7 @@ using UnityEngine.UIElements;
 
 namespace io.github.ykysnk.ykyToolkit.Editor
 {
-    public class DeleteHistoryWindow : EditorWindow
+    internal class DeleteHistoryWindow : EditorWindow
     {
         [SerializeField] private VisualTreeAsset? uxml;
         [SerializeField] private List<DeleteRecord> records = new();

@@ -9,7 +9,6 @@ using UnityEngine;
 namespace io.github.ykysnk.ykyToolkit.Editor
 {
     [Serializable]
-    [PublicAPI]
     internal struct DeleteRecord
     {
         public string path;
@@ -47,7 +46,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         private static List<DeleteRecord> LoadInternal()
         {
-            var json = PlayerPrefs.GetString(DeleteHistoryEditorKey);
+            var json = EditorPrefs.GetString(DeleteHistoryEditorKey);
             return !JsonUtils.TryFromJson<ListWrapper<DeleteRecord>>(json, out var list, out _) ? new() : list!.items;
         }
 
@@ -55,7 +54,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         {
             Trim(list);
             if (!JsonUtils.TryToJson(Wrapper.Create(list), out var json, out _)) return;
-            PlayerPrefs.SetString(DeleteHistoryEditorKey, json);
+            EditorPrefs.SetString(DeleteHistoryEditorKey, json);
         }
 
         private static void Trim(List<DeleteRecord> list)

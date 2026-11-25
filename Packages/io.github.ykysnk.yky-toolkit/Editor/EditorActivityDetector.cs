@@ -1,3 +1,4 @@
+using System;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -23,10 +24,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         }
 
         private static bool _initialized;
-        private static EditorState? _prevState;
-
-        private static bool _wasCompiling;
-        private static bool _wasPlaying;
 
         static EditorActivityDetector()
         {
@@ -47,66 +44,67 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         {
             if (EditorApplication.isCompiling)
             {
-                SetState(EditorState.Compiling, "Reloading Domain…");
+                SetState(EditorState.Compiling, () => "Reloading Domain…");
                 return;
             }
 
             if (BuildPipeline.isBuildingPlayer)
             {
-                SetState(EditorState.Building, "Building Project…");
+                SetState(EditorState.Building, () => "Building Project…");
                 return;
             }
 
             if (EditorApplication.isPlaying)
             {
                 SetState(EditorApplication.isPaused ? EditorState.Paused : EditorState.Playing,
-                    $"Scene: {GetActiveSceneName()}");
+                    () => $"Scene: {GetActiveSceneName()}");
                 return;
             }
 
             if (IsEditingScript())
             {
-                SetState(EditorState.EditingScript, $"File: {GetSelectedObjectName()}");
+                SetState(EditorState.EditingScript, () => $"File: {GetSelectedObjectName()}");
                 return;
             }
 
             if (PrefabStageUtility.GetCurrentPrefabStage() != null)
             {
                 var prefab = PrefabStageUtility.GetCurrentPrefabStage().prefabContentsRoot;
-                SetState(EditorState.EditingPrefab, $"Prefab: {prefab.name}.prefab");
+                SetState(EditorState.EditingPrefab, () => $"Prefab: {prefab.name}.prefab");
                 return;
             }
 
             if (IsEditingMaterial())
             {
-                SetState(EditorState.EditingMaterial, $"Material: {GetSelectedObjectName()}");
+                SetState(EditorState.EditingMaterial, () => $"Material: {GetSelectedObjectName()}");
                 return;
             }
 
             if (IsEditingShader())
             {
-                SetState(EditorState.EditingShader, $"Shader: {GetSelectedObjectName()}");
+                SetState(EditorState.EditingShader, () => $"Shader: {GetSelectedObjectName()}");
                 return;
             }
 
             if (SceneView.lastActiveSceneView != null &&
                 EditorWindow.focusedWindow is SceneView)
             {
-                SetState(EditorState.EditingScene, $"Scene: {GetActiveSceneName()}");
+                SetState(EditorState.EditingScene, () => $"Scene: {GetActiveSceneName()}");
                 return;
             }
 
-            SetState(EditorState.Idle, "Browsing Project");
+            SetState(EditorState.Idle, () => "Browsing Project");
         }
 
-        private static void SetState(EditorState state, string details)
+        private static void SetState(EditorState state, Func<string> details)
         {
-            if (_prevState != state)
-                UpdateDiscordState();
+            // The state is recomputed every editor update; the details are only built when the state actually changes,
+            // so the per frame string interpolation (and the Discord update) disappears.
+            if (CurrentState == state) return;
 
-            _prevState = CurrentState;
             CurrentState = state;
-            CurrentDetails = details;
+            CurrentDetails = details();
+            UpdateDiscordState();
         }
 
         private static void UpdateDiscordState()

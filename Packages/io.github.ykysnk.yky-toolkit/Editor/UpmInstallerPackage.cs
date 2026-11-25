@@ -18,9 +18,19 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         public UpmInstallerPackage(string fullName)
         {
-            var split = fullName.Split('@');
-            packageName = split[0];
-            version = split.GetValueOrDefault(1) ?? "";
+            // Splitting on the last '@' that is followed by a version keeps git specs intact:
+            // https://github.com/user/repo.git?path=/sub@1.2.3 must not be cut at the URL's own '@'.
+            var at = fullName.LastIndexOf('@');
+
+            if (at > 0 && at < fullName.Length - 1 && char.IsDigit(fullName[at + 1]))
+            {
+                packageName = fullName[..at];
+                version = fullName[(at + 1)..];
+                return;
+            }
+
+            packageName = fullName;
+            version = "";
         }
 
         public string FullName => string.IsNullOrEmpty(version) ? packageName : $"{packageName}@{version}";

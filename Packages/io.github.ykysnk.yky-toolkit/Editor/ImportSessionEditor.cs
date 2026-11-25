@@ -46,14 +46,32 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             var rootNodes = BuildTree(recordsProperty);
             var nodesTreeView = tree.Q<TreeView>("nodes");
-            nodesTreeView.makeItem =
-                () => segmentUxml.CloneTree().Q<VisualElement>(className: "import-log-item__segment");
+            nodesTreeView.makeItem = () =>
+            {
+                var segment = segmentUxml.CloneTree().Q<VisualElement>(className: "import-log-item__segment");
+
+                // Registered once here: bindItem runs for every reuse, so registering it there added a handler per
+                // scroll and pinged the object several times.
+                segment.RegisterCallback<MouseDownEvent>(e =>
+                {
+                    if (e.clickCount != 2 || segment.userData is not Node node) return;
+                    e.StopPropagation();
+                    var asset = AssetDatabase.LoadAssetAtPath<Object>(node.FullPath);
+                    if (asset == null) return;
+                    EditorGUIUtility.PingObject(asset);
+                    Selection.activeObject = asset;
+                });
+
+                return segment;
+            };
 
             nodesTreeView.bindItem = (element, index) =>
             {
                 var id = nodesTreeView.GetIdForIndex(index);
                 var node = nodesTreeView.GetItemDataForId<Node>(id);
                 if (node == null) return;
+
+                element.userData = node;
 
                 var icon = element.Q<Image>("icon");
                 var label = element.Q<Label>("name");
@@ -77,19 +95,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     icon.image = InternalEditorUtility.GetIconForFile(node.FullPath);
                     label.style.color = Color.red;
                 }
-
-                element.RegisterCallback<MouseDownEvent>(OnMouseDown);
-                return;
-
-                void OnMouseDown(MouseDownEvent e)
-                {
-                    if (e.clickCount != 2) return;
-                    e.StopPropagation();
-                    var a = AssetDatabase.LoadAssetAtPath<Object>(node.FullPath);
-                    if (a == null) return;
-                    EditorGUIUtility.PingObject(a);
-                    Selection.activeObject = a;
-                }
             };
 
             nodesTreeView.SetRootItems(rootNodes.Select(CreateTreeViewItem).ToList());
@@ -107,6 +112,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         {
             var rootNodes = new List<Node>();
             var map = new Dictionary<string, Node>();
+            var nextId = 0;
 
             for (var i = 0; i < records.arraySize; i++)
             {
@@ -130,7 +136,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
                     if (!map.TryGetValue(current, out var node))
                     {
-                        node = new(part, current);
+                        // A counter rather than the path hash: the TreeView needs ids that never collide.
+                        node = new(part, current, nextId++);
                         map[current] = node;
 
                         if (parent == null)
@@ -161,11 +168,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             public readonly int Id;
             public readonly string Name;
 
-            public Node(string name, string fullPath)
+            public Node(string name, string fullPath, int id)
             {
                 Name = name;
                 FullPath = fullPath;
-                Id = fullPath.GetHashCode();
+                Id = id;
             }
         }
     }

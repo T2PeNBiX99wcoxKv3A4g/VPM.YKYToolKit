@@ -27,11 +27,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             set => EditorPrefs.SetBool(EditorKey, value);
         }
 
-        [MenuItem(ToolsMenuPath, false, Util.Twe)]
+        [MenuItem(ToolsMenuPath, false, Util.Two)]
         [MenuItem(AssetsMenuPath)]
         private static void DeleteSelectedShowMenu() => ShowWarnWindow = !ShowWarnWindow;
 
-        [MenuItem(ToolsMenuPath, true, Util.Twe)]
+        [MenuItem(ToolsMenuPath, true, Util.Two)]
         [MenuItem(AssetsMenuPath, true)]
         private static bool DeleteSelectedGameObjectsShowMenuValidate()
         {
@@ -40,7 +40,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             return true;
         }
 
-        [MenuItem("GameObject/YKYToolkit/Delete Selected", false, Util.Twe)]
+        [MenuItem("GameObject/YKYToolkit/Delete Selected", false, Util.Two)]
         [MenuItem("Assets/YKYToolkit/Delete Selected _DEL")]
         private static void DeleteSelected()
         {
