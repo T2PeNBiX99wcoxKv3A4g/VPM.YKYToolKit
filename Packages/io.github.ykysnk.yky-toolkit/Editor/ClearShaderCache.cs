@@ -1,3 +1,4 @@
+using io.github.ykysnk.Localization.Editor;
 using System.IO;
 using Cysharp.Threading.Tasks;
 using io.github.ykysnk.utils;

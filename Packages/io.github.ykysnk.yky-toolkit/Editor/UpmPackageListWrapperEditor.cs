@@ -1,3 +1,4 @@
+using io.github.ykysnk.Localization.Editor;
 using System.Collections.Generic;
 using io.github.ykysnk.utils.Editor;
 using io.github.ykysnk.utils.Extensions;
@@ -19,7 +20,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             if (uxml == null) return BasicEditor.CreateUxmlImportErrorUI();
 
             var tree = uxml.CloneTree();
-            InternalLocalizationExtensions.Helper.UILocalize(tree, false);
+            tree.UILocalize(false);
             tree.Bind(property.serializedObject);
 
             var importButton = tree.Q<Button>("import");

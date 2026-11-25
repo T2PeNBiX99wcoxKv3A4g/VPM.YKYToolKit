@@ -1,3 +1,4 @@
+using io.github.ykysnk.Localization.Editor;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 using UnityEditor;

@@ -1,3 +1,4 @@
+using io.github.ykysnk.Localization.Editor;
 using io.github.ykysnk.utils.Editor;
 using UnityEditor;
 using UnityEditor.UIElements;
@@ -14,7 +15,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 AssetDatabase.GUIDToAssetPath("c26a6854be5c7d242b661c85b140896a"));
             if (uxml == null) return BasicEditor.CreateUxmlImportErrorUI();
             var tree = uxml!.CloneTree();
-            InternalLocalizationExtensions.Helper.UILocalize(tree, false);
+            tree.UILocalize(false);
             tree.Bind(property.serializedObject);
             return tree;
         }

@@ -1,3 +1,4 @@
+using io.github.ykysnk.Localization.Editor;
 using System.Collections.Generic;
 using io.github.ykysnk.utils.Editor;
 using io.github.ykysnk.utils.Extensions;
@@ -25,7 +26,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         {
             var serializedObject = new SerializedObject(this);
             var tree = uxml!.CloneTree();
-            InternalLocalizationExtensions.Helper.UILocalize(tree);
+            tree.UILocalize();
             tree.Bind(serializedObject);
             rootVisualElement.Add(tree);
             LoadFileColorList();

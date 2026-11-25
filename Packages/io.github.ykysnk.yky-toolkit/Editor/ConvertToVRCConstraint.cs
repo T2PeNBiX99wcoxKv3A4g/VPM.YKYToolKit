@@ -29,20 +29,20 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private static async UniTask ConvertToVRCAsync(GameObject[] selectedObjects)
         {
             var stopwatch = Stopwatch.StartNew();
-            var searchResult = new Dictionary<GameObject, Dictionary<string, ConstraintData[]>>();
+            var searchResult = new Dictionary<GameObject, Dictionary<Transform, ConstraintData[]>>();
             var doneResult = new HashSet<Transform>();
             var doneFound = new HashSet<Transform>();
 
             foreach (var selected in selectedObjects)
             {
-                var result = new Dictionary<string, ConstraintData[]>();
-                var stack = new Stack<(string path, Transform transform)>();
+                var result = new Dictionary<Transform, ConstraintData[]>();
+                var stack = new Stack<Transform>();
 
-                stack.Push(new("", selected.transform));
+                stack.Push(selected.transform);
 
                 while (stack.Count > 0)
                 {
-                    var (path, current) = stack.Pop();
+                    var current = stack.Pop();
 
                     if (!doneResult.Contains(current))
                     {
@@ -50,10 +50,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                             .Cast<IConstraint>().ToArray();
 
                         if (constraints.Length > 0)
-                            result.TryAdd(path, constraints.Select(x => new ConstraintData(x)).ToArray());
+                            result.TryAdd(current, constraints.Select(x => new ConstraintData(x)).ToArray());
 
                         foreach (Transform child in current)
-                            stack.Push(new(string.IsNullOrEmpty(path) ? child.name : $"{path}/{child.name}", child));
+                            stack.Push(child);
 
                         doneResult.Add(current);
                     }
@@ -74,28 +74,27 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             {
                 if (!selected || result == null) continue;
 
-                foreach (var (path, datas) in result)
+                foreach (var (found, datas) in result)
                 {
-                    var found = string.IsNullOrEmpty(path) ? selected.transform : selected.transform.Find(path);
-                    if (found == null || doneFound.Contains(found)) continue;
+                    if (!found || !doneFound.Add(found)) continue;
 
                     Undo.RecordObject(found.gameObject, "Convert to VRC Constraint");
 
-                    found.ComponentsForeach((_, comp) =>
-                    {
-                        if (comp is not IConstraint) return;
-                        Object.DestroyImmediate(comp);
-                    });
+                    // Collected up front: destroying components while walking them shifts the indices and would skip
+                    // every constraint that follows a destroyed one.
+                    var unityConstraints =
+                        found.GetComponents<Component>().Where(x => x && x is IConstraint).ToArray();
 
                     foreach (var data in datas)
                         switch (data.Type)
                         {
                             case ConstraintType.Position:
                             {
-                                var vrcPositionConstraint = found.gameObject.AddComponent<VRCPositionConstraint>();
+                                var vrcPositionConstraint = Undo.AddComponent<VRCPositionConstraint>(found.gameObject);
                                 vrcPositionConstraint.IsActive = data.IsActive;
                                 vrcPositionConstraint.Locked = data.Locked;
                                 vrcPositionConstraint.GlobalWeight = data.GlobalWeight;
+                                vrcPositionConstraint.enabled = data.Enabled;
 
                                 if (data.ExtraData is PositionExtraData extraData)
                                 {
@@ -116,10 +115,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                             }
                             case ConstraintType.Rotation:
                             {
-                                var vrcRotationConstraint = found.gameObject.AddComponent<VRCRotationConstraint>();
+                                var vrcRotationConstraint = Undo.AddComponent<VRCRotationConstraint>(found.gameObject);
                                 vrcRotationConstraint.IsActive = data.IsActive;
                                 vrcRotationConstraint.Locked = data.Locked;
                                 vrcRotationConstraint.GlobalWeight = data.GlobalWeight;
+                                vrcRotationConstraint.enabled = data.Enabled;
 
                                 if (data.ExtraData is RotationExtraData extraData)
                                 {
@@ -140,10 +140,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                             }
                             case ConstraintType.Scale:
                             {
-                                var vrcScaleConstraint = found.gameObject.AddComponent<VRCScaleConstraint>();
+                                var vrcScaleConstraint = Undo.AddComponent<VRCScaleConstraint>(found.gameObject);
                                 vrcScaleConstraint.IsActive = data.IsActive;
                                 vrcScaleConstraint.Locked = data.Locked;
                                 vrcScaleConstraint.GlobalWeight = data.GlobalWeight;
+                                vrcScaleConstraint.enabled = data.Enabled;
 
                                 if (data.ExtraData is ScaleExtraData extraData)
                                 {
@@ -164,10 +165,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                             }
                             case ConstraintType.Parent:
                             {
-                                var vrcParentConstraint = found.gameObject.AddComponent<VRCParentConstraint>();
+                                var vrcParentConstraint = Undo.AddComponent<VRCParentConstraint>(found.gameObject);
                                 vrcParentConstraint.IsActive = data.IsActive;
                                 vrcParentConstraint.Locked = data.Locked;
                                 vrcParentConstraint.GlobalWeight = data.GlobalWeight;
+                                vrcParentConstraint.enabled = data.Enabled;
 
                                 if (data.ExtraData is ParentExtraData extraData)
                                 {
@@ -183,8 +185,15 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                                     for (var i = 0; i < data.SourceDatas.Length; i++)
                                     {
                                         var sourceData = data.SourceDatas[i];
-                                        var positionOffset = extraData.PositionOffsets[i];
-                                        var rotationOffset = extraData.RotationOffsets[i];
+
+                                        // Unity keeps these arrays the same length as the sources, but serialized data
+                                        // from another version (or the VRC constructor's empty arrays) may not.
+                                        var positionOffset = i < extraData.PositionOffsets.Length
+                                            ? extraData.PositionOffsets[i]
+                                            : Vector3.zero;
+                                        var rotationOffset = i < extraData.RotationOffsets.Length
+                                            ? extraData.RotationOffsets[i]
+                                            : Vector3.zero;
 
                                         var source = new VRCConstraintSource(sourceData.SourceTransform,
                                             sourceData.Weight, positionOffset, rotationOffset);
@@ -196,10 +205,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                             }
                             case ConstraintType.LookAt:
                             {
-                                var vrcLookAtConstraint = found.gameObject.AddComponent<VRCLookAtConstraint>();
+                                var vrcLookAtConstraint = Undo.AddComponent<VRCLookAtConstraint>(found.gameObject);
                                 vrcLookAtConstraint.IsActive = data.IsActive;
                                 vrcLookAtConstraint.Locked = data.Locked;
                                 vrcLookAtConstraint.GlobalWeight = data.GlobalWeight;
+                                vrcLookAtConstraint.enabled = data.Enabled;
 
                                 if (data.ExtraData is LookAtExtraData extraData)
                                 {
@@ -220,10 +230,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                             }
                             case ConstraintType.Aim:
                             {
-                                var vrcAimConstraint = found.gameObject.AddComponent<VRCAimConstraint>();
+                                var vrcAimConstraint = Undo.AddComponent<VRCAimConstraint>(found.gameObject);
                                 vrcAimConstraint.IsActive = data.IsActive;
                                 vrcAimConstraint.Locked = data.Locked;
                                 vrcAimConstraint.GlobalWeight = data.GlobalWeight;
+                                vrcAimConstraint.enabled = data.Enabled;
 
                                 if (data.ExtraData is AimExtraData extraData)
                                 {
@@ -252,7 +263,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                                     "Constraint type isn't supported");
                         }
 
-                    doneFound.Add(found);
+                    // Destroyed only after every replacement exists, so a failure above cannot leave the object with
+                    // its Unity constraints removed and nothing in their place.
+                    foreach (var unityConstraint in unityConstraints)
+                        Undo.DestroyObjectImmediate(unityConstraint);
+
+                    EditorUtility.SetDirty(found.gameObject);
 
                     if (stopwatch.ElapsedMilliseconds <= Util.StopwatchWaitElapsedMilliseconds) continue;
                     await UniTask.Yield();
@@ -278,30 +294,30 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private static async UniTask ConvertToUnity(GameObject[] selectedObjects)
         {
             var stopwatch = Stopwatch.StartNew();
-            var searchResult = new Dictionary<GameObject, Dictionary<string, ConstraintData[]>>();
+            var searchResult = new Dictionary<GameObject, Dictionary<Transform, ConstraintData[]>>();
             var doneResult = new HashSet<Transform>();
             var doneFound = new HashSet<Transform>();
 
             foreach (var selected in selectedObjects)
             {
-                var result = new Dictionary<string, ConstraintData[]>();
-                var stack = new Stack<(string path, Transform transform)>();
+                var result = new Dictionary<Transform, ConstraintData[]>();
+                var stack = new Stack<Transform>();
 
-                stack.Push(new("", selected.transform));
+                stack.Push(selected.transform);
 
                 while (stack.Count > 0)
                 {
-                    var (path, current) = stack.Pop();
+                    var current = stack.Pop();
 
                     if (!doneResult.Contains(current))
                     {
                         var constraints = current.GetComponents<VRCConstraintBase>().Where(x => x).ToArray();
 
                         if (constraints.Length > 0)
-                            result.TryAdd(path, constraints.Select(x => new ConstraintData(x)).ToArray());
+                            result.TryAdd(current, constraints.Select(x => new ConstraintData(x)).ToArray());
 
                         foreach (Transform child in current)
-                            stack.Push(new(string.IsNullOrEmpty(path) ? child.name : $"{path}/{child.name}", child));
+                            stack.Push(child);
 
                         doneResult.Add(current);
                     }
@@ -322,28 +338,26 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             {
                 if (!selected || result == null) continue;
 
-                foreach (var (path, datas) in result)
+                foreach (var (found, datas) in result)
                 {
-                    var found = string.IsNullOrEmpty(path) ? selected.transform : selected.transform.Find(path);
-                    if (found == null || doneFound.Contains(found)) continue;
+                    if (!found || !doneFound.Add(found)) continue;
 
                     Undo.RecordObject(found.gameObject, "Convert to Unity Constraint");
 
-                    found.ComponentsForeach((_, comp) =>
-                    {
-                        if (comp is not VRCConstraintBase) return;
-                        Object.DestroyImmediate(comp);
-                    });
+                    // Collected up front: destroying components while walking them shifts the indices and would skip
+                    // every constraint that follows a destroyed one.
+                    var vrcConstraints = found.GetComponents<VRCConstraintBase>().Where(x => x).ToArray();
 
                     foreach (var data in datas)
                         switch (data.Type)
                         {
                             case ConstraintType.Position:
                             {
-                                var positionConstraint = found.gameObject.AddComponent<PositionConstraint>();
+                                var positionConstraint = Undo.AddComponent<PositionConstraint>(found.gameObject);
                                 positionConstraint.constraintActive = data.IsActive;
                                 positionConstraint.locked = data.Locked;
                                 positionConstraint.weight = data.GlobalWeight;
+                                positionConstraint.enabled = data.Enabled;
 
                                 if (data.ExtraData is PositionExtraData extraData)
                                 {
@@ -373,10 +387,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                             }
                             case ConstraintType.Rotation:
                             {
-                                var rotationConstraint = found.gameObject.AddComponent<RotationConstraint>();
+                                var rotationConstraint = Undo.AddComponent<RotationConstraint>(found.gameObject);
                                 rotationConstraint.constraintActive = data.IsActive;
                                 rotationConstraint.locked = data.Locked;
                                 rotationConstraint.weight = data.GlobalWeight;
+                                rotationConstraint.enabled = data.Enabled;
 
                                 if (data.ExtraData is RotationExtraData extraData)
                                 {
@@ -406,10 +421,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                             }
                             case ConstraintType.Scale:
                             {
-                                var scaleConstraint = found.gameObject.AddComponent<ScaleConstraint>();
+                                var scaleConstraint = Undo.AddComponent<ScaleConstraint>(found.gameObject);
                                 scaleConstraint.constraintActive = data.IsActive;
                                 scaleConstraint.locked = data.Locked;
                                 scaleConstraint.weight = data.GlobalWeight;
+                                scaleConstraint.enabled = data.Enabled;
 
                                 if (data.ExtraData is ScaleExtraData extraData)
                                 {
@@ -439,10 +455,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                             }
                             case ConstraintType.Parent:
                             {
-                                var parentConstraint = found.gameObject.AddComponent<ParentConstraint>();
+                                var parentConstraint = Undo.AddComponent<ParentConstraint>(found.gameObject);
                                 parentConstraint.constraintActive = data.IsActive;
                                 parentConstraint.locked = data.Locked;
                                 parentConstraint.weight = data.GlobalWeight;
+                                parentConstraint.enabled = data.Enabled;
 
                                 if (data.ExtraData is ParentExtraData extraData)
                                 {
@@ -489,10 +506,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                             }
                             case ConstraintType.LookAt:
                             {
-                                var lookAtConstraint = found.gameObject.AddComponent<LookAtConstraint>();
+                                var lookAtConstraint = Undo.AddComponent<LookAtConstraint>(found.gameObject);
                                 lookAtConstraint.constraintActive = data.IsActive;
                                 lookAtConstraint.locked = data.Locked;
                                 lookAtConstraint.weight = data.GlobalWeight;
+                                lookAtConstraint.enabled = data.Enabled;
 
                                 if (data.ExtraData is LookAtExtraData extraData)
                                 {
@@ -517,10 +535,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                             }
                             case ConstraintType.Aim:
                             {
-                                var aimConstraint = found.gameObject.AddComponent<AimConstraint>();
+                                var aimConstraint = Undo.AddComponent<AimConstraint>(found.gameObject);
                                 aimConstraint.constraintActive = data.IsActive;
                                 aimConstraint.locked = data.Locked;
                                 aimConstraint.weight = data.GlobalWeight;
+                                aimConstraint.enabled = data.Enabled;
 
                                 if (data.ExtraData is AimExtraData extraData)
                                 {
@@ -559,7 +578,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                                     "Constraint type isn't supported");
                         }
 
-                    doneFound.Add(found);
+                    // Destroyed only after every replacement exists, so a failure above cannot leave the object with
+                    // its VRC constraints removed and nothing in their place.
+                    foreach (var vrcConstraint in vrcConstraints)
+                        Undo.DestroyObjectImmediate(vrcConstraint);
+
+                    EditorUtility.SetDirty(found.gameObject);
 
                     if (stopwatch.ElapsedMilliseconds <= Util.StopwatchWaitElapsedMilliseconds) continue;
                     await UniTask.Yield();
@@ -578,6 +602,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             public readonly float GlobalWeight;
             public readonly bool IsActive;
             public readonly bool Locked;
+            public readonly bool Enabled;
             public readonly ConstraintSourceData[] SourceDatas;
             public readonly ConstraintType Type;
 
@@ -597,6 +622,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 GlobalWeight = constraint.weight;
                 IsActive = constraint.constraintActive;
                 Locked = constraint.locked;
+                Enabled = (constraint as Behaviour)?.enabled ?? true;
 
                 var sourceList = new List<ConstraintSource>();
                 constraint.GetSources(sourceList);
@@ -630,6 +656,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 GlobalWeight = constraint.GlobalWeight;
                 IsActive = constraint.IsActive;
                 Locked = constraint.Locked;
+                Enabled = constraint.enabled;
 
                 SourceDatas = constraint.Sources.Select(source => new ConstraintSourceData(source)).ToArray();
 

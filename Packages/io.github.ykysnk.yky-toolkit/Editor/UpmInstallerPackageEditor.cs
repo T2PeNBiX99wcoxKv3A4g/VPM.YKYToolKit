@@ -1,3 +1,4 @@
+using io.github.ykysnk.Localization.Editor;
 using io.github.ykysnk.utils.Editor;
 using UnityEditor;
 using UnityEditor.UIElements;
@@ -17,7 +18,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             if (uxml == null) return BasicEditor.CreateUxmlImportErrorUI();
 
             var tree = uxml.CloneTree();
-            InternalLocalizationExtensions.Helper.UILocalize(tree, false);
+            tree.UILocalize(false);
             tree.Bind(property.serializedObject);
 
             var packageNameField = tree.Q<TextField>("packageName");

@@ -1,3 +1,4 @@
+using io.github.ykysnk.Localization.Editor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +31,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 AssetDatabase.GUIDToAssetPath("cda28001015e4dd2963c16ddc38b7b1b"));
 
             var tree = uxml.CloneTree();
-            InternalLocalizationExtensions.Helper.UILocalize(tree, false);
+            tree.UILocalize(false);
             tree.Bind(property.serializedObject);
 
             var unixSecondsProperty = property.FindPropertyRelative("unixSeconds");

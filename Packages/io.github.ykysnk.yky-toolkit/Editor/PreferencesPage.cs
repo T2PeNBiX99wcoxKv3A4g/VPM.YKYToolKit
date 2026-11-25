@@ -1,3 +1,4 @@
+using io.github.ykysnk.Localization.Editor;
 using System.Collections.Generic;
 using io.github.ykysnk.utils.Editor;
 using io.github.ykysnk.utils.Extensions;
@@ -28,7 +29,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     }
 
                     var tree = uxml.CloneTree();
-                    InternalLocalizationExtensions.Helper.UILocalize(tree);
+                    tree.UILocalize();
                     root.Add(tree);
 
                     var allowAsyncCompilationToggle = tree.Q<Toggle>("allowAsyncCompilation");
@@ -77,7 +78,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                             return BasicEditor.CreateUxmlImportErrorUI();
 
                         var tree2 = uxml2.CloneTree();
-                        InternalLocalizationExtensions.Helper.UILocalize(tree, false);
+                        tree.UILocalize(false);
                         return tree2;
                     };
                     importWatcherFileExtensionColorsListView.bindItem = (element, index) =>

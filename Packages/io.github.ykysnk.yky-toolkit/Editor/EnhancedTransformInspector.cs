@@ -1,4 +1,6 @@
+using io.github.ykysnk.Localization.Editor;
 using System;
+using System.Globalization;
 using System.Linq;
 using io.github.ykysnk.utils.Editor;
 using io.github.ykysnk.utils.Extensions;
@@ -82,28 +84,53 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var theTarget = (Transform)target;
             var exData = EnhancedTransformDatabase.Get(theTarget);
             _defaultEditor ??= CreateEditor(targets, type);
-            GUI.enabled = !exData.lockTransform;
-            _defaultEditor?.OnInspectorGUI();
-            GUI.enabled = false;
+            var previousEnabled = GUI.enabled;
+
+            try
+            {
+                GUI.enabled = !exData.lockTransform;
+                _defaultEditor?.OnInspectorGUI();
+            }
+            finally
+            {
+                // Restored even when the default inspector throws, otherwise everything drawn later stays greyed out.
+                GUI.enabled = previousEnabled;
+            }
+
             EditorGUILayout.TextField("label.enhanced_transform_inspector.hierarchy_path".G(), theTarget.FullName());
+
+            EditorGUI.BeginChangeCheck();
+
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("label.enhanced_transform_inspector.position_decimal_precision".G(),
                 GUILayout.Width(100));
-            EditorGUILayout.IntSlider(exData.positionDecimalPrecision, -1, 6);
+            var positionDecimalPrecision = EditorGUILayout.IntSlider(exData.positionDecimalPrecision, -1, 6);
             EditorGUILayout.EndHorizontal();
+
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("label.enhanced_transform_inspector.rotation_decimal_precision".G(),
                 GUILayout.Width(100));
-            EditorGUILayout.IntSlider(exData.rotationDecimalPrecision, -1, 6);
+            var rotationDecimalPrecision = EditorGUILayout.IntSlider(exData.rotationDecimalPrecision, -1, 6);
             EditorGUILayout.EndHorizontal();
+
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("label.enhanced_transform_inspector.scale_decimal_precision".G(),
                 GUILayout.Width(100));
-            EditorGUILayout.IntSlider(exData.scaleDecimalPrecision, -1, 6);
+            var scaleDecimalPrecision = EditorGUILayout.IntSlider(exData.scaleDecimalPrecision, -1, 6);
             EditorGUILayout.EndHorizontal();
-            EditorGUILayout.Toggle("label.enhanced_transform_inspector.lock_transform".G(), exData.lockTransform);
-            GUI.enabled = true;
+
+            var lockTransform =
+                EditorGUILayout.Toggle("label.enhanced_transform_inspector.lock_transform".G(), exData.lockTransform);
+
             EditorGUILayout.HelpBox("label.enhanced_transform_inspector.imgui".S(), MessageType.Warning);
+
+            if (!EditorGUI.EndChangeCheck()) return;
+
+            exData.positionDecimalPrecision = positionDecimalPrecision;
+            exData.rotationDecimalPrecision = rotationDecimalPrecision;
+            exData.scaleDecimalPrecision = scaleDecimalPrecision;
+            exData.lockTransform = lockTransform;
+            EnhancedTransformDatabase.Save();
         }
 
         protected override VisualElement CreateErrorHandleInspectorGUI()
@@ -118,7 +145,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var scaleProperty = serializedObject.FindProperty("m_LocalScale");
             var tree = uxml!.CloneTree();
             _root = tree;
-            InternalLocalizationExtensions.Helper.UILocalize(tree);
+            tree.UILocalize();
             tree.Bind(serializedObject);
 
             var exData = EnhancedTransformDatabase.Get(theTarget);
@@ -223,7 +250,13 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 evt.menu.AppendAction("label.copy".S(),
                     _ => EditorGUIUtility.systemCopyBuffer = FormatVector3LikeUnity(globalPositionField.value));
                 var canBePaste = TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer, out var pasteVector3);
-                evt.menu.AppendAction("label.paste".S(), _ => globalPositionField.value = pasteVector3,
+                evt.menu.AppendAction("label.paste".S(), _ =>
+                    {
+                        // The field only applies to the targets while it has focus, which a menu click does not give it.
+                        globalPositionFieldEditing = true;
+                        globalPositionField.value = pasteVector3;
+                        globalPositionFieldEditing = false;
+                    },
                     canBePaste ? DropdownMenuAction.Status.Normal : DropdownMenuAction.Status.Disabled);
             }));
 
@@ -232,7 +265,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             globalPositionField.PasteButton.clicked += () =>
             {
                 if (!TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer, out var pasteVector3)) return;
+                globalPositionFieldEditing = true;
                 globalPositionField.value = pasteVector3;
+                globalPositionFieldEditing = false;
             };
             globalPositionField.schedule.Execute(() =>
                 globalPositionField.PasteButton.SetEnabled(TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer,
@@ -354,9 +389,18 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 evt.menu.AppendAction("label.paste".S(), _ =>
                     {
                         if (canBePasteToVector3)
+                        {
+                            globalRotationEditing = true;
                             globalRotationField.value = pasteVector3;
+                            globalRotationEditing = false;
+                        }
                         else if (canBePasteToQuaternion)
-                            theTarget.rotation = pasteQuaternion;
+                            foreach (var transform in targets.OfType<Transform>())
+                            {
+                                if (!transform) continue;
+                                Undo.RecordObject(transform, "Set World Rotation");
+                                transform.rotation = pasteQuaternion;
+                            }
                     },
                     canBePasteToVector3 || canBePasteToQuaternion
                         ? DropdownMenuAction.Status.Normal
@@ -368,7 +412,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             globalRotationField.PasteButton.clicked += () =>
             {
                 if (!TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer, out var pasteVector3)) return;
+                globalRotationEditing = true;
                 globalRotationField.value = pasteVector3;
+                globalRotationEditing = false;
             };
             globalRotationField.schedule.Execute(() =>
                     globalRotationField.PasteButton.SetEnabled(TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer,
@@ -540,7 +586,13 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 evt.menu.AppendAction("label.copy".S(),
                     _ => EditorGUIUtility.systemCopyBuffer = FormatVector3LikeUnity(lossyScaleField.value));
                 var canBePaste = TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer, out var pasteVector3);
-                evt.menu.AppendAction("label.paste".S(), _ => lossyScaleField.value = pasteVector3,
+                evt.menu.AppendAction("label.paste".S(), _ =>
+                    {
+                        // The field only applies to the targets while it has focus, which a menu click does not give it.
+                        lossyScaleFieldEditing = true;
+                        lossyScaleField.value = pasteVector3;
+                        lossyScaleFieldEditing = false;
+                    },
                     canBePaste ? DropdownMenuAction.Status.Normal : DropdownMenuAction.Status.Disabled);
             }));
 
@@ -549,7 +601,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             lossyScaleField.PasteButton.clicked += () =>
             {
                 if (!TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer, out var pasteVector3)) return;
+                lossyScaleFieldEditing = true;
                 lossyScaleField.value = pasteVector3;
+                lossyScaleFieldEditing = false;
             };
             lossyScaleField.schedule.Execute(() =>
                     lossyScaleField.PasteButton.SetEnabled(TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer,
@@ -975,8 +1029,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             $"Quaternion({FormatFloat(q.x)},{FormatFloat(q.y)},{FormatFloat(q.z)},{FormatFloat(q.w)})";
 
         private static string FormatFloat(float f) => Mathf.Approximately(f, Mathf.Round(f))
-            ? Mathf.RoundToInt(f).ToString()
-            : f.ToString("0.########");
+            ? Mathf.RoundToInt(f).ToString(CultureInfo.InvariantCulture)
+            : f.ToString("0.########", CultureInfo.InvariantCulture);
 
         private static bool TryParseUnityVector3(string s, out Vector3 result)
         {
@@ -993,18 +1047,14 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             if (parts.Length != 3)
                 return false;
 
-            try
-            {
-                var x = float.Parse(parts[0]);
-                var y = float.Parse(parts[1]);
-                var z = float.Parse(parts[2]);
-                result = new(x, y, z);
-                return true;
-            }
-            catch
-            {
+            // The clipboard is shared with Unity's own fields, which always use the invariant format.
+            if (!float.TryParse(parts[0], NumberStyles.Float, CultureInfo.InvariantCulture, out var x) ||
+                !float.TryParse(parts[1], NumberStyles.Float, CultureInfo.InvariantCulture, out var y) ||
+                !float.TryParse(parts[2], NumberStyles.Float, CultureInfo.InvariantCulture, out var z))
                 return false;
-            }
+
+            result = new(x, y, z);
+            return true;
         }
 
         private static bool TryParseUnityQuaternion(string s, out Quaternion result)
@@ -1022,19 +1072,14 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             if (parts.Length != 4)
                 return false;
 
-            try
-            {
-                var x = float.Parse(parts[0]);
-                var y = float.Parse(parts[1]);
-                var z = float.Parse(parts[2]);
-                var w = float.Parse(parts[3]);
-                result = new(x, y, z, w);
-                return true;
-            }
-            catch
-            {
+            if (!float.TryParse(parts[0], NumberStyles.Float, CultureInfo.InvariantCulture, out var x) ||
+                !float.TryParse(parts[1], NumberStyles.Float, CultureInfo.InvariantCulture, out var y) ||
+                !float.TryParse(parts[2], NumberStyles.Float, CultureInfo.InvariantCulture, out var z) ||
+                !float.TryParse(parts[3], NumberStyles.Float, CultureInfo.InvariantCulture, out var w))
                 return false;
-            }
+
+            result = new(x, y, z, w);
+            return true;
         }
 
         private static bool TryParsePRSData(string json, out PRSData data)
@@ -1166,7 +1211,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             if (!parsed.Success)
                 return false;
 
-            var count = targets.Length;
+            var count = targets.OfType<Transform>().Count(t => t != null);
+            var divisor = Mathf.Max(1, count - 1);
             var index = 0;
 
             foreach (var obj in targets)
@@ -1204,11 +1250,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                         break;
 
                     case TransformInputMode.Interpolate:
-                        value = Mathf.Lerp(parsed.A, parsed.B, index / (float)(count - 1));
+                        value = Mathf.Lerp(parsed.A, parsed.B, index / (float)divisor);
                         break;
 
                     case TransformInputMode.InterpolateRev:
-                        value = Mathf.Lerp(parsed.A, parsed.B, 1f - index / (float)(count - 1));
+                        value = Mathf.Lerp(parsed.A, parsed.B, 1f - index / (float)divisor);
                         break;
 
                     case TransformInputMode.Clamp:
@@ -1220,8 +1266,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                         break;
 
                     case TransformInputMode.Step:
-                        value = parsed.A + index % (int)parsed.B;
+                    {
+                        // A step of zero (TT(0,0) or TT(0,0.5)) would throw a DivideByZeroException below.
+                        var step = Mathf.Max(1, (int)parsed.B);
+                        value = parsed.A + index % step;
                         break;
+                    }
 
                     case TransformInputMode.PingPong:
                         value = Mathf.Lerp(parsed.A, parsed.B, Mathf.PingPong(index, 1f));
@@ -1234,7 +1284,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                             .Select(t3 => new
                             {
                                 t3,
-                                dist = Vector3.Distance(t.position, center)
+                                dist = Vector3.Distance(t3.position, center)
                             })
                             .OrderBy(e => e.dist)
                             .ToList();
@@ -1250,7 +1300,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                             .Select(t2 => new
                             {
                                 t2,
-                                angle = Mathf.Atan2(t.position.z, t.position.x) * Mathf.Rad2Deg
+                                angle = Mathf.Atan2(t2.position.z, t2.position.x) * Mathf.Rad2Deg
                             })
                             .OrderBy(e => e.angle)
                             .ToList();

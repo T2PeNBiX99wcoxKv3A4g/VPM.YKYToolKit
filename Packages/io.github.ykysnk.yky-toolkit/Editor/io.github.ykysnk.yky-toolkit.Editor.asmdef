@@ -7,9 +7,7 @@
         "io.github.ykysnk.utils.Editor",
         "io.github.ykysnk.utils.non-udon",
         "io.github.ykysnk.localization.Editor",
-        "io.github.ykysnk.yky-toolkit",
-        "VRC.SDKBase",
-        "jp.lilxyzw.editortoolbox"
+        "VRC.SDKBase"
     ],
     "includePlatforms": [
         "Editor"

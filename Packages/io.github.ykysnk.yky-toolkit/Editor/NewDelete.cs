@@ -1,3 +1,4 @@
+using io.github.ykysnk.Localization.Editor;
 using System;
 using System.Diagnostics;
 using System.IO;

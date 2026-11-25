@@ -1,3 +1,4 @@
+using io.github.ykysnk.Localization.Editor;
 using io.github.ykysnk.utils.Editor;
 using UnityEditor;
 using UnityEditor.UIElements;
@@ -14,7 +15,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         protected override VisualElement? CreateErrorHandleInspectorGUI()
         {
             var tree = uxml!.CloneTree();
-            InternalLocalizationExtensions.Helper.UILocalize(tree);
+            tree.UILocalize();
             tree.Bind(serializedObject);
             return tree;
         }

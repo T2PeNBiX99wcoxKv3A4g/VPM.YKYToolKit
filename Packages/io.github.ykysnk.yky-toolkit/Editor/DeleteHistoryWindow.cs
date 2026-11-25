@@ -1,3 +1,4 @@
+using io.github.ykysnk.Localization.Editor;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
@@ -23,7 +24,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         {
             var serializedObject = new SerializedObject(this);
             var tree = uxml!.CloneTree();
-            InternalLocalizationExtensions.Helper.UILocalize(tree, false);
+            tree.UILocalize(false);
             tree.Bind(serializedObject);
             rootVisualElement.Add(tree);
 
