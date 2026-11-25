@@ -1,5 +1,5 @@
-using io.github.ykysnk.Localization.Editor;
 using System.Diagnostics.CodeAnalysis;
+using io.github.ykysnk.Localization.Editor;
 using JetBrains.Annotations;
 using UnityEditor;
 using UnityEngine;

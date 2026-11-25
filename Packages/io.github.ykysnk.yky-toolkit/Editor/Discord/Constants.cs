@@ -1,6 +1,6 @@
 ﻿using JetBrains.Annotations;
 
-namespace io.github.ykysnk.ykyToolkit.Discord
+namespace io.github.ykysnk.ykyToolkit.Editor.Discord
 {
     [PublicAPI]
     internal static class Constants

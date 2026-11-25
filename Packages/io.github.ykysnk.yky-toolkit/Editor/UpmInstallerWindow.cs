@@ -1,10 +1,9 @@
-using io.github.ykysnk.Localization.Editor;
 using System.Collections.Generic;
 using System.Linq;
+using io.github.ykysnk.Localization.Editor;
 using io.github.ykysnk.utils;
 using io.github.ykysnk.utils.Editor;
 using io.github.ykysnk.utils.Editor.Extensions;
-using io.github.ykysnk.utils.Extensions;
 using io.github.ykysnk.utils.NonUdon;
 using UnityEditor;
 using UnityEditor.UIElements;
@@ -21,8 +20,18 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         [SerializeField] private List<UpmInstallerPackage> packages = new();
         [SerializeField] private List<UpmInstallerPackage> packageListMaker = new();
         [SerializeField] private List<UpmPackageListWrapper> packageLists = new();
+        private ListView? _makerField;
+        private ScrollView? _packageListsScroll;
+        private ListView? _packagesField;
+        private int _selectedPackageListIndex = -1;
+
+        private SerializedObject? _serializedObject;
 
         private static UpmInstallerWindow? Instance { get; set; }
+
+        private SerializedProperty PackagesProperty => _serializedObject!.FindProperty("packages");
+
+        private SerializedProperty MakerProperty => _serializedObject!.FindProperty("packageListMaker");
 
         private void OnDestroy()
         {
@@ -31,17 +40,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             _serializedObject?.Dispose();
         }
 
-        private SerializedObject? _serializedObject;
-        private ListView? _packagesField;
-        private ListView? _makerField;
-        private ScrollView? _packageListsScroll;
-        private int _selectedPackageListIndex = -1;
-
         private void CreateGUI()
         {
             Instance = this;
             _serializedObject?.Dispose();
-            _serializedObject = new SerializedObject(this);
+            _serializedObject = new(this);
             // Load first: a list only picks up the entries that exist when it binds.
             LoadPackageList();
 
@@ -164,7 +167,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             // Own add/remove rows: the built-in ListView footer floats over whatever comes next inside a card.
             tree.Q<Button>("addPackage").clicked += () =>
             {
-                AppendEntries("packages", new[] { new UpmInstallerPackage("", "") });
+                AppendEntries("packages", new[]
+                {
+                    new UpmInstallerPackage("", "")
+                });
                 packagesField.Rebuild();
             };
             tree.Q<Button>("removePackage").clicked += () =>
@@ -175,7 +181,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             tree.Q<Button>("addMaker").clicked += () =>
             {
-                AppendEntries("packageListMaker", new[] { new UpmInstallerPackage("", "") });
+                AppendEntries("packageListMaker", new[]
+                {
+                    new UpmInstallerPackage("", "")
+                });
                 makerField.Rebuild();
             };
             tree.Q<Button>("removeMaker").clicked += () =>
@@ -194,7 +203,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         {
             if (index < 0 || index >= packageLists.Count) return;
 
-            RemoveEntries("packageLists", new[] { index });
+            RemoveEntries("packageLists", new[]
+            {
+                index
+            });
             _selectedPackageListIndex = -1;
             RebuildPackageListRows();
             SavePackageList();
@@ -213,8 +225,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             EditorGUIUtility.systemCopyBuffer = json;
         }
-
-        private SerializedProperty PackagesProperty => _serializedObject!.FindProperty("packages");
 
         private void AddPackageMenu(ListView list, string propertyName)
         {
@@ -307,8 +317,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             _selectedPackageListIndex = property.arraySize - 1;
             RebuildPackageListRows();
         }
-
-        private SerializedProperty MakerProperty => _serializedObject!.FindProperty("packageListMaker");
 
         /// <summary>
         ///     The lists are bound to their SerializedProperty, so they have to be edited through it; changing the

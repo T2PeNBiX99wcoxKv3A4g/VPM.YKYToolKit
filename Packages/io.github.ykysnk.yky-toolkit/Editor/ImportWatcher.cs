@@ -30,23 +30,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             RebuildPathCache();
         }
 
-        // The project window item callback runs for every visible item on every repaint, so the lookups use sets
-        // instead of walking the highlight list (and building "path/" strings) each time.
-        private static void RebuildPathCache()
-        {
-            HighlightPaths.Clear();
-            HighlightFolders.Clear();
-
-            foreach (var highlight in Highlights)
-            {
-                HighlightPaths.Add(highlight.path);
-
-                var folder = Path.GetDirectoryName(highlight.path);
-                while (!string.IsNullOrEmpty(folder) && HighlightFolders.Add(folder))
-                    folder = Path.GetDirectoryName(folder);
-            }
-        }
-
         internal static Color HighlightColor
         {
             get => ColorUtility.TryParseHtmlString(EditorPrefs.GetString(ImportHighlightColor), out var color)
@@ -127,6 +110,23 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     extension = Path.GetExtension(path),
                     unixSeconds = DateTimeOffset.UtcNow.ToUnixTimeSeconds()
                 });
+        }
+
+        // The project window item callback runs for every visible item on every repaint, so the lookups use sets
+        // instead of walking the highlight list (and building "path/" strings) each time.
+        private static void RebuildPathCache()
+        {
+            HighlightPaths.Clear();
+            HighlightFolders.Clear();
+
+            foreach (var highlight in Highlights)
+            {
+                HighlightPaths.Add(highlight.path);
+
+                var folder = Path.GetDirectoryName(highlight.path);
+                while (!string.IsNullOrEmpty(folder) && HighlightFolders.Add(folder))
+                    folder = Path.GetDirectoryName(folder);
+            }
         }
 
         private static void AddOrUpdate(string path)

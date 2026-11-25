@@ -13,14 +13,18 @@ namespace io.github.ykysnk.ykyToolkit.Editor.Patches
     {
         // The lilEditorToolbox integration is optional: the plugin is reached through reflection instead of an
         // assembly reference, so installing this package without the plugin still compiles.
-        private static readonly Type? ProjectExtensionType = AccessTools.TypeByName("jp.lilxyzw.editortoolbox.ProjectExtension");
+        private static readonly Type? ProjectExtensionType =
+            AccessTools.TypeByName("jp.lilxyzw.editortoolbox.ProjectExtension");
 
         private static readonly PropertyInfo? IconGuiProperty =
             ProjectExtensionType == null ? null : AccessTools.Property(ProjectExtensionType, "isIconGUI");
 
         private static readonly MethodInfo? GuidToObjectMethod = ProjectExtensionType == null
             ? null
-            : AccessTools.Method(ProjectExtensionType, "GUIDToObject", new[] { typeof(string) });
+            : AccessTools.Method(ProjectExtensionType, "GUIDToObject", new[]
+            {
+                typeof(string)
+            });
 
         public override string QualifiedName => "io.github.ykysnk.yky-toolkit.patches";
 
@@ -41,7 +45,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor.Patches
         internal static bool MaterialCheckPrefix(string guid, string extension) =>
             extension == ".mat" &&
             IconGuiProperty?.GetValue(null) is false &&
-            GuidToObjectMethod?.Invoke(null, new object[] { guid }) is Material material &&
+            GuidToObjectMethod?.Invoke(null, new object[]
+            {
+                guid
+            }) is Material material &&
             material;
     }
 }

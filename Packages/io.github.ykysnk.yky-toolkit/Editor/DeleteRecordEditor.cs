@@ -1,5 +1,5 @@
-using io.github.ykysnk.Localization.Editor;
 using System;
+using io.github.ykysnk.Localization.Editor;
 using io.github.ykysnk.utils.Editor;
 using UnityEditor;
 using UnityEditor.UIElements;

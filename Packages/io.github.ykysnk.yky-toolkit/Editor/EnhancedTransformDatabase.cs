@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using JetBrains.Annotations;
 using UnityEditor;
 using UnityEngine;
@@ -10,10 +9,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
     public class EnhancedTransformDatabase : ScriptableObject
     {
         private const string Path = "Assets/EnhancedTransformDatabase.asset";
+        private static EnhancedTransformDatabase? _instance;
         public List<EnhancedTransformData> entries = new();
 
         private Dictionary<string, EnhancedTransformData>? _cache;
-        private static EnhancedTransformDatabase? _instance;
 
         private EnhancedTransformData GetOrCreate(string id)
         {

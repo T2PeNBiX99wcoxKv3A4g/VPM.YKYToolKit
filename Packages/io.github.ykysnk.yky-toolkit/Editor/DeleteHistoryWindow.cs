@@ -1,7 +1,7 @@
-using io.github.ykysnk.Localization.Editor;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using io.github.ykysnk.Localization.Editor;
 using io.github.ykysnk.utils.Editor;
 using UnityEditor;
 using UnityEditor.UIElements;
@@ -20,14 +20,14 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private ListView? _listView;
         private ToolbarButton? _refreshButton;
 
-        private void OnDestroy() => _serializedObject?.Dispose();
-
         private SerializedObject? _serializedObject;
+
+        private void OnDestroy() => _serializedObject?.Dispose();
 
         private void CreateGUI()
         {
             _serializedObject?.Dispose();
-            _serializedObject = new SerializedObject(this);
+            _serializedObject = new(this);
             var tree = uxml!.CloneTree();
             tree.UILocalize(false);
             tree.Bind(_serializedObject);

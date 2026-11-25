@@ -4,13 +4,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Cysharp.Threading.Tasks;
-using io.github.ykysnk.utils.Extensions;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Animations;
 using VRC.Dynamics;
 using VRC.SDK3.Dynamics.Constraint.Components;
-using Object = UnityEngine.Object;
 
 namespace io.github.ykysnk.ykyToolkit.Editor
 {
@@ -598,11 +596,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         private class ConstraintData
         {
+            public readonly bool Enabled;
             public readonly IConstraintExtraData ExtraData;
             public readonly float GlobalWeight;
             public readonly bool IsActive;
             public readonly bool Locked;
-            public readonly bool Enabled;
             public readonly ConstraintSourceData[] SourceDatas;
             public readonly ConstraintType Type;
 

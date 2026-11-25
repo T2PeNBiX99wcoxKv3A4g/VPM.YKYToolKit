@@ -1,6 +1,6 @@
 ﻿using JetBrains.Annotations;
 
-namespace io.github.ykysnk.ykyToolkit.Discord
+namespace io.github.ykysnk.ykyToolkit.Editor.Discord
 {
     [PublicAPI]
     public partial class ActivityManager

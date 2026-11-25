@@ -61,17 +61,25 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             return s switch
             {
                 // Basic
-                _ when s.StartsWith("=") && float.TryParse(s[1..], NumberStyles.Float, CultureInfo.InvariantCulture, out var v) ||
-                       s.StartsWith("E(") && float.TryParse(s.MiddlePath('(', ')'), NumberStyles.Float, CultureInfo.InvariantCulture, out v)
+                _ when s.StartsWith("=") &&
+                       float.TryParse(s[1..], NumberStyles.Float, CultureInfo.InvariantCulture, out var v) ||
+                       s.StartsWith("E(") && float.TryParse(s.MiddlePath('(', ')'), NumberStyles.Float,
+                           CultureInfo.InvariantCulture, out v)
                     => new(TransformInputMode.Absolute, v),
-                _ when s.StartsWith("+") && float.TryParse(s[1..], NumberStyles.Float, CultureInfo.InvariantCulture, out var v) ||
-                       s.StartsWith("A(") && float.TryParse(s.MiddlePath('(', ')'), NumberStyles.Float, CultureInfo.InvariantCulture, out v)
+                _ when s.StartsWith("+") &&
+                       float.TryParse(s[1..], NumberStyles.Float, CultureInfo.InvariantCulture, out var v) ||
+                       s.StartsWith("A(") && float.TryParse(s.MiddlePath('(', ')'), NumberStyles.Float,
+                           CultureInfo.InvariantCulture, out v)
                     => new(TransformInputMode.Additive, v),
-                _ when s.StartsWith("*") && float.TryParse(s[1..], NumberStyles.Float, CultureInfo.InvariantCulture, out var v) ||
-                       s.StartsWith("M(") && float.TryParse(s.MiddlePath('(', ')'), NumberStyles.Float, CultureInfo.InvariantCulture, out v)
+                _ when s.StartsWith("*") &&
+                       float.TryParse(s[1..], NumberStyles.Float, CultureInfo.InvariantCulture, out var v) ||
+                       s.StartsWith("M(") && float.TryParse(s.MiddlePath('(', ')'), NumberStyles.Float,
+                           CultureInfo.InvariantCulture, out v)
                     => new(TransformInputMode.Multiply, v),
-                _ when s.StartsWith("/") && float.TryParse(s[1..], NumberStyles.Float, CultureInfo.InvariantCulture, out var v) ||
-                       s.StartsWith("D(") && float.TryParse(s.MiddlePath('(', ')'), NumberStyles.Float, CultureInfo.InvariantCulture, out v)
+                _ when s.StartsWith("/") &&
+                       float.TryParse(s[1..], NumberStyles.Float, CultureInfo.InvariantCulture, out var v) ||
+                       s.StartsWith("D(") && float.TryParse(s.MiddlePath('(', ')'), NumberStyles.Float,
+                           CultureInfo.InvariantCulture, out v)
                     => new(TransformInputMode.Division, v),
 
                 // Unity-like

@@ -2,8 +2,7 @@ using System;
 using io.github.ykysnk.utils;
 using io.github.ykysnk.utils.NonUdon;
 using io.github.ykysnk.utils.NonUdon.Extensions;
-using io.github.ykysnk.ykyToolkit.Discord;
-using JetBrains.Annotations;
+using io.github.ykysnk.ykyToolkit.Editor.Discord;
 using UnityEditor;
 
 namespace io.github.ykysnk.ykyToolkit.Editor
@@ -32,13 +31,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             Initialize(ApplicationId);
         }
 
-        private static void EnsureUpdateSubscribed()
-        {
-            if (_updateSubscribed) return;
-            _updateSubscribed = true;
-            EditorApplication.update += Update;
-        }
-
         internal static bool EnableDiscordRichPresence
         {
             get => EditorPrefs.GetBool(EnableKey, true);
@@ -56,6 +48,13 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 else
                     Shutdown();
             }
+        }
+
+        private static void EnsureUpdateSubscribed()
+        {
+            if (_updateSubscribed) return;
+            _updateSubscribed = true;
+            EditorApplication.update += Update;
         }
 
         [MenuItem(ToolsMenuPath, false, Util.Two)]

@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 
 // ReSharper disable MemberHidesStaticFromOuterClass
 
-namespace io.github.ykysnk.ykyToolkit.Discord
+namespace io.github.ykysnk.ykyToolkit.Editor.Discord
 {
     [PublicAPI]
     public enum Result
@@ -775,6 +775,30 @@ namespace io.github.ykysnk.ykyToolkit.Discord
 
         private readonly IntPtr _voiceEventsPtr;
 
+        internal AchievementManager? AchievementManagerInstance;
+
+        internal ActivityManager? ActivityManagerInstance;
+
+        internal ApplicationManager? ApplicationManagerInstance;
+
+        internal ImageManager? ImageManagerInstance;
+
+        internal LobbyManager? LobbyManagerInstance;
+
+        internal NetworkManager? NetworkManagerInstance;
+
+        internal OverlayManager? OverlayManagerInstance;
+
+        internal RelationshipManager? RelationshipManagerInstance;
+
+        internal StorageManager? StorageManagerInstance;
+
+        internal StoreManager? StoreManagerInstance;
+
+        internal UserManager? UserManagerInstance;
+
+        internal VoiceManager? VoiceManagerInstance;
+
         private AchievementManager.FFIEvents _achievementEvents;
 
         private ActivityManager.FFIEvents _activityEvents;
@@ -804,30 +828,6 @@ namespace io.github.ykysnk.ykyToolkit.Discord
         private UserManager.FFIEvents _userEvents;
 
         private VoiceManager.FFIEvents _voiceEvents;
-
-        internal AchievementManager? AchievementManagerInstance;
-
-        internal ActivityManager? ActivityManagerInstance;
-
-        internal ApplicationManager? ApplicationManagerInstance;
-
-        internal ImageManager? ImageManagerInstance;
-
-        internal LobbyManager? LobbyManagerInstance;
-
-        internal NetworkManager? NetworkManagerInstance;
-
-        internal OverlayManager? OverlayManagerInstance;
-
-        internal RelationshipManager? RelationshipManagerInstance;
-
-        internal StorageManager? StorageManagerInstance;
-
-        internal StoreManager? StoreManagerInstance;
-
-        internal UserManager? UserManagerInstance;
-
-        internal VoiceManager? VoiceManagerInstance;
 
         public Discord(long clientId, ulong flags)
         {

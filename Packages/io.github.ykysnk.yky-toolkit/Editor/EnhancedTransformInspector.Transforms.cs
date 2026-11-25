@@ -1,17 +1,7 @@
-using io.github.ykysnk.Localization.Editor;
 using System;
-using System.Globalization;
-using System.Linq;
-using io.github.ykysnk.utils.Editor;
 using io.github.ykysnk.utils.Extensions;
-using io.github.ykysnk.utils.NonUdon;
-using io.github.ykysnk.ykyToolkit.Editor.UIElements;
 using UnityEditor;
-using UnityEditor.SceneManagement;
-using UnityEditor.UIElements;
 using UnityEngine;
-using UnityEngine.UIElements;
-using Random = UnityEngine.Random;
 
 namespace io.github.ykysnk.ykyToolkit.Editor
 {
@@ -123,6 +113,5 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 ApplyVector3WhenChanged(old, v, v2 => after(t, v2));
             }, undoMessage);
         }
-
     }
 }

@@ -1,6 +1,6 @@
-using io.github.ykysnk.Localization.Editor;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using io.github.ykysnk.Localization.Editor;
 using io.github.ykysnk.utils.Editor;
 using io.github.ykysnk.utils.Extensions;
 using UnityEditor;
@@ -17,14 +17,14 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         [SerializeField] private VisualTreeAsset? uxml;
         [SerializeField] private List<ImportSession> sessions = new();
 
-        private void OnDestroy() => _serializedObject?.Dispose();
-
         private SerializedObject? _serializedObject;
+
+        private void OnDestroy() => _serializedObject?.Dispose();
 
         private void CreateGUI()
         {
             _serializedObject?.Dispose();
-            _serializedObject = new SerializedObject(this);
+            _serializedObject = new(this);
             var tree = uxml!.CloneTree();
             tree.UILocalize(false);
             tree.Bind(_serializedObject);

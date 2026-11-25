@@ -1,10 +1,10 @@
-using io.github.ykysnk.Localization.Editor;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using io.github.ykysnk.Localization.Editor;
 using io.github.ykysnk.utils;
 using io.github.ykysnk.utils.Editor;
 using io.github.ykysnk.utils.NonUdon;

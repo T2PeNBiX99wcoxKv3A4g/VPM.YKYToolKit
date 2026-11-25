@@ -1,7 +1,5 @@
-using io.github.ykysnk.Localization.Editor;
-using System;
-using System.Globalization;
 using System.Linq;
+using io.github.ykysnk.Localization.Editor;
 using io.github.ykysnk.utils.Editor;
 using io.github.ykysnk.utils.Extensions;
 using io.github.ykysnk.utils.NonUdon;
@@ -29,8 +27,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         [SerializeField] private VisualTreeAsset? uxml;
 
         private UnityEditor.Editor? _defaultEditor;
-        private VisualElement? _root;
         private SerializedObject? _prefabTargetSerializedObject;
+        private VisualElement? _root;
 
         private static bool IsDefaultUIExpanded
         {
@@ -144,7 +142,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 positionField.value = pasteVector3;
             };
             positionField.schedule.Execute(() =>
-                    positionField.PasteButton.SetEnabled(!exData.lockTransform && TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer, out _)))
+                    positionField.PasteButton.SetEnabled(!exData.lockTransform &&
+                                                         TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer, out _)))
                 .Every(100);
 
             var globalPositionFieldEditing = false;
@@ -219,7 +218,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 globalPositionFieldEditing = false;
             };
             globalPositionField.schedule.Execute(() =>
-                globalPositionField.PasteButton.SetEnabled(!exData.lockTransform && TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer,
+                globalPositionField.PasteButton.SetEnabled(!exData.lockTransform && TryParseUnityVector3(
+                    EditorGUIUtility.systemCopyBuffer,
                     out _))).Every(100);
 
             positionField.ResetButton.clicked += ResetLocalPosition;
@@ -279,7 +279,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 rotationField.value = pasteVector3;
             };
             rotationField.schedule.Execute(() =>
-                    rotationField.PasteButton.SetEnabled(!exData.lockTransform && TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer, out _)))
+                    rotationField.PasteButton.SetEnabled(!exData.lockTransform &&
+                                                         TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer, out _)))
                 .Every(100);
 
             var globalRotationEditing = false;
@@ -366,7 +367,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 globalRotationEditing = false;
             };
             globalRotationField.schedule.Execute(() =>
-                    globalRotationField.PasteButton.SetEnabled(!exData.lockTransform && TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer,
+                    globalRotationField.PasteButton.SetEnabled(!exData.lockTransform && TryParseUnityVector3(
+                        EditorGUIUtility.systemCopyBuffer,
                         out _)))
                 .Every(100);
 
@@ -474,7 +476,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 scaleField.value = pasteVector3;
             };
             scaleField.schedule.Execute(() =>
-                    scaleField.PasteButton.SetEnabled(!exData.lockTransform && TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer, out _)))
+                    scaleField.PasteButton.SetEnabled(!exData.lockTransform &&
+                                                      TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer, out _)))
                 .Every(100);
 
             var lossyScaleFieldEditing = false;
@@ -555,7 +558,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 lossyScaleFieldEditing = false;
             };
             lossyScaleField.schedule.Execute(() =>
-                    lossyScaleField.PasteButton.SetEnabled(!exData.lockTransform && TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer,
+                    lossyScaleField.PasteButton.SetEnabled(!exData.lockTransform && TryParseUnityVector3(
+                        EditorGUIUtility.systemCopyBuffer,
                         out _)))
                 .Every(100);
 
@@ -764,7 +768,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 var prefabTarget = PrefabUtility.GetCorrespondingObjectFromSource(theTarget);
                 if (prefabTarget == null) return;
 
-                _prefabTargetSerializedObject = new SerializedObject(prefabTarget);
+                _prefabTargetSerializedObject = new(prefabTarget);
                 prefabTargetPos = _prefabTargetSerializedObject.FindProperty("m_LocalPosition");
                 prefabTargetRot = _prefabTargetSerializedObject.FindProperty("m_LocalRotation");
                 prefabTargetEulerHint = _prefabTargetSerializedObject.FindProperty("m_LocalEulerAnglesHint");
@@ -989,6 +993,5 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 lossyScaleField.value += randomVector;
             }
         }
-
     }
 }

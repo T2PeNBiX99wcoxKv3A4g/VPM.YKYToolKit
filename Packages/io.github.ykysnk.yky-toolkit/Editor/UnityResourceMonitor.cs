@@ -1,8 +1,8 @@
-using io.github.ykysnk.Localization.Editor;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using io.github.ykysnk.Localization.Editor;
 using io.github.ykysnk.utils.Editor;
 using UnityEditor;
 using UnityEditor.UIElements;
@@ -23,16 +23,16 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private double _lastCpuTime;
         private Process? _process;
 
-        private void OnDestroy() => _serializedObject?.Dispose();
-
         private SerializedObject? _serializedObject;
+
+        private void OnDestroy() => _serializedObject?.Dispose();
 
         private void CreateGUI()
         {
             _process = Process.GetCurrentProcess();
 
             _serializedObject?.Dispose();
-            _serializedObject = new SerializedObject(this);
+            _serializedObject = new(this);
             var tree = uxml!.CloneTree();
             tree.UILocalize(false);
             tree.Bind(_serializedObject);

@@ -1,9 +1,7 @@
 using JetBrains.Annotations;
-#if UNITY_EDITOR || UNITY_STANDALONE
 using UnityEngine;
-#endif
 
-namespace io.github.ykysnk.ykyToolkit.Discord
+namespace io.github.ykysnk.ykyToolkit.Editor.Discord
 {
     [PublicAPI]
     public partial struct ImageHandle
