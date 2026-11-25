@@ -1,4 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="True">
+    <Style src="project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/YkyToolkitTheme.uss?guid=34e0c41dada851146aeccffc05549196&amp;type=3"/>
     <Style src="project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/DeleteHistoryWindow.uss?fileID=7433441132597879392&amp;guid=740dea6a94a94abe8ac59f9a97b81da9&amp;type=3#DeleteHistoryWindow"/>
     <ui:VisualElement class="delete-history-item">
         <ui:VisualElement name="infoContainer">

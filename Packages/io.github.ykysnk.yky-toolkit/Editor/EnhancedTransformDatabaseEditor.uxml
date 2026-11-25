@@ -1,4 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/YkyToolkitTheme.uss?guid=34e0c41dada851146aeccffc05549196&amp;type=3"/>
     <ui:VisualElement>
         <ui:HelpBox name="info" message-type="Warning" text="label.enhanced_transform_database.info"/>
         <ui:ListView binding-path="entries" name="entries" virtualization-method="DynamicHeight"

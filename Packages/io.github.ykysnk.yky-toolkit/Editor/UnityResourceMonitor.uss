@@ -3,13 +3,6 @@
     flex-direction: column;
 }
 
-.title {
-    -unity-font-style: bold;
-    -unity-text-align: upper-center;
-    font-size: 14px;
-    margin-bottom: 8px;
-}
-
 .tableHeader {
     flex-direction: row;
     background-color: #333333;

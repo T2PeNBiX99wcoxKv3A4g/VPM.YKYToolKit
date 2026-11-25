@@ -1,4 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <Style src="project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/YkyToolkitTheme.uss?guid=34e0c41dada851146aeccffc05549196&amp;type=3"/>
     <Style src="project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/ImportWatcherWindow.uss?fileID=7433441132597879392&amp;guid=cb3f7d18f6e8d4e4d8f0d704c12890d4&amp;type=3#ImportWatcherWindow"/>
     <uie:Toolbar>
         <uie:ToolbarButton text="label.refresh" name="refresh"/>
