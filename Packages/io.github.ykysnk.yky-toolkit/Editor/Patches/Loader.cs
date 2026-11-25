@@ -16,8 +16,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor.Patches
         private static readonly Type? ProjectExtensionType =
             AccessTools.TypeByName("jp.lilxyzw.editortoolbox.ProjectExtension");
 
-        private static readonly PropertyInfo? IconGuiProperty =
-            ProjectExtensionType == null ? null : AccessTools.Property(ProjectExtensionType, "isIconGUI");
+        private static readonly FieldInfo? IconGuiField =
+            ProjectExtensionType == null ? null : AccessTools.Field(ProjectExtensionType, "isIconGUI");
 
         private static readonly MethodInfo? GuidToObjectMethod = ProjectExtensionType == null
             ? null
@@ -34,7 +34,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor.Patches
         {
             // Without the plugin nothing is patched; the patch classes only exist when YKYTOOLKIT_LILEDITORTOOLBOX is set.
 #if YKYTOOLKIT_LILEDITORTOOLBOX
-            if (IconGuiProperty == null || GuidToObjectMethod == null) return;
+            if (IconGuiField == null || GuidToObjectMethod == null) return;
 
             Run(MaterialQueuePatch.Instance);
             Run(MaterialShaderPatch.Instance);
@@ -44,7 +44,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor.Patches
 
         internal static bool MaterialCheckPrefix(string guid, string extension) =>
             extension == ".mat" &&
-            IconGuiProperty?.GetValue(null) is false &&
+            IconGuiField?.GetValue(null) is false &&
             GuidToObjectMethod?.Invoke(null, new object[]
             {
                 guid
