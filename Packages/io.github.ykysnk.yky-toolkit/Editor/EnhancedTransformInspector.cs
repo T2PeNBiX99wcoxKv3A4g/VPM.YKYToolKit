@@ -30,6 +30,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         private UnityEditor.Editor? _defaultEditor;
         private VisualElement? _root;
+        private SerializedObject? _prefabTargetSerializedObject;
 
         private static bool IsDefaultUIExpanded
         {
@@ -61,6 +62,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         private void OnDestroy()
         {
+            _prefabTargetSerializedObject?.Dispose();
+
             if (_defaultEditor != null)
                 DestroyImmediate(_defaultEditor);
         }
@@ -748,8 +751,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             });
 
             // Reused by the once-per-second override check; creating a SerializedObject there every second was the
-            // expensive part.
-            SerializedObject? prefabTargetSerializedObject = null;
+            // expensive part. It is disposed in OnDestroy.
             SerializedProperty? prefabTargetPos = null;
             SerializedProperty? prefabTargetRot = null;
             SerializedProperty? prefabTargetEulerHint = null;
@@ -757,16 +759,16 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             void EnsurePrefabProperties()
             {
-                if (prefabTargetSerializedObject != null || theTarget == null) return;
+                if (_prefabTargetSerializedObject != null || theTarget == null) return;
 
                 var prefabTarget = PrefabUtility.GetCorrespondingObjectFromSource(theTarget);
                 if (prefabTarget == null) return;
 
-                prefabTargetSerializedObject = new SerializedObject(prefabTarget);
-                prefabTargetPos = prefabTargetSerializedObject.FindProperty("m_LocalPosition");
-                prefabTargetRot = prefabTargetSerializedObject.FindProperty("m_LocalRotation");
-                prefabTargetEulerHint = prefabTargetSerializedObject.FindProperty("m_LocalEulerAnglesHint");
-                prefabTargetScale = prefabTargetSerializedObject.FindProperty("m_LocalScale");
+                _prefabTargetSerializedObject = new SerializedObject(prefabTarget);
+                prefabTargetPos = _prefabTargetSerializedObject.FindProperty("m_LocalPosition");
+                prefabTargetRot = _prefabTargetSerializedObject.FindProperty("m_LocalRotation");
+                prefabTargetEulerHint = _prefabTargetSerializedObject.FindProperty("m_LocalEulerAnglesHint");
+                prefabTargetScale = _prefabTargetSerializedObject.FindProperty("m_LocalScale");
             }
 
             tree.schedule.Execute(ClearOverride).Every(1000);
@@ -787,7 +789,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 if (AnimationMode.InAnimationMode()) return;
 
                 EnsurePrefabProperties();
-                if (prefabTargetSerializedObject == null) return;
+                if (_prefabTargetSerializedObject == null) return;
 
                 var isChanged = false;
 

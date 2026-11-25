@@ -23,14 +23,19 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private double _lastCpuTime;
         private Process? _process;
 
+        private void OnDestroy() => _serializedObject?.Dispose();
+
+        private SerializedObject? _serializedObject;
+
         private void CreateGUI()
         {
             _process = Process.GetCurrentProcess();
 
-            var serializedObject = new SerializedObject(this);
+            _serializedObject?.Dispose();
+            _serializedObject = new SerializedObject(this);
             var tree = uxml!.CloneTree();
             tree.UILocalize(false);
-            tree.Bind(serializedObject);
+            tree.Bind(_serializedObject);
             rootVisualElement.Add(tree);
             rootVisualElement.AddManipulator(
                 new ContextualMenuManipulator(evt => evt.menu.AppendAction("Reload", _ => Reload())));

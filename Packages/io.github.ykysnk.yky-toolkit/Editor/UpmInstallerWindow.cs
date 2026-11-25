@@ -30,16 +30,20 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         {
             if (Instance == this) Instance = null;
             SavePackageList();
+            _serializedObject?.Dispose();
         }
+
+        private SerializedObject? _serializedObject;
 
         private void CreateGUI()
         {
             _ = isPackageListMakerExpanded;
             Instance = this;
-            var serializedObject = new SerializedObject(this);
+            _serializedObject?.Dispose();
+            _serializedObject = new SerializedObject(this);
             var tree = uxml!.CloneTree();
             tree.UILocalize(false);
-            tree.Bind(serializedObject);
+            tree.Bind(_serializedObject);
             rootVisualElement.Add(tree);
             LoadPackageList();
 
