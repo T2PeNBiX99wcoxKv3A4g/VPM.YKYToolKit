@@ -35,6 +35,14 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var foldout = tree.Q<Foldout>();
             foldout.schedule.Execute(() => foldout.value = false);
 
+            // The built-in count is an editable int field that reads as a black box; a read-only pill matches the
+            // localization list header instead.
+            var packagesProperty = property.FindPropertyRelative("wrapPackages");
+            var countLabel = new Label(packagesProperty.arraySize.ToString());
+            countLabel.AddToClassList("yky-count");
+            foldout.Q<VisualElement>(className: "unity-foldout__input")?.Add(countLabel);
+            countLabel.TrackPropertyValue(packagesProperty, p => countLabel.text = p.arraySize.ToString());
+
             return tree;
         }
     }

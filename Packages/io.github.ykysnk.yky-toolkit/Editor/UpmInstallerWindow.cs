@@ -32,35 +32,53 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         }
 
         private SerializedObject? _serializedObject;
+        private ListView? _packagesField;
+        private ListView? _makerField;
+        private ScrollView? _packageListsScroll;
+        private int _selectedPackageListIndex = -1;
 
         private void CreateGUI()
         {
             Instance = this;
             _serializedObject?.Dispose();
             _serializedObject = new SerializedObject(this);
+            // Load first: a list only picks up the entries that exist when it binds.
+            LoadPackageList();
+
             var tree = uxml!.CloneTree();
             tree.UILocalize(false);
             tree.Bind(_serializedObject);
             rootVisualElement.Add(tree);
-            LoadPackageList();
+            // The template wrapper is not a flex child of the window root by default, so the page would only be as
+            // tall as its content instead of filling the window.
+            tree.style.flexGrow = 1;
 
-            var packagesField = tree.Q<ListView>("packages");
-            var makerField = tree.Q<ListView>("packageListMaker");
-            var packageListsField = tree.Q<ListView>("packageLists");
+            var packagesField = _packagesField = tree.Q<ListView>("packages");
+            var makerField = _makerField = tree.Q<ListView>("packageListMaker");
+            _packageListsScroll = tree.Q<ScrollView>("packageLists");
+            _selectedPackageListIndex = -1;
+
+            packagesField.LocalizeEmptyLabel();
+            makerField.LocalizeEmptyLabel();
+
+            AddPackageMenu(packagesField, "packages");
+            AddPackageMenu(makerField, "packageListMaker");
+
+            RebuildPackageListRows();
 
             var installButton = tree.Q<Button>("install");
             installButton.clicked += () =>
             {
-                var entries = ReadEntries("packages");
-                if (entries.Count == 0) return;
+                var entries = ReadEntries("packages").Where(x => !string.IsNullOrEmpty(x.packageName)).ToArray();
+                if (entries.Length == 0) return;
                 UpmInstaller.Install(entries.Select(x => x.FullName).ToArray());
             };
 
             var removeButton = tree.Q<Button>("remove");
             removeButton.clicked += () =>
             {
-                var entries = ReadEntries("packages");
-                if (entries.Count == 0) return;
+                var entries = ReadEntries("packages").Where(x => !string.IsNullOrEmpty(x.packageName)).ToArray();
+                if (entries.Length == 0) return;
                 UpmInstaller.Remove(entries.Select(x => x.FullName).ToArray());
             };
 
@@ -103,7 +121,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                         : createListNameField.value
                 };
                 wrapper.wrapPackages.AddRange(ReadEntries("packageListMaker"));
-                packageLists.Add(wrapper);
+                AppendPackageList(wrapper);
                 SavePackageList();
 
                 if (JsonUtils.TryToJson(wrapper, out var json, out var exception))
@@ -130,7 +148,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 {
                     Utils.Log(nameof(UpmInstallerWindow),
                         $"Imported package list: {result!.wrapName} - {result.wrapPackages.Count}");
-                    packageLists.Add(result);
+                    AppendPackageList(result);
                     SavePackageList();
                 }
                 else
@@ -166,40 +184,129 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 makerField.Rebuild();
             };
 
-            packageListsField.AddManipulator(new ContextualMenuManipulator(evt =>
-            {
-                if (!packageListsField.selectedIndices.Any() || packageListsField.selectedIndex < 0)
-                    return;
-
-                evt.menu.AppendAction("label.upm_installer_window.copy".S(), _ => CopySelected());
-                evt.menu.AppendAction("label.upm_installer_window.remove".S(), _ => RemoveSelected());
-            }));
-
             removeSelectedButton.clicked += RemoveSelected;
             return;
 
-            void RemoveSelected()
-            {
-                foreach (var index in packageListsField.selectedIndices.OrderByDescending(i => i))
-                    packageLists.RemoveAt(index);
+            void RemoveSelected() => RemovePackageList(_selectedPackageListIndex);
+        }
 
-                packageListsField.Rebuild();
+        private void RemovePackageList(int index)
+        {
+            if (index < 0 || index >= packageLists.Count) return;
+
+            RemoveEntries("packageLists", new[] { index });
+            _selectedPackageListIndex = -1;
+            RebuildPackageListRows();
+            SavePackageList();
+        }
+
+        private void CopyPackageList(int index)
+        {
+            if (index < 0 || index >= packageLists.Count) return;
+
+            if (!JsonUtils.TryToJson(packageLists[index], out var json, out var exception))
+            {
+                Utils.LogError(nameof(UpmInstallerWindow),
+                    $"Copy package list failed. {exception!.Message}\n{exception.StackTrace}");
+                return;
             }
 
-            void CopySelected()
-            {
-                if (!JsonUtils.TryToJson(packageLists[packageListsField.selectedIndex], out var json, out var exception))
-                {
-                    Utils.LogError(nameof(UpmInstallerWindow),
-                        $"Copy package list failed. {exception!.Message}\n{exception.StackTrace}");
-                    return;
-                }
-
-                EditorGUIUtility.systemCopyBuffer = json;
-            }
+            EditorGUIUtility.systemCopyBuffer = json;
         }
 
         private SerializedProperty PackagesProperty => _serializedObject!.FindProperty("packages");
+
+        private void AddPackageMenu(ListView list, string propertyName)
+        {
+            list.AddManipulator(new ContextualMenuManipulator(evt =>
+            {
+                var selection = list.selectedIndices.ToList();
+                if (selection.Count == 0) return;
+
+                evt.menu.AppendAction("label.upm_installer_window.copy".S(), _ =>
+                {
+                    var entries = ReadEntries(propertyName);
+                    EditorGUIUtility.systemCopyBuffer = string.Join("\n",
+                        selection.Where(i => i >= 0 && i < entries.Count).Select(i => entries[i].FullName));
+                });
+
+                evt.menu.AppendAction("label.upm_installer_window.remove".S(), _ =>
+                {
+                    RemoveEntries(propertyName, selection);
+                    list.Rebuild();
+                });
+            }));
+        }
+
+        /// <summary>
+        ///     The saved lists are not a virtualized ListView on purpose: each row is a drawer that can expand to show its
+        ///     packages, and a virtualized list does not remeasure an item when its drawer grows (the rows then overlap).
+        /// </summary>
+        private void RebuildPackageListRows()
+        {
+            if (_packageListsScroll == null) return;
+
+            var container = _packageListsScroll.contentContainer;
+            container.Clear();
+            _serializedObject!.Update();
+
+            var property = _serializedObject.FindProperty("packageLists");
+            if (property.arraySize == 0)
+            {
+                var empty = new Label("label.list_empty".S());
+                empty.AddToClassList("yky-list-empty");
+                container.Add(empty);
+                return;
+            }
+
+            for (var i = 0; i < property.arraySize; i++)
+            {
+                var index = i;
+                var row = new PropertyField(property.GetArrayElementAtIndex(i));
+                row.AddToClassList("yky-list-row");
+                row.EnableInClassList("yky-list-row--selected", index == _selectedPackageListIndex);
+                row.RegisterCallback<PointerDownEvent>(_ => SelectPackageList(index), TrickleDown.TrickleDown);
+                row.AddManipulator(new ContextualMenuManipulator(evt =>
+                {
+                    SelectPackageList(index);
+                    evt.menu.AppendAction("label.upm_installer_window.copy".S(), _ => CopyPackageList(index));
+                    evt.menu.AppendAction("label.upm_installer_window.remove".S(), _ => RemovePackageList(index));
+                }));
+
+                container.Add(row);
+                row.Bind(_serializedObject);
+            }
+        }
+
+        private void SelectPackageList(int index)
+        {
+            _selectedPackageListIndex = index;
+            if (_packageListsScroll == null) return;
+
+            var rows = _packageListsScroll.contentContainer.Children().ToList();
+            for (var i = 0; i < rows.Count; i++) rows[i].EnableInClassList("yky-list-row--selected", i == index);
+        }
+
+        private void AppendPackageList(UpmPackageListWrapper wrapper)
+        {
+            var property = _serializedObject!.FindProperty("packageLists");
+            property.arraySize++;
+            var element = property.GetArrayElementAtIndex(property.arraySize - 1);
+            element.FindPropertyRelative("wrapName").stringValue = wrapper.wrapName;
+
+            var packagesProperty = element.FindPropertyRelative("wrapPackages");
+            packagesProperty.arraySize = wrapper.wrapPackages.Count;
+            for (var i = 0; i < wrapper.wrapPackages.Count; i++)
+            {
+                var package = packagesProperty.GetArrayElementAtIndex(i);
+                package.FindPropertyRelative("packageName").stringValue = wrapper.wrapPackages[i].packageName;
+                package.FindPropertyRelative("version").stringValue = wrapper.wrapPackages[i].version;
+            }
+
+            _serializedObject.ApplyModifiedProperties();
+            _selectedPackageListIndex = property.arraySize - 1;
+            RebuildPackageListRows();
+        }
 
         private SerializedProperty MakerProperty => _serializedObject!.FindProperty("packageListMaker");
 
@@ -278,13 +385,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             if (Instance == null) return;
             Utils.Log(nameof(UpmInstallerWindow),
                 $"Importing package list: {wrapper.wrapName} - {wrapper.wrapPackages.Count}");
-            Instance.packages.AddRange(wrapper.wrapPackages);
-            RebuildList(Instance.packages);
+            Instance.AppendEntries("packages", wrapper.wrapPackages.Where(x => !string.IsNullOrEmpty(x.packageName)));
+            Instance._packagesField?.Rebuild();
             Instance.SavePackageList();
         }
-
-        private static void RebuildList(List<UpmInstallerPackage> packages) =>
-            packages.Rebuild(x => string.IsNullOrEmpty(x.FullName));
 
         [MenuItem("Tools/YKYToolkit/UPM Installer", false, Util.Three)]
         private static void ShowWindow()

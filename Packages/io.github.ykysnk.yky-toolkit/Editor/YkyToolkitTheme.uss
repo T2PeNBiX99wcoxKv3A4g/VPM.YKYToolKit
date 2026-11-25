@@ -113,8 +113,54 @@ Button:active,
     flex-grow: 1;
     flex-basis: 0;
     min-width: 0;
+    min-height: 0;
     flex-direction: column;
     margin: 4px;
+}
+
+/* A list that shares a column with other elements has to be able to shrink, or its content pushes the rest out. */
+.yky-list {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-height: 0;
+}
+
+.yky-scroll {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-height: 0;
+    margin: 0;
+}
+
+.yky-list-row {
+    margin: 2px 0;
+    padding: 1px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.yky-list-row--selected {
+    background-color: rgba(76, 141, 255, 0.12);
+}
+
+.yky-list-empty {
+    margin: 12px 8px;
+    font-size: 12px;
+    color: rgba(140, 140, 140, 0.95);
+}
+
+.yky-count {
+    margin-left: 6px;
+    padding: 0 6px;
+    font-size: 10px;
+    -unity-text-align: middle-center;
+    background-color: rgba(128, 128, 128, 0.28);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
 }
 
 .yky-row {
@@ -136,11 +182,28 @@ Button:active,
 }
 
 .yky-icon-button {
-    min-width: 24px;
-    width: 24px;
+    width: 22px;
+    min-width: 22px;
+    height: 20px;
     padding: 0;
-    margin: 2px;
+    margin: 0 0 0 4px;
+    font-size: 13px;
     -unity-text-align: middle-center;
+    background-image: none;
+    background-color: transparent;
+    border-width: 0;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.yky-icon-button:hover {
+    background-color: rgba(76, 141, 255, 0.30);
+}
+
+.yky-icon-button:active {
+    background-color: rgba(76, 141, 255, 0.45);
 }
 
 .yky-inline-label {
@@ -152,6 +215,11 @@ Button:active,
 .yky-card ListView {
     margin: 0;
     border-width: 0;
+}
+
+/* The card already has padding, so the first heading does not need its own top margin. */
+.yky-card > .yky-section:first-child {
+    margin-top: 2px;
 }
 
 /* ---------- toolbar ---------- */
@@ -187,6 +255,7 @@ ToolbarButton:hover,
 ListView,
 .unity-list-view {
     margin: 4px 0;
+    min-height: 0;
     border-width: 1px;
     border-color: rgba(128, 128, 128, 0.28);
     border-top-left-radius: 6px;
@@ -197,6 +266,19 @@ ListView,
 
 .unity-list-view__item:hover {
     background-color: rgba(76, 141, 255, 0.12);
+}
+
+/* The built-in add/remove footer is painted with a solid dark toolbar, which reads as a black frame in a card. */
+.unity-list-view__footer {
+    padding: 1px 2px;
+    background-image: none;
+    background-color: transparent;
+    border-width: 0;
+}
+
+.unity-list-view__footer .unity-button {
+    min-width: 22px;
+    padding: 0 6px;
 }
 
 /* ---------- foldout ---------- */

@@ -36,6 +36,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var settingsButton = tree.Q<ToolbarButton>("settings");
             var emptyLabel = tree.Q<Label>("importLogEmpty");
             var listView = tree.Q<ListView>("importLogList");
+            listView.LocalizeEmptyLabel();
 
             refreshButton.clicked += RefreshImportLog;
             clearButton.clicked += () => UniTask.Create(async () =>

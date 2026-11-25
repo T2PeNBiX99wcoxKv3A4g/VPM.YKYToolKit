@@ -68,6 +68,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                         ImportHistoryManager.MaxSessions = evt.newValue);
 
                     var importWatcherFileExtensionColorsListView = tree.Q<ListView>("importWatcherFileExtensionColors");
+                    importWatcherFileExtensionColorsListView.LocalizeEmptyLabel();
                     var newColorList = new List<ImportWatcherFileColor?>(ImportWatcher.ColorList);
                     importWatcherFileExtensionColorsListView.itemsSource = newColorList;
                     importWatcherFileExtensionColorsListView.makeItem = () =>

@@ -8,8 +8,8 @@
         </ui:VisualElement>
         <ui:ListView selection-type="Multiple" show-alternating-row-backgrounds="ContentOnly"
                      virtualization-method="DynamicHeight" reorderable="true"
-                     show-add-remove-footer="true" reorder-mode="Animated" show-bound-collection-size="true"
+                     show-add-remove-footer="true" reorder-mode="Animated" show-bound-collection-size="false"
                      binding-path="wrapPackages" name="ListView" show-foldout-header="true"
-                     header-title="label.upm_package_list_wrapper.packages"/>
+                     header-title="label.upm_package_list_wrapper.packages" class="upm-package-list"/>
     </ui:VisualElement>
 </ui:UXML>

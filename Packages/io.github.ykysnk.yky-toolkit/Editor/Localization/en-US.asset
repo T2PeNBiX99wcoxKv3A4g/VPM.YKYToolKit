@@ -619,5 +619,10 @@ MonoBehaviour:
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
+  - key: label.list_empty
+    translate: No items
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   jsonFile: {fileID: 0}
   poFile: {fileID: 0}

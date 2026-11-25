@@ -28,7 +28,7 @@
                 <ui:ListView binding-path="packages" virtualization-method="DynamicHeight"
                              selection-type="Multiple" show-alternating-row-backgrounds="ContentOnly"
                              show-bound-collection-size="false" reorder-mode="Animated" reorderable="true"
-                             show-add-remove-footer="false" name="packages" style="flex-grow: 1;"/>
+                             show-add-remove-footer="false" name="packages" class="yky-list"/>
                 <ui:VisualElement class="yky-row yky-row--end">
                     <ui:Button text="+" name="addPackage" class="yky-icon-button"/>
                     <ui:Button text="−" name="removePackage" class="yky-icon-button"/>
@@ -37,10 +37,7 @@
 
             <ui:VisualElement class="yky-card yky-column">
                 <ui:Label text="label.upm_installer_window.package_list" class="yky-section"/>
-                <ui:ListView virtualization-method="DynamicHeight" selection-type="Multiple"
-                             show-alternating-row-backgrounds="ContentOnly" reorderable="true"
-                             reorder-mode="Animated" show-bound-collection-size="false" binding-path="packageLists"
-                             name="packageLists" style="flex-grow: 1;"/>
+                <ui:ScrollView name="packageLists" class="yky-scroll"/>
                 <ui:VisualElement class="yky-row">
                     <ui:Button text="label.upm_installer_window.import" parse-escape-sequences="true"
                                display-tooltip-when-elided="true" name="import" class="cell"/>
@@ -53,7 +50,7 @@
                              show-alternating-row-backgrounds="ContentOnly" reorderable="true"
                              show-add-remove-footer="false" reorder-mode="Animated"
                              show-bound-collection-size="false" binding-path="packageListMaker"
-                             name="packageListMaker" style="flex-grow: 1;"/>
+                             name="packageListMaker" class="yky-list"/>
                 <ui:VisualElement class="yky-row yky-row--end">
                     <ui:Button text="+" name="addMaker" class="yky-icon-button"/>
                     <ui:Button text="−" name="removeMaker" class="yky-icon-button"/>

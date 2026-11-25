@@ -52,6 +52,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             _emptyLabel = tree.Q<Label>("emptyLabel");
             _listView = tree.Q<ListView>("listView");
+            _listView.LocalizeEmptyLabel();
             _listView.AddManipulator(new ContextualMenuManipulator(evt =>
             {
                 if (!_listView.selectedIndices.Any() || _listView.selectedIndex < 0)

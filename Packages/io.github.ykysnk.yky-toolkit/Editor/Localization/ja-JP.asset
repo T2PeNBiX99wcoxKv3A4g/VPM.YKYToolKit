@@ -568,5 +568,10 @@ MonoBehaviour:
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
+  - key: label.list_empty
+    translate: "\u9805\u76EE\u304C\u3042\u308A\u307E\u305B\u3093"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   jsonFile: {fileID: 0}
   poFile: {fileID: 0}

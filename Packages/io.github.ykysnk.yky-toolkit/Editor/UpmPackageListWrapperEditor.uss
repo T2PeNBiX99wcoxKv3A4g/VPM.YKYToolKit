@@ -1,3 +1,8 @@
 .cell {
     flex-grow: 1;
 }
+
+/* A saved list is a card in a scroll view: keep it from growing without limit when it holds many packages. */
+.upm-package-list {
+    max-height: 220px;
+}
