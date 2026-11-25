@@ -181,7 +181,9 @@ Button:active,
     margin: 0 0 3px 0;
 }
 
-.yky-icon-button {
+/* The + / - of a custom row and of the built-in list footer must look like the same button. */
+.yky-icon-button,
+.unity-list-view__footer .unity-button {
     width: 22px;
     min-width: 22px;
     height: 20px;
@@ -198,11 +200,13 @@ Button:active,
     border-bottom-right-radius: 4px;
 }
 
-.yky-icon-button:hover {
+.yky-icon-button:hover,
+.unity-list-view__footer .unity-button:hover {
     background-color: rgba(76, 141, 255, 0.30);
 }
 
-.yky-icon-button:active {
+.yky-icon-button:active,
+.unity-list-view__footer .unity-button:active {
     background-color: rgba(76, 141, 255, 0.45);
 }
 
@@ -274,11 +278,6 @@ ListView,
     background-image: none;
     background-color: transparent;
     border-width: 0;
-}
-
-.unity-list-view__footer .unity-button {
-    min-width: 22px;
-    padding: 0 6px;
 }
 
 /* ---------- foldout ---------- */
