@@ -18,96 +18,156 @@ MonoBehaviour:
   - key: label.language
     translate: Language
     tooltip: Change your target language in the editor.
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.unity_resource_monitor.type
     translate: Type
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.unity_resource_monitor.value
     translate: Value
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.upm_installer_window.install
     translate: Install
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.upm_installer_window.remove
     translate: Remove
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.upm_installer_window.update
     translate: Update
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.upm_installer_window.clear
     translate: Clear
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.upm_installer_window.check_and_upgrade
     translate: Check update then upgrade all UPM packages
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.upm_installer_package.name
     translate: Name
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.upm_installer_package.version
     translate: Version (opt.)
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.upm_installer_window.create_and_copy
     translate: Create and copy
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.upm_installer_window.package_list_name
     translate: Package List Name
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.upm_installer_window.package_list_maker
     translate: Package List Maker
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.upm_installer_window.package_list
     translate: Package List
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.upm_installer_window.import
     translate: Import
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.upm_installer_window.remove_selected
     translate: Remove Selected
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.upm_package_list_wrapper.packages
     translate: Packages
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.upm_installer_window.import_to_maker
     translate: Import to maker
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.upm_installer_window.copy
     translate: Copy
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.upm_installer_window.remove
     translate: Remove
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.new_delete.title
     translate: Delete select assets
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.new_delete.message
     translate: '{0}
 
 
       You cannot undo the delete assets action.'
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.new_delete.ok
     translate: Delete
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.new_delete.cancel
     translate: Cancel
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.empty_folder_clear.no_empty_folders
     translate: No empty folders found.
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.empty_folder_clear.has_empty_folders
     translate: Found {0} empty folders.
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.empty_folder_clear.ok
     translate: Clear
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.empty_folder_clear.cancel
     translate: Cancel
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.empty_folder_clear.title
     translate: Clear Empty Folder
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.clear_shader_cache.title
     translate: Clear Shader Cache
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.clear_shader_cache.message
     translate: 'Are you sure want to clear the shader cache?
 
@@ -117,105 +177,173 @@ MonoBehaviour:
 
       You cannot undo the action.'
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.clear_shader_cache.ok
     translate: Clear
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.clear_shader_cache.cancel
     translate: Cancel
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.clear_shader_cache.title2
     translate: Shader Cache Cleared
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.clear_shader_cache.message2
     translate: Shader Cache has been cleared.
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.local_position
     translate: Position
     tooltip: The local position of this GameObject relative to the parent.
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.local_rotation
     translate: Rotation
     tooltip: The local rotation of this GameObject relative to the parent.
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.local_scale
     translate: Scale
     tooltip: The local scale of this GameObject relative to the parent.
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.local_space
     translate: Local Space
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.global_space
     translate: World Space
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.global_position
     translate: Position
     tooltip: The global position of this GameObject.
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.global_rotation
     translate: Rotation
     tooltip: The global rotation of this GameObject.
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.global_scale
     translate: Scale
     tooltip: The lossy global scale of this GameObject. (Is lossy)
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.reset_position
     translate: Reset Position
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.reset_rotation
     translate: Reset Rotation
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.reset_scale
     translate: Reset Scale
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.reset_all
     translate: Reset All
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.copy_transform
     translate: Copy
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.paste_transform
     translate: Paste
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.random_position
     translate: Random Position
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.random_rotation
     translate: Random Rotation
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.random_scale
     translate: Random Scale
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.random_all
     translate: Random All
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.default_ui
     translate: Default UI
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.other
     translate: Other
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.father
     translate: Parent
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.align_to_parent
     translate: Align to Parent
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.align_to_ground
     translate: Align to Ground
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.hierarchy_path
     translate: Hierarchy Path
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.children
     translate: Children
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.bounds_size
     translate: Bounds Size
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.align_mode
     translate: Align Mode
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.clear_parent
     translate: Clear Parent
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.help
     translate: Help
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.helpText
     translate: '=x, E(x) -> Absolute
 
@@ -253,142 +381,243 @@ MonoBehaviour:
       N(scale, min,
       max) -> Noise'
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.copy
     translate: Copy
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.paste
     translate: Paste
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.copy_euler_angles
     translate: Copy Euler Angles
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.copy_quaternion
     translate: Copy Quaternion
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.copy_property_path
     translate: Copy Property Path
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.search_for_same_property
     translate: Search for same Property
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: unity:label.position
     translate: Position
     tooltip: The local position of this GameObject relative to the parent.
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: unity:label.rotation
     translate: Rotation
     tooltip: The local rotation of this Game Object relative to the parent.
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: unity:label.scale
     translate: Scale
     tooltip: The local scaling of this GameObject relative to the parent.
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.scale_link_enable
     translate: Enable constrained proportions
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.scale_link_disable
     translate: Disable constrained proportions
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.import_watcher.color
     translate: Highlight Color
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.import_watcher.duration
     translate: Highlight Duration
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.import_watcher.file_extension_colors
     translate: Highlight colors for file extensions
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.preferences_page.allow_async_compilation
     translate: Allow Async Compilation
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.preferences_page.delete_selected_warn_window
     translate: Warning Window for Delete Selected
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.preferences_page.enable_discord_rich_presence
     translate: Enable Discord Rich Presence
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.preferences_page.import_watcher
     translate: Import Watcher
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.refresh
     translate: Refresh
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.clear
     translate: Clear
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.delete_record.path
     translate: 'Path: '
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.delete_record.guid
     translate: 'GUID: '
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.delete_record.ext
     translate: 'Ext: '
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.delete_record.time
     translate: 'Time: '
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.delete_record.copy_path
     translate: Copy Path
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.delete_record.copy_guid
     translate: Copy GUID
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.delete_record.unknown
     translate: (unknown)
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.delete_record.none
     translate: (none)
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.import_watcher.settings
     translate: Settings
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.import_watcher.no_import_log
     translate: No import log.
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.delete_record.no_delete_history
     translate: No delete history.
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.import_watcher.max_sessions
     translate: Max History Sessions
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.enhanced_transform_database.info
     translate: This asset stores extra data for the enhanced transform.
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.position_decimal_precision
     translate: Position Decimal Places
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.rotation_decimal_precision
     translate: Rotation Decimal Places
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.scale_decimal_precision
     translate: Scale Decimal Places
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.import_watcher.clear_import_log_title
     translate: Clear Import Log
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.import_watcher.clear_import_log_message
     translate: Are you sure you want to clear all import log records?
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.clear
     translate: Clear
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.cancel
     translate: Cancel
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.delete_history_window.clear_delete_history_title
     translate: Clear Delete History
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.delete_history_window.clear_delete_history_message
     translate: Are you sure you want to clear all delete history records?
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.lock_transform
     translate: Transform Lock
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.imgui
     translate: Because Unity only supports imgui in prefab overrides. So only basic
       features are supported.
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.delete_history_manager.max_records
     translate: Max Records
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.delete_history_manager
     translate: Delete History Manager
     tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.upm_installer_window.packages
+    translate: Packages
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  jsonFile: {fileID: 0}
+  poFile: {fileID: 0}

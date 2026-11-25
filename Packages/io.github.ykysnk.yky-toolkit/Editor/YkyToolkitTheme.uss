@@ -9,6 +9,7 @@
 .root,
 .yky-page {
     padding: 12px;
+    flex-grow: 1;
 }
 
 /* ---------- section ---------- */
@@ -89,6 +90,68 @@ Button:active,
 .cell {
     flex-grow: 1;
     margin: 2px 3px;
+}
+
+/* ---------- layout helpers ---------- */
+
+.yky-toolbar {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.yky-spacer {
+    flex-grow: 1;
+}
+
+.yky-columns {
+    flex-direction: row;
+    flex-grow: 1;
+}
+
+.yky-column {
+    flex-grow: 1;
+    flex-basis: 0;
+    min-width: 0;
+    flex-direction: column;
+    margin: 4px;
+}
+
+.yky-row {
+    flex-direction: row;
+    align-items: center;
+}
+
+.yky-row--end {
+    justify-content: flex-end;
+}
+
+.yky-stack {
+    flex-direction: column;
+    margin-top: 6px;
+}
+
+.yky-hint {
+    margin: 0 0 3px 0;
+}
+
+.yky-icon-button {
+    min-width: 24px;
+    width: 24px;
+    padding: 0;
+    margin: 2px;
+    -unity-text-align: middle-center;
+}
+
+.yky-inline-label {
+    min-width: 96px;
+    margin-right: 6px;
+}
+
+/* A list inside a card is framed by the card, so it does not need its own border. */
+.yky-card ListView {
+    margin: 0;
+    border-width: 0;
 }
 
 /* ---------- toolbar ---------- */

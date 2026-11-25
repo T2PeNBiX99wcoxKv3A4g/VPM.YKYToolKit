@@ -21,8 +21,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         [SerializeField] private List<UpmInstallerPackage> packages = new();
         [SerializeField] private List<UpmInstallerPackage> packageListMaker = new();
         [SerializeField] private List<UpmPackageListWrapper> packageLists = new();
-        [SerializeField] private bool isPackageListExpanded;
-        [SerializeField] private bool isPackageListMakerExpanded = true;
 
         private static UpmInstallerWindow? Instance { get; set; }
 
@@ -37,7 +35,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         private void CreateGUI()
         {
-            _ = isPackageListMakerExpanded;
             Instance = this;
             _serializedObject?.Dispose();
             _serializedObject = new SerializedObject(this);
@@ -80,21 +77,14 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var clearButton = tree.Q<Button>("clear");
             clearButton.clicked += () => packages.Clear();
 
-            var isPackageListMakerExpandedFoldout = tree.Q<Foldout>("isPackageListMakerExpanded");
             var importToMakerButton = tree.Q<Button>("importToMaker");
             importToMakerButton.clicked += () =>
             {
                 packageListMaker.AddRange(packages);
                 RebuildList(packageListMaker);
-                isPackageListMakerExpandedFoldout.value = true;
             };
 
             var createListNameField = tree.Q<TextField>("createListName");
-            var createListNamePlaceholderLabel = createListNameField.Q<Label>(null, "placeholder");
-            createListNameField.RegisterValueChangedCallback(_ =>
-                createListNamePlaceholderLabel.style.display = string.IsNullOrEmpty(createListNameField.value)
-                    ? DisplayStyle.Flex
-                    : DisplayStyle.None);
             var createAndCopyButton = tree.Q<Button>("createAndCopy");
             createAndCopyButton.clicked += () =>
             {
@@ -143,6 +133,35 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             var packageListsField = tree.Q<ListView>("packageLists");
             var removeSelectedButton = tree.Q<Button>("removeSelected");
+
+            // Own add/remove rows: the built-in ListView footer floats over whatever comes next inside a card.
+            var packagesField = tree.Q<ListView>("packages");
+            tree.Q<Button>("addPackage").clicked += () =>
+            {
+                packages.Add(new("", ""));
+                RebuildList(packages);
+            };
+            tree.Q<Button>("removePackage").clicked += () =>
+            {
+                foreach (var index in packagesField.selectedIndices.OrderByDescending(i => i).ToList())
+                    if (index >= 0 && index < packages.Count)
+                        packages.RemoveAt(index);
+                RebuildList(packages);
+            };
+
+            var makerField = tree.Q<ListView>("packageListMaker");
+            tree.Q<Button>("addMaker").clicked += () =>
+            {
+                packageListMaker.Add(new("", ""));
+                RebuildList(packageListMaker);
+            };
+            tree.Q<Button>("removeMaker").clicked += () =>
+            {
+                foreach (var index in makerField.selectedIndices.OrderByDescending(i => i).ToList())
+                    if (index >= 0 && index < packageListMaker.Count)
+                        packageListMaker.RemoveAt(index);
+                RebuildList(packageListMaker);
+            };
 
             packageListsField.AddManipulator(new ContextualMenuManipulator(evt =>
             {
@@ -212,6 +231,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         {
             var window = GetWindow<UpmInstallerWindow>();
             window.titleContent = EditorGUIUtils.IconContent(Title, "package manager");
+            window.minSize = new(620, 420);
         }
     }
 }
