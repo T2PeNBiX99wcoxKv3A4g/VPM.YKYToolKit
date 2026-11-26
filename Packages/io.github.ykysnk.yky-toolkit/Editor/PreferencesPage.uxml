@@ -35,9 +35,6 @@
                 <ui:VisualElement class="yky-card__title">
                     <ui:VisualElement class="yky-icon yky-icon--section yky-icon--delete-history"/>
                     <ui:Label text="label.preferences_page.delete_protection" class="yky-section"/>
-                    <ui:VisualElement class="yky-spacer"/>
-                    <ui:Button name="resetDeleteProtection" tooltip="label.import_watcher.reset_colors"
-                               class="yky-icon-button yky-button-icon--reset"/>
                 </ui:VisualElement>
                 <ui:Label text="label.preferences_page.delete_protection_hint" class="yky-hint"/>
                 <ui:VisualElement class="yky-list-header">
@@ -45,7 +42,7 @@
                     <ui:Label name="protectedDirectoryCount" text="0" class="yky-count"/>
                     <ui:VisualElement class="yky-spacer"/>
                 </ui:VisualElement>
-                <ui:ListView name="extraProtectedDirectories" show-add-remove-footer="true"
+                <ui:ListView name="extraProtectedDirectories"
                              show-alternating-row-backgrounds="ContentOnly" selection-type="Multiple"
                              virtualization-method="DynamicHeight"
                              class="yky-list yky-preferences__protected-list"/>
@@ -82,7 +79,7 @@
                     <ui:Label text="label.import_watcher.file_extension_colors" class="yky-list-title"/>
                     <ui:Label name="fileColorCount" text="0" class="yky-count"/>
                 </ui:VisualElement>
-                <ui:ListView reorder-mode="Animated" show-add-remove-footer="true" reorderable="true"
+                <ui:ListView reorder-mode="Animated" reorderable="true"
                              show-alternating-row-backgrounds="ContentOnly" selection-type="Multiple"
                              virtualization-method="DynamicHeight"
                              name="importWatcherFileExtensionColors" class="yky-list"/>

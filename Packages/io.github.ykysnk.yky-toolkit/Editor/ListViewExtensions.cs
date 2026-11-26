@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using io.github.ykysnk.Localization.Editor;
 using JetBrains.Annotations;
 using UnityEngine.UIElements;
@@ -26,41 +27,39 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         }
 
         /// <summary>
-        ///     Adds an icon button at the left end of the list's built-in footer, so it lines up with the add/remove
-        ///     buttons without a wrapper or absolute positioning.
+        ///     Replaces the built-in add/remove footer with the toolkit footer: reset, + and - in the bottom-right
+        ///     corner. Every list in the preferences page uses this, so the footer looks and behaves the same.
         /// </summary>
-        internal static void AddFooterReset(this ListView list, string name, string tooltip, Action onClick)
+        internal static void AddFooterButtons(this ListView list, Action add, Action remove, Action reset,
+            string resetTooltip)
         {
-            IVisualElementScheduledItem? item = null;
-            item = list.schedule.Execute(() =>
-            {
-                if (list.Q<Button>(name) != null)
-                {
-                    item?.Pause();
-                    return;
-                }
+            if (list.parent == null) return;
+            if (list.parent.Q<VisualElement>(className: "yky-list-footer") != null) return;
 
-                var footer = list.Q<VisualElement>(className: "unity-list-view__footer");
-                if (footer == null) return;
+            list.showAddRemoveFooter = false;
 
-                var button = new Button
-                {
-                    name = name,
-                    tooltip = tooltip
-                };
-                button.AddToClassList("yky-icon-button");
-                button.AddToClassList("yky-button-icon--reset");
-                button.AddToClassList("yky-list-reset");
-                button.clicked += onClick;
+            var footer = new VisualElement();
+            footer.AddToClassList("yky-list-footer");
 
-                // The footer lays its children out right to left. A spacer between the built-in buttons and this one
-                // pins it to the left end while add/remove stay on the right.
-                var spacer = new VisualElement();
-                spacer.AddToClassList("yky-footer-spacer");
-                footer.Add(spacer);
-                footer.Add(button);
-                item?.Pause();
-            }).Every(200);
+            var resetButton = new Button(reset) { tooltip = resetTooltip };
+            resetButton.AddToClassList("yky-icon-button");
+            resetButton.AddToClassList("yky-button-icon--reset");
+
+            var addButton = new Button(add) { text = "+" };
+            addButton.AddToClassList("yky-icon-button");
+
+            var removeButton = new Button(remove) { text = "-" };
+            removeButton.AddToClassList("yky-icon-button");
+
+            footer.Add(resetButton);
+            footer.Add(addButton);
+            footer.Add(removeButton);
+
+            list.parent.Insert(list.parent.IndexOf(list) + 1, footer);
+
+            void UpdateRemoveButton() => removeButton.SetEnabled(list.selectedIndices.Any());
+            list.selectionChanged += _ => UpdateRemoveButton();
+            UpdateRemoveButton();
         }
 
         private static bool Apply(ListView list)

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using io.github.ykysnk.Localization.Editor;
 using io.github.ykysnk.utils.Extensions;
 using UnityEditor;
@@ -67,18 +68,35 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             LoadFileColorList();
             fileColorsField.itemsSource = fileColors;
 
-            var addButton = fileColorsField.Q<Button>("unity-list-view__add-button");
-            var removeButton = fileColorsField.Q<Button>("unity-list-view__remove-button");
-            addButton.clicked += SaveFileColorList;
-            removeButton.clicked += SaveFileColorList;
-
-            fileColorsField.AddFooterReset("resetFileColors", "label.import_watcher.reset_colors".S(), () =>
+            void RemoveSelectedColors()
             {
-                fileColors.Clear();
-                fileColors.AddRange(ImportWatcherFileColor.DefaultColors);
+                var selected = fileColorsField.selectedIndices.OrderByDescending(index => index).ToList();
+                if (selected.Count == 0) return;
+
+                foreach (var index in selected)
+                    if (index >= 0 && index < fileColors.Count)
+                        fileColors.RemoveAt(index);
+
                 fileColorsField.Rebuild();
                 SaveFileColorList();
-            });
+            }
+
+            fileColorsField.AddFooterButtons(
+                add: () =>
+                {
+                    fileColors.Add(new ImportWatcherFileColor("", ImportWatcherFileColor.DefaultColor));
+                    fileColorsField.Rebuild();
+                    SaveFileColorList();
+                },
+                remove: RemoveSelectedColors,
+                reset: () =>
+                {
+                    fileColors.Clear();
+                    fileColors.AddRange(ImportWatcherFileColor.DefaultColors);
+                    fileColorsField.Rebuild();
+                    SaveFileColorList();
+                },
+                resetTooltip: "label.import_watcher.reset_colors".S());
         }
 
         private void LoadFileColorList()

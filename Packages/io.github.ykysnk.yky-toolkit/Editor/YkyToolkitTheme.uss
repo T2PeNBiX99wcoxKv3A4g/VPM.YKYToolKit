@@ -435,29 +435,22 @@ ListView,
     border-width: 0;
 }
 
-/* A list reset lives in the footer, which is right-aligned by default; a full-width footer lets it sit on the left. */
-ListView > .unity-list-view__footer {
-    width: 100%;
+/* A list footer is built by the toolkit instead of Unity's dark toolbar: reset, + and - in the bottom-right
+   corner, the same in every preferences list. */
+.yky-list-footer {
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 4px;
 }
 
-.yky-footer-spacer {
-    flex-grow: 1;
-}
-
-.yky-list-reset {
-    margin-left: 26px;
-}
-
-/* The footer's own button rule sets the margin with two classes, so this selector has to match it to keep the
-   extra offset. */
-.unity-list-view__footer .yky-list-reset {
-    margin-left: 26px;
+.yky-list-footer .yky-icon-button {
+    margin-left: 4px;
 }
 
 /* The reset icon is used in a card title and in the list footer. The footer clears its button images, so this rule
    has to come after it to keep the icon on the footer button. */
-.yky-icon-button.yky-button-icon--reset,
-.yky-button-icon--reset.yky-list-reset {
+.yky-icon-button.yky-button-icon--reset {
     background-image: url("project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/Icons/reset.png?fileID=2800000&guid=d87bcb1c5259d6e41934305859e8c37a&type=3");
     background-size: 14px 14px;
     background-position: center;

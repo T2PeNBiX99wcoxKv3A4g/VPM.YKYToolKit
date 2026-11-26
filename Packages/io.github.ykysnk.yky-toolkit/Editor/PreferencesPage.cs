@@ -121,22 +121,36 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     protectedList.Rebuild();
                     UpdateProtectedCount();
 
-                    void SaveAndRebuildProtected()
+                    void RemoveSelectedProtected()
                     {
+                        var selected = protectedList.selectedIndices.OrderByDescending(index => index).ToList();
+                        if (selected.Count == 0) return;
+
+                        foreach (var index in selected)
+                            if (index >= 0 && index < protectedDirectories.Count)
+                                protectedDirectories.RemoveAt(index);
+
                         SaveProtected();
                         protectedList.Rebuild();
+                        UpdateProtectedCount();
                     }
 
-                    protectedList.Q<Button>("unity-list-view__add-button").clicked += SaveAndRebuildProtected;
-                    protectedList.Q<Button>("unity-list-view__remove-button").clicked += SaveAndRebuildProtected;
-
-                    tree.Q<Button>("resetDeleteProtection").clicked += () =>
-                    {
-                        DeletePathGuard.ResetExtras();
-                        protectedDirectories.Clear();
-                        protectedList.Rebuild();
-                        UpdateProtectedCount();
-                    };
+                    protectedList.AddFooterButtons(
+                        add: () =>
+                        {
+                            protectedDirectories.Add("");
+                            SaveProtected();
+                            protectedList.Rebuild();
+                        },
+                        remove: RemoveSelectedProtected,
+                        reset: () =>
+                        {
+                            DeletePathGuard.ResetExtras();
+                            protectedDirectories.Clear();
+                            protectedList.Rebuild();
+                            UpdateProtectedCount();
+                        },
+                        resetTooltip: "label.import_watcher.reset_colors".S());
 
                     var enableDiscordRichPresenceToggle = tree.Q<Toggle>("enableDiscordRichPresence");
                     enableDiscordRichPresenceToggle.SetValueWithoutNotify(DiscordEditorRPC.EnableDiscordRichPresence);
@@ -225,8 +239,33 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                         fileColorsField.Rebuild();
                     }
 
-                    fileColorsField.Q<Button>("unity-list-view__add-button").clicked += SaveAndRebuildColorList;
-                    fileColorsField.Q<Button>("unity-list-view__remove-button").clicked += SaveAndRebuildColorList;
+                    void RemoveSelectedColors()
+                    {
+                        var selected = fileColorsField.selectedIndices.OrderByDescending(index => index).ToList();
+                        if (selected.Count == 0) return;
+
+                        foreach (var index in selected)
+                            if (index >= 0 && index < newColorList.Count)
+                                newColorList.RemoveAt(index);
+
+                        SaveAndRebuildColorList();
+                    }
+
+                    fileColorsField.AddFooterButtons(
+                        add: () =>
+                        {
+                            newColorList.Add(new ImportWatcherFileColor("", ImportWatcherFileColor.DefaultColor));
+                            SaveAndRebuildColorList();
+                        },
+                        remove: RemoveSelectedColors,
+                        reset: () =>
+                        {
+                            newColorList.Clear();
+                            foreach (var color in ImportWatcherFileColor.DefaultColors)
+                                newColorList.Add(color);
+                            SaveAndRebuildColorList();
+                        },
+                        resetTooltip: "label.import_watcher.reset_colors".S());
 
                     tree.Q<Button>("resetImportWatcher").clicked += () =>
                     {
@@ -236,14 +275,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                         importWatcherDurationField.SetValueWithoutNotify(ImportWatcher.Duration);
                         importWatcherMaxSessionsField.SetValueWithoutNotify(ImportHistoryManager.MaxSessions);
                     };
-
-                    fileColorsField.AddFooterReset("resetFileColors", "label.import_watcher.reset_colors".S(), () =>
-                    {
-                        newColorList.Clear();
-                        foreach (var color in ImportWatcherFileColor.DefaultColors)
-                            newColorList.Add(color);
-                        SaveAndRebuildColorList();
-                    });
                 }
             };
 
