@@ -43,6 +43,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             set => EditorPrefs.SetInt(MaxSessionsEditorKey, value);
         }
 
+        internal static void ResetSettings() => MaxSessions = DefaultMaxSessions;
+
         public static void AddSession(ImportSession session)
         {
             var list = LoadInternal();

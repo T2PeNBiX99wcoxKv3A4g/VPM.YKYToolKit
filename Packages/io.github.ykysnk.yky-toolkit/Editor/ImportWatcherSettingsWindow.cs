@@ -16,6 +16,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         [SerializeField] private VisualTreeAsset? uxml;
         [SerializeField] private List<ImportWatcherFileColor> fileColors = new();
 
+        private Label? _fileColorCount;
+
         private void CreateGUI()
         {
             var tree = uxml!.CloneTree();
@@ -34,6 +36,16 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             maxSessionsField.SetValueWithoutNotify(ImportHistoryManager.MaxSessions);
             maxSessionsField.RegisterValueChangedCallback(evt => ImportHistoryManager.MaxSessions = evt.newValue);
 
+            tree.Q<Button>("resetSettings").clicked += () =>
+            {
+                ImportWatcher.ResetSettings();
+                ImportHistoryManager.ResetSettings();
+                colorField.SetValueWithoutNotify(ImportWatcher.HighlightColor);
+                durationField.SetValueWithoutNotify(ImportWatcher.Duration);
+                maxSessionsField.SetValueWithoutNotify(ImportHistoryManager.MaxSessions);
+            };
+
+            _fileColorCount = tree.Q<Label>("fileColorCount");
             var fileColorsField = tree.Q<ListView>("fileColors");
             fileColorsField.makeItem = CreateFileColorRow;
             fileColorsField.bindItem = (element, index) =>
@@ -91,6 +103,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             fileColors.Clear();
             fileColors.AddRange(ImportWatcher.ColorList);
             fileColors.Rebuild();
+            UpdateColorCount();
         }
 
         private void SaveFileColorList()
@@ -99,6 +112,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 fileColors[i] ??= new ImportWatcherFileColor("", ImportWatcherFileColor.DefaultColor);
 
             ImportWatcher.ColorList = fileColors;
+            UpdateColorCount();
+        }
+
+        private void UpdateColorCount()
+        {
+            if (_fileColorCount != null) _fileColorCount.text = fileColors.Count.ToString();
         }
 
         [MenuItem("Tools/YKYToolkit/Import Watcher Settings", false, Util.Three)]

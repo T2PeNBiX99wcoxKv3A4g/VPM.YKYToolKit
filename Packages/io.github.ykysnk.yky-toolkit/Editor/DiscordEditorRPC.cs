@@ -50,6 +50,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             }
         }
 
+        internal static void ResetSettings() => EnableDiscordRichPresence = true;
+
         private static void EnsureUpdateSubscribed()
         {
             if (_updateSubscribed) return;

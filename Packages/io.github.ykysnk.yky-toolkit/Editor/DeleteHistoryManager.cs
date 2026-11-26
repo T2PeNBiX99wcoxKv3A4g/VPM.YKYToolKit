@@ -27,6 +27,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             set => EditorPrefs.SetInt(MaxRecordsEditorKey, value);
         }
 
+        internal static void ResetSettings() => MaxRecords = DefaultMaxRecords;
+
         public static void Add(DeleteRecord record)
         {
             var list = LoadInternal();

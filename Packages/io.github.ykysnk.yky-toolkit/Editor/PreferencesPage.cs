@@ -83,6 +83,23 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     deleteHistoryManagerMaxRecordsField.RegisterValueChangedCallback(evt =>
                         DeleteHistoryManager.MaxRecords = evt.newValue);
 
+                    tree.Q<Button>("resetGeneral").clicked += () =>
+                    {
+                        ShaderAsync.ResetSettings();
+                        NewDelete.ResetSettings();
+                        DiscordEditorRPC.ResetSettings();
+                        allowAsyncCompilationToggle.SetValueWithoutNotify(ShaderAsync.AllowAsyncCompilation);
+                        deleteSelectedWarnWindowToggle.SetValueWithoutNotify(NewDelete.ShowWarnWindow);
+                        enableDiscordRichPresenceToggle.SetValueWithoutNotify(
+                            DiscordEditorRPC.EnableDiscordRichPresence);
+                    };
+
+                    tree.Q<Button>("resetDeleteHistory").clicked += () =>
+                    {
+                        DeleteHistoryManager.ResetSettings();
+                        deleteHistoryManagerMaxRecordsField.SetValueWithoutNotify(DeleteHistoryManager.MaxRecords);
+                    };
+
                     var importWatcherColorField = tree.Q<ColorField>("importWatcherColor");
                     importWatcherColorField.SetValueWithoutNotify(ImportWatcher.HighlightColor);
                     importWatcherColorField.RegisterValueChangedCallback(evt =>
@@ -90,46 +107,46 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
                     var importWatcherDurationField = tree.Q<SliderInt>("importWatcherDuration");
                     importWatcherDurationField.SetValueWithoutNotify(ImportWatcher.Duration);
-                    importWatcherDurationField.RegisterValueChangedCallback(evt => ImportWatcher.Duration = evt.newValue);
+                    importWatcherDurationField.RegisterValueChangedCallback(evt =>
+                        ImportWatcher.Duration = evt.newValue);
 
                     var importWatcherMaxSessionsField = tree.Q<SliderInt>("importWatcherMaxSessionsField");
                     importWatcherMaxSessionsField.SetValueWithoutNotify(ImportHistoryManager.MaxSessions);
                     importWatcherMaxSessionsField.RegisterValueChangedCallback(evt =>
                         ImportHistoryManager.MaxSessions = evt.newValue);
 
-                    var importWatcherFileExtensionColorsListView = tree.Q<ListView>("importWatcherFileExtensionColors");
-                    importWatcherFileExtensionColorsListView.LocalizeEmptyLabel();
+                    var colorCount = tree.Q<Label>("fileColorCount");
                     var newColorList = new List<ImportWatcherFileColor?>(ImportWatcher.ColorList);
-                    importWatcherFileExtensionColorsListView.itemsSource = newColorList;
-                    importWatcherFileExtensionColorsListView.makeItem = () =>
+
+                    void UpdateColorCount()
                     {
-                        var uxml2 = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(
+                        if (colorCount != null) colorCount.text = newColorList.Count.ToString();
+                    }
+
+                    var fileColorsField = tree.Q<ListView>("importWatcherFileExtensionColors");
+                    fileColorsField.makeItem = () =>
+                    {
+                        var rowUxml = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(
                             AssetDatabase.GUIDToAssetPath("6bdd0e10034ff1b4281322ac210d8519"));
+                        if (rowUxml == null) return BasicEditor.CreateUxmlImportErrorUI();
 
-                        if (uxml2 == null)
-                            return BasicEditor.CreateUxmlImportErrorUI();
-
-                        var tree2 = uxml2.CloneTree();
-                        tree2.UILocalize(false);
-
-                        // Registered once here: bindItem runs every time a row is reused, and registering the callbacks
-                        // there piled up one more handler per scroll.
-                        tree2.Q<TextField>("fileExtension").RegisterValueChangedCallback(evt =>
+                        var row = rowUxml.CloneTree();
+                        row.UILocalize(false);
+                        row.Q<TextField>("fileExtension").RegisterValueChangedCallback(evt =>
                         {
-                            if (tree2.userData is not ImportWatcherFileColor value) return;
+                            if (row.userData is not ImportWatcherFileColor value) return;
                             value.fileExtension = evt.newValue;
                             SaveColorList();
                         });
-                        tree2.Q<ColorField>("color").RegisterValueChangedCallback(evt =>
+                        row.Q<ColorField>("color").RegisterValueChangedCallback(evt =>
                         {
-                            if (tree2.userData is not ImportWatcherFileColor value) return;
+                            if (row.userData is not ImportWatcherFileColor value) return;
                             value.color = evt.newValue;
                             SaveColorList();
                         });
-
-                        return tree2;
+                        return row;
                     };
-                    importWatcherFileExtensionColorsListView.bindItem = (element, index) =>
+                    fileColorsField.bindItem = (element, index) =>
                     {
                         var value = newColorList.GetValueOrDefault(index) ??
                                     new ImportWatcherFileColor("", ImportWatcherFileColor.DefaultColor);
@@ -137,27 +154,32 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                         element.Q<TextField>("fileExtension").SetValueWithoutNotify(value.fileExtension);
                         element.Q<ColorField>("color").SetValueWithoutNotify(value.color);
                     };
-                    importWatcherFileExtensionColorsListView.Rebuild();
+                    fileColorsField.itemsSource = newColorList;
+                    fileColorsField.Rebuild();
+                    UpdateColorCount();
 
-                    var addButton = importWatcherFileExtensionColorsListView.Q<Button>("unity-list-view__add-button");
-                    var removeButton =
-                        importWatcherFileExtensionColorsListView.Q<Button>("unity-list-view__remove-button");
-
-                    // The built-in add button appends a null for a class element, so the list is normalized before it
-                    // is written back.
                     void SaveColorList()
                     {
                         ImportWatcher.ColorList = newColorList
                             .Select(value => value ?? new ImportWatcherFileColor("", ImportWatcherFileColor.DefaultColor))
                             .ToList();
-                        importWatcherFileExtensionColorsListView.Rebuild();
+                        fileColorsField.Rebuild();
+                        UpdateColorCount();
                     }
 
-                    addButton.clicked += SaveColorList;
-                    removeButton.clicked += SaveColorList;
+                    fileColorsField.Q<Button>("unity-list-view__add-button").clicked += SaveColorList;
+                    fileColorsField.Q<Button>("unity-list-view__remove-button").clicked += SaveColorList;
 
-                    var resetFileColorsButton = tree.Q<Button>("resetFileColors");
-                    resetFileColorsButton.clicked += () =>
+                    tree.Q<Button>("resetImportWatcher").clicked += () =>
+                    {
+                        ImportWatcher.ResetSettings();
+                        ImportHistoryManager.ResetSettings();
+                        importWatcherColorField.SetValueWithoutNotify(ImportWatcher.HighlightColor);
+                        importWatcherDurationField.SetValueWithoutNotify(ImportWatcher.Duration);
+                        importWatcherMaxSessionsField.SetValueWithoutNotify(ImportHistoryManager.MaxSessions);
+                    };
+
+                    tree.Q<Button>("resetFileColors").clicked += () =>
                     {
                         newColorList.Clear();
                         foreach (var color in ImportWatcherFileColor.DefaultColors)

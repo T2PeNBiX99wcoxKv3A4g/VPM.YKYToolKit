@@ -44,6 +44,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             set => EditorPrefs.SetInt(ImportHighlightDuration, value);
         }
 
+        internal static void ResetSettings()
+        {
+            HighlightColor = DefaultHighlightColor;
+            Duration = DefaultDuration;
+        }
+
         internal static List<ImportWatcherFileColor> ColorList
         {
             get

@@ -26,6 +26,11 @@
                            name="deleteSelectedWarnWindow"/>
                 <ui:Toggle label="label.preferences_page.enable_discord_rich_presence"
                            name="enableDiscordRichPresence"/>
+                <ui:VisualElement class="yky-row">
+                    <ui:Button name="resetGeneral" tooltip="label.import_watcher.reset_colors"
+                               class="yky-icon-button yky-button-icon--reset"/>
+                    <ui:VisualElement class="yky-spacer"/>
+                </ui:VisualElement>
             </ui:VisualElement>
 
             <ui:VisualElement class="yky-card">
@@ -35,15 +40,17 @@
                 </ui:VisualElement>
                 <ui:SliderInt label="label.delete_history_manager.max_records" high-value="1000" low-value="1"
                               show-input-field="true" name="deleteHistoryManagerMaxRecords"/>
+                <ui:VisualElement class="yky-row">
+                    <ui:Button name="resetDeleteHistory" tooltip="label.import_watcher.reset_colors"
+                               class="yky-icon-button yky-button-icon--reset"/>
+                    <ui:VisualElement class="yky-spacer"/>
+                </ui:VisualElement>
             </ui:VisualElement>
 
             <ui:VisualElement class="yky-card">
                 <ui:VisualElement class="yky-card__title">
                     <ui:VisualElement class="yky-icon yky-icon--section yky-icon--import-watcher"/>
                     <ui:Label text="label.preferences_page.import_watcher" class="yky-section"/>
-                    <ui:VisualElement class="yky-spacer"/>
-                    <ui:Button name="resetFileColors" text="label.import_watcher.reset_colors"
-                               class="yky-button--small"/>
                 </ui:VisualElement>
                 <uie:ColorField label="label.import_watcher.color" value="RGBA(0.000, 1.000, 1.000, 1.000)"
                                 name="importWatcherColor"/>
@@ -51,11 +58,25 @@
                               show-input-field="true"/>
                 <ui:SliderInt label="label.import_watcher.max_sessions" high-value="1000"
                               name="importWatcherMaxSessionsField" show-input-field="true" low-value="1"/>
-                <ui:ListView header-title="label.import_watcher.file_extension_colors" reorder-mode="Animated"
-                             show-add-remove-footer="true" show-foldout-header="true" reorderable="true"
+                <ui:VisualElement class="yky-row">
+                    <ui:Button name="resetImportWatcher" tooltip="label.import_watcher.reset_colors"
+                               class="yky-icon-button yky-button-icon--reset"/>
+                    <ui:VisualElement class="yky-spacer"/>
+                </ui:VisualElement>
+
+                <ui:VisualElement class="yky-list-header">
+                    <ui:Label text="label.import_watcher.file_extension_colors" class="yky-list-title"/>
+                    <ui:Label name="fileColorCount" text="0" class="yky-count"/>
+                </ui:VisualElement>
+                <ui:ListView reorder-mode="Animated" show-add-remove-footer="true" reorderable="true"
                              show-alternating-row-backgrounds="ContentOnly" selection-type="Multiple"
                              virtualization-method="DynamicHeight"
                              name="importWatcherFileExtensionColors" class="yky-list"/>
+                <ui:VisualElement class="yky-row">
+                    <ui:Button name="resetFileColors" tooltip="label.import_watcher.reset_colors"
+                               class="yky-icon-button yky-button-icon--reset"/>
+                    <ui:VisualElement class="yky-spacer"/>
+                </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:ScrollView>

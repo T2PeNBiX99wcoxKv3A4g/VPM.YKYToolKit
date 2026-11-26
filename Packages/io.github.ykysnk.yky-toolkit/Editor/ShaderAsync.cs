@@ -20,6 +20,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             }
         }
 
+        internal static void ResetSettings() => AllowAsyncCompilation = true;
+
         [MenuItem(MenuPath, false, Util.Two)]
         private static void Toggle() => AllowAsyncCompilation = !AllowAsyncCompilation;
 

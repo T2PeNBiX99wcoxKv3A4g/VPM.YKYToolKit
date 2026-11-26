@@ -27,6 +27,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             set => EditorPrefs.SetBool(EditorKey, value);
         }
 
+        internal static void ResetSettings() => ShowWarnWindow = true;
+
         [MenuItem(ToolsMenuPath, false, Util.Two)]
         [MenuItem(AssetsMenuPath)]
         private static void DeleteSelectedShowMenu() => ShowWarnWindow = !ShowWarnWindow;

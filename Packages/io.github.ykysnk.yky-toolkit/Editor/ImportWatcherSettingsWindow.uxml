@@ -14,19 +14,28 @@
                               show-input-field="true"/>
                 <ui:SliderInt label="label.import_watcher.max_sessions" high-value="1000" name="maxSessions"
                               show-input-field="true"/>
+                <ui:VisualElement class="yky-row">
+                    <ui:Button name="resetSettings" tooltip="label.import_watcher.reset_colors"
+                               class="yky-icon-button yky-button-icon--reset"/>
+                    <ui:VisualElement class="yky-spacer"/>
+                </ui:VisualElement>
             </ui:VisualElement>
 
             <ui:VisualElement class="yky-card">
-                <ui:VisualElement class="yky-row">
-                    <ui:VisualElement class="yky-spacer"/>
-                    <ui:Button name="resetFileColors" text="label.import_watcher.reset_colors"
-                               class="yky-button--small"/>
+                <ui:VisualElement class="yky-list-header">
+                    <ui:Label text="label.import_watcher.file_extension_colors" class="yky-list-title"/>
+                    <ui:Label name="fileColorCount" text="0" class="yky-count"/>
                 </ui:VisualElement>
                 <ui:ListView show-alternating-row-backgrounds="ContentOnly" reorderable="true"
                              reorder-mode="Animated" show-add-remove-footer="true" selection-type="Multiple"
                              virtualization-method="DynamicHeight"
-                             name="fileColors" show-bound-collection-size="true" show-foldout-header="true"
+                             name="fileColors" show-foldout-header="false"
                              header-title="label.import_watcher.file_extension_colors" class="yky-list"/>
+                <ui:VisualElement class="yky-row">
+                    <ui:Button name="resetFileColors" tooltip="label.import_watcher.reset_colors"
+                               class="yky-icon-button yky-button-icon--reset"/>
+                    <ui:VisualElement class="yky-spacer"/>
+                </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:ScrollView>
