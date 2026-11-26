@@ -60,7 +60,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private static List<DeleteRecord> LoadInternal()
         {
             var json = ProjectHistoryStore.Read(HistoryFileName);
-            return !JsonUtils.TryFromJson<ListWrapper<DeleteRecord>>(json, out var list, out _) ? new() : list!.items;
+            if (JsonUtils.TryFromJson<ListWrapper<DeleteRecord>>(json, out var list, out var exception))
+                return list!.items;
+
+            HistoryDebug.Log("history", "delete history unreadable len=" + json.Length + " ex=" + exception?.Message);
+            return new();
         }
 
         private static void SaveInternal(List<DeleteRecord> list)

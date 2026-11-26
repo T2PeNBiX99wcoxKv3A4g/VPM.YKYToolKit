@@ -68,7 +68,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private static List<ImportSession> LoadInternal()
         {
             var json = ProjectHistoryStore.Read(HistoryFileName);
-            return !JsonUtils.TryFromJson<ListWrapper<ImportSession>>(json, out var list, out _) ? new() : list!.items;
+            if (JsonUtils.TryFromJson<ListWrapper<ImportSession>>(json, out var list, out var exception))
+                return list!.items;
+
+            HistoryDebug.Log("history", "import history unreadable len=" + json.Length + " ex=" + exception?.Message);
+            return new();
         }
 
         private static void SaveInternal(List<ImportSession> list)

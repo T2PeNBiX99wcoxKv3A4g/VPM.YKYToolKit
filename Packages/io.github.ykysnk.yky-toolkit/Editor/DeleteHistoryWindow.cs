@@ -42,9 +42,13 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         private string _filter = string.Empty;
         private bool _historySubscribed;
+        private bool _laidOut;
+        private int _emptyReloads;
 
         private void CreateGUI()
         {
+            HistoryDebug.Log("dh", "CreateGUI begin h=" + rootVisualElement.layout.height + " w=" + rootVisualElement.layout.width);
+
             var tree = uxml!.CloneTree();
             tree.UILocalize(false);
             tree.style.flexGrow = 1;
@@ -78,11 +82,22 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             });
 
             var search = tree.Q<ToolbarSearchField>("search");
-            search.SetupSearchField();
-            search.RegisterValueChangedCallback(evt =>
+            search.SetupSearchField(text =>
             {
-                _filter = evt.newValue ?? string.Empty;
+                _filter = text;
+                HistoryDebug.Log("dh", "filter=[" + text + "]");
                 RebuildDates();
+            });
+
+            // A window in a background tab is given its GUI before it has any layout, and it can be restored before
+            // the history file is readable. Reload once when the window is really laid out so neither case sticks.
+            _laidOut = rootVisualElement.layout.height > 0;
+            rootVisualElement.RegisterCallback<GeometryChangedEvent>(evt =>
+            {
+                HistoryDebug.Log("dh", "geometry h=" + evt.newRect.height + " w=" + evt.newRect.width + " laidOut=" + _laidOut);
+                if (_laidOut || evt.newRect.height <= 0) return;
+                _laidOut = true;
+                Refresh();
             });
 
             Refresh();
@@ -296,6 +311,18 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             _all.Reverse();
 
             RebuildDates();
+
+            // While a domain reload finishes the history file can be unreadable for a moment, which would leave the
+            // window empty for good. Try again a couple of times, but never spin.
+            if (_all.Count > 0)
+            {
+                _emptyReloads = 0;
+                return;
+            }
+
+            if (_emptyReloads++ >= 2) return;
+            HistoryDebug.Log("dh", "history empty, retry " + _emptyReloads);
+            rootVisualElement.schedule.Execute(Refresh).ExecuteLater(500);
         }
 
         private void RebuildDates()
@@ -324,6 +351,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             }
 
             if (_dateList == null) return;
+
+            HistoryDebug.Log("dh",
+                "rebuild all=" + _all.Count + " dates=" + _dates.Count + " filter=[" + _filter +
+                "] listH=" + _dateList.layout.height + " rootH=" + rootVisualElement.layout.height);
 
             _dateList.itemsSource = _dates;
             _dateList.Rebuild();

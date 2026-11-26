@@ -14,7 +14,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         {
             get
             {
-                var project = Directory.GetParent(Application.dataPath);
+                // Application.dataPath is empty for a moment while the editor restores a domain, and
+                // Directory.GetParent throws on an empty path.
+                var dataPath = Application.dataPath;
+                if (string.IsNullOrEmpty(dataPath)) return string.Empty;
+
+                var project = Directory.GetParent(dataPath);
                 return project == null ? "" : Path.Combine(project.FullName, "UserSettings", "YKYToolkit");
             }
         }
