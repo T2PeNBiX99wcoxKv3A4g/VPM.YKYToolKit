@@ -163,7 +163,7 @@
         </ui:VisualElement>
 
         <ui:Foldout text="label.enhanced_transform_inspector.default_ui" value="false" name="defaultGUIFoldout"
-                    class="transform-foldout">
+                    class="transform-default-ui">
             <ui:IMGUIContainer name="defaultGUI"/>
         </ui:Foldout>
     </ui:VisualElement>

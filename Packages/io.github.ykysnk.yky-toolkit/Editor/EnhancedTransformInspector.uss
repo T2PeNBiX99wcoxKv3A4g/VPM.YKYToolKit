@@ -36,8 +36,45 @@
     flex-shrink: 0;
 }
 
-.transform-foldout {
+/* ---------- Unity's default transform UI ---------- */
+
+.transform-default-ui {
+    margin: 8px 0 4px 0;
+    padding: 6px 8px 8px 8px;
+    background-color: rgba(128, 128, 128, 0.05);
+    border-width: 1px;
+    border-left-width: 2px;
+    border-color: rgba(128, 128, 128, 0.20);
+    border-left-color: rgba(128, 128, 128, 0.38);
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+.transform-default-ui .unity-foldout__toggle {
+    margin: 0;
+}
+
+.transform-default-ui .unity-foldout__text {
+    font-size: 11px;
+    -unity-font-style: bold;
+    color: rgba(150, 165, 185, 0.95);
+}
+
+.transform-default-ui .unity-foldout__checkmark {
+    -unity-background-image-tint-color: rgba(150, 165, 185, 0.95);
+}
+
+.transform-default-ui .unity-foldout__toggle:hover .unity-foldout__text {
+    color: rgb(190, 205, 225);
+}
+
+.transform-default-ui .unity-foldout__content {
     margin-top: 6px;
+    padding-top: 6px;
+    border-top-width: 1px;
+    border-top-color: rgba(128, 128, 128, 0.18);
 }
 
 /* ---------- other card ---------- */
