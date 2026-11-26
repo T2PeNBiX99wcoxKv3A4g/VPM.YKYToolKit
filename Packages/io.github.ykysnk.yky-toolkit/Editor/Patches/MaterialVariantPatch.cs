@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using HarmonyLib;
 using io.github.ykysnk.utils.Editor.Patches;
+using io.github.ykysnk.utils.NonUdon;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -11,7 +12,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor.Patches
 {
     internal class MaterialVariantPatch : Patch<MaterialVariantPatch>
     {
-        private static readonly Type TargetType = AccessTools.TypeByName("jp.lilxyzw.editortoolbox.MaterialVariant");
+        private static readonly Type? TargetType =
+            ReflectionUtils.FindType("jp.lilxyzw.editortoolbox.MaterialVariant");
 
         protected override void Execute(Harmony harmony)
         {
@@ -20,7 +22,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor.Patches
         [UsedImplicitly]
         private class OnGUI : PatchMethod<OnGUI>
         {
-            public override MethodInfo? TargetMethod { get; } = AccessTools.Method(TargetType, nameof(OnGUI));
+            public override MethodInfo? TargetMethod { get; } =
+                ReflectionUtils.FindMethod(TargetType, nameof(OnGUI));
+
             public override string PrefixMethod => nameof(Prefix);
 
             [SuppressMessage("ReSharper", "UnusedParameter.Local")]

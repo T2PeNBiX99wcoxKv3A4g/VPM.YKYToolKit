@@ -2,6 +2,7 @@ using System;
 using System.Reflection;
 using HarmonyLib;
 using io.github.ykysnk.utils.Editor.Patches;
+using io.github.ykysnk.utils.NonUdon;
 using io.github.ykysnk.ykyToolkit.Editor.Patches;
 using UnityEngine;
 
@@ -14,17 +15,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor.Patches
         // The lilEditorToolbox integration is optional: the plugin is reached through reflection instead of an
         // assembly reference, so installing this package without the plugin still compiles.
         private static readonly Type? ProjectExtensionType =
-            AccessTools.TypeByName("jp.lilxyzw.editortoolbox.ProjectExtension");
-
-        private static readonly FieldInfo? IconGuiField =
-            ProjectExtensionType == null ? null : AccessTools.Field(ProjectExtensionType, "isIconGUI");
+            ReflectionUtils.FindType("jp.lilxyzw.editortoolbox.ProjectExtension");
 
         private static readonly MethodInfo? GuidToObjectMethod = ProjectExtensionType == null
             ? null
-            : AccessTools.Method(ProjectExtensionType, "GUIDToObject", new[]
-            {
-                typeof(string)
-            });
+            : ReflectionUtils.FindMethod(ProjectExtensionType, "GUIDToObject");
 
         public override string QualifiedName => "io.github.ykysnk.yky-toolkit.patches";
 
@@ -34,7 +29,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor.Patches
         {
             // Without the plugin nothing is patched; the patch classes only exist when YKYTOOLKIT_LILEDITORTOOLBOX is set.
 #if YKYTOOLKIT_LILEDITORTOOLBOX
-            if (IconGuiField == null || GuidToObjectMethod == null) return;
+            if (GuidToObjectMethod == null) return;
 
             Run(MaterialQueuePatch.Instance);
             Run(MaterialShaderPatch.Instance);
@@ -42,9 +37,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor.Patches
 #endif
         }
 
+        // The toolbox caches GUIDToObject results. A cached object compares equal to null after Unity destroys it, so
+        // this check is what keeps its component from reading a destroyed material and breaking the project window.
         internal static bool MaterialCheckPrefix(string guid, string extension) =>
             extension == ".mat" &&
-            IconGuiField?.GetValue(null) is false &&
             GuidToObjectMethod?.Invoke(null, new object[]
             {
                 guid
