@@ -420,3 +420,15 @@ msgstr "对齐模式"
 msgid "label.enhanced_transform_inspector.unlock_transform"
 msgstr "解锁变换"
 
+msgid "label.enhanced_transform_database.entries"
+msgstr "条目"
+
+msgid "label.enhanced_transform_database.no_entries"
+msgstr "还没有条目。"
+
+msgid "label.enhanced_transform_database.missing"
+msgstr "未加载"
+
+msgid "label.enhanced_transform_database.remove_selected"
+msgstr "删除选中"
+

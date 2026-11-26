@@ -1,0 +1,80 @@
+/* The shared theme carries the colours; this file holds the database-specific layout. */
+
+.transform-db {
+    padding: 8px;
+    flex-grow: 1;
+}
+
+.transform-db__card {
+    margin: 0;
+    flex-grow: 1;
+}
+
+.transform-db__header {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.transform-db__title {
+    font-size: 11px;
+    -unity-font-style: bold;
+    color: rgb(120, 165, 255);
+}
+
+.transform-db__list {
+    flex-grow: 1;
+    flex-shrink: 1;
+    margin-top: 6px;
+}
+
+.transform-db__item {
+    margin: 0;
+}
+
+.transform-db-entry {
+    flex-direction: row;
+    align-items: center;
+    min-height: 24px;
+    padding: 2px 4px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.transform-db-entry:hover {
+    background-color: rgba(76, 141, 255, 0.12);
+}
+
+.transform-db-entry__path {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+    font-size: 11px;
+    color: rgba(205, 205, 205, 0.95);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.transform-db-entry__path--missing {
+    color: rgb(230, 125, 125);
+}
+
+.transform-db-entry__precision {
+    width: 54px;
+    min-width: 54px;
+    margin: 0 2px;
+}
+
+.transform-db-entry__precision .unity-base-field__label {
+    width: 12px;
+    min-width: 12px;
+    font-size: 9px;
+    color: rgba(150, 150, 150, 0.9);
+}
+
+.transform-db-entry__lock {
+    margin-left: 6px;
+}

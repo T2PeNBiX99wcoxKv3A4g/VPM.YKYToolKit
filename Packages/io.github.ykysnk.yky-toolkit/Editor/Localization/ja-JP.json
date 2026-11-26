@@ -136,5 +136,9 @@
   "label.enhanced_transform_inspector.section_alignment": "整列",
   "label.enhanced_transform_inspector.section_precision": "小数点以下の桁数（-1 で無効）",
   "label.enhanced_transform_inspector.align_mode": "整列モード",
-  "label.enhanced_transform_inspector.unlock_transform": "Transform のロックを解除"
+  "label.enhanced_transform_inspector.unlock_transform": "Transform のロックを解除",
+  "label.enhanced_transform_database.entries": "エントリ",
+  "label.enhanced_transform_database.no_entries": "まだエントリがありません。",
+  "label.enhanced_transform_database.missing": "未読み込み",
+  "label.enhanced_transform_database.remove_selected": "選択を削除"
 }

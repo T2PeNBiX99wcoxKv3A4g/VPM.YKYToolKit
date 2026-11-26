@@ -716,5 +716,25 @@ MonoBehaviour:
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_database.entries
+    translate: Entries
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_database.no_entries
+    translate: No entries yet.
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_database.missing
+    translate: Not loaded
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_database.remove_selected
+    translate: Remove selected
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   jsonFile: {fileID: 4900000, guid: 6e72198484143e7449ee76937982b4cc, type: 3}
   poFile: {fileID: 9010515335742159986, guid: 220dc13c173d4294c93efe037715c538, type: 3}

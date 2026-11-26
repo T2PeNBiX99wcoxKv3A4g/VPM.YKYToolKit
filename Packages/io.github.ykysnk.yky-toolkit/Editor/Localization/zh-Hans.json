@@ -136,5 +136,9 @@
   "label.enhanced_transform_inspector.section_alignment": "对齐",
   "label.enhanced_transform_inspector.section_precision": "小数位数（-1 为关闭）",
   "label.enhanced_transform_inspector.align_mode": "对齐模式",
-  "label.enhanced_transform_inspector.unlock_transform": "解锁变换"
+  "label.enhanced_transform_inspector.unlock_transform": "解锁变换",
+  "label.enhanced_transform_database.entries": "条目",
+  "label.enhanced_transform_database.no_entries": "还没有条目。",
+  "label.enhanced_transform_database.missing": "未加载",
+  "label.enhanced_transform_database.remove_selected": "删除选中"
 }
