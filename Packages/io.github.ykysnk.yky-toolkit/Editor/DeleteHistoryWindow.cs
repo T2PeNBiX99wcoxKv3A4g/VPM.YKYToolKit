@@ -146,13 +146,25 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var folder = new Label { name = "folder" };
             folder.AddToClassList("delete-history-row__folder");
 
+            var folderIcon = new Image
+            {
+                name = "folderIcon",
+                image = EditorGUIUtility.FindTexture("Folder Icon")
+            };
+            folderIcon.AddToClassList("delete-history-row__folder-icon");
+
+            var folderRow = new VisualElement();
+            folderRow.AddToClassList("delete-history-row__folder-row");
+            folderRow.Add(folderIcon);
+            folderRow.Add(folder);
+
             var time = new Label { name = "time" };
             time.AddToClassList("delete-history-row__time");
 
             nameRow.Add(name);
             nameRow.Add(extension);
             text.Add(nameRow);
-            text.Add(folder);
+            text.Add(folderRow);
             row.Add(icon);
             row.Add(text);
             row.Add(time);
@@ -191,6 +203,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var name = element.Q<Label>("name");
             var extension = element.Q<Label>("extension");
             var folder = element.Q<Label>("folder");
+            var folderRow = element.Q<VisualElement>(className: "delete-history-row__folder-row");
             var time = element.Q<Label>("time");
             var icon = element.Q<Image>("icon");
 
@@ -206,6 +219,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 extension.text = string.Empty;
                 extension.style.display = DisplayStyle.None;
                 folder.text = string.Empty;
+                folderRow.style.display = DisplayStyle.None;
                 time.text = string.Empty;
                 icon.image = null;
                 return;
@@ -220,6 +234,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             var directory = Path.GetDirectoryName(value.path)?.Replace('\\', '/');
             folder.text = directory ?? string.Empty;
+            folderRow.style.display = string.IsNullOrEmpty(directory) ? DisplayStyle.None : DisplayStyle.Flex;
 
             var extensionText = string.IsNullOrEmpty(value.extension) ? Path.GetExtension(value.path) : value.extension;
             extension.text = extensionText;
@@ -237,8 +252,22 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             time.text = DateTimeOffset.FromUnixTimeSeconds(value.unixSeconds).LocalDateTime.ToString(TimeFormat);
 
-            icon.image = InternalEditorUtility.GetIconForFile(value.path) ??
-                         EditorGUIUtility.FindTexture("DefaultAsset Icon");
+            // A deleted path cannot be queried any more, so a folder is guessed from the missing extension.
+            icon.image = LooksLikeFolder(value)
+                ? EditorGUIUtility.FindTexture("Folder Icon") ??
+                  InternalEditorUtility.GetIconForFile(value.path)
+                : InternalEditorUtility.GetIconForFile(value.path) ??
+                  EditorGUIUtility.FindTexture("DefaultAsset Icon");
+        }
+
+        private static bool LooksLikeFolder(DeleteRecord record)
+        {
+            if (AssetDatabase.IsValidFolder(record.path)) return true;
+
+            var extension = string.IsNullOrEmpty(record.extension) ? Path.GetExtension(record.path) : record.extension;
+            if (!string.IsNullOrEmpty(extension)) return false;
+
+            return !Path.GetFileName(record.path).Contains('.');
         }
 
         private static Color TagColor(string extension)

@@ -108,13 +108,26 @@
     flex-shrink: 1;
 }
 
+.delete-history-row__folder-row {
+    flex-direction: row;
+    align-items: center;
+    margin-top: 1px;
+}
+
+.delete-history-row__folder-icon {
+    width: 11px;
+    height: 11px;
+    margin-right: 4px;
+    flex-shrink: 0;
+    opacity: 0.6;
+}
+
 .delete-history-row__folder {
     font-size: 10px;
     color: rgb(150, 158, 172);
     -unity-text-align: middle-left;
     overflow: hidden;
     text-overflow: ellipsis;
-    margin-top: 1px;
 }
 
 .delete-history-row__ext {
