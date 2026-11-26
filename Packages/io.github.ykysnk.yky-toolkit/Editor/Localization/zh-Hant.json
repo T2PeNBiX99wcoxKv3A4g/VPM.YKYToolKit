@@ -136,5 +136,5 @@
   "label.enhanced_transform_inspector.section_precision": "小數位數（-1 為關閉）",
   "label.enhanced_transform_inspector.align_mode": "對齊模式",
   "label.enhanced_transform_inspector.unlock_transform": "解除變換鎖定",
-  "label.enhanced_transform_settings.info": "在 Transform 檢視器中編輯。"
+  "label.enhanced_transform_settings.info": "用於儲存 Transform 的額外資料。請在 Transform 檢視器中編輯。"
 }

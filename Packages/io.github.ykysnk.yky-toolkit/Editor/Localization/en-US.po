@@ -418,5 +418,5 @@ msgid "label.enhanced_transform_inspector.unlock_transform"
 msgstr "Unlock transform"
 
 msgid "label.enhanced_transform_settings.info"
-msgstr "Edited from the Transform inspector."
+msgstr "Stores extra data for the Transform. Edit it in the Transform inspector."
 

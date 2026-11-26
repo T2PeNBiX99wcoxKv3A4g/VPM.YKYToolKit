@@ -418,5 +418,5 @@ msgid "label.enhanced_transform_inspector.unlock_transform"
 msgstr "解除變換鎖定"
 
 msgid "label.enhanced_transform_settings.info"
-msgstr "在 Transform 檢視器中編輯。"
+msgstr "用於儲存 Transform 的額外資料。請在 Transform 檢視器中編輯。"
 

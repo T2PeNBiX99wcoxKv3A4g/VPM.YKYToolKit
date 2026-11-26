@@ -136,5 +136,5 @@
   "label.enhanced_transform_inspector.section_precision": "小数位数（-1 为关闭）",
   "label.enhanced_transform_inspector.align_mode": "对齐模式",
   "label.enhanced_transform_inspector.unlock_transform": "解锁变换",
-  "label.enhanced_transform_settings.info": "在 Transform 检查器中编辑。"
+  "label.enhanced_transform_settings.info": "用于存储 Transform 的额外数据。请在 Transform 检查器中编辑。"
 }

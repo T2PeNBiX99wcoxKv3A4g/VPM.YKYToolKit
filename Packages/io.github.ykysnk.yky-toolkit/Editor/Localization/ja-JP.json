@@ -136,5 +136,5 @@
   "label.enhanced_transform_inspector.section_precision": "小数点以下の桁数（-1 で無効）",
   "label.enhanced_transform_inspector.align_mode": "整列モード",
   "label.enhanced_transform_inspector.unlock_transform": "Transform のロックを解除",
-  "label.enhanced_transform_settings.info": "Transform インスペクターで編集します。"
+  "label.enhanced_transform_settings.info": "Transform の追加データを保存します。編集は Transform インスペクターから行います。"
 }

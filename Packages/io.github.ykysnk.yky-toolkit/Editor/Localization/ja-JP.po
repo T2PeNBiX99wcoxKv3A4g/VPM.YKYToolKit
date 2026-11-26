@@ -418,5 +418,5 @@ msgid "label.enhanced_transform_inspector.unlock_transform"
 msgstr "Transform のロックを解除"
 
 msgid "label.enhanced_transform_settings.info"
-msgstr "Transform インスペクターで編集します。"
+msgstr "Transform の追加データを保存します。編集は Transform インスペクターから行います。"
 

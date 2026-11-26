@@ -705,7 +705,8 @@ MonoBehaviour:
     useTooltip: 0
     tooltipSuffix: :tooltip
   - key: label.enhanced_transform_settings.info
-    translate: "Transform \u30A4\u30F3\u30B9\u30DA\u30AF\u30BF\u30FC\u3067\u7DE8\u96C6\u3057\u307E\u3059\u3002"
+    translate: "Transform \u306E\u8FFD\u52A0\u30C7\u30FC\u30BF\u3092\u4FDD\u5B58\u3057\u307E\u3059\u3002\u7DE8\u96C6\u306F
+      Transform \u30A4\u30F3\u30B9\u30DA\u30AF\u30BF\u30FC\u304B\u3089\u884C\u3044\u307E\u3059\u3002"
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
