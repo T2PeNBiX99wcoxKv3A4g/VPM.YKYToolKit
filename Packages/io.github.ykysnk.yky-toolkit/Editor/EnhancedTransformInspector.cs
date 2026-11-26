@@ -94,7 +94,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var scaleProperty = serializedObject.FindProperty("m_LocalScale");
             var tree = uxml!.CloneTree();
             _root = tree;
-            tree.UILocalize();
+            tree.UILocalize(false);
             tree.Bind(serializedObject);
 
             // Expressions are applied when the field is committed. Enter is handled by the axis fields; these

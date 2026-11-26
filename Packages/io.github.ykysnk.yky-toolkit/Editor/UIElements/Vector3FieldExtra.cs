@@ -40,8 +40,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor.UIElements
             // Unity draws the scale link before the x/y/z inputs; the other extra actions belong after them.
             LinkSlot = new()
             {
-                name = "linkSlot",
-                style = { display = DisplayStyle.None }
+                name = "linkSlot"
             };
             LinkSlot.AddToClassList("link-slot");
             schedule.Execute(MoveLinkSlot).ExecuteLater(0);
@@ -129,7 +128,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor.UIElements
             set
             {
                 _showLinkButton = value;
-                LinkSlot.style.display = value ? DisplayStyle.Flex : DisplayStyle.None;
+                LinkButton.style.display = value ? DisplayStyle.Flex : DisplayStyle.None;
                 if (value) MoveLinkSlot();
             }
         }
