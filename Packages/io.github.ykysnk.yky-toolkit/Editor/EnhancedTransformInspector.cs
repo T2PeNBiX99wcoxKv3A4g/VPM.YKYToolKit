@@ -705,7 +705,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     _ => EditorGUIUtility.systemCopyBuffer = hierarchyPathField.value);
             }));
 
+            var copyPathButton = tree.Q<IconButton>("copyPath");
+            copyPathButton.style.backgroundImage = Vector3FieldExtra.CopyIcon;
+            copyPathButton.clicked += () => EditorGUIUtility.systemCopyBuffer = hierarchyPathField.value;
+
             var positionDecimalField = tree.Q<SliderInt>("positionDecimal");
+            positionDecimalField.tooltip = "label.enhanced_transform_inspector.position_decimal_precision".S();
             positionDecimalField.value = exData.positionDecimalPrecision;
             positionDecimalField.RegisterValueChangedCallback(evt =>
             {
@@ -714,6 +719,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             });
 
             var rotationDecimalField = tree.Q<SliderInt>("rotationDecimal");
+            rotationDecimalField.tooltip = "label.enhanced_transform_inspector.rotation_decimal_precision".S();
             rotationDecimalField.value = exData.rotationDecimalPrecision;
             rotationDecimalField.RegisterValueChangedCallback(evt =>
             {
@@ -722,6 +728,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             });
 
             var scaleDecimalField = tree.Q<SliderInt>("scaleDecimal");
+            scaleDecimalField.tooltip = "label.enhanced_transform_inspector.scale_decimal_precision".S();
             scaleDecimalField.value = exData.scaleDecimalPrecision;
             scaleDecimalField.RegisterValueChangedCallback(evt =>
             {
@@ -742,6 +749,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             };
 
             var alignModeField = tree.Q<EnumField>("alignMode");
+            alignModeField.tooltip = "label.enhanced_transform_inspector.align_mode".S();
             alignModeField.SetValueWithoutNotify(AlignModeSave);
             alignModeField.RegisterValueChangedCallback(evt =>
             {

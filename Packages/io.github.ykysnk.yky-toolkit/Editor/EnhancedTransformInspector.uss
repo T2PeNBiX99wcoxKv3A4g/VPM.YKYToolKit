@@ -33,25 +33,105 @@
 
 .transform-action {
     margin-left: 2px;
-}
-
-.transform-tools-row {
-    flex-direction: row;
-    margin: 2px 0;
-}
-
-.transform-tool-button {
-    flex-grow: 1;
-    height: 24px;
-    margin: 2px;
-    font-size: 10px;
+    flex-shrink: 0;
 }
 
 .transform-foldout {
     margin-top: 6px;
 }
 
-/* ---------- expression cheat sheet ---------- */
+/* ---------- other card ---------- */
+
+.transform-other__section {
+    margin: 0 0 4px 0;
+}
+
+.transform-other__section-title {
+    margin: 6px 0 3px 0;
+    padding-bottom: 2px;
+    font-size: 10px;
+    -unity-font-style: bold;
+    color: rgba(145, 180, 235, 0.95);
+    border-bottom-width: 1px;
+    border-bottom-color: rgba(128, 128, 128, 0.22);
+}
+
+.transform-other__row {
+    flex-direction: row;
+    align-items: center;
+}
+
+.transform-other__path {
+    flex-grow: 1;
+    margin: 0;
+}
+
+.transform-other__path .unity-base-field__label {
+    display: none;
+}
+
+.transform-other__enum {
+    margin: 0 0 4px 0;
+}
+
+.transform-other__enum .unity-base-field__label {
+    display: none;
+}
+
+.transform-other__button-row {
+    flex-direction: row;
+}
+
+.transform-other__button {
+    flex-grow: 1;
+    height: 24px;
+    margin: 0 4px 0 0;
+    padding: 0 6px;
+    font-size: 10px;
+}
+
+.transform-other__button--wide {
+    margin: 4px 0 0 0;
+}
+
+.transform-other__precision-row {
+    flex-direction: row;
+}
+
+.transform-other__precision {
+    flex-grow: 1;
+    flex-basis: 0;
+    margin-right: 6px;
+}
+
+.transform-other__precision--last {
+    margin-right: 0;
+}
+
+.transform-other__precision-label {
+    margin-bottom: 1px;
+    font-size: 9px;
+    color: rgba(160, 160, 160, 0.9);
+}
+
+.transform-other__slider {
+    margin: 0;
+}
+
+.transform-other__slider .unity-base-field__label {
+    display: none;
+}
+
+.transform-other__slider .unity-base-slider__input {
+    flex-grow: 1;
+}
+
+.transform-other__lock {
+    margin-top: 4px;
+    padding-top: 6px;
+    border-top-width: 1px;
+    border-top-color: rgba(128, 128, 128, 0.22);
+}
 
 /* ---------- expression suggestions ---------- */
 

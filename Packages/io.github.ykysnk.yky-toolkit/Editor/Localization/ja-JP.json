@@ -40,9 +40,6 @@
   "label.enhanced_transform_inspector.local_scale": "スケール",
   "label.enhanced_transform_inspector.local_space": "ローカル座標系",
   "label.enhanced_transform_inspector.global_space": "ワールド座標系",
-  "label.enhanced_transform_inspector.global_position": "位置",
-  "label.enhanced_transform_inspector.global_rotation": "回転",
-  "label.enhanced_transform_inspector.global_scale": "スケール",
   "label.enhanced_transform_inspector.reset_position": "位置をリセット",
   "label.enhanced_transform_inspector.reset_rotation": "回転をリセット",
   "label.enhanced_transform_inspector.reset_scale": "スケールをリセット",
@@ -61,7 +58,6 @@
   "label.enhanced_transform_inspector.hierarchy_path": "ヒエラルキーパス",
   "label.enhanced_transform_inspector.children": "子",
   "label.enhanced_transform_inspector.bounds_size": "バウンズサイズ",
-  "label.enhanced_transform_inspector.align_mode": "整列モード",
   "label.enhanced_transform_inspector.clear_parent": "親を解除",
   "label.enhanced_transform_inspector.help": "ヘルプ",
   "label.copy": "コピー",
@@ -136,5 +132,8 @@
   "label.enhanced_transform_inspector.help_copied": "コピーしました",
   "label.enhanced_transform_inspector.help_suggest": "↑↓ 選択 · Enter 挿入 · Esc 閉じる",
   "label.enhanced_transform_inspector.help_window_title": "Transform の式",
-  "label.enhanced_transform_inspector.help_no_match": "一致する式はありません。"
+  "label.enhanced_transform_inspector.help_no_match": "一致する式はありません。",
+  "label.enhanced_transform_inspector.section_alignment": "整列",
+  "label.enhanced_transform_inspector.section_precision": "小数点以下の桁数（-1 で無効）",
+  "label.enhanced_transform_inspector.align_mode": "整列モード"
 }

@@ -129,15 +129,6 @@ msgstr "ローカル座標系"
 msgid "label.enhanced_transform_inspector.global_space"
 msgstr "ワールド座標系"
 
-msgid "label.enhanced_transform_inspector.global_position"
-msgstr "位置"
-
-msgid "label.enhanced_transform_inspector.global_rotation"
-msgstr "回転"
-
-msgid "label.enhanced_transform_inspector.global_scale"
-msgstr "スケール"
-
 msgid "label.enhanced_transform_inspector.reset_position"
 msgstr "位置をリセット"
 
@@ -191,9 +182,6 @@ msgstr "子"
 
 msgid "label.enhanced_transform_inspector.bounds_size"
 msgstr "バウンズサイズ"
-
-msgid "label.enhanced_transform_inspector.align_mode"
-msgstr "整列モード"
 
 msgid "label.enhanced_transform_inspector.clear_parent"
 msgstr "親を解除"
@@ -419,4 +407,13 @@ msgstr "Transform の式"
 
 msgid "label.enhanced_transform_inspector.help_no_match"
 msgstr "一致する式はありません。"
+
+msgid "label.enhanced_transform_inspector.section_alignment"
+msgstr "整列"
+
+msgid "label.enhanced_transform_inspector.section_precision"
+msgstr "小数点以下の桁数（-1 で無効）"
+
+msgid "label.enhanced_transform_inspector.align_mode"
+msgstr "整列モード"
 

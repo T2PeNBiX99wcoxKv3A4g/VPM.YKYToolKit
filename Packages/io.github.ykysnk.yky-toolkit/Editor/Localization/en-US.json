@@ -40,9 +40,6 @@
   "label.enhanced_transform_inspector.local_scale": "Scale",
   "label.enhanced_transform_inspector.local_space": "Local Space",
   "label.enhanced_transform_inspector.global_space": "World Space",
-  "label.enhanced_transform_inspector.global_position": "Position",
-  "label.enhanced_transform_inspector.global_rotation": "Rotation",
-  "label.enhanced_transform_inspector.global_scale": "Scale",
   "label.enhanced_transform_inspector.reset_position": "Reset Position",
   "label.enhanced_transform_inspector.reset_rotation": "Reset Rotation",
   "label.enhanced_transform_inspector.reset_scale": "Reset Scale",
@@ -61,7 +58,6 @@
   "label.enhanced_transform_inspector.hierarchy_path": "Hierarchy Path",
   "label.enhanced_transform_inspector.children": "Children",
   "label.enhanced_transform_inspector.bounds_size": "Bounds Size",
-  "label.enhanced_transform_inspector.align_mode": "Align Mode",
   "label.enhanced_transform_inspector.clear_parent": "Clear Parent",
   "label.enhanced_transform_inspector.help": "Help",
   "label.copy": "Copy",
@@ -136,5 +132,8 @@
   "label.enhanced_transform_inspector.help_copied": "Copied",
   "label.enhanced_transform_inspector.help_suggest": "↑↓ Select · Enter insert · Esc close",
   "label.enhanced_transform_inspector.help_window_title": "Transform expressions",
-  "label.enhanced_transform_inspector.help_no_match": "No expression matches."
+  "label.enhanced_transform_inspector.help_no_match": "No expression matches.",
+  "label.enhanced_transform_inspector.section_alignment": "Alignment",
+  "label.enhanced_transform_inspector.section_precision": "Decimal places (-1 = off)",
+  "label.enhanced_transform_inspector.align_mode": "Alignment mode"
 }

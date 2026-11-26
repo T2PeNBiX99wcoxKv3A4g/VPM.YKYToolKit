@@ -75,13 +75,13 @@
             <io.github.ykysnk.ykyToolkit.Editor.UIElements.Vector3FieldExtra name="globalPosition"
                                                                              reset-button-tooltip="label.enhanced_transform_inspector.reset_position"
                                                                              random-button-tooltip="label.enhanced_transform_inspector.random_position"
-                                                                             label="label.enhanced_transform_inspector.global_position"
+                                                                             label="unity:label.position"
                                                                              show-copy-paste-buttons="true"
                                                                              copy-button-tooltip="label.enhanced_transform_inspector.copy_transform"
                                                                              paste-button-tooltip="label.enhanced_transform_inspector.paste_transform"
                                                                              class="localize-tooltip"/>
             <io.github.ykysnk.ykyToolkit.Editor.UIElements.Vector3FieldExtra name="globalRotation"
-                                                                             label="label.enhanced_transform_inspector.global_rotation"
+                                                                             label="unity:label.rotation"
                                                                              reset-button-tooltip="label.enhanced_transform_inspector.reset_rotation"
                                                                              random-button-tooltip="label.enhanced_transform_inspector.random_rotation"
                                                                              show-copy-paste-buttons="true"
@@ -89,7 +89,7 @@
                                                                              paste-button-tooltip="label.enhanced_transform_inspector.paste_transform"
                                                                              class="localize-tooltip"/>
             <io.github.ykysnk.ykyToolkit.Editor.UIElements.Vector3FieldExtra name="lossyScale"
-                                                                             label="label.enhanced_transform_inspector.global_scale"
+                                                                             label="unity:label.scale"
                                                                              show-link-button="true"
                                                                              reset-button-tooltip="label.enhanced_transform_inspector.reset_scale"
                                                                              random-button-tooltip="label.enhanced_transform_inspector.random_scale"
@@ -100,7 +100,7 @@
                                                                              class="localize-tooltip"/>
         </ui:VisualElement>
 
-        <ui:VisualElement class="yky-card transform-card">
+        <ui:VisualElement class="yky-card transform-card transform-other">
             <ui:VisualElement class="transform-card__header">
                 <ui:Label text="label.enhanced_transform_inspector.other" class="transform-card__title"/>
                 <ui:VisualElement class="yky-spacer"/>
@@ -108,26 +108,58 @@
                                                                           tooltip="label.enhanced_transform_inspector.help"
                                                                           class="transform-action"/>
             </ui:VisualElement>
-            <ui:TextField label="label.enhanced_transform_inspector.hierarchy_path" name="hierarchyPath"
-                          readonly="true" picking-mode="Ignore" class="transform-path"/>
-            <ui:EnumField label="label.enhanced_transform_inspector.align_mode"
-                          type="io.github.ykysnk.ykyToolkit.Editor.AlignMode, io.github.ykysnk.yky-toolkit.Editor"
-                          name="alignMode"/>
-            <ui:VisualElement class="transform-tools-row">
-                <ui:Button text="label.enhanced_transform_inspector.align_to_parent" name="alignToParent"
-                           class="transform-tool-button"/>
-                <ui:Button text="label.enhanced_transform_inspector.align_to_ground" name="alignToGround"
-                           class="transform-tool-button"/>
-                <ui:Button text="label.enhanced_transform_inspector.clear_parent" name="clearParent"
-                           class="transform-tool-button"/>
+
+            <ui:VisualElement class="transform-other__section">
+                <ui:Label text="label.enhanced_transform_inspector.hierarchy_path"
+                          class="transform-other__section-title"/>
+                <ui:VisualElement class="transform-other__row">
+                    <ui:TextField name="hierarchyPath" readonly="true" picking-mode="Ignore"
+                                  class="transform-path transform-other__path"/>
+                    <io.github.ykysnk.ykyToolkit.Editor.UIElements.IconButton name="copyPath"
+                                                                              tooltip="label.copy"
+                                                                              class="transform-action"/>
+                </ui:VisualElement>
             </ui:VisualElement>
-            <ui:Toggle label="label.enhanced_transform_inspector.lock_transform" name="lockTransform"/>
-            <ui:SliderInt label="label.enhanced_transform_inspector.position_decimal_precision" high-value="6"
-                          show-input-field="true" name="positionDecimal" low-value="-1"/>
-            <ui:SliderInt label="label.enhanced_transform_inspector.rotation_decimal_precision" high-value="6"
-                          show-input-field="true" name="rotationDecimal" low-value="-1"/>
-            <ui:SliderInt label="label.enhanced_transform_inspector.scale_decimal_precision" high-value="6"
-                          show-input-field="true" name="scaleDecimal" low-value="-1"/>
+
+            <ui:VisualElement class="transform-other__section">
+                <ui:Label text="label.enhanced_transform_inspector.section_alignment"
+                          class="transform-other__section-title"/>
+                <ui:EnumField type="io.github.ykysnk.ykyToolkit.Editor.AlignMode, io.github.ykysnk.yky-toolkit.Editor"
+                              name="alignMode" class="transform-other__enum"/>
+                <ui:VisualElement class="transform-other__button-row">
+                    <ui:Button text="label.enhanced_transform_inspector.align_to_parent" name="alignToParent"
+                               class="transform-other__button"/>
+                    <ui:Button text="label.enhanced_transform_inspector.align_to_ground" name="alignToGround"
+                               class="transform-other__button"/>
+                </ui:VisualElement>
+                <ui:Button text="label.enhanced_transform_inspector.clear_parent" name="clearParent"
+                           class="transform-other__button transform-other__button--wide"/>
+            </ui:VisualElement>
+
+            <ui:VisualElement class="transform-other__section">
+                <ui:Label text="label.enhanced_transform_inspector.section_precision"
+                          class="transform-other__section-title"/>
+                <ui:VisualElement class="transform-other__precision-row">
+                    <ui:VisualElement class="transform-other__precision">
+                        <ui:Label text="unity:label.position" class="transform-other__precision-label"/>
+                        <ui:SliderInt high-value="6" show-input-field="true" name="positionDecimal" low-value="-1"
+                                      class="transform-other__slider"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="transform-other__precision">
+                        <ui:Label text="unity:label.rotation" class="transform-other__precision-label"/>
+                        <ui:SliderInt high-value="6" show-input-field="true" name="rotationDecimal" low-value="-1"
+                                      class="transform-other__slider"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="transform-other__precision transform-other__precision--last">
+                        <ui:Label text="unity:label.scale" class="transform-other__precision-label"/>
+                        <ui:SliderInt high-value="6" show-input-field="true" name="scaleDecimal" low-value="-1"
+                                      class="transform-other__slider"/>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:Toggle label="label.enhanced_transform_inspector.lock_transform" name="lockTransform"
+                       class="transform-other__lock"/>
         </ui:VisualElement>
 
         <ui:Foldout text="label.enhanced_transform_inspector.default_ui" value="false" name="defaultGUIFoldout"

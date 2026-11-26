@@ -129,15 +129,6 @@ msgstr "局部空間"
 msgid "label.enhanced_transform_inspector.global_space"
 msgstr "世界空間"
 
-msgid "label.enhanced_transform_inspector.global_position"
-msgstr "位置"
-
-msgid "label.enhanced_transform_inspector.global_rotation"
-msgstr "旋轉"
-
-msgid "label.enhanced_transform_inspector.global_scale"
-msgstr "縮放"
-
 msgid "label.enhanced_transform_inspector.reset_position"
 msgstr "重設位置"
 
@@ -191,9 +182,6 @@ msgstr "子物件"
 
 msgid "label.enhanced_transform_inspector.bounds_size"
 msgstr "邊界大小"
-
-msgid "label.enhanced_transform_inspector.align_mode"
-msgstr "對齊模式"
 
 msgid "label.enhanced_transform_inspector.clear_parent"
 msgstr "清除父物件"
@@ -419,4 +407,13 @@ msgstr "Transform 表達式"
 
 msgid "label.enhanced_transform_inspector.help_no_match"
 msgstr "沒有符合的表達式。"
+
+msgid "label.enhanced_transform_inspector.section_alignment"
+msgstr "對齊"
+
+msgid "label.enhanced_transform_inspector.section_precision"
+msgstr "小數位數（-1 為關閉）"
+
+msgid "label.enhanced_transform_inspector.align_mode"
+msgstr "對齊模式"
 

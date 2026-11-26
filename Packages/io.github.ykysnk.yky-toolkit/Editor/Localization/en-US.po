@@ -129,15 +129,6 @@ msgstr "Local Space"
 msgid "label.enhanced_transform_inspector.global_space"
 msgstr "World Space"
 
-msgid "label.enhanced_transform_inspector.global_position"
-msgstr "Position"
-
-msgid "label.enhanced_transform_inspector.global_rotation"
-msgstr "Rotation"
-
-msgid "label.enhanced_transform_inspector.global_scale"
-msgstr "Scale"
-
 msgid "label.enhanced_transform_inspector.reset_position"
 msgstr "Reset Position"
 
@@ -191,9 +182,6 @@ msgstr "Children"
 
 msgid "label.enhanced_transform_inspector.bounds_size"
 msgstr "Bounds Size"
-
-msgid "label.enhanced_transform_inspector.align_mode"
-msgstr "Align Mode"
 
 msgid "label.enhanced_transform_inspector.clear_parent"
 msgstr "Clear Parent"
@@ -419,4 +407,13 @@ msgstr "Transform expressions"
 
 msgid "label.enhanced_transform_inspector.help_no_match"
 msgstr "No expression matches."
+
+msgid "label.enhanced_transform_inspector.section_alignment"
+msgstr "Alignment"
+
+msgid "label.enhanced_transform_inspector.section_precision"
+msgstr "Decimal places (-1 = off)"
+
+msgid "label.enhanced_transform_inspector.align_mode"
+msgstr "Alignment mode"
 

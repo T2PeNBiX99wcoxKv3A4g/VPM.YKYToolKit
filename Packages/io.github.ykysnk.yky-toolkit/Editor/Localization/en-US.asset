@@ -229,21 +229,6 @@ MonoBehaviour:
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
-  - key: label.enhanced_transform_inspector.global_position
-    translate: Position
-    tooltip: 
-    useTooltip: 0
-    tooltipSuffix: :tooltip
-  - key: label.enhanced_transform_inspector.global_rotation
-    translate: Rotation
-    tooltip: 
-    useTooltip: 0
-    tooltipSuffix: :tooltip
-  - key: label.enhanced_transform_inspector.global_scale
-    translate: Scale
-    tooltip: 
-    useTooltip: 0
-    tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.reset_position
     translate: Reset Position
     tooltip: 
@@ -331,11 +316,6 @@ MonoBehaviour:
     tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.bounds_size
     translate: Bounds Size
-    tooltip: 
-    useTooltip: 0
-    tooltipSuffix: :tooltip
-  - key: label.enhanced_transform_inspector.align_mode
-    translate: Align Mode
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
@@ -713,6 +693,21 @@ MonoBehaviour:
     tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.help_no_match
     translate: No expression matches.
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.section_alignment
+    translate: Alignment
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.section_precision
+    translate: Decimal places (-1 = off)
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.align_mode
+    translate: Alignment mode
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip

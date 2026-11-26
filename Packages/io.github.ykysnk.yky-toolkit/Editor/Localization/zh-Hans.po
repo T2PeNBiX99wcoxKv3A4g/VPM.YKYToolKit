@@ -129,15 +129,6 @@ msgstr "局部空间"
 msgid "label.enhanced_transform_inspector.global_space"
 msgstr "世界空间"
 
-msgid "label.enhanced_transform_inspector.global_position"
-msgstr "位置"
-
-msgid "label.enhanced_transform_inspector.global_rotation"
-msgstr "旋转"
-
-msgid "label.enhanced_transform_inspector.global_scale"
-msgstr "缩放"
-
 msgid "label.enhanced_transform_inspector.reset_position"
 msgstr "重置位置"
 
@@ -191,9 +182,6 @@ msgstr "子级"
 
 msgid "label.enhanced_transform_inspector.bounds_size"
 msgstr "边界大小"
-
-msgid "label.enhanced_transform_inspector.align_mode"
-msgstr "对齐模式"
 
 msgid "label.enhanced_transform_inspector.clear_parent"
 msgstr "清除父级"
@@ -419,4 +407,13 @@ msgstr "Transform 表达式"
 
 msgid "label.enhanced_transform_inspector.help_no_match"
 msgstr "没有符合条件的表达式。"
+
+msgid "label.enhanced_transform_inspector.section_alignment"
+msgstr "对齐"
+
+msgid "label.enhanced_transform_inspector.section_precision"
+msgstr "小数位数（-1 为关闭）"
+
+msgid "label.enhanced_transform_inspector.align_mode"
+msgstr "对齐模式"
 

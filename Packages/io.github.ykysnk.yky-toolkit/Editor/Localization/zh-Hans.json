@@ -40,9 +40,6 @@
   "label.enhanced_transform_inspector.local_scale": "缩放",
   "label.enhanced_transform_inspector.local_space": "局部空间",
   "label.enhanced_transform_inspector.global_space": "世界空间",
-  "label.enhanced_transform_inspector.global_position": "位置",
-  "label.enhanced_transform_inspector.global_rotation": "旋转",
-  "label.enhanced_transform_inspector.global_scale": "缩放",
   "label.enhanced_transform_inspector.reset_position": "重置位置",
   "label.enhanced_transform_inspector.reset_rotation": "重置旋转",
   "label.enhanced_transform_inspector.reset_scale": "重置缩放",
@@ -61,7 +58,6 @@
   "label.enhanced_transform_inspector.hierarchy_path": "层级路径",
   "label.enhanced_transform_inspector.children": "子级",
   "label.enhanced_transform_inspector.bounds_size": "边界大小",
-  "label.enhanced_transform_inspector.align_mode": "对齐模式",
   "label.enhanced_transform_inspector.clear_parent": "清除父级",
   "label.enhanced_transform_inspector.help": "帮助",
   "label.copy": "复制",
@@ -136,5 +132,8 @@
   "label.enhanced_transform_inspector.help_copied": "已复制",
   "label.enhanced_transform_inspector.help_suggest": "↑↓ 选择 · Enter 插入 · Esc 关闭",
   "label.enhanced_transform_inspector.help_window_title": "Transform 表达式",
-  "label.enhanced_transform_inspector.help_no_match": "没有符合条件的表达式。"
+  "label.enhanced_transform_inspector.help_no_match": "没有符合条件的表达式。",
+  "label.enhanced_transform_inspector.section_alignment": "对齐",
+  "label.enhanced_transform_inspector.section_precision": "小数位数（-1 为关闭）",
+  "label.enhanced_transform_inspector.align_mode": "对齐模式"
 }

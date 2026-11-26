@@ -221,21 +221,6 @@ MonoBehaviour:
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
-  - key: label.enhanced_transform_inspector.global_position
-    translate: "\u4F4D\u7F6E"
-    tooltip: 
-    useTooltip: 0
-    tooltipSuffix: :tooltip
-  - key: label.enhanced_transform_inspector.global_rotation
-    translate: "\u56DE\u8EE2"
-    tooltip: 
-    useTooltip: 0
-    tooltipSuffix: :tooltip
-  - key: label.enhanced_transform_inspector.global_scale
-    translate: "\u30B9\u30B1\u30FC\u30EB"
-    tooltip: 
-    useTooltip: 0
-    tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.reset_position
     translate: "\u4F4D\u7F6E\u3092\u30EA\u30BB\u30C3\u30C8"
     tooltip: 
@@ -323,11 +308,6 @@ MonoBehaviour:
     tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.bounds_size
     translate: "\u30D0\u30A6\u30F3\u30BA\u30B5\u30A4\u30BA"
-    tooltip: 
-    useTooltip: 0
-    tooltipSuffix: :tooltip
-  - key: label.enhanced_transform_inspector.align_mode
-    translate: "\u6574\u5217\u30E2\u30FC\u30C9"
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
@@ -707,6 +687,21 @@ MonoBehaviour:
     tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.help_no_match
     translate: "\u4E00\u81F4\u3059\u308B\u5F0F\u306F\u3042\u308A\u307E\u305B\u3093\u3002"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.section_alignment
+    translate: "\u6574\u5217"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.section_precision
+    translate: "\u5C0F\u6570\u70B9\u4EE5\u4E0B\u306E\u6841\u6570\uFF08-1 \u3067\u7121\u52B9\uFF09"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.align_mode
+    translate: "\u6574\u5217\u30E2\u30FC\u30C9"
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
