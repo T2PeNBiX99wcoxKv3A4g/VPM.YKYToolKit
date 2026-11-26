@@ -193,6 +193,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     ApplyVector3WhenChanged(old, p, v => setter(t, v));
                 });
 
+                // Without a delayed field, Unity parses and applies "+15" as an absolute 15 as soon as it is pasted,
+                // then the expression below would add another 15. Delaying until Enter keeps the raw text available.
+                field.isDelayed = true;
+
                 bool Apply()
                 {
                     if (string.IsNullOrWhiteSpace(field.text)) return false;

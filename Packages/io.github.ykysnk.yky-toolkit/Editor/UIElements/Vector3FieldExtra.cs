@@ -9,25 +9,27 @@ namespace io.github.ykysnk.ykyToolkit.Editor.UIElements
 {
     public class Vector3FieldExtra : Vector3Field
     {
+        private const string RandomIconGuid = "51d0cfb580d7e2f449c1ddf5a91761eb";
+        private const string ResetIconGuid = "d87bcb1c5259d6e41934305859e8c37a";
+        private const string CopyIconGuid = "f8379f706ae3d4841838ff5cc924da0a";
+        private const string PasteIconGuid = "3d32b439cc5c09f4f93312cf317a8019";
+
         [PublicAPI] internal static readonly StyleBackground LinkedIcon =
             new(EditorGUIUtility.FindTexture("linked"));
 
-        [PublicAPI] internal static readonly StyleBackground RandomIcon =
-            new(EditorGUIUtility.FindTexture("preaudioloopoff"));
+        [PublicAPI] internal static readonly StyleBackground RandomIcon = LoadIcon(RandomIconGuid);
 
-        [PublicAPI] internal static readonly StyleBackground ResetIcon =
-            new(EditorGUIUtility.FindTexture("refresh"));
+        [PublicAPI] internal static readonly StyleBackground ResetIcon = LoadIcon(ResetIconGuid);
 
         [PublicAPI] internal static readonly StyleBackground UnlinkedIcon =
             new(EditorGUIUtility.FindTexture("unlinked"));
 
-        [PublicAPI] internal static readonly StyleBackground CopyIcon =
-            new(AssetDatabase.LoadAssetAtPath<Texture2D>(
-                AssetDatabase.GUIDToAssetPath("f8379f706ae3d4841838ff5cc924da0a")));
+        [PublicAPI] internal static readonly StyleBackground CopyIcon = LoadIcon(CopyIconGuid);
 
-        [PublicAPI] internal static readonly StyleBackground PasteIcon =
-            new(AssetDatabase.LoadAssetAtPath<Texture2D>(
-                AssetDatabase.GUIDToAssetPath("3d32b439cc5c09f4f93312cf317a8019")));
+        [PublicAPI] internal static readonly StyleBackground PasteIcon = LoadIcon(PasteIconGuid);
+
+        private static StyleBackground LoadIcon(string guid) =>
+            new(AssetDatabase.LoadAssetAtPath<Texture2D>(AssetDatabase.GUIDToAssetPath(guid)));
 
         private bool _showCopyPasteButtons;
 
@@ -35,6 +37,15 @@ namespace io.github.ykysnk.ykyToolkit.Editor.UIElements
 
         public Vector3FieldExtra()
         {
+            // Unity draws the scale link before the x/y/z inputs; the other extra actions belong after them.
+            LinkSlot = new()
+            {
+                name = "linkSlot",
+                style = { display = DisplayStyle.None }
+            };
+            LinkSlot.AddToClassList("link-slot");
+            schedule.Execute(MoveLinkSlot).ExecuteLater(0);
+
             ExtraSlot = new()
             {
                 name = "extraSlot"
@@ -55,7 +66,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor.UIElements
             };
             LinkButton.RegisterValueChangedCallback(_ => SetLinked(LinkButton.value));
 
-            ExtraSlot.Add(LinkButton);
+            LinkSlot.Add(LinkButton);
 
             CopyButton = new()
             {
@@ -103,6 +114,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor.UIElements
         }
 
         [PublicAPI] public VisualElement ExtraSlot { get; }
+        [PublicAPI] public VisualElement LinkSlot { get; }
         [PublicAPI] public IconButton ResetButton { get; }
         [PublicAPI] public IconButton RandomButton { get; }
         [PublicAPI] public IconButton LinkButton { get; }
@@ -117,7 +129,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor.UIElements
             set
             {
                 _showLinkButton = value;
-                LinkButton.style.display = value ? DisplayStyle.Flex : DisplayStyle.None;
+                LinkSlot.style.display = value ? DisplayStyle.Flex : DisplayStyle.None;
+                if (value) MoveLinkSlot();
             }
         }
 
@@ -188,6 +201,20 @@ namespace io.github.ykysnk.ykyToolkit.Editor.UIElements
             LinkButton.tooltip = linked
                 ? "label.enhanced_transform_inspector.scale_link_disable".S()
                 : "label.enhanced_transform_inspector.scale_link_enable".S();
+        }
+
+        private void MoveLinkSlot()
+        {
+            var input = this.Q<VisualElement>(className: "unity-vector3-field__input");
+            if (input == null)
+            {
+                schedule.Execute(MoveLinkSlot).ExecuteLater(50);
+                return;
+            }
+
+            if (LinkSlot.parent == input) return;
+            LinkSlot.RemoveFromHierarchy();
+            input.Insert(0, LinkSlot);
         }
 
         public new class UxmlFactory : UxmlFactory<Vector3FieldExtra, UxmlTraits>
