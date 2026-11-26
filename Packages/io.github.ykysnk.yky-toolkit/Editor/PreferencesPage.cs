@@ -5,6 +5,7 @@ using io.github.ykysnk.utils.Editor;
 using io.github.ykysnk.utils.Extensions;
 using UnityEditor;
 using UnityEditor.UIElements;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace io.github.ykysnk.ykyToolkit.Editor
@@ -32,6 +33,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     var tree = uxml.CloneTree();
                     tree.UILocalize();
                     root.Add(tree);
+
+                    // The Settings window reuses the provider UI, so the scroll view can keep an old offset and hide
+                    // the header. Every activation starts at the top.
+                    var scroll = tree.Q<ScrollView>();
+                    if (scroll != null) scroll.scrollOffset = Vector2.zero;
 
                     var allowAsyncCompilationToggle = tree.Q<Toggle>("allowAsyncCompilation");
                     allowAsyncCompilationToggle.value = ShaderAsync.AllowAsyncCompilation;

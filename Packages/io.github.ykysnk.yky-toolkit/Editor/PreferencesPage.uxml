@@ -1,7 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
     <Style src="project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/YkyToolkitTheme.uss?guid=34e0c41dada851146aeccffc05549196&amp;type=3"/>
     <Style src="project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/PreferencesPage.uss?fileID=7433441132597879392&amp;guid=d16273d813d4ff74482b362d3570add2&amp;type=3#PreferencesPage"/>
-    <ui:VisualElement class="root yky-preferences">
+    <ui:ScrollView class="root yky-preferences">
         <ui:VisualElement class="yky-preferences__content">
             <ui:VisualElement class="yky-preferences__header">
                 <ui:VisualElement class="yky-icon yky-icon--header yky-icon--preferences"/>
@@ -47,5 +47,5 @@
                              name="importWatcherFileExtensionColors"/>
             </ui:VisualElement>
         </ui:VisualElement>
-    </ui:VisualElement>
+    </ui:ScrollView>
 </ui:UXML>

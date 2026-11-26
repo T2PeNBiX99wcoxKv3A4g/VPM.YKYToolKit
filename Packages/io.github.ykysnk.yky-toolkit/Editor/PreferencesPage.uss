@@ -32,6 +32,7 @@
 .yky-preferences .yky-card {
     padding: 10px 12px;
     margin: 10px 0;
+    flex-shrink: 0;
 }
 
 .yky-preferences ListView {

@@ -1,17 +1,28 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
     <Style src="project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/YkyToolkitTheme.uss?guid=34e0c41dada851146aeccffc05549196&amp;type=3"/>
     <Style src="project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/ImportWatcherSettingsWindow.uss?fileID=7433441132597879392&amp;guid=14ed0cab3837c8e428a86088225faaa2&amp;type=3#ImportWatcherSettingsWindow"/>
-    <ui:VisualElement style="padding-top: 8px; padding-right: 8px; padding-bottom: 8px; padding-left: 8px;">
-        <ui:Label text="label.import_watcher.settings" parse-escape-sequences="true" display-tooltip-when-elided="true"
-                  style="-unity-font-style: bold;"/>
-        <uie:ColorField label="label.import_watcher.color" value="RGBA(0.000, 1.000, 1.000, 1.000)" name="color"/>
-        <ui:SliderInt label="label.import_watcher.duration" high-value="500" name="duration" show-input-field="true"/>
-        <ui:SliderInt label="label.import_watcher.max_sessions" high-value="1000" name="maxSessions"
-                      show-input-field="true"/>
-        <ui:ListView show-alternating-row-backgrounds="ContentOnly" reorderable="true" reorder-mode="Animated"
-                     show-add-remove-footer="true" selection-type="Multiple" show-border="true"
-                     virtualization-method="DynamicHeight" binding-path="fileColors" name="fileColors"
-                     show-bound-collection-size="true" show-foldout-header="true"
-                     header-title="label.import_watcher.file_extension_colors"/>
-    </ui:VisualElement>
+    <ui:ScrollView class="root yky-settings-window">
+        <ui:VisualElement class="yky-settings-window__content">
+            <ui:VisualElement class="yky-card">
+                <ui:VisualElement class="yky-card__title">
+                    <ui:VisualElement class="yky-icon yky-icon--section yky-icon--settings"/>
+                    <ui:Label text="label.import_watcher.settings" class="yky-section"/>
+                </ui:VisualElement>
+                <uie:ColorField label="label.import_watcher.color" value="RGBA(0.000, 1.000, 1.000, 1.000)"
+                                name="color"/>
+                <ui:SliderInt label="label.import_watcher.duration" high-value="500" name="duration"
+                              show-input-field="true"/>
+                <ui:SliderInt label="label.import_watcher.max_sessions" high-value="1000" name="maxSessions"
+                              show-input-field="true"/>
+            </ui:VisualElement>
+
+            <ui:VisualElement class="yky-card">
+                <ui:ListView show-alternating-row-backgrounds="ContentOnly" reorderable="true"
+                             reorder-mode="Animated" show-add-remove-footer="true" selection-type="Multiple"
+                             show-border="true" virtualization-method="DynamicHeight" binding-path="fileColors"
+                             name="fileColors" show-bound-collection-size="true" show-foldout-header="true"
+                             header-title="label.import_watcher.file_extension_colors"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:ScrollView>
 </ui:UXML>

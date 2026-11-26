@@ -1,7 +1,20 @@
-.cell {
-    flex-grow: 1;
+/* The shared theme in YkyToolkitTheme.uss carries the look; this file only holds what is specific to this window. */
+
+.yky-settings-window {
+    padding: 0;
 }
 
-.row {
-    flex-direction: row;
+.yky-settings-window__content {
+    padding: 10px 8px 12px 8px;
+}
+
+.yky-settings-window .yky-card {
+    padding: 10px 12px;
+    margin: 8px 0;
+    flex-shrink: 0;
+}
+
+.yky-settings-window ListView {
+    height: 240px;
+    margin-top: 4px;
 }

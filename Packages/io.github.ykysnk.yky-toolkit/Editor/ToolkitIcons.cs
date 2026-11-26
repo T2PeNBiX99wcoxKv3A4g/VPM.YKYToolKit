@@ -18,7 +18,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         [NotNull]
         public static GUIContent Content(string text, string name)
         {
-            var texture = Load(name);
+            // The title bar draws a 16 px image, so a dedicated export with a smaller glyph and more margin reads
+            // better there than the 64 px icon the toolbar uses.
+            var texture = Load(name + "-title") ?? Load(name);
             return texture == null ? new GUIContent(text) : new GUIContent(text, texture);
         }
     }
