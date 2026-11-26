@@ -1,13 +1,9 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="True">
     <Style src="project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/YkyToolkitTheme.uss?guid=34e0c41dada851146aeccffc05549196&amp;type=3"/>
     <Style src="project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/UnityResourceMonitor.uss?fileID=7433441132597879392&amp;guid=25f427bf8ebb416438d9843074da83cf&amp;type=3#UnityResourceMonitor"/>
-    <ui:VisualElement class="root">
-        <ui:VisualElement class="tableHeader">
-            <ui:Label text="label.unity_resource_monitor.type" class="headerCell"/>
-            <ui:Label text="label.unity_resource_monitor.value" class="headerCell"/>
+    <ui:VisualElement class="root yky-monitor">
+        <ui:VisualElement class="yky-card yky-monitor__card">
+            <ui:VisualElement name="metrics" class="yky-metrics"/>
         </ui:VisualElement>
-        <ui:ListView selection-type="Multiple" show-alternating-row-backgrounds="ContentOnly"
-                     virtualization-method="DynamicHeight" binding-path="rows" reorder-mode="Animated"
-                     show-bound-collection-size="false" reorderable="true" class="localize-skip yky-list"/>
     </ui:VisualElement>
 </ui:UXML>

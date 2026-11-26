@@ -1,11 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
-using io.github.ykysnk.Localization.Editor;
-using io.github.ykysnk.utils.Editor;
 using UnityEditor;
-using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.Profiling;
 using UnityEngine.UIElements;
@@ -15,109 +11,161 @@ namespace io.github.ykysnk.ykyToolkit.Editor
     internal class UnityResourceMonitor : EditorWindow
     {
         private const string Title = "Unity Resource Monitor";
+        private const int RefreshIntervalMs = 100;
+        private const long Megabyte = 1024 * 1024;
+
+        private static readonly Color NormalColor = new(0.34f, 0.78f, 0.48f);
+        private static readonly Color WarningColor = new(0.94f, 0.65f, 0.20f);
+        private static readonly Color CriticalColor = new(0.97f, 0.36f, 0.36f);
 
         [SerializeField] private VisualTreeAsset? uxml;
-        [SerializeField] private List<UnityResourceMonitorRow> rows = new();
 
+        private readonly List<MetricView> _metrics = new();
+        private Process? _process;
         private double _lastCheckTime;
         private double _lastCpuTime;
-        private Process? _process;
 
-        private SerializedObject? _serializedObject;
-
-        private void OnDestroy() => _serializedObject?.Dispose();
+        private void OnDestroy() => _process?.Dispose();
 
         private void CreateGUI()
         {
             _process = Process.GetCurrentProcess();
 
-            _serializedObject?.Dispose();
-            _serializedObject = new(this);
             var tree = uxml!.CloneTree();
-            tree.UILocalize(false);
-            tree.Bind(_serializedObject);
+            tree.style.flexGrow = 1;
             rootVisualElement.Add(tree);
-            rootVisualElement.AddManipulator(
-                new ContextualMenuManipulator(evt => evt.menu.AppendAction("Reload", _ => Reload())));
-            rootVisualElement.schedule.Execute(UpdateUI).Every(100);
-            UpdateUI();
-            return;
 
-            void UpdateUI()
+            var container = tree.Q<VisualElement>("metrics");
+            _metrics.Clear();
+            _metrics.Add(AddMetric(container, 0, "Mono Used"));
+            _metrics.Add(AddMetric(container, 1, "Reserved Memory"));
+            _metrics.Add(AddMetric(container, 2, "Allocated Memory"));
+            _metrics.Add(AddMetric(container, 3, "CPU Usage"));
+
+            rootVisualElement.schedule.Execute(UpdateMetrics).Every(RefreshIntervalMs);
+
+            // The first CPU sample needs a baseline, or the value is measured against the whole editor lifetime.
+            ResetCpuSample();
+            UpdateMetrics();
+        }
+
+        private void ResetCpuSample()
+        {
+            if (_process == null) return;
+
+            _process.Refresh();
+            _lastCpuTime = _process.TotalProcessorTime.TotalMilliseconds;
+            _lastCheckTime = EditorApplication.timeSinceStartup;
+        }
+
+        private void UpdateMetrics()
+        {
+            if (_process == null) return;
+
+            _process.Refresh();
+
+            var currentCpuTime = _process.TotalProcessorTime.TotalMilliseconds;
+            var currentCheckTime = EditorApplication.timeSinceStartup;
+            var cpuDelta = currentCpuTime - _lastCpuTime;
+            var timeDelta = (currentCheckTime - _lastCheckTime) * 1000.0;
+            var cpuUsage = timeDelta > 0 ? cpuDelta / timeDelta * 100.0 / Environment.ProcessorCount : 0;
+
+            _lastCpuTime = currentCpuTime;
+            _lastCheckTime = currentCheckTime;
+
+            var reservedMemory = Profiler.GetTotalReservedMemoryLong() / Megabyte;
+
+            foreach (var metric in _metrics)
             {
-                _process.Refresh();
+                switch (metric.Row.id)
+                {
+                    case 0:
+                        metric.Row.Update(Profiler.GetMonoUsedSizeLong() / Megabyte,
+                            Profiler.GetMonoHeapSizeLong() / Megabyte, MegabyteText);
+                        break;
+                    case 1:
+                        metric.Row.Update(reservedMemory, SystemInfo.systemMemorySize, MegabyteText);
+                        break;
+                    case 2:
+                        metric.Row.Update(Profiler.GetTotalAllocatedMemoryLong() / Megabyte,
+                            Math.Max(1, reservedMemory), MegabyteText);
+                        break;
+                    case 3:
+                        metric.Row.Update((long)Math.Round(cpuUsage), 100, PercentText);
+                        break;
+                }
 
-                var currentCpuTime = _process.TotalProcessorTime.TotalMilliseconds;
-                var currentCheckTime = EditorApplication.timeSinceStartup;
-
-                var cpuDelta = currentCpuTime - _lastCpuTime;
-                var timeDelta = (currentCheckTime - _lastCheckTime) * 1000.0;
-
-                var cpuCount = Environment.ProcessorCount;
-                var cpuUsage = cpuDelta / timeDelta * 100.0 / cpuCount;
-
-                _lastCpuTime = _process.TotalProcessorTime.TotalMilliseconds;
-                _lastCheckTime = EditorApplication.timeSinceStartup;
-
-#if UNITY_EDITOR_WIN
-                var userHandlesValue = GetGuiResources(_process.Handle, 0);
-                var gdiHandlesValue = GetGuiResources(_process.Handle, 1);
-#else
-                var userHandlesValue = -1;
-                var gdiHandlesValue = -1;
-#endif
-
-                foreach (var row in rows)
-                    switch (row.id)
-                    {
-                        case 0:
-                            row.Update(userHandlesValue, 10000, value => value > 0 ? $"{value}" : "N/A");
-                            break;
-                        case 1:
-                            row.Update(gdiHandlesValue, 10000, value => value > 0 ? $"{value}" : "N/A");
-                            break;
-                        case 2:
-                            row.Update(Profiler.GetMonoUsedSizeLong() / 1024 / 1024,
-                                Profiler.GetMonoHeapSizeLong() / 1024 / 1024, value => $"{value} MB");
-                            break;
-                        case 3:
-                            row.Update(Profiler.GetTotalReservedMemoryLong() / 1024 / 1024, SystemInfo.systemMemorySize,
-                                value => $"{value} MB");
-                            break;
-                        case 4:
-                            row.Update(Profiler.GetTotalAllocatedMemoryLong() / 1024 / 1024, SystemInfo.systemMemorySize,
-                                value => $"{value} MB");
-                            break;
-                        case 5:
-                            row.Update((long)cpuUsage, 100, value => $"{value}%");
-                            break;
-                    }
+                metric.Refresh();
             }
         }
 
-        private void Reload()
+        private static MetricView AddMetric(VisualElement parent, int id, string title)
         {
-            rows.Clear();
-            rows.Add(new(0, "USER Handles"));
-            rows.Add(new(1, "GDI Handles"));
-            rows.Add(new(2, "Mono Used"));
-            rows.Add(new(3, "GC Allocated"));
-            rows.Add(new(4, "Total Allocated"));
-            rows.Add(new(5, "CPU Usage"));
+            var metric = new VisualElement();
+            metric.AddToClassList("yky-metric");
+
+            var head = new VisualElement();
+            head.AddToClassList("yky-metric__head");
+
+            var name = new Label(title);
+            name.AddToClassList("yky-metric__name");
+
+            var value = new Label("-");
+            value.AddToClassList("yky-metric__value");
+
+            head.Add(name);
+            head.Add(value);
+            metric.Add(head);
+
+            var meter = new VisualElement();
+            meter.AddToClassList("yky-meter");
+            var fill = new VisualElement();
+            fill.AddToClassList("yky-meter__fill");
+            meter.Add(fill);
+            metric.Add(meter);
+
+            parent.Add(metric);
+
+            return new MetricView(new UnityResourceMonitorRow(id, title), fill, value);
         }
 
-#if UNITY_EDITOR_WIN
-        [DllImport("user32.dll")]
-        private static extern int GetGuiResources(IntPtr hProcess, int uiFlags);
-#endif
+        private static string MegabyteText(long value) => $"{value} MB";
+
+        private static string PercentText(long value) => $"{value}%";
 
         [MenuItem("Tools/YKYToolkit/Unity Resource Monitor", false, Util.Three)]
         private static void ShowWindow()
         {
             var window = GetWindow<UnityResourceMonitor>();
             window.titleContent = ToolkitIcons.Content(Title, "resource-monitor");
-            if (window.rows.Count < 1)
-                window.Reload();
+            window.minSize = new Vector2(360, 300);
+        }
+
+        private sealed class MetricView
+        {
+            private readonly VisualElement _fill;
+            private readonly Label _value;
+
+            internal readonly UnityResourceMonitorRow Row;
+
+            internal MetricView(UnityResourceMonitorRow row, VisualElement fill, Label value)
+            {
+                Row = row;
+                _fill = fill;
+                _value = value;
+            }
+
+            internal void Refresh()
+            {
+                var ratio = Row.maxValue > 0 ? Mathf.Clamp01((float)Row.value / Row.maxValue) : 0;
+
+                _fill.style.width = Length.Percent(ratio * 100f);
+                _value.text = Row.text;
+
+                var color = ratio >= 0.8f ? CriticalColor : ratio >= 0.6f ? WarningColor : NormalColor;
+                _fill.style.backgroundColor = color;
+                _value.style.color = color;
+            }
         }
     }
 }

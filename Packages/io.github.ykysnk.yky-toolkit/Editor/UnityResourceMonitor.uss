@@ -1,34 +1,58 @@
-.root {
-    padding: 8px;
-    flex-direction: column;
-}
+/* The shared theme in YkyToolkitTheme.uss carries the look; this file only holds what is specific to the monitor. */
 
-.tableHeader {
-    flex-direction: row;
-    background-color: #333333;
-    padding-left: 4px;
-    padding-right: 4px;
-    min-height: 15px;
-}
-
-.headerCell {
+.yky-monitor {
+    padding: 10px;
     flex-grow: 1;
-    color: white;
+}
+
+.yky-monitor__card {
+    padding: 12px 14px;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.yky-metrics {
+    flex-grow: 1;
+}
+
+.yky-metric {
+    flex-grow: 1;
+    justify-content: center;
+    padding: 4px 0;
+}
+
+.yky-metric__head {
+    flex-direction: row;
+    align-items: flex-end;
+    margin-bottom: 5px;
+}
+
+.yky-metric__name {
+    flex-grow: 1;
+    font-size: 11px;
+    color: rgb(170, 180, 195);
+}
+
+.yky-metric__value {
+    font-size: 11px;
     -unity-font-style: bold;
-    -unity-text-align: upper-center;
+    -unity-text-align: middle-right;
 }
 
-.tableRow {
-    flex-direction: row;
-    padding-left: 4px;
-    padding-right: 4px;
+.yky-meter {
+    height: 6px;
+    background-color: rgba(128, 128, 128, 0.22);
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
 }
 
-.cell {
-    flex-grow: 1;
-}
-
-ProgressBar {
-    height: 18px;
-    margin-bottom: 6px;
+.yky-meter__fill {
+    height: 100%;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    background-color: rgb(87, 199, 123);
 }
