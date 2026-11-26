@@ -1,1 +1,98 @@
 /* The shared theme in YkyToolkitTheme.uss carries the look; this file only holds what is specific to this window. */
+
+.yky-import-log {
+    padding: 10px;
+    flex-grow: 1;
+}
+
+.yky-import-log__card {
+    flex-grow: 1;
+    margin: 0;
+    padding: 8px;
+    min-height: 0;
+}
+
+.yky-import-log__body {
+    flex-direction: row;
+    flex-grow: 1;
+    min-height: 0;
+}
+
+/* Date column of the import log, like the project browser's folder column. */
+.yky-import-log__sidebar {
+    width: 140px;
+    min-width: 110px;
+    max-width: 200px;
+    flex-shrink: 0;
+    padding-right: 6px;
+    border-right-width: 1px;
+    border-right-color: rgba(128, 128, 128, 0.24);
+}
+
+.yky-import-log__sessions {
+    flex-grow: 1;
+    margin: 0;
+    border-width: 0;
+    min-height: 0;
+}
+
+.yky-import-log__sessions .unity-collection-view__item--selected {
+    background-color: rgba(76, 141, 255, 0.30);
+}
+
+.yky-import-log__detail {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+    padding-left: 8px;
+}
+
+.yky-import-log__detail-title {
+    font-size: 11px;
+    -unity-font-style: bold;
+    color: rgb(120, 165, 255);
+    margin: 2px 0 4px 2px;
+    min-height: 16px;
+}
+
+.yky-import-log__detail TreeView {
+    flex-grow: 1;
+    min-height: 0;
+    margin: 0;
+    border-width: 0;
+}
+
+/* ---------- date row ---------- */
+
+.import-log-date {
+    flex-direction: row;
+    align-items: center;
+    padding: 0 8px;
+}
+
+.import-log-date__label {
+    flex-grow: 1;
+    font-size: 12px;
+}
+
+/* ---------- record row ---------- */
+
+.import-log-item {
+    flex-direction: row;
+    align-items: center;
+}
+
+.import-log-item__icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 4px;
+    flex-shrink: 0;
+}
+
+.import-log-item__name {
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -unity-text-align: middle-left;
+    -unity-font-style: normal;
+}

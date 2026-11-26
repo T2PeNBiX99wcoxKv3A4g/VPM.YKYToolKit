@@ -1,18 +1,26 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
     <Style src="project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/YkyToolkitTheme.uss?guid=34e0c41dada851146aeccffc05549196&amp;type=3"/>
     <Style src="project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/ImportWatcherWindow.uss?fileID=7433441132597879392&amp;guid=cb3f7d18f6e8d4e4d8f0d704c12890d4&amp;type=3#ImportWatcherWindow"/>
-    <ui:VisualElement class="root">
-        <ui:VisualElement class="yky-card">
+    <ui:VisualElement class="root yky-import-log">
+        <ui:VisualElement class="yky-card yky-import-log__card">
             <uie:Toolbar>
                 <uie:ToolbarButton text="label.refresh" name="refresh"/>
                 <uie:ToolbarButton text="label.clear" name="clear"/>
-                <uie:ToolbarButton text="label.import_watcher.settings" parse-escape-sequences="true"
-                                   display-tooltip-when-elided="true" name="settings"/>
+                <uie:ToolbarButton text="label.import_watcher.settings" name="settings"/>
             </uie:Toolbar>
-            <ui:ListView selection-type="Multiple" virtualization-method="DynamicHeight" name="importLogList"
-                         binding-path="sessions" show-bound-collection-size="false"
-                         show-alternating-row-backgrounds="ContentOnly" reorder-mode="Animated" class="yky-list"/>
-            <ui:Label text="label.import_watcher.no_import_log" name="importLogEmpty" class="yky-list-empty"/>
+            <ui:VisualElement class="yky-import-log__body">
+                <ui:VisualElement class="yky-import-log__sidebar">
+                    <ui:ListView name="importLogList" selection-type="Single" virtualization-method="DynamicHeight"
+                                 show-alternating-row-backgrounds="None" class="yky-list yky-import-log__sessions"/>
+                </ui:VisualElement>
+                <ui:VisualElement class="yky-import-log__detail">
+                    <ui:Label name="importLogDetailTitle" text="-" class="yky-import-log__detail-title"/>
+                    <ui:TreeView name="importLogTree" virtualization-method="DynamicHeight"
+                                 selection-type="Multiple" show-alternating-row-backgrounds="ContentOnly"
+                                 auto-expand="true"/>
+                    <ui:Label text="label.import_watcher.no_import_log" name="importLogEmpty" class="yky-list-empty"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
