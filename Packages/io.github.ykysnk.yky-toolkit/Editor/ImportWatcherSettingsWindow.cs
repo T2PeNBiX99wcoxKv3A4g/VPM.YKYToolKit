@@ -30,21 +30,21 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             _serializedObject?.Dispose();
             _serializedObject = new(this);
             var tree = uxml!.CloneTree();
-            tree.UILocalize();
+            tree.UILocalize(false);
             tree.Bind(_serializedObject);
             rootVisualElement.Add(tree);
             LoadFileColorList();
 
             var colorField = tree.Q<ColorField>("color");
-            colorField.value = ImportWatcher.HighlightColor;
+            colorField.SetValueWithoutNotify(ImportWatcher.HighlightColor);
             colorField.RegisterValueChangedCallback(evt => ImportWatcher.HighlightColor = evt.newValue);
 
             var durationField = tree.Q<SliderInt>("duration");
-            durationField.value = ImportWatcher.Duration;
+            durationField.SetValueWithoutNotify(ImportWatcher.Duration);
             durationField.RegisterValueChangedCallback(evt => ImportWatcher.Duration = evt.newValue);
 
             var maxSessionsField = tree.Q<SliderInt>("maxSessions");
-            maxSessionsField.value = ImportHistoryManager.MaxSessions;
+            maxSessionsField.SetValueWithoutNotify(ImportHistoryManager.MaxSessions);
             maxSessionsField.RegisterValueChangedCallback(evt => ImportHistoryManager.MaxSessions = evt.newValue);
 
             var fileColorsField = tree.Q<ListView>("fileColors");

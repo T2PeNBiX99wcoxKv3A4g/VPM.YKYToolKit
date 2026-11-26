@@ -385,6 +385,9 @@ TextField .unity-base-text-field__input {
 .yky-icon--preferences {
     background-image: url("project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/Icons/preferences.png?fileID=2800000&guid=3d4c646e69dbf8f4d955333eea64c89e&type=3");
 }
+.yky-icon--language {
+    background-image: url("project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/Icons/language.png?fileID=2800000&guid=371f21e69eb122441accf9a5dd98bcf5&type=3");
+}
 
 .yky-icon--upm-installer {
     background-image: url("project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/Icons/upm-installer.png?fileID=2800000&guid=5ab713cc40cfc93438365a1d080586ed&type=3");

@@ -8,6 +8,14 @@
                 <ui:Label text="YKY Toolkit" class="yky-preferences__title"/>
             </ui:VisualElement>
 
+            <ui:VisualElement class="yky-card yky-card--language">
+                <ui:VisualElement class="yky-card__title">
+                    <ui:VisualElement class="yky-icon yky-icon--section yky-icon--language"/>
+                    <ui:Label text="label.language" class="yky-section"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="languagePickerHost" class="yky-language-picker-host"/>
+            </ui:VisualElement>
+
             <ui:VisualElement class="yky-card">
                 <ui:VisualElement class="yky-card__title">
                     <ui:VisualElement class="yky-icon yky-icon--section yky-icon--settings"/>

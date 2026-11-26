@@ -21,6 +21,32 @@
     -unity-font-style: bold;
 }
 
+.yky-card--language {
+    border-color: rgba(96, 141, 235, 0.55);
+    background-color: rgba(76, 141, 255, 0.10);
+}
+
+.yky-language-picker {
+    margin: 2px 0 0 0;
+    padding: 0;
+    border-top-width: 0;
+}
+
+.yky-language-picker .unity-base-field__label {
+    display: none;
+}
+
+.yky-language-picker .unity-base-field__input {
+    flex-grow: 1;
+    min-width: 0;
+    max-width: none;
+    height: 28px;
+    font-size: 13px;
+    -unity-font-style: bold;
+    background-color: rgba(76, 141, 255, 0.22);
+    border-color: rgba(96, 141, 235, 0.75);
+}
+
 .yky-preferences Toggle {
     margin: 3px 0;
 }

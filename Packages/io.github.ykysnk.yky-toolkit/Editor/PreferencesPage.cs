@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using io.github.ykysnk.Localization.Editor;
@@ -31,7 +32,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     }
 
                     var tree = uxml.CloneTree();
-                    tree.UILocalize();
+                    tree.UILocalize(false);
                     root.Add(tree);
 
                     // The Settings window reuses the provider UI, so the scroll view can keep an old offset and hide
@@ -39,37 +40,60 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     var scroll = tree.Q<ScrollView>();
                     if (scroll != null) scroll.scrollOffset = Vector2.zero;
 
+                    var helper = LocalizationHelper.For(typeof(PreferencesPage).Assembly);
+                    var languageHost = tree.Q<VisualElement>("languagePickerHost");
+                    if (languageHost != null)
+                    {
+                        var languages = helper.Languages.ToList();
+                        var names = helper.LanguageNames;
+                        var selected = Math.Max(0, languages.IndexOf(helper.SelectedLanguage));
+
+                        string Name(string id)
+                        {
+                            var index = languages.IndexOf(id);
+                            return index >= 0 && index < names.Count ? names[index] : id;
+                        }
+
+                        var languagePicker = new PopupField<string>("", languages, selected, Name, Name);
+                        languagePicker.AddToClassList("yky-language-picker");
+                        languagePicker.RegisterValueChangedCallback(evt =>
+                        {
+                            if (!string.IsNullOrEmpty(evt.newValue)) helper.SelectedLanguage = evt.newValue;
+                        });
+                        languageHost.Add(languagePicker);
+                    }
+
                     var allowAsyncCompilationToggle = tree.Q<Toggle>("allowAsyncCompilation");
-                    allowAsyncCompilationToggle.value = ShaderAsync.AllowAsyncCompilation;
+                    allowAsyncCompilationToggle.SetValueWithoutNotify(ShaderAsync.AllowAsyncCompilation);
                     allowAsyncCompilationToggle.RegisterValueChangedCallback(evt =>
                         ShaderAsync.AllowAsyncCompilation = evt.newValue);
 
                     var deleteSelectedWarnWindowToggle = tree.Q<Toggle>("deleteSelectedWarnWindow");
-                    deleteSelectedWarnWindowToggle.value = NewDelete.ShowWarnWindow;
+                    deleteSelectedWarnWindowToggle.SetValueWithoutNotify(NewDelete.ShowWarnWindow);
                     deleteSelectedWarnWindowToggle.RegisterValueChangedCallback(evt =>
                         NewDelete.ShowWarnWindow = evt.newValue);
 
                     var enableDiscordRichPresenceToggle = tree.Q<Toggle>("enableDiscordRichPresence");
-                    enableDiscordRichPresenceToggle.value = DiscordEditorRPC.EnableDiscordRichPresence;
+                    enableDiscordRichPresenceToggle.SetValueWithoutNotify(DiscordEditorRPC.EnableDiscordRichPresence);
                     enableDiscordRichPresenceToggle.RegisterValueChangedCallback(evt =>
                         DiscordEditorRPC.EnableDiscordRichPresence = evt.newValue);
 
                     var deleteHistoryManagerMaxRecordsField = tree.Q<SliderInt>("deleteHistoryManagerMaxRecords");
-                    deleteHistoryManagerMaxRecordsField.value = DeleteHistoryManager.MaxRecords;
+                    deleteHistoryManagerMaxRecordsField.SetValueWithoutNotify(DeleteHistoryManager.MaxRecords);
                     deleteHistoryManagerMaxRecordsField.RegisterValueChangedCallback(evt =>
                         DeleteHistoryManager.MaxRecords = evt.newValue);
 
                     var importWatcherColorField = tree.Q<ColorField>("importWatcherColor");
-                    importWatcherColorField.value = ImportWatcher.HighlightColor;
+                    importWatcherColorField.SetValueWithoutNotify(ImportWatcher.HighlightColor);
                     importWatcherColorField.RegisterValueChangedCallback(evt =>
                         ImportWatcher.HighlightColor = evt.newValue);
 
                     var importWatcherDurationField = tree.Q<SliderInt>("importWatcherDuration");
-                    importWatcherDurationField.value = ImportWatcher.Duration;
+                    importWatcherDurationField.SetValueWithoutNotify(ImportWatcher.Duration);
                     importWatcherDurationField.RegisterValueChangedCallback(evt => ImportWatcher.Duration = evt.newValue);
 
                     var importWatcherMaxSessionsField = tree.Q<SliderInt>("importWatcherMaxSessionsField");
-                    importWatcherMaxSessionsField.value = ImportHistoryManager.MaxSessions;
+                    importWatcherMaxSessionsField.SetValueWithoutNotify(ImportHistoryManager.MaxSessions);
                     importWatcherMaxSessionsField.RegisterValueChangedCallback(evt =>
                         ImportHistoryManager.MaxSessions = evt.newValue);
 
@@ -113,6 +137,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                         element.Q<TextField>("fileExtension").SetValueWithoutNotify(value.fileExtension);
                         element.Q<ColorField>("color").SetValueWithoutNotify(value.color);
                     };
+                    importWatcherFileExtensionColorsListView.Rebuild();
 
                     var addButton = importWatcherFileExtensionColorsListView.Q<Button>("unity-list-view__add-button");
                     var removeButton =
