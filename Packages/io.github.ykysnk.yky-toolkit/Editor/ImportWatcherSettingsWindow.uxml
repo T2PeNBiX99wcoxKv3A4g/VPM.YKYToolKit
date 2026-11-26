@@ -24,15 +24,11 @@
                     <ui:Label text="label.import_watcher.file_extension_colors" class="yky-list-title"/>
                     <ui:Label name="fileColorCount" text="0" class="yky-count"/>
                 </ui:VisualElement>
-                <ui:VisualElement class="yky-list-frame">
-                    <ui:ListView show-alternating-row-backgrounds="ContentOnly" reorderable="true"
-                                 reorder-mode="Animated" show-add-remove-footer="true" selection-type="Multiple"
-                                 virtualization-method="DynamicHeight"
-                                 name="fileColors" show-foldout-header="false"
-                                 header-title="label.import_watcher.file_extension_colors" class="yky-list"/>
-                    <ui:Button name="resetFileColors" tooltip="label.import_watcher.reset_colors"
-                               class="yky-icon-button yky-button-icon--reset yky-list-reset"/>
-                </ui:VisualElement>
+                <ui:ListView show-alternating-row-backgrounds="ContentOnly" reorderable="true"
+                             reorder-mode="Animated" show-add-remove-footer="true" selection-type="Multiple"
+                             virtualization-method="DynamicHeight"
+                             name="fileColors" show-foldout-header="false"
+                             header-title="label.import_watcher.file_extension_colors" class="yky-list"/>
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:ScrollView>

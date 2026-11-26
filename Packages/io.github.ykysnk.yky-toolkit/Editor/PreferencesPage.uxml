@@ -62,14 +62,10 @@
                     <ui:Label text="label.import_watcher.file_extension_colors" class="yky-list-title"/>
                     <ui:Label name="fileColorCount" text="0" class="yky-count"/>
                 </ui:VisualElement>
-                <ui:VisualElement class="yky-list-frame">
-                    <ui:ListView reorder-mode="Animated" show-add-remove-footer="true" reorderable="true"
-                                 show-alternating-row-backgrounds="ContentOnly" selection-type="Multiple"
-                                 virtualization-method="DynamicHeight"
-                                 name="importWatcherFileExtensionColors" class="yky-list"/>
-                    <ui:Button name="resetFileColors" tooltip="label.import_watcher.reset_colors"
-                               class="yky-icon-button yky-button-icon--reset yky-list-reset"/>
-                </ui:VisualElement>
+                <ui:ListView reorder-mode="Animated" show-add-remove-footer="true" reorderable="true"
+                             show-alternating-row-backgrounds="ContentOnly" selection-type="Multiple"
+                             virtualization-method="DynamicHeight"
+                             name="importWatcherFileExtensionColors" class="yky-list"/>
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:ScrollView>

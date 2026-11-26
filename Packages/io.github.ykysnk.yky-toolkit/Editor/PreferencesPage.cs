@@ -124,28 +124,14 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     }
 
                     var fileColorsField = tree.Q<ListView>("importWatcherFileExtensionColors");
-                    fileColorsField.makeItem = () =>
-                    {
-                        var rowUxml = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(
-                            AssetDatabase.GUIDToAssetPath("6bdd0e10034ff1b4281322ac210d8519"));
-                        if (rowUxml == null) return BasicEditor.CreateUxmlImportErrorUI();
-
-                        var row = rowUxml.CloneTree();
-                        row.UILocalize(false);
-                        row.Q<TextField>("fileExtension").RegisterValueChangedCallback(evt =>
+                    fileColorsField.makeItem = () => ImportWatcherFileColorRow.Create(
+                        _ => SaveColorList(),
+                        value =>
                         {
-                            if (row.userData is not ImportWatcherFileColor value) return;
-                            value.fileExtension = evt.newValue;
+                            newColorList.Remove(value);
                             SaveColorList();
+                            fileColorsField.Rebuild();
                         });
-                        row.Q<ColorField>("color").RegisterValueChangedCallback(evt =>
-                        {
-                            if (row.userData is not ImportWatcherFileColor value) return;
-                            value.color = evt.newValue;
-                            SaveColorList();
-                        });
-                        return row;
-                    };
                     fileColorsField.bindItem = (element, index) =>
                     {
                         var value = newColorList.GetValueOrDefault(index) ??
@@ -158,17 +144,24 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     fileColorsField.Rebuild();
                     UpdateColorCount();
 
+                    // Editing a row only writes the value back; rebuilding here would recycle the row and drop focus
+                    // while the user is still typing.
                     void SaveColorList()
                     {
                         ImportWatcher.ColorList = newColorList
                             .Select(value => value ?? new ImportWatcherFileColor("", ImportWatcherFileColor.DefaultColor))
                             .ToList();
-                        fileColorsField.Rebuild();
                         UpdateColorCount();
                     }
 
-                    fileColorsField.Q<Button>("unity-list-view__add-button").clicked += SaveColorList;
-                    fileColorsField.Q<Button>("unity-list-view__remove-button").clicked += SaveColorList;
+                    void SaveAndRebuildColorList()
+                    {
+                        SaveColorList();
+                        fileColorsField.Rebuild();
+                    }
+
+                    fileColorsField.Q<Button>("unity-list-view__add-button").clicked += SaveAndRebuildColorList;
+                    fileColorsField.Q<Button>("unity-list-view__remove-button").clicked += SaveAndRebuildColorList;
 
                     tree.Q<Button>("resetImportWatcher").clicked += () =>
                     {
@@ -179,13 +172,13 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                         importWatcherMaxSessionsField.SetValueWithoutNotify(ImportHistoryManager.MaxSessions);
                     };
 
-                    tree.Q<Button>("resetFileColors").clicked += () =>
+                    fileColorsField.AddFooterReset("resetFileColors", "label.import_watcher.reset_colors".S(), () =>
                     {
                         newColorList.Clear();
                         foreach (var color in ImportWatcherFileColor.DefaultColors)
                             newColorList.Add(color);
-                        SaveColorList();
-                    };
+                        SaveAndRebuildColorList();
+                    });
                 }
             };
 
