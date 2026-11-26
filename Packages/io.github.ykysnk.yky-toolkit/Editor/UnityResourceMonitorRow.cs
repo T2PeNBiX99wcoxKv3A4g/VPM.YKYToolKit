@@ -29,5 +29,13 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             maxValue = newMaxValue;
             text = $"{valueHandler(value)} / {valueHandler(maxValue)}";
         }
+
+        /// <summary>A value without a maximum, such as a count or a size that has no natural ceiling.</summary>
+        public void UpdateAbsolute(long newValue, ValueHandle valueHandler)
+        {
+            value = newValue;
+            maxValue = 0;
+            text = valueHandler(value);
+        }
     }
 }
