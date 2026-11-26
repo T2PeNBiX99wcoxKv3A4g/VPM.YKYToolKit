@@ -174,7 +174,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             return new Row { Entry = entry, Element = element };
         }
 
-        [MenuItem("Tools/YKYToolkit/Transform Expression Help", false, Util.ThreeAfter)]
+        [MenuItem("Tools/YKYToolkit/Transform Expression Help", false, Util.Three)]
         internal static void Open()
         {
             var window = GetWindow<TransformHelpWindow>();

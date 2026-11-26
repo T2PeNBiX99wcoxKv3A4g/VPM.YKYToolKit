@@ -14,10 +14,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         internal const int Four = Three + Separator;
         internal const int Five = Four + Separator;
 
-        // First slot after the third group's new lead item (Preferences), and after the fourth group.
-        internal const int ThreeAfter = Three + 1;
-        internal const int FourAfter = Four + 1;
-
         internal const int One2 = 1000;
         internal const int Two2 = One2 + Separator;
         internal const int Three2 = Two2 + Separator;
