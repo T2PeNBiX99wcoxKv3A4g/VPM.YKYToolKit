@@ -529,6 +529,11 @@ MonoBehaviour:
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
+  - key: label.ok
+    translate: OK
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.delete_history_window.clear_delete_history_title
     translate: Clear Delete History
     tooltip: 

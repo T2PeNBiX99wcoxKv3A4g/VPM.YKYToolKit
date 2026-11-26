@@ -309,6 +309,9 @@ msgstr "すべてのインポートログを消去しますか？"
 msgid "label.cancel"
 msgstr "キャンセル"
 
+msgid "label.ok"
+msgstr "OK"
+
 msgid "label.delete_history_window.clear_delete_history_title"
 msgstr "削除履歴をクリア"
 

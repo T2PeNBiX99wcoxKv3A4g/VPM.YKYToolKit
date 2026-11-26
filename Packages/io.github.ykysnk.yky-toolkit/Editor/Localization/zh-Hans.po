@@ -309,6 +309,9 @@ msgstr "确定要清除所有导入日志记录吗？"
 msgid "label.cancel"
 msgstr "取消"
 
+msgid "label.ok"
+msgstr "确定"
+
 msgid "label.delete_history_window.clear_delete_history_title"
 msgstr "清除删除历史"
 

@@ -309,6 +309,9 @@ msgstr "確定要清除所有匯入記錄嗎？"
 msgid "label.cancel"
 msgstr "取消"
 
+msgid "label.ok"
+msgstr "確定"
+
 msgid "label.delete_history_window.clear_delete_history_title"
 msgstr "清除刪除記錄"
 

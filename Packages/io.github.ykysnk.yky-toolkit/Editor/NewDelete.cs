@@ -139,10 +139,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 var restricted = paths.Where(DeletePathGuard.IsRestricted).ToList();
                 if (restricted.Count > 0)
                 {
+                    // Nothing is deleted here, so the dialog only acknowledges the refusal: a Delete button would
+                    // promise an action this dialog cannot perform.
                     await EditorUtils.DisplayDialogAsync(
                         "label.new_delete.restricted_title".S(),
                         new DeleteDialogContent(paths, restricted),
-                        "label.new_delete.ok".S());
+                        "label.ok".S());
                     Progress.Finish(progressId, Progress.Status.Canceled);
                     return;
                 }

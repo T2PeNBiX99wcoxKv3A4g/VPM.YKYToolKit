@@ -309,6 +309,9 @@ msgstr "Are you sure you want to clear all import log records?"
 msgid "label.cancel"
 msgstr "Cancel"
 
+msgid "label.ok"
+msgstr "OK"
+
 msgid "label.delete_history_window.clear_delete_history_title"
 msgstr "Clear Delete History"
 

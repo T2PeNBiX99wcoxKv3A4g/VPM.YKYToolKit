@@ -100,6 +100,7 @@
   "label.import_watcher.clear_import_log_title": "清除匯入記錄",
   "label.import_watcher.clear_import_log_message": "確定要清除所有匯入記錄嗎？",
   "label.cancel": "取消",
+  "label.ok": "確定",
   "label.delete_history_window.clear_delete_history_title": "清除刪除記錄",
   "label.delete_history_window.clear_delete_history_message": "確定要清除所有刪除記錄嗎？",
   "label.enhanced_transform_inspector.lock_transform": "鎖定變換",

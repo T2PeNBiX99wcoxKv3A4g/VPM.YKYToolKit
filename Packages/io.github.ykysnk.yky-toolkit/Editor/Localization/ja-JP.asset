@@ -521,6 +521,11 @@ MonoBehaviour:
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
+  - key: label.ok
+    translate: OK
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.delete_history_window.clear_delete_history_title
     translate: "\u524A\u9664\u5C65\u6B74\u3092\u30AF\u30EA\u30A2"
     tooltip: 
