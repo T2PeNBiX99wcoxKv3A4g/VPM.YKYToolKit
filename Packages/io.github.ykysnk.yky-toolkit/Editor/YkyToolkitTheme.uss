@@ -152,6 +152,24 @@ Button:active,
     min-height: 0;
 }
 
+/* Wrapper that lets a list carry controls in its own bottom-left corner. */
+.yky-list-frame {
+    position: relative;
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-height: 0;
+}
+
+.yky-list-frame > ListView {
+    flex-grow: 1;
+}
+
+.yky-list-reset {
+    position: absolute;
+    left: 4px;
+    bottom: 4px;
+}
+
 .yky-scroll {
     flex-grow: 1;
     flex-shrink: 1;
