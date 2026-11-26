@@ -18,13 +18,23 @@
     min-height: 0;
 }
 
-/* Date column of the import log, like the project browser's folder column. */
-.yky-import-log__sidebar {
-    width: 140px;
-    min-width: 110px;
-    max-width: 200px;
+/* Date and time columns of the import log, like the project browser's folder column. */
+.yky-import-log__dates {
+    width: 126px;
+    min-width: 104px;
+    max-width: 170px;
     flex-shrink: 0;
     padding-right: 6px;
+    border-right-width: 1px;
+    border-right-color: rgba(128, 128, 128, 0.24);
+}
+
+.yky-import-log__times {
+    width: 94px;
+    min-width: 82px;
+    max-width: 130px;
+    flex-shrink: 0;
+    padding: 0 6px;
     border-right-width: 1px;
     border-right-color: rgba(128, 128, 128, 0.24);
 }
@@ -62,7 +72,7 @@
     border-width: 0;
 }
 
-/* ---------- date row ---------- */
+/* ---------- date and time rows ---------- */
 
 .import-log-date {
     flex-direction: row;
@@ -73,6 +83,17 @@
 .import-log-date__label {
     flex-grow: 1;
     font-size: 12px;
+}
+
+.import-log-time {
+    flex-direction: row;
+    align-items: center;
+    padding: 0 8px;
+}
+
+.import-log-time__label {
+    flex-grow: 1;
+    font-size: 11px;
 }
 
 /* ---------- record row ---------- */

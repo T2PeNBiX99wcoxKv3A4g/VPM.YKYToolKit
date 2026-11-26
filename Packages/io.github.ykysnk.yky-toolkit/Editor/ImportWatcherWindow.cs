@@ -26,13 +26,13 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             "ProjectSettings"
         };
 
-        private static readonly Color SessionTimeColor = new(0.47f, 0.65f, 1f);
-
         [SerializeField] private VisualTreeAsset? uxml;
 
         private readonly List<DateGroup> _dates = new();
+        private readonly List<TimeGroup> _times = new();
 
-        private ListView? _list;
+        private ListView? _dateList;
+        private ListView? _timeList;
         private TreeView? _tree;
         private Label? _detailTitle;
         private Label? _emptyLabel;
@@ -44,15 +44,20 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             tree.style.flexGrow = 1;
             rootVisualElement.Add(tree);
 
-            _list = tree.Q<ListView>("importLogList");
+            _dateList = tree.Q<ListView>("importLogList");
+            _timeList = tree.Q<ListView>("importLogTimes");
             _tree = tree.Q<TreeView>("importLogTree");
             _detailTitle = tree.Q<Label>("importLogDetailTitle");
             _emptyLabel = tree.Q<Label>("importLogEmpty");
 
-            _list.makeItem = CreateDateRow;
-            _list.bindItem = BindDateRow;
-            _list.selectionChanged += _ => ShowSelectedDate();
-            _list.LocalizeEmptyLabel();
+            _dateList.makeItem = CreateDateRow;
+            _dateList.bindItem = BindDateRow;
+            _dateList.selectionChanged += _ => ShowSelectedDate();
+            _dateList.LocalizeEmptyLabel();
+
+            _timeList.makeItem = CreateTimeRow;
+            _timeList.bindItem = BindTimeRow;
+            _timeList.selectionChanged += _ => ShowSelectedSession();
 
             _tree.makeItem = CreateRecordRow;
             _tree.bindItem = BindRecordRow;
@@ -80,9 +85,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var row = new VisualElement();
             row.AddToClassList("import-log-date");
 
-            var date = new Label();
-            date.AddToClassList("import-log-date__label");
-            row.Add(date);
+            var label = new Label();
+            label.AddToClassList("import-log-date__label");
+            row.Add(label);
 
             return row;
         }
@@ -94,6 +99,27 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var group = _dates[index];
             element.userData = group;
             element.Q<Label>(className: "import-log-date__label").text = group.Date.ToString(DateFormat);
+        }
+
+        private static VisualElement CreateTimeRow()
+        {
+            var row = new VisualElement();
+            row.AddToClassList("import-log-time");
+
+            var label = new Label();
+            label.AddToClassList("import-log-time__label");
+            row.Add(label);
+
+            return row;
+        }
+
+        private void BindTimeRow(VisualElement element, int index)
+        {
+            if (index < 0 || index >= _times.Count) return;
+
+            var group = _times[index];
+            element.userData = group;
+            element.Q<Label>(className: "import-log-time__label").text = group.LocalTime.ToString(TimeFormat);
         }
 
         private VisualElement CreateRecordRow()
@@ -113,7 +139,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             // Registered once here: bindItem runs for every reuse, so registering it there added a handler per scroll.
             row.RegisterCallback<MouseDownEvent>(e =>
             {
-                if (e.clickCount != 2 || row.userData is not Node { IsSession: false } node) return;
+                if (e.clickCount != 2 || row.userData is not Node node) return;
                 e.StopPropagation();
                 var asset = AssetDatabase.LoadAssetAtPath<Object>(node.FullPath);
                 if (asset == null) return;
@@ -137,20 +163,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var icon = element.Q<Image>("icon");
             var label = element.Q<Label>("name");
 
-            if (node.IsSession)
-            {
-                icon.style.display = DisplayStyle.None;
-                label.text = node.Name;
-                label.tooltip = null;
-                label.style.color = SessionTimeColor;
-                label.style.unityFontStyleAndWeight = FontStyle.Bold;
-                return;
-            }
-
-            icon.style.display = DisplayStyle.Flex;
             label.text = node.Name;
             label.tooltip = node.FullPath;
-            label.style.unityFontStyleAndWeight = FontStyle.Normal;
 
             var type = AssetDatabase.GetMainAssetTypeAtPath(node.FullPath);
             if (type != null || AssetDatabase.IsValidFolder(node.FullPath))
@@ -172,7 +186,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         private void RefreshImportLog()
         {
-            if (_list == null) return;
+            if (_dateList == null) return;
 
             _dates.Clear();
             var sessions = ImportHistoryManager.All();
@@ -192,8 +206,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 group.Sessions.Add(session);
             }
 
-            _list.itemsSource = _dates;
-            _list.Rebuild();
+            _dateList.itemsSource = _dates;
+            _dateList.Rebuild();
 
             var hasDates = _dates.Count > 0;
             if (_emptyLabel != null)
@@ -204,48 +218,76 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             if (!hasDates)
             {
-                _tree?.SetRootItems(new List<TreeViewItemData<Node>>());
-                if (_detailTitle != null) _detailTitle.text = string.Empty;
+                ClearDetail();
                 return;
             }
 
-            _list.SetSelection(0);
+            _dateList.SetSelection(0);
             ShowSelectedDate();
         }
 
         private void ShowSelectedDate()
         {
-            if (_list == null || _tree == null) return;
+            if (_timeList == null) return;
 
-            var index = _list.selectedIndex;
-            if (index < 0 || index >= _dates.Count)
+            _times.Clear();
+
+            var index = _dateList?.selectedIndex ?? -1;
+            if (index >= 0 && index < _dates.Count)
             {
-                _tree.SetRootItems(new List<TreeViewItemData<Node>>());
-                if (_detailTitle != null) _detailTitle.text = string.Empty;
+                // A single import can arrive as several sessions in the same second, so the time column groups them.
+                var map = new Dictionary<long, TimeGroup>();
+                foreach (var session in _dates[index].Sessions)
+                {
+                    if (!map.TryGetValue(session.unixSeconds, out var group))
+                    {
+                        group = new TimeGroup(session.unixSeconds);
+                        map[session.unixSeconds] = group;
+                        _times.Add(group);
+                    }
+
+                    group.Sessions.Add(session);
+                }
+            }
+
+            _timeList.itemsSource = _times;
+            _timeList.Rebuild();
+
+            if (_times.Count == 0)
+            {
+                ClearDetail();
                 return;
             }
 
-            var group = _dates[index];
-            var recordCount = group.Sessions.Sum(session => session.records.Count);
-
-            if (_detailTitle != null)
-                _detailTitle.text = $"{group.Date:yyyy-MM-dd}  ({recordCount})";
-
-            var nextId = 0;
-            var items = new List<TreeViewItemData<Node>>();
-            foreach (var session in group.Sessions)
-                items.Add(CreateSessionItem(session, ref nextId));
-
-            _tree.SetRootItems(items);
+            _timeList.SetSelection(0);
+            ShowSelectedSession();
         }
 
-        private static TreeViewItemData<Node> CreateSessionItem(ImportSession session, ref int nextId)
+        private void ShowSelectedSession()
         {
-            var time = DateTimeOffset.FromUnixTimeSeconds(session.unixSeconds).LocalDateTime;
-            var children = BuildTree(session.records, ref nextId).Select(CreateTreeViewItem).ToList();
-            var node = new Node($"{time:HH:mm:ss}  ({session.records.Count})", string.Empty, nextId++, true);
+            if (_tree == null) return;
 
-            return new(node.Id, node, children);
+            var index = _timeList?.selectedIndex ?? -1;
+            if (index < 0 || index >= _times.Count)
+            {
+                ClearDetail();
+                return;
+            }
+
+            var group = _times[index];
+
+            if (_detailTitle != null)
+                _detailTitle.text = $"{group.LocalTime:HH:mm:ss}  ({group.RecordCount})";
+
+            var records = group.Sessions.SelectMany(session => session.records).ToList();
+            var nextId = 0;
+            _tree.SetRootItems(BuildTree(records, ref nextId).Select(CreateTreeViewItem).ToList());
+        }
+
+        private void ClearDetail()
+        {
+            _tree?.SetRootItems(new List<TreeViewItemData<Node>>());
+            if (_detailTitle != null) _detailTitle.text = string.Empty;
         }
 
         private static List<Node> BuildTree(List<ImportRecord> records, ref int nextId)
@@ -315,7 +357,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         {
             var window = GetWindow<ImportWatcherWindow>();
             window.titleContent = ToolkitIcons.Content(Title, "import-watcher");
-            window.minSize = new Vector2(560, 360);
+            window.minSize = new Vector2(600, 360);
         }
 
         private sealed class DateGroup
@@ -326,6 +368,17 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             internal DateGroup(DateTime date) => Date = date;
         }
 
+        private sealed class TimeGroup
+        {
+            internal readonly DateTime LocalTime;
+            internal readonly List<ImportSession> Sessions = new();
+
+            internal TimeGroup(long unixSeconds) =>
+                LocalTime = DateTimeOffset.FromUnixTimeSeconds(unixSeconds).LocalDateTime;
+
+            internal int RecordCount => Sessions.Sum(session => session.records.Count);
+        }
+
         private class Node
         {
             public readonly List<Node> Children = new();
@@ -333,15 +386,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             public readonly int Id;
             public readonly string Name;
 
-            public Node(string name, string fullPath, int id, bool isSession = false)
+            public Node(string name, string fullPath, int id)
             {
                 Name = name;
                 FullPath = fullPath;
                 Id = id;
-                IsSession = isSession;
             }
-
-            public bool IsSession { get; }
         }
     }
 }
