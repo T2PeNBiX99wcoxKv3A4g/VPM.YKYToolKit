@@ -33,7 +33,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
     internal static class ImportHistoryManager
     {
-        private const string ImportHistoryEditorKey = "YKYToolkit/ImportWatcher/ImportHistory";
+        private const string HistoryFileName = "ImportWatcherHistory.json";
         private const string MaxSessionsEditorKey = "YKYToolkit/ImportWatcher/MaxSessions";
         private const int DefaultMaxSessions = 100;
 
@@ -62,7 +62,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         private static List<ImportSession> LoadInternal()
         {
-            var json = EditorPrefs.GetString(ImportHistoryEditorKey);
+            var json = ProjectHistoryStore.Read(HistoryFileName);
             return !JsonUtils.TryFromJson<ListWrapper<ImportSession>>(json, out var list, out _) ? new() : list!.items;
         }
 
@@ -70,7 +70,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         {
             Trim(list);
             if (!JsonUtils.TryToJson(Wrapper.Create(list), out var json, out _)) return;
-            EditorPrefs.SetString(ImportHistoryEditorKey, json);
+            ProjectHistoryStore.Write(HistoryFileName, json);
         }
 
         private static void Trim(List<ImportSession> list)

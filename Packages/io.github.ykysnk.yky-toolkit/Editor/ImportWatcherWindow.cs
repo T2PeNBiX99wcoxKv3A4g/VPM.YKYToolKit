@@ -28,7 +28,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         private ListView? _dateList;
         private ListView? _timeList;
-        private VisualElement? _dateColumn;
         private VisualElement? _timeColumn;
         private TreeView? _tree;
         private Label? _detailTitle;
@@ -48,7 +47,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             _dateList = tree.Q<ListView>("importLogList");
             _timeList = tree.Q<ListView>("importLogTimes");
-            _dateColumn = tree.Q<VisualElement>("dateColumn");
             _timeColumn = tree.Q<VisualElement>("timeColumn");
             _tree = tree.Q<TreeView>("importLogTree");
             _detailTitle = tree.Q<Label>("importLogDetailTitle");
@@ -271,8 +269,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var hasDates = _dates.Count > 0;
             if (_emptyLabel != null)
                 _emptyLabel.style.display = hasDates ? DisplayStyle.None : DisplayStyle.Flex;
-            if (_dateColumn != null)
-                _dateColumn.style.display = hasDates ? DisplayStyle.Flex : DisplayStyle.None;
+            // The date column stays visible even when empty; it is the window's navigation frame. The time column
+            // only makes sense once a date has matches.
             if (_timeColumn != null)
                 _timeColumn.style.display = hasDates ? DisplayStyle.Flex : DisplayStyle.None;
             if (_tree != null) _tree.style.display = hasDates ? DisplayStyle.Flex : DisplayStyle.None;

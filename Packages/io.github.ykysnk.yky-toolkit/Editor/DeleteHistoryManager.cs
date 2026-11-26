@@ -17,7 +17,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
     internal static class DeleteHistoryManager
     {
-        private const string DeleteHistoryEditorKey = "YKYToolkit/DeleteHistory";
+        private const string HistoryFileName = "DeleteHistory.json";
         private const string MaxRecordsEditorKey = "YKYToolkit/DeleteHistory/MaxRecords";
         private const int DefaultMaxRecords = 200;
 
@@ -54,7 +54,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         private static List<DeleteRecord> LoadInternal()
         {
-            var json = EditorPrefs.GetString(DeleteHistoryEditorKey);
+            var json = ProjectHistoryStore.Read(HistoryFileName);
             return !JsonUtils.TryFromJson<ListWrapper<DeleteRecord>>(json, out var list, out _) ? new() : list!.items;
         }
 
@@ -62,7 +62,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         {
             Trim(list);
             if (!JsonUtils.TryToJson(Wrapper.Create(list), out var json, out _)) return;
-            EditorPrefs.SetString(DeleteHistoryEditorKey, json);
+            ProjectHistoryStore.Write(HistoryFileName, json);
         }
 
         private static void Trim(List<DeleteRecord> list)
