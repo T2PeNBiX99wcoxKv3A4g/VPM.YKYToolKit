@@ -429,6 +429,6 @@ msgstr "No entries yet."
 msgid "label.enhanced_transform_database.missing"
 msgstr "Not loaded"
 
-msgid "label.enhanced_transform_database.remove_selected"
-msgstr "Remove selected"
+msgid "label.enhanced_transform_database.read_only"
+msgstr "Read only"
 

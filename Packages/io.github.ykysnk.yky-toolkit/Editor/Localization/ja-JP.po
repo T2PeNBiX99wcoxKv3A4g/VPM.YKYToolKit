@@ -429,6 +429,6 @@ msgstr "まだエントリがありません。"
 msgid "label.enhanced_transform_database.missing"
 msgstr "未読み込み"
 
-msgid "label.enhanced_transform_database.remove_selected"
-msgstr "選択を削除"
+msgid "label.enhanced_transform_database.read_only"
+msgstr "読み取り専用"
 

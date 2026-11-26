@@ -429,6 +429,6 @@ msgstr "還沒有項目。"
 msgid "label.enhanced_transform_database.missing"
 msgstr "未載入"
 
-msgid "label.enhanced_transform_database.remove_selected"
-msgstr "移除選取"
+msgid "label.enhanced_transform_database.read_only"
+msgstr "唯讀"
 

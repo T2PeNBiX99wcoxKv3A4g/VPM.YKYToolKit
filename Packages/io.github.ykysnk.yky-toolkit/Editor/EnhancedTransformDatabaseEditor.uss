@@ -22,9 +22,21 @@
     color: rgb(120, 165, 255);
 }
 
+.transform-db__read-only {
+    margin-left: 6px;
+    padding: 0 7px;
+    font-size: 9px;
+    color: rgba(160, 170, 185, 0.95);
+    background-color: rgba(128, 128, 128, 0.18);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
 .transform-db__list {
-    flex-grow: 1;
-    flex-shrink: 1;
+    flex-grow: 0;
+    flex-shrink: 0;
     margin-top: 6px;
 }
 
@@ -62,19 +74,10 @@
     color: rgb(230, 125, 125);
 }
 
-.transform-db-entry__precision {
+.transform-db-entry__value {
     width: 54px;
     min-width: 54px;
-    margin: 0 2px;
-}
-
-.transform-db-entry__precision .unity-base-field__label {
-    width: 12px;
-    min-width: 12px;
-    font-size: 9px;
-    color: rgba(150, 150, 150, 0.9);
-}
-
-.transform-db-entry__lock {
-    margin-left: 6px;
+    font-size: 10px;
+    color: rgba(200, 200, 200, 0.95);
+    -unity-text-align: middle-center;
 }

@@ -725,8 +725,8 @@ MonoBehaviour:
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
-  - key: label.enhanced_transform_database.remove_selected
-    translate: "\u9078\u629E\u3092\u524A\u9664"
+  - key: label.enhanced_transform_database.read_only
+    translate: "\u8AAD\u307F\u53D6\u308A\u5C02\u7528"
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip

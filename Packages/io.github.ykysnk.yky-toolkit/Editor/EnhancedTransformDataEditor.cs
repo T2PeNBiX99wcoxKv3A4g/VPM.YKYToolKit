@@ -1,10 +1,13 @@
 using io.github.ykysnk.Localization.Editor;
 using UnityEditor;
-using UnityEditor.UIElements;
 using UnityEngine.UIElements;
 
 namespace io.github.ykysnk.ykyToolkit.Editor
 {
+    /// <summary>
+    ///     Read-only row for the transform database. The values are changed from the Transform inspector, so this
+    ///     view only lists what is stored.
+    /// </summary>
     [CustomPropertyDrawer(typeof(EnhancedTransformData))]
     public class EnhancedTransformDataEditor : PropertyDrawer
     {
@@ -23,36 +26,22 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             root.Add(path);
 
-            AddPrecision(root, property.FindPropertyRelative("positionDecimalPrecision"), "P",
+            AddValue(root, "P", property.FindPropertyRelative("positionDecimalPrecision").intValue,
                 "label.enhanced_transform_inspector.position_decimal_precision");
-            AddPrecision(root, property.FindPropertyRelative("rotationDecimalPrecision"), "R",
+            AddValue(root, "R", property.FindPropertyRelative("rotationDecimalPrecision").intValue,
                 "label.enhanced_transform_inspector.rotation_decimal_precision");
-            AddPrecision(root, property.FindPropertyRelative("scaleDecimalPrecision"), "S",
+            AddValue(root, "S", property.FindPropertyRelative("scaleDecimalPrecision").intValue,
                 "label.enhanced_transform_inspector.scale_decimal_precision");
 
-            var lockToggle = new Toggle
-            {
-                bindingPath = property.FindPropertyRelative("lockTransform").propertyPath,
-                tooltip = "label.enhanced_transform_inspector.lock_transform".S()
-            };
-            lockToggle.AddToClassList("transform-db-entry__lock");
-            root.Add(lockToggle);
-
-            root.Bind(property.serializedObject);
             return root;
         }
 
-        private static void AddPrecision(VisualElement root, SerializedProperty property, string label,
-            string tooltipKey)
+        private static void AddValue(VisualElement root, string label, int value, string tooltipKey)
         {
-            var field = new IntegerField(label)
-            {
-                isDelayed = true,
-                bindingPath = property.propertyPath,
-                tooltip = tooltipKey.S()
-            };
-            field.AddToClassList("transform-db-entry__precision");
-            root.Add(field);
+            var text = new Label($"{label} {value}");
+            text.AddToClassList("transform-db-entry__value");
+            text.tooltip = tooltipKey.S();
+            root.Add(text);
         }
     }
 }

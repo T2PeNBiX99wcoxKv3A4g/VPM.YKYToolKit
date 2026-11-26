@@ -6,14 +6,14 @@
             <ui:VisualElement class="transform-db__header">
                 <ui:Label text="label.enhanced_transform_database.entries" class="transform-db__title"/>
                 <ui:Label name="count" text="0" class="yky-count"/>
+                <ui:Label text="label.enhanced_transform_database.read_only" class="transform-db__read-only"/>
                 <ui:VisualElement class="yky-spacer"/>
-                <ui:Button name="remove" text="label.enhanced_transform_database.remove_selected"
-                           class="yky-button--small"/>
             </ui:VisualElement>
             <ui:Label text="label.enhanced_transform_database.info" class="yky-hint"/>
-            <ui:ListView binding-path="entries" name="entries" virtualization-method="DynamicHeight"
-                         show-alternating-row-backgrounds="None" reorder-mode="Animated"
-                         show-bound-collection-size="false" selection-type="Multiple"
+            <ui:ListView binding-path="entries" name="entries" virtualization-method="FixedHeight"
+                         fixed-item-height="28"
+                         show-alternating-row-backgrounds="None"
+                         show-bound-collection-size="false" selection-type="None"
                          class="yky-list transform-db__list"/>
             <ui:Label text="label.enhanced_transform_database.no_entries" name="empty" class="yky-list-empty"/>
         </ui:VisualElement>
