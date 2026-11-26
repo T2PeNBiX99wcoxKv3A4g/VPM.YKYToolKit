@@ -77,7 +77,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             });
 
             var search = tree.Q<ToolbarSearchField>("search");
-            search.tooltip = "Filter by path, GUID or extension.";
+            search.SetupSearchField();
             search.RegisterValueChangedCallback(evt =>
             {
                 _filter = evt.newValue ?? string.Empty;

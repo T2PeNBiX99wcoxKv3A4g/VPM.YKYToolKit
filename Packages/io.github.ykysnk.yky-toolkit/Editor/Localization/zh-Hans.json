@@ -1,5 +1,6 @@
 {
   "label.language": "语言",
+  "label.search": "搜索",
   "label.unity_resource_monitor.type": "类型",
   "label.unity_resource_monitor.value": "值",
   "label.upm_installer_window.install": "安装",

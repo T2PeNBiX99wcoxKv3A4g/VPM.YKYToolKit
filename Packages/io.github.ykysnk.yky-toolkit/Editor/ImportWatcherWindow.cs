@@ -78,7 +78,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             tree.Q<ToolbarButton>("settings").clicked += ImportWatcherSettingsWindow.ShowWindow;
 
             var search = tree.Q<ToolbarSearchField>("search");
-            search.tooltip = "Filter by path or GUID.";
+            search.SetupSearchField();
             search.RegisterValueChangedCallback(evt =>
             {
                 _filter = evt.newValue ?? string.Empty;

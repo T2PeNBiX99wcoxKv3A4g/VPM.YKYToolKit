@@ -9,6 +9,9 @@ msgstr ""
 msgid "label.language"
 msgstr "言語"
 
+msgid "label.search"
+msgstr "検索"
+
 msgid "label.unity_resource_monitor.type"
 msgstr "種類"
 

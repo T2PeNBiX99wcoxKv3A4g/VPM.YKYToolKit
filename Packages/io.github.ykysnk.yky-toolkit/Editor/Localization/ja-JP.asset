@@ -20,6 +20,11 @@ MonoBehaviour:
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
+  - key: label.search
+    translate: 検索
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.unity_resource_monitor.type
     translate: "\u7A2E\u985E"
     tooltip: 
