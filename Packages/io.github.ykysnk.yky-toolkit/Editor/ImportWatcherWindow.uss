@@ -50,6 +50,11 @@
     background-color: rgba(76, 141, 255, 0.30);
 }
 
+.yky-import-log__search {
+    width: 190px;
+    margin: 0 2px 0 4px;
+}
+
 .yky-import-log__detail {
     flex-grow: 1;
     flex-shrink: 1;

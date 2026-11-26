@@ -22,6 +22,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         [SerializeField] private VisualTreeAsset? uxml;
 
+        private readonly List<ImportSession> _sessions = new();
         private readonly List<DateGroup> _dates = new();
         private readonly List<TimeGroup> _times = new();
 
@@ -33,6 +34,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         // Ids keep increasing across selections, so the tree never mistakes an old row for a new one.
         private int _nodeIdSeed;
+
+        private string _filter = string.Empty;
 
         private void CreateGUI()
         {
@@ -73,6 +76,14 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 }
             });
             tree.Q<ToolbarButton>("settings").clicked += ImportWatcherSettingsWindow.ShowWindow;
+
+            var search = tree.Q<ToolbarSearchField>("search");
+            search.tooltip = "Filter by path or GUID.";
+            search.RegisterValueChangedCallback(evt =>
+            {
+                _filter = evt.newValue ?? string.Empty;
+                RebuildLog();
+            });
 
             RefreshImportLog();
         }
@@ -207,25 +218,48 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         private void RefreshImportLog()
         {
-            if (_dateList == null) return;
+            _sessions.Clear();
+            _sessions.AddRange(ImportHistoryManager.All());
+            _sessions.Reverse();
+
+            RebuildLog();
+        }
+
+        private void RebuildLog()
+        {
+            var selectedDate = _dateList != null && _dateList.selectedIndex >= 0 &&
+                               _dateList.selectedIndex < _dates.Count
+                ? _dates[_dateList.selectedIndex].Date
+                : (DateTime?)null;
 
             _dates.Clear();
-            var sessions = ImportHistoryManager.All();
-            sessions.Reverse();
-
             var map = new Dictionary<DateTime, DateGroup>();
-            foreach (var session in sessions)
+
+            foreach (var session in _sessions)
             {
-                var date = DateTimeOffset.FromUnixTimeSeconds(session.unixSeconds).LocalDateTime.Date;
-                if (!map.TryGetValue(date, out var group))
+                var records = session.records.Where(MatchesFilter).ToList();
+                if (records.Count == 0) continue;
+
+                var date = LocalTimeOf(session.unixSeconds).Date;
+                if (!map.TryGetValue(date, out var dateGroup))
                 {
-                    group = new DateGroup(date);
-                    map[date] = group;
-                    _dates.Add(group);
+                    dateGroup = new DateGroup(date);
+                    map[date] = dateGroup;
+                    _dates.Add(dateGroup);
                 }
 
-                group.Sessions.Add(session);
+                // A single import can arrive as several sessions in the same second, so a time groups them.
+                var timeGroup = dateGroup.Times.FirstOrDefault(group => group.UnixSeconds == session.unixSeconds);
+                if (timeGroup == null)
+                {
+                    timeGroup = new TimeGroup(session.unixSeconds);
+                    dateGroup.Times.Add(timeGroup);
+                }
+
+                timeGroup.Records.AddRange(records);
             }
+
+            if (_dateList == null) return;
 
             _dateList.itemsSource = _dates;
             _dateList.Rebuild();
@@ -243,8 +277,17 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 return;
             }
 
-            _dateList.SetSelection(0);
+            var index = selectedDate.HasValue ? _dates.FindIndex(group => group.Date == selectedDate.Value) : -1;
+            _dateList.SetSelection(index >= 0 ? index : 0);
             ShowSelectedDate();
+        }
+
+        private bool MatchesFilter(ImportRecord record)
+        {
+            if (string.IsNullOrEmpty(_filter)) return true;
+
+            return record.path?.IndexOf(_filter, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                   record.guid?.IndexOf(_filter, StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
         private void ShowSelectedDate()
@@ -253,23 +296,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             _times.Clear();
 
-            var index = _dateList?.selectedIndex ?? -1;
-            if (index >= 0 && index < _dates.Count)
-            {
-                // A single import can arrive as several sessions in the same second, so the time column groups them.
-                var map = new Dictionary<long, TimeGroup>();
-                foreach (var session in _dates[index].Sessions)
-                {
-                    if (!map.TryGetValue(session.unixSeconds, out var group))
-                    {
-                        group = new TimeGroup(session.unixSeconds);
-                        map[session.unixSeconds] = group;
-                        _times.Add(group);
-                    }
-
-                    group.Sessions.Add(session);
-                }
-            }
+            var group = _dates.ElementAtOrDefault(_dateList?.selectedIndex ?? -1);
+            if (group != null) _times.AddRange(group.Times);
 
             _timeList.itemsSource = _times;
             _timeList.Rebuild();
@@ -288,21 +316,18 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         {
             if (_tree == null) return;
 
-            var index = _timeList?.selectedIndex ?? -1;
-            if (index < 0 || index >= _times.Count)
+            var group = _times.ElementAtOrDefault(_timeList?.selectedIndex ?? -1);
+            if (group == null)
             {
                 ClearDetail();
                 return;
             }
 
-            var group = _times[index];
-
             if (_detailTitle != null)
-                _detailTitle.text = $"{group.LocalTime:HH:mm:ss}  ({group.RecordCount})";
+                _detailTitle.text = $"{group.LocalTime:HH:mm:ss}  ({group.Records.Count})";
 
-            var records = group.Sessions.SelectMany(session => session.records).ToList();
             _tree.ClearSelection();
-            _tree.SetRootItems(BuildTree(records, ref _nodeIdSeed).Select(CreateTreeViewItem).ToList());
+            _tree.SetRootItems(BuildTree(group.Records, ref _nodeIdSeed).Select(CreateTreeViewItem).ToList());
             _tree.schedule.Execute(() =>
             {
                 // Expansion state does not follow new items, so the files stay hidden until every item is expanded.
@@ -404,18 +429,31 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 SortTree(node.Children);
         }
 
+        private static DateTime LocalTimeOf(long unixSeconds)
+        {
+            try
+            {
+                return DateTimeOffset.FromUnixTimeSeconds(unixSeconds).LocalDateTime;
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                // A corrupt history entry should not stop the whole log from opening.
+                return new DateTime(1970, 1, 1).ToLocalTime();
+            }
+        }
+
         [MenuItem("Tools/YKYToolkit/Import Watcher", false, Util.Three)]
         private static void ShowWindow()
         {
             var window = GetWindow<ImportWatcherWindow>();
             window.titleContent = ToolkitIcons.Content(Title, "import-watcher");
-            window.minSize = new Vector2(600, 360);
+            window.minSize = new Vector2(640, 360);
         }
 
         private sealed class DateGroup
         {
             internal readonly DateTime Date;
-            internal readonly List<ImportSession> Sessions = new();
+            internal readonly List<TimeGroup> Times = new();
 
             internal DateGroup(DateTime date) => Date = date;
         }
@@ -423,12 +461,14 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private sealed class TimeGroup
         {
             internal readonly DateTime LocalTime;
-            internal readonly List<ImportSession> Sessions = new();
+            internal readonly List<ImportRecord> Records = new();
+            internal readonly long UnixSeconds;
 
-            internal TimeGroup(long unixSeconds) =>
-                LocalTime = DateTimeOffset.FromUnixTimeSeconds(unixSeconds).LocalDateTime;
-
-            internal int RecordCount => Sessions.Sum(session => session.records.Count);
+            internal TimeGroup(long unixSeconds)
+            {
+                UnixSeconds = unixSeconds;
+                LocalTime = LocalTimeOf(unixSeconds);
+            }
         }
 
         private class Node
