@@ -1,53 +1,75 @@
+/*
+ * Body of the delete confirmation. It sits inside CustomDialogWindow, so it only draws the banner and
+ * the list; the frame, the spacing and the buttons come from the dialog itself.
+ */
+
 .delete-dialog {
     flex-grow: 1;
     min-height: 0;
 }
 
+/* The warning is the reason the dialog exists, so it reads as a banner rather than a red headline. */
 .delete-dialog__warning {
-    margin: 0 2px 8px 2px;
+    margin: 0 2px 12px 2px;
+    padding: 10px 12px 10px 12px;
     font-size: 12px;
-    -unity-font-style: bold;
-    color: rgb(240, 150, 120);
     white-space: normal;
+    background-color: rgba(226, 138, 68, 0.12);
+    border-left-width: 3px;
+    border-left-color: rgb(226, 138, 68);
+    border-top-left-radius: 4px;
+    border-top-right-radius: 6px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 6px;
 }
 
 .delete-dialog__warning--error {
-    color: rgb(255, 120, 120);
+    background-color: rgba(214, 79, 79, 0.14);
+    border-left-color: rgb(214, 79, 79);
 }
+
+/* ---------- list ---------- */
 
 .delete-dialog__list {
     flex-grow: 1;
     min-height: 0;
     margin: 0;
-    background-color: rgba(128, 128, 128, 0.06);
+    background-color: rgba(128, 128, 128, 0.04);
     border-width: 1px;
-    border-color: rgba(128, 128, 128, 0.28);
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
+    border-color: rgba(128, 128, 128, 0.20);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
 }
 
 .delete-dialog__row {
     flex-direction: row;
     align-items: center;
-    padding: 3px 6px;
+    padding: 4px 8px 4px 5px;
+    /* Every row keeps the same left border width, so a blocked row does not shift its neighbours. */
+    border-left-width: 3px;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-bottom-width: 1px;
+    border-bottom-color: rgba(128, 128, 128, 0.12);
 }
 
 .delete-dialog__row--blocked {
-    background-color: rgba(220, 80, 80, 0.16);
+    background-color: rgba(214, 79, 79, 0.12);
+    border-left-color: rgba(214, 79, 79, 0.85);
 }
 
 .delete-dialog__object {
-    width: 42%;
+    width: 40%;
     min-width: 170px;
-    margin: 0 8px 0 0;
+    margin: 0 10px 0 0;
 }
 
 .delete-dialog__object .unity-base-field__label {
     display: none;
 }
 
+/* The path is read-only text that exists to be read and copied, so it keeps no field chrome. */
 .delete-dialog__path {
     flex-grow: 1;
     min-width: 0;
@@ -59,8 +81,12 @@
 }
 
 .delete-dialog__path .unity-base-text-field__input {
-    background-color: rgba(128, 128, 128, 0.10);
-    border-color: rgba(128, 128, 128, 0.24);
-    font-size: 10px;
-    color: rgb(180, 188, 202);
+    padding: 2px 4px;
+    font-size: 11px;
+    background-color: rgba(0, 0, 0, 0);
+    border-width: 0;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
 }

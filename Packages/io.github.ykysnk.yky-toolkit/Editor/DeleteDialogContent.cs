@@ -30,7 +30,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 StringComparer.OrdinalIgnoreCase);
         }
 
-        public override Vector2 Size => new(660, 470);
+        // Tall enough for every row, but never taller than the list is worth: a long selection scrolls instead.
+        public override Vector2 Size =>
+            new(660, Mathf.Clamp(160 + _paths.Count * 26, 230, 470));
 
         public override VisualElement CreateContent()
         {
@@ -52,7 +54,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 itemsSource = _paths,
                 virtualizationMethod = CollectionVirtualizationMethod.DynamicHeight,
                 selectionType = SelectionType.None,
-                showAlternatingRowBackgrounds = AlternatingRowBackground.ContentOnly,
+                showAlternatingRowBackgrounds = AlternatingRowBackground.None,
                 makeItem = CreateRow,
                 bindItem = BindRow
             };
