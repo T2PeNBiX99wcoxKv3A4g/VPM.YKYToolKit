@@ -28,7 +28,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         private ListView? _dateList;
         private ListView? _timeList;
-        private VisualElement? _timeColumn;
         private TreeView? _tree;
         private Label? _detailTitle;
         private Label? _emptyLabel;
@@ -47,7 +46,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             _dateList = tree.Q<ListView>("importLogList");
             _timeList = tree.Q<ListView>("importLogTimes");
-            _timeColumn = tree.Q<VisualElement>("timeColumn");
             _tree = tree.Q<TreeView>("importLogTree");
             _detailTitle = tree.Q<Label>("importLogDetailTitle");
             _emptyLabel = tree.Q<Label>("importLogEmpty");
@@ -60,6 +58,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             _timeList.makeItem = CreateTimeRow;
             _timeList.bindItem = BindTimeRow;
             _timeList.selectionChanged += _ => ShowSelectedSession();
+            _timeList.LocalizeEmptyLabel();
 
             _tree.makeItem = CreateRecordRow;
             _tree.bindItem = BindRecordRow;
@@ -269,10 +268,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var hasDates = _dates.Count > 0;
             if (_emptyLabel != null)
                 _emptyLabel.style.display = hasDates ? DisplayStyle.None : DisplayStyle.Flex;
-            // The date column stays visible even when empty; it is the window's navigation frame. The time column
-            // only makes sense once a date has matches.
-            if (_timeColumn != null)
-                _timeColumn.style.display = hasDates ? DisplayStyle.Flex : DisplayStyle.None;
+            // The date and time columns are the window's navigation frame and stay visible even when empty.
             if (_tree != null) _tree.style.display = hasDates ? DisplayStyle.Flex : DisplayStyle.None;
             if (_detailTitle != null)
                 _detailTitle.style.display = hasDates ? DisplayStyle.Flex : DisplayStyle.None;
