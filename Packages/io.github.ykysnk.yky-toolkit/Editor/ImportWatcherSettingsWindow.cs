@@ -121,7 +121,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             if (_fileColorCount != null) _fileColorCount.text = fileColors.Count.ToString();
         }
 
-        [MenuItem("Tools/YKYToolkit/Import Watcher Settings", false, Util.Three)]
+        [MenuItem("Tools/YKYToolkit/Import Watcher Settings", false, Util.ThreeAfter)]
         internal static void ShowWindow()
         {
             var window = GetWindow<ImportWatcherSettingsWindow>();

@@ -385,7 +385,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             if (_detailTitle != null) _detailTitle.text = string.Empty;
         }
 
-        [MenuItem("Tools/YKYToolkit/Delete History", false, Util.Three)]
+        [MenuItem("Tools/YKYToolkit/Delete History", false, Util.ThreeAfter)]
         private static void ShowWindow()
         {
             var window = GetWindow<DeleteHistoryWindow>();

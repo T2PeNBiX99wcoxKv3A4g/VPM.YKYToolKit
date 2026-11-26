@@ -464,7 +464,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             }
         }
 
-        [MenuItem("Tools/YKYToolkit/Import Watcher", false, Util.Three)]
+        [MenuItem("Tools/YKYToolkit/Import Watcher", false, Util.ThreeAfter)]
         private static void ShowWindow()
         {
             var window = GetWindow<ImportWatcherWindow>();

@@ -398,7 +398,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             Instance.SavePackageList();
         }
 
-        [MenuItem("Tools/YKYToolkit/UPM Installer", false, Util.Three)]
+        [MenuItem("Tools/YKYToolkit/UPM Installer", false, Util.ThreeAfter)]
         private static void ShowWindow()
         {
             var window = GetWindow<UpmInstallerWindow>();

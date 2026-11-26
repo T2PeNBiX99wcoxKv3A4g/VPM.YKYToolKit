@@ -144,7 +144,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         private static string PercentText(long value) => $"{value}%";
 
-        [MenuItem("Tools/YKYToolkit/Unity Resource Monitor", false, Util.Three)]
+        [MenuItem("Tools/YKYToolkit/Unity Resource Monitor", false, Util.ThreeAfter)]
         private static void ShowWindow()
         {
             var window = GetWindow<UnityResourceMonitor>();
