@@ -1,16 +1,26 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
     <Style src="project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/YkyToolkitTheme.uss?guid=34e0c41dada851146aeccffc05549196&amp;type=3"/>
     <Style src="project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/DeleteHistoryWindow.uss?fileID=7433441132597879392&amp;guid=740dea6a94a94abe8ac59f9a97b81da9&amp;type=3#DeleteHistoryWindow"/>
-    <ui:VisualElement class="root">
-        <ui:VisualElement class="yky-card">
+    <ui:VisualElement class="root yky-delete-history">
+        <ui:VisualElement class="yky-card yky-delete-history__card">
             <uie:Toolbar>
                 <uie:ToolbarButton text="label.refresh" name="refreshButton"/>
                 <uie:ToolbarButton text="label.clear" name="clearButton"/>
+                <ui:VisualElement class="yky-spacer"/>
+                <uie:ToolbarSearchField name="search" class="yky-delete-history__search"/>
             </uie:Toolbar>
-            <ui:ListView show-alternating-row-backgrounds="ContentOnly" selection-type="Multiple"
-                         virtualization-method="DynamicHeight" name="listView" binding-path="records"
-                         show-bound-collection-size="false" class="yky-list"/>
-            <ui:Label text="label.delete_record.no_delete_history" name="emptyLabel" class="yky-list-empty"/>
+            <ui:VisualElement class="yky-delete-history__body">
+                <ui:VisualElement class="yky-delete-history__dates">
+                    <ui:ListView name="dateList" selection-type="Single" virtualization-method="DynamicHeight"
+                                 show-alternating-row-backgrounds="None" class="yky-list yky-delete-history__date-list"/>
+                </ui:VisualElement>
+                <ui:VisualElement class="yky-delete-history__detail">
+                    <ui:Label name="detailTitle" text="-" class="yky-delete-history__detail-title"/>
+                    <ui:ListView name="recordList" selection-type="Single" virtualization-method="DynamicHeight"
+                                 show-alternating-row-backgrounds="None" class="yky-list yky-delete-history__records"/>
+                    <ui:Label text="label.delete_record.no_delete_history" name="emptyLabel" class="yky-list-empty"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

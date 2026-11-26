@@ -1,42 +1,136 @@
-.delete-history-item {
-    padding: 4px 8px;
-    border-bottom-width: 1px;
-    border-bottom-color: rgba(0.2, 0.2, 0.2, 0.5);
+/* The shared theme in YkyToolkitTheme.uss carries the look; this file only holds what is specific to this window. */
+
+.yky-delete-history {
+    padding: 10px;
+    flex-grow: 1;
 }
 
-.delete-history-item__path {
+.yky-delete-history__card {
+    flex-grow: 1;
+    margin: 0;
+    padding: 8px;
+    min-height: 0;
+}
+
+.yky-delete-history__body {
+    flex-direction: row;
+    flex-grow: 1;
+    min-height: 0;
+}
+
+.yky-delete-history__dates {
+    width: 126px;
+    min-width: 104px;
+    max-width: 170px;
+    flex-shrink: 0;
+    padding-right: 6px;
+    border-right-width: 1px;
+    border-right-color: rgba(128, 128, 128, 0.24);
+}
+
+.yky-delete-history__date-list,
+.yky-delete-history__records {
+    flex-grow: 1;
+    margin: 0;
+    border-width: 0;
+    min-height: 0;
+}
+
+.yky-delete-history__date-list .unity-collection-view__item--selected,
+.yky-delete-history__records .unity-collection-view__item--selected {
+    background-color: rgba(76, 141, 255, 0.30);
+}
+
+.yky-delete-history__detail {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+    padding-left: 8px;
+}
+
+.yky-delete-history__detail-title {
+    font-size: 11px;
     -unity-font-style: bold;
+    color: rgb(120, 165, 255);
+    margin: 2px 0 4px 2px;
+    min-height: 16px;
 }
 
-.delete-history-item__guid {
-    font-size: 10px;
-    color: rgb(179, 179, 179);
+.yky-delete-history__search {
+    width: 190px;
+    margin: 0 2px 0 4px;
 }
 
-.delete-history-item__meta-container {
+/* ---------- date row ---------- */
+
+.delete-history-date {
     flex-direction: row;
+    align-items: center;
+    padding: 0 8px;
 }
 
-.delete-history-item__ext {
-    font-size: 10px;
-    color: rgb(153, 153, 153);
-    margin-right: 10px;
+.delete-history-date__label {
+    flex-grow: 1;
+    font-size: 12px;
 }
 
-.delete-history-item__time {
-    font-size: 10px;
-    color: rgb(153, 153, 153);
-}
+/* ---------- record row ---------- */
 
-.delete-history-item__button-container {
+.delete-history-row {
     flex-direction: row;
-    margin-top: 4px;
+    align-items: center;
+    padding: 4px 8px;
 }
 
-.delete-history-item__button {
-    width: 90px;
+.delete-history-row__icon {
+    width: 18px;
+    height: 18px;
+    margin-right: 7px;
+    flex-shrink: 0;
 }
 
-.delete-history-item__button--wide {
-    width: 110px;
+.delete-history-row__text {
+    flex-grow: 1;
+    min-width: 0;
+}
+
+.delete-history-row__name-row {
+    flex-direction: row;
+    align-items: center;
+}
+
+.delete-history-row__name {
+    font-size: 11px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-shrink: 1;
+}
+
+.delete-history-row__folder {
+    font-size: 10px;
+    color: rgb(150, 158, 172);
+    -unity-text-align: middle-left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-top: 1px;
+}
+
+.delete-history-row__ext {
+    margin-left: 6px;
+    padding: 0 5px;
+    font-size: 9px;
+    -unity-text-align: middle-center;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+.delete-history-row__time {
+    font-size: 10px;
+    color: rgb(168, 178, 195);
+    margin-left: 10px;
+    flex-shrink: 0;
 }
