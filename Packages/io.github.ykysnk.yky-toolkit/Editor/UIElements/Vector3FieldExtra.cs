@@ -43,7 +43,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor.UIElements
             ExtraSlot.AddToClassList("row");
             ExtraSlot.AddToClassList("extra-slot");
 
-            Insert(0, ExtraSlot);
+            Add(ExtraSlot);
 
             LinkButton = new()
             {
@@ -117,7 +117,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor.UIElements
             set
             {
                 _showLinkButton = value;
-                LinkButton.style.visibility = value ? Visibility.Visible : Visibility.Hidden;
+                LinkButton.style.display = value ? DisplayStyle.Flex : DisplayStyle.None;
             }
         }
 

@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using io.github.ykysnk.utils.Extensions;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -9,6 +11,33 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 {
     public partial class EnhancedTransformInspector
     {
+        private readonly Dictionary<VisualElement, Action> _pendingExpressions = new();
+        private VisualElement? _lastExpressionElement;
+
+        private void ApplyPendingExpression()
+        {
+            if (_lastExpressionElement == null) return;
+            if (_pendingExpressions.TryGetValue(_lastExpressionElement, out var apply)) apply();
+        }
+
+        private void ApplyExpressionOnFocusOut(FocusOutEvent evt)
+        {
+            if (evt.target is VisualElement target &&
+                _pendingExpressions.TryGetValue(target, out var apply))
+            {
+                apply();
+                return;
+            }
+
+            ApplyPendingExpression();
+        }
+
+        private void OnExpressionFocusIn(FocusInEvent evt)
+        {
+            if (evt.target is VisualElement target && _pendingExpressions.ContainsKey(target))
+                _lastExpressionElement = target;
+        }
+
         private bool ApplyParsedInputToAxis(
             string input,
             Func<Transform, float> getter,
@@ -140,53 +169,60 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private void Vector3FieldApplyParsedInput(Vector3Field? vector3Field, Func<Transform, Vector3> getter,
             Action<Transform, Vector3> setter, Action? onParsed = null)
         {
-            var xField = vector3Field.Q<FloatField>("unity-x-input");
-            xField.schedule.Execute(() =>
-            {
-                var parsed = ApplyParsedInputToAxis(
-                    xField.text,
-                    t => getter(t).x,
-                    (t, v) =>
-                    {
-                        var p = getter(t);
-                        var old = p;
-                        p.x = v;
-                        ApplyVector3WhenChanged(old, p, v2 => setter(t, v2));
-                    });
-                if (parsed) onParsed?.Invoke();
-            }).Every(1000);
+            if (vector3Field == null) return;
 
-            var yField = vector3Field.Q<FloatField>("unity-y-input");
-            yField.schedule.Execute(() =>
-            {
-                var parsed = ApplyParsedInputToAxis(
-                    yField.text,
-                    t => getter(t).y,
-                    (t, v) =>
-                    {
-                        var p = getter(t);
-                        var old = p;
-                        p.y = v;
-                        ApplyVector3WhenChanged(old, p, v2 => setter(t, v2));
-                    });
-                if (parsed) onParsed?.Invoke();
-            }).Every(1000);
+            ApplyAxis(vector3Field.Q<FloatField>("unity-x-input"), 0);
+            ApplyAxis(vector3Field.Q<FloatField>("unity-y-input"), 1);
+            ApplyAxis(vector3Field.Q<FloatField>("unity-z-input"), 2);
 
-            var zField = vector3Field.Q<FloatField>("unity-z-input");
-            zField.schedule.Execute(() =>
+            void ApplyAxis(FloatField field, int axis)
             {
-                var parsed = ApplyParsedInputToAxis(
-                    zField.text,
-                    t => getter(t).z,
-                    (t, v) =>
-                    {
-                        var p = getter(t);
-                        var old = p;
-                        p.z = v;
-                        ApplyVector3WhenChanged(old, p, v2 => setter(t, v2));
-                    });
-                if (parsed) onParsed?.Invoke();
-            }).Every(1000);
+                var axisGetter = new Func<Transform, float>(t =>
+                {
+                    var value = getter(t);
+                    return axis == 0 ? value.x : axis == 1 ? value.y : value.z;
+                });
+
+                var axisSetter = new Action<Transform, float>((t, value) =>
+                {
+                    var p = getter(t);
+                    var old = p;
+                    if (axis == 0) p.x = value;
+                    else if (axis == 1) p.y = value;
+                    else p.z = value;
+                    ApplyVector3WhenChanged(old, p, v => setter(t, v));
+                });
+
+                bool Apply()
+                {
+                    if (string.IsNullOrWhiteSpace(field.text)) return false;
+                    if (!ApplyParsedInputToAxis(field.text, axisGetter, axisSetter)) return false;
+
+                    onParsed?.Invoke();
+
+                    // Leave the resulting number in the field instead of the expression, so it cannot be applied twice.
+                    // The composite field has to be updated as well, or its value would still be the old vector.
+                    if (target is Transform theTarget)
+                        vector3Field.SetValueWithoutNotify(getter(theTarget).Clean());
+
+                    return true;
+                }
+
+                // Expressions used to be polled every second, so "+90" kept adding 90 while the field held the text.
+                // They are applied once, when the user commits the field.
+                field.RegisterCallback<KeyDownEvent>(evt =>
+                {
+                    if (evt.keyCode != KeyCode.Return && evt.keyCode != KeyCode.KeypadEnter) return;
+                    if (!Apply()) return;
+
+                    evt.StopImmediatePropagation();
+                    evt.PreventDefault();
+                }, TrickleDown.TrickleDown);
+
+                _pendingExpressions[field] = () => Apply();
+                foreach (var element in field.Query<VisualElement>().ToList())
+                    _pendingExpressions[element] = () => Apply();
+            }
         }
     }
 }

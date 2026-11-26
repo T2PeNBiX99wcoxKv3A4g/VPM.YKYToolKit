@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using io.github.ykysnk.Localization.Editor;
 using io.github.ykysnk.utils.Editor;
@@ -50,12 +51,13 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         protected override void OnEnable()
         {
-            Undo.undoRedoPerformed += RefreshRotationFields;
+            Undo.undoRedoPerformed -= RefreshTransformFields;
+            Undo.undoRedoPerformed += RefreshTransformFields;
         }
 
         private void OnDisable()
         {
-            Undo.undoRedoPerformed -= RefreshRotationFields;
+            Undo.undoRedoPerformed -= RefreshTransformFields;
         }
 
         private void OnDestroy()
@@ -66,17 +68,17 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 DestroyImmediate(_defaultEditor);
         }
 
-        private void RefreshRotationFields()
+        private void RefreshTransformFields()
         {
             if (target == null || _root == null) return;
             var theTarget = (Transform)target;
 
-            var tree = _root;
-            var rotationField = tree.Q<Vector3FieldExtra>("rotation");
-            var globalRotationField = tree.Q<Vector3FieldExtra>("globalRotation");
-
-            rotationField?.SetValueWithoutNotify(theTarget.localEulerAngles);
-            globalRotationField?.SetValueWithoutNotify(theTarget.eulerAngles);
+            _root.Q<Vector3FieldExtra>("position")?.SetValueWithoutNotify(theTarget.localPosition.Clean());
+            _root.Q<Vector3FieldExtra>("rotation")?.SetValueWithoutNotify(theTarget.localEulerAngles.Clean());
+            _root.Q<Vector3FieldExtra>("scale")?.SetValueWithoutNotify(theTarget.localScale.Clean());
+            _root.Q<Vector3FieldExtra>("globalPosition")?.SetValueWithoutNotify(theTarget.position.Clean());
+            _root.Q<Vector3FieldExtra>("globalRotation")?.SetValueWithoutNotify(theTarget.eulerAngles.Clean());
+            _root.Q<Vector3FieldExtra>("lossyScale")?.SetValueWithoutNotify(theTarget.lossyScale.Clean());
         }
 
 
@@ -94,6 +96,14 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             _root = tree;
             tree.UILocalize();
             tree.Bind(serializedObject);
+
+            // Expressions are applied when the field is committed. Enter is handled by the axis fields; these
+            // catch a click elsewhere or a focus change before the numeric field can revert the text.
+            tree.RegisterCallback<PointerDownEvent>(_ => ApplyPendingExpression(), TrickleDown.TrickleDown);
+            tree.RegisterCallback<FocusOutEvent>(ApplyExpressionOnFocusOut, TrickleDown.TrickleDown);
+            tree.RegisterCallback<FocusOutEvent>(ApplyExpressionOnFocusOut, TrickleDown.NoTrickleDown);
+            tree.RegisterCallback<FocusInEvent>(OnExpressionFocusIn, TrickleDown.TrickleDown);
+            tree.RegisterCallback<FocusInEvent>(OnExpressionFocusIn, TrickleDown.NoTrickleDown);
 
             var exData = EnhancedTransformDatabase.Get(theTarget);
             var stage = PrefabStageUtility.GetCurrentPrefabStage();
@@ -165,7 +175,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             globalPositionField.schedule.Execute(() =>
             {
-                if (theTarget == null) return;
+                if (theTarget == null || globalPositionFieldEditing) return;
                 globalPositionField.SetValueWithoutNotify(theTarget.position.Clean());
             }).Every(1000);
 
@@ -275,12 +285,20 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 EditorGUIUtility.systemCopyBuffer = FormatVector3LikeUnity(rotationField.value);
             rotationField.PasteButton.clicked += () =>
             {
-                if (!TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer, out var pasteVector3)) return;
-                rotationField.value = pasteVector3;
+                if (TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer, out var pasteVector3))
+                    rotationField.value = pasteVector3;
+                else if (TryParseUnityQuaternion(EditorGUIUtility.systemCopyBuffer, out var pasteQuaternion))
+                {
+                    ApplyToTargets(t => t.localRotation = pasteQuaternion, "Paste Local Rotation");
+                    RefreshAllFields();
+                }
             };
             rotationField.schedule.Execute(() =>
                     rotationField.PasteButton.SetEnabled(!exData.lockTransform &&
-                                                         TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer, out _)))
+                                                        (TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer,
+                                                            out _) ||
+                                                         TryParseUnityQuaternion(EditorGUIUtility.systemCopyBuffer,
+                                                             out _))))
                 .Every(100);
 
             var globalRotationEditing = false;
@@ -297,7 +315,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             globalRotationField.schedule.Execute(() =>
             {
-                if (theTarget == null) return;
+                if (theTarget == null || globalRotationEditing) return;
                 globalRotationField.SetValueWithoutNotify(theTarget.eulerAngles.Clean());
             }).Every(1000);
 
@@ -361,15 +379,26 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 EditorGUIUtility.systemCopyBuffer = FormatVector3LikeUnity(globalRotationField.value);
             globalRotationField.PasteButton.clicked += () =>
             {
-                if (!TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer, out var pasteVector3)) return;
-                globalRotationEditing = true;
-                globalRotationField.value = pasteVector3;
-                globalRotationEditing = false;
+                if (TryParseUnityVector3(EditorGUIUtility.systemCopyBuffer, out var pasteVector3))
+                {
+                    globalRotationEditing = true;
+                    globalRotationField.value = pasteVector3;
+                    globalRotationEditing = false;
+                }
+                else if (TryParseUnityQuaternion(EditorGUIUtility.systemCopyBuffer, out var pasteQuaternion))
+                {
+                    ApplyToTargets(t => t.rotation = pasteQuaternion, "Paste World Rotation");
+                    RefreshAllFields();
+                }
             };
             globalRotationField.schedule.Execute(() =>
-                    globalRotationField.PasteButton.SetEnabled(!exData.lockTransform && TryParseUnityVector3(
-                        EditorGUIUtility.systemCopyBuffer,
-                        out _)))
+                    globalRotationField.PasteButton.SetEnabled(!exData.lockTransform &&
+                                                               (TryParseUnityVector3(
+                                                                    EditorGUIUtility.systemCopyBuffer,
+                                                                    out _) ||
+                                                                TryParseUnityQuaternion(
+                                                                    EditorGUIUtility.systemCopyBuffer,
+                                                                    out _))))
                 .Every(100);
 
             rotationField.ResetButton.clicked += ResetLocalRotation;
@@ -437,7 +466,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             scaleField.schedule.Execute(() =>
             {
-                if (theTarget == null) return;
+                if (theTarget == null || scaleFieldEditing) return;
                 scaleField.SetValueWithoutNotify(theTarget.localScale.Clean());
             }).Every(1000);
 
@@ -494,7 +523,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             lossyScaleField.schedule.Execute(() =>
             {
-                if (theTarget == null) return;
+                if (theTarget == null || lossyScaleFieldEditing) return;
                 lossyScaleField.SetValueWithoutNotify(theTarget.lossyScale.Clean());
             }).Every(1000);
 
@@ -783,7 +812,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             void UpdateLocalRotation()
             {
-                if (theTarget == null) return;
+                if (theTarget == null || rotationEditing) return;
                 rotationField.SetValueWithoutNotify(theTarget.localEulerAngles.Clean());
             }
 
@@ -791,6 +820,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             {
                 if (theTarget == null) return;
                 if (AnimationMode.InAnimationMode()) return;
+
+                // The fields below are edited directly on the Transform, so the cached SerializedObject values are
+                // stale. Applying pending field edits first and then updating keeps them while refreshing the values
+                // used by the prefab check; without it an old override could be reverted and reset the rotation.
+                serializedObject.ApplyModifiedPropertiesWithoutUndo();
+                serializedObject.Update();
 
                 EnsurePrefabProperties();
                 if (_prefabTargetSerializedObject == null) return;
@@ -896,21 +931,32 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 scaleField.value = scaleField.value.Clean();
             }
 
+            void RefreshAllFields()
+            {
+                if (_root == null || target == null) return;
+                var t = (Transform)target;
+
+                _root.Q<Vector3FieldExtra>("position")?.SetValueWithoutNotify(t.localPosition.Clean());
+                _root.Q<Vector3FieldExtra>("rotation")?.SetValueWithoutNotify(t.localEulerAngles.Clean());
+                _root.Q<Vector3FieldExtra>("scale")?.SetValueWithoutNotify(t.localScale.Clean());
+                _root.Q<Vector3FieldExtra>("globalPosition")?.SetValueWithoutNotify(t.position.Clean());
+                _root.Q<Vector3FieldExtra>("globalRotation")?.SetValueWithoutNotify(t.eulerAngles.Clean());
+                _root.Q<Vector3FieldExtra>("lossyScale")?.SetValueWithoutNotify(t.lossyScale.Clean());
+            }
+
             void ResetLocalPosition()
             {
                 ApplyToTargets(t => ApplyVector3WhenChanged(t.localPosition, Vector3.zero, v => t.localPosition = v),
                     "Reset Local Position");
-                positionField.value = Vector3.zero;
+                RefreshAllFields();
             }
 
             void ResetLocalRotation()
             {
-                rotationEditing = true;
                 ApplyToTargets(
                     t => ApplyVector3WhenChanged(t.localEulerAngles, Vector3.zero, v => t.localEulerAngles = v),
                     "Reset Local Rotation");
-                rotationField.value = Vector3.zero;
-                rotationField.schedule.Execute(() => rotationEditing = false);
+                RefreshAllFields();
             }
 
             void ResetLocalScale()
@@ -919,23 +965,21 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     scaleField.LinkButton.value = false;
                 ApplyToTargets(t => ApplyVector3WhenChanged(t.localScale, Vector3.one, v => t.localScale = v),
                     "Reset Local Scale");
-                scaleField.value = Vector3.one;
+                RefreshAllFields();
             }
 
             void ResetGlobalPosition()
             {
                 ApplyToTargets(t => ApplyVector3WhenChanged(t.position, Vector3.zero, v => t.position = v),
                     "Reset World Position");
-                globalPositionField.value = Vector3.zero;
+                RefreshAllFields();
             }
 
             void ResetGlobalRotation()
             {
-                rotationEditing = true;
                 ApplyToTargets(t => ApplyVector3WhenChanged(t.eulerAngles, Vector3.zero, v => t.eulerAngles = v),
                     "Reset World Rotation");
-                globalRotationField.value = Vector3.zero;
-                globalPositionField.schedule.Execute(() => rotationEditing = false);
+                RefreshAllFields();
             }
 
             void ResetGlobalScale()
@@ -944,53 +988,49 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     lossyScaleField.LinkButton.value = false;
                 ApplyToTargets(t => ApplyVector3WhenChanged(t.lossyScale, Vector3.one, t.SetLossyScale),
                     "Reset World Scale");
-                lossyScaleField.value = Vector3.one;
+                RefreshAllFields();
             }
 
             void RandomLocalPosition()
             {
                 var randomVector = (Random.insideUnitSphere * 10).Clean();
                 ApplyToTargets(t => t.localPosition += randomVector, "Random Local Position");
-                positionField.value += randomVector;
+                RefreshAllFields();
             }
 
             void RandomLocalRotation()
             {
-                rotationEditing = true;
                 var randomVector = (Random.insideUnitSphere * 360).Clean();
                 ApplyToTargets(t => t.localEulerAngles = randomVector, "Random Local Rotation");
-                rotationField.value = randomVector;
-                rotationField.schedule.Execute(() => rotationEditing = false);
+                RefreshAllFields();
             }
 
             void RandomLocalScale()
             {
                 var randomVector = (Random.insideUnitSphere * 2).Clean();
                 ApplyToTargets(t => t.localScale += randomVector, "Random Local Scale");
-                scaleField.value += randomVector;
+                RefreshAllFields();
             }
 
             void RandomGlobalPosition()
             {
                 var randomVector = (Random.insideUnitSphere * 10).Clean();
                 ApplyToTargets(t => t.position += randomVector, "Random World Position");
-                globalPositionField.value += randomVector;
+                RefreshAllFields();
             }
 
             void RandomGlobalRotation()
             {
-                rotationEditing = true;
                 var randomVector = (Random.insideUnitSphere * 360).Clean();
                 ApplyToTargets(t => t.eulerAngles = randomVector, "Random World Rotation");
-                globalRotationField.value = randomVector;
-                globalPositionField.schedule.Execute(() => rotationEditing = false);
+                RefreshAllFields();
             }
 
             void RandomGlobalScale()
             {
                 var randomVector = (Random.insideUnitSphere * 2).Clean();
                 ApplyToTargets(t => t.SetLossyScale(t.lossyScale + randomVector), "Random World Scale");
-                lossyScaleField.value += randomVector;
+                RefreshAllFields();
             }
         }
     }

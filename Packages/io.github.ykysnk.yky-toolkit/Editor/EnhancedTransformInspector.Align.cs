@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 namespace io.github.ykysnk.ykyToolkit.Editor
@@ -27,24 +28,18 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         private static void AlignToGround(Transform t, AlignMode mode)
         {
-            var selfCol = t.GetComponent<Collider>();
             var origin = t.position + Vector3.up * 1000f;
 
             // ReSharper disable once Unity.PreferNonAllocApi
             var hits = Physics.RaycastAll(origin, Vector3.down, 5000, ~LayerMask.GetMask("Ignore Raycast"));
 
-            if (hits.Length < 1) return;
-
-            RaycastHit? best = null;
-
-            foreach (var hit in hits)
-            {
-                if (selfCol != null && hit.collider == selfCol)
-                    continue;
-
-                best = hit;
-                break;
-            }
+            // The first hit is not necessarily the nearest, and the object's own colliders (including children)
+            // used to count as ground, which made Align to Ground do nothing.
+            var best = hits
+                .Where(hit => !hit.collider.isTrigger && hit.transform != t && !hit.transform.IsChildOf(t))
+                .OrderBy(hit => hit.distance)
+                .Cast<RaycastHit?>()
+                .FirstOrDefault();
 
             if (!best.HasValue)
                 return;

@@ -1,39 +1,76 @@
-.scale-row {
-    flex-direction: row;
-    align-items: center;
-}
-
-.space-title {
-    margin-bottom: 5px;
-    -unity-font-style: bold;
-    margin-top: 5px;
-}
-
-.cell {
-    flex-grow: 1;
+.transform-editor {
+    padding: 2px 0 8px 0;
 }
 
 .row {
     flex-direction: row;
 }
 
+.transform-card {
+    margin: 5px 0;
+    padding: 8px 10px 10px 10px;
+    border-left-width: 2px;
+    border-left-color: rgba(96, 141, 235, 0.55);
+}
+
+.transform-card__header {
+    flex-direction: row;
+    align-items: center;
+    min-height: 20px;
+    margin: 0 0 4px 0;
+}
+
+.transform-card__title {
+    font-size: 11px;
+    -unity-font-style: bold;
+    color: rgb(120, 165, 255);
+}
+
+.transform-actions {
+    flex-direction: row;
+    align-items: center;
+}
+
+.transform-action {
+    margin-left: 2px;
+}
+
+.transform-tools-row {
+    flex-direction: row;
+    margin: 2px 0;
+}
+
+.transform-tool-button {
+    flex-grow: 1;
+    height: 24px;
+    margin: 2px;
+    font-size: 10px;
+}
+
+.transform-foldout {
+    margin-top: 6px;
+}
+
+.transform-path .unity-base-field__label {
+    min-width: 90px;
+}
+
 .extra-slot {
     padding: 0;
-    margin: 0;
+    margin: 0 0 0 4px;
     justify-content: center;
     align-items: center;
-    margin-right: 2px;
     align-self: center;
 }
 
 .icon-button {
-    border-radius: 0;
+    border-radius: 3px;
     border-width: 0;
     padding: 0;
     margin: 0;
-    width: 18px;
-    height: 18px;
-    background-size: 15px 15px;
+    width: 16px;
+    height: 16px;
+    background-size: 13px 13px;
     background-position: center;
     background-repeat: no-repeat;
     justify-content: center;
@@ -41,14 +78,10 @@
 }
 
 .icon-button:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.10);
     transition: background-color 0.12s ease-in-out;
 }
 
 .icon-button.flash {
     background-color: rgba(255, 255, 255, 0.25);
-}
-
-.readonly-object-field:disabled .unity-label .unity-base-field__label .unity-object-field__label {
-    color: white;
 }
