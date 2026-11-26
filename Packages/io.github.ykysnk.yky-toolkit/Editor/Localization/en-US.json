@@ -94,7 +94,6 @@
   "label.import_watcher.no_import_log": "No import log.",
   "label.delete_record.no_delete_history": "No delete history.",
   "label.import_watcher.max_sessions": "Max History Sessions",
-  "label.enhanced_transform_database.info": "This asset stores extra data for the enhanced transform.",
   "label.enhanced_transform_inspector.position_decimal_precision": "Position Decimal Places",
   "label.enhanced_transform_inspector.rotation_decimal_precision": "Rotation Decimal Places",
   "label.enhanced_transform_inspector.scale_decimal_precision": "Scale Decimal Places",
@@ -137,9 +136,5 @@
   "label.enhanced_transform_inspector.section_precision": "Decimal places (-1 = off)",
   "label.enhanced_transform_inspector.align_mode": "Alignment mode",
   "label.enhanced_transform_inspector.unlock_transform": "Unlock transform",
-  "label.enhanced_transform_database.entries": "Entries",
-  "label.enhanced_transform_database.no_entries": "No entries yet.",
-  "label.enhanced_transform_database.missing": "Not loaded",
-  "label.enhanced_transform_database.read_only": "Read only",
   "label.enhanced_transform_settings.info": "Edited from the Transform inspector."
 }

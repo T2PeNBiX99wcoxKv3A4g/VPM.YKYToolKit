@@ -16,7 +16,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private const string UndoName = "Transform Settings";
 
         private readonly Transform _target;
-        private EnhancedTransformData? _legacy;
         private EnhancedTransformSettings? _settings;
 
         private bool _initialized;
@@ -30,10 +29,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         {
             _target = target;
             _settings = target.GetComponent<EnhancedTransformSettings>();
-
-            // Old data is read until the first change; it moves into the component at that point.
-            if (_settings == null)
-                _legacy = EnhancedTransformDatabase.Find(GlobalObjectId.GetGlobalObjectIdSlow(target).ToString());
         }
 
         internal static EnhancedTransformSettingsAccessor Get(Transform target) => new(target);
@@ -103,10 +98,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             if (_initialized) return;
             _initialized = true;
 
-            _position = _settings?.positionDecimalPrecision ?? _legacy?.positionDecimalPrecision ?? -1;
-            _rotation = _settings?.rotationDecimalPrecision ?? _legacy?.rotationDecimalPrecision ?? -1;
-            _scale = _settings?.scaleDecimalPrecision ?? _legacy?.scaleDecimalPrecision ?? -1;
-            _locked = _settings?.lockTransform ?? _legacy?.lockTransform ?? false;
+            _position = _settings?.positionDecimalPrecision ?? -1;
+            _rotation = _settings?.rotationDecimalPrecision ?? -1;
+            _scale = _settings?.scaleDecimalPrecision ?? -1;
+            _locked = _settings?.lockTransform ?? false;
         }
 
         private void ScheduleFlush()
@@ -126,13 +121,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             // Everything is back to the default: nothing has to live on the object.
             if (_position == -1 && _rotation == -1 && _scale == -1 && !_locked)
             {
-                if (_settings != null)
-                {
-                    Undo.DestroyObjectImmediate(_settings);
-                    _settings = null;
-                }
-
-                RemoveLegacy();
+                if (_settings == null) return;
+                Undo.DestroyObjectImmediate(_settings);
+                _settings = null;
                 return;
             }
 
@@ -149,15 +140,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             _settings.scaleDecimalPrecision = _scale;
             _settings.lockTransform = _locked;
             EditorUtility.SetDirty(_settings);
-
-            RemoveLegacy();
-        }
-
-        private void RemoveLegacy()
-        {
-            if (_legacy == null) return;
-            EnhancedTransformDatabase.Remove(_legacy.id);
-            _legacy = null;
         }
 
         private static void MoveBelowTransform(EnhancedTransformSettings settings)

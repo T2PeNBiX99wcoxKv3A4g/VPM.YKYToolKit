@@ -94,7 +94,6 @@
   "label.import_watcher.no_import_log": "沒有匯入記錄。",
   "label.delete_record.no_delete_history": "沒有刪除記錄。",
   "label.import_watcher.max_sessions": "最大歷史工作階段數",
-  "label.enhanced_transform_database.info": "此資產儲存增強變換的額外資料。",
   "label.enhanced_transform_inspector.position_decimal_precision": "位置小數位數",
   "label.enhanced_transform_inspector.rotation_decimal_precision": "旋轉小數位數",
   "label.enhanced_transform_inspector.scale_decimal_precision": "縮放小數位數",
@@ -137,9 +136,5 @@
   "label.enhanced_transform_inspector.section_precision": "小數位數（-1 為關閉）",
   "label.enhanced_transform_inspector.align_mode": "對齊模式",
   "label.enhanced_transform_inspector.unlock_transform": "解除變換鎖定",
-  "label.enhanced_transform_database.entries": "項目",
-  "label.enhanced_transform_database.no_entries": "還沒有項目。",
-  "label.enhanced_transform_database.missing": "未載入",
-  "label.enhanced_transform_database.read_only": "唯讀",
   "label.enhanced_transform_settings.info": "在 Transform 檢視器中編輯。"
 }

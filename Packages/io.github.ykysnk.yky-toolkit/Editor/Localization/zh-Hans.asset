@@ -491,11 +491,6 @@ MonoBehaviour:
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
-  - key: label.enhanced_transform_database.info
-    translate: "\u6B64\u8D44\u6E90\u4FDD\u5B58\u589E\u5F3A\u53D8\u6362\u7684\u989D\u5916\u6570\u636E\u3002"
-    tooltip: 
-    useTooltip: 0
-    tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.position_decimal_precision
     translate: "\u4F4D\u7F6E\u5C0F\u6570\u4F4D\u6570"
     tooltip: 
@@ -706,26 +701,6 @@ MonoBehaviour:
     tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.unlock_transform
     translate: "\u89E3\u9501\u53D8\u6362"
-    tooltip: 
-    useTooltip: 0
-    tooltipSuffix: :tooltip
-  - key: label.enhanced_transform_database.entries
-    translate: "\u6761\u76EE"
-    tooltip: 
-    useTooltip: 0
-    tooltipSuffix: :tooltip
-  - key: label.enhanced_transform_database.no_entries
-    translate: "\u8FD8\u6CA1\u6709\u6761\u76EE\u3002"
-    tooltip: 
-    useTooltip: 0
-    tooltipSuffix: :tooltip
-  - key: label.enhanced_transform_database.missing
-    translate: "\u672A\u52A0\u8F7D"
-    tooltip: 
-    useTooltip: 0
-    tooltipSuffix: :tooltip
-  - key: label.enhanced_transform_database.read_only
-    translate: "\u53EA\u8BFB"
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip

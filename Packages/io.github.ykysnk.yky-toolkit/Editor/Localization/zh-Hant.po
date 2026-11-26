@@ -291,9 +291,6 @@ msgstr "沒有刪除記錄。"
 msgid "label.import_watcher.max_sessions"
 msgstr "最大歷史工作階段數"
 
-msgid "label.enhanced_transform_database.info"
-msgstr "此資產儲存增強變換的額外資料。"
-
 msgid "label.enhanced_transform_inspector.position_decimal_precision"
 msgstr "位置小數位數"
 
@@ -419,18 +416,6 @@ msgstr "對齊模式"
 
 msgid "label.enhanced_transform_inspector.unlock_transform"
 msgstr "解除變換鎖定"
-
-msgid "label.enhanced_transform_database.entries"
-msgstr "項目"
-
-msgid "label.enhanced_transform_database.no_entries"
-msgstr "還沒有項目。"
-
-msgid "label.enhanced_transform_database.missing"
-msgstr "未載入"
-
-msgid "label.enhanced_transform_database.read_only"
-msgstr "唯讀"
 
 msgid "label.enhanced_transform_settings.info"
 msgstr "在 Transform 檢視器中編輯。"

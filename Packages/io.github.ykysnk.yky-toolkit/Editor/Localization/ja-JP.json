@@ -94,7 +94,6 @@
   "label.import_watcher.no_import_log": "インポートログはありません。",
   "label.delete_record.no_delete_history": "削除履歴はありません。",
   "label.import_watcher.max_sessions": "最大履歴セッション数",
-  "label.enhanced_transform_database.info": "このアセットは、Enhanced Transform の追加データを保存します。",
   "label.enhanced_transform_inspector.position_decimal_precision": "位置の小数点以下の桁数",
   "label.enhanced_transform_inspector.rotation_decimal_precision": "回転の小数点以下の桁数",
   "label.enhanced_transform_inspector.scale_decimal_precision": "スケールの小数点以下の桁数",
@@ -137,9 +136,5 @@
   "label.enhanced_transform_inspector.section_precision": "小数点以下の桁数（-1 で無効）",
   "label.enhanced_transform_inspector.align_mode": "整列モード",
   "label.enhanced_transform_inspector.unlock_transform": "Transform のロックを解除",
-  "label.enhanced_transform_database.entries": "エントリ",
-  "label.enhanced_transform_database.no_entries": "まだエントリがありません。",
-  "label.enhanced_transform_database.missing": "未読み込み",
-  "label.enhanced_transform_database.read_only": "読み取り専用",
   "label.enhanced_transform_settings.info": "Transform インスペクターで編集します。"
 }
