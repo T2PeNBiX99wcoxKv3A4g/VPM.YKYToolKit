@@ -103,6 +103,10 @@
         <ui:VisualElement class="yky-card transform-card">
             <ui:VisualElement class="transform-card__header">
                 <ui:Label text="label.enhanced_transform_inspector.other" class="transform-card__title"/>
+                <ui:VisualElement class="yky-spacer"/>
+                <io.github.ykysnk.ykyToolkit.Editor.UIElements.IconButton name="openHelp"
+                                                                          tooltip="label.enhanced_transform_inspector.help"
+                                                                          class="transform-action"/>
             </ui:VisualElement>
             <ui:TextField label="label.enhanced_transform_inspector.hierarchy_path" name="hierarchyPath"
                           readonly="true" picking-mode="Ignore" class="transform-path"/>
@@ -126,9 +130,6 @@
                           show-input-field="true" name="scaleDecimal" low-value="-1"/>
         </ui:VisualElement>
 
-        <ui:Foldout text="label.enhanced_transform_inspector.help" name="helpFoldout" class="transform-foldout">
-            <ui:VisualElement name="helpList" class="transform-help"/>
-        </ui:Foldout>
         <ui:Foldout text="label.enhanced_transform_inspector.default_ui" value="false" name="defaultGUIFoldout"
                     class="transform-foldout">
             <ui:IMGUIContainer name="defaultGUI"/>

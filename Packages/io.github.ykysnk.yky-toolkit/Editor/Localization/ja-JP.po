@@ -414,3 +414,9 @@ msgstr "コピーしました"
 msgid "label.enhanced_transform_inspector.help_suggest"
 msgstr "↑↓ 選択 · Enter 挿入 · Esc 閉じる"
 
+msgid "label.enhanced_transform_inspector.help_window_title"
+msgstr "Transform の式"
+
+msgid "label.enhanced_transform_inspector.help_no_match"
+msgstr "一致する式はありません。"
+

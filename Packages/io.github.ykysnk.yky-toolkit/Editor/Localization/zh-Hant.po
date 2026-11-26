@@ -414,3 +414,9 @@ msgstr "已複製"
 msgid "label.enhanced_transform_inspector.help_suggest"
 msgstr "↑↓ 選擇 · Enter 插入 · Esc 關閉"
 
+msgid "label.enhanced_transform_inspector.help_window_title"
+msgstr "Transform 表達式"
+
+msgid "label.enhanced_transform_inspector.help_no_match"
+msgstr "沒有符合的表達式。"
+

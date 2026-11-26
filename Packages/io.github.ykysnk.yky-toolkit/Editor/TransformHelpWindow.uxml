@@ -1,0 +1,19 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <Style src="project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/YkyToolkitTheme.uss?guid=34e0c41dada851146aeccffc05549196&amp;type=3"/>
+    <Style src="project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/TransformHelpWindow.uss?fileID=7433441132597879392&amp;guid=67023e85095bead46876ae2fefc6e2ef&amp;type=3#TransformHelpWindow"/>
+    <ui:VisualElement class="root yky-help">
+        <uie:Toolbar>
+            <ui:Label text="label.enhanced_transform_inspector.help_window_title" class="yky-help__toolbar-title"/>
+            <ui:VisualElement class="yky-spacer"/>
+            <uie:ToolbarSearchField name="search" class="yky-help__search"/>
+        </uie:Toolbar>
+        <ui:ScrollView class="yky-help__scroll">
+            <ui:VisualElement class="yky-card yky-help__card">
+                <ui:Label text="label.enhanced_transform_inspector.help_hint" class="yky-hint"/>
+                <ui:VisualElement name="groups"/>
+                <ui:Label text="label.enhanced_transform_inspector.help_copy_hint" class="yky-help__copy-hint"/>
+                <ui:Label text="label.enhanced_transform_inspector.help_no_match" name="empty" class="yky-list-empty"/>
+            </ui:VisualElement>
+        </ui:ScrollView>
+    </ui:VisualElement>
+</ui:UXML>

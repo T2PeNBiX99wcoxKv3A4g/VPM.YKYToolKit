@@ -14,7 +14,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private const string StyleSheetPath =
             "Packages/io.github.ykysnk.yky-toolkit/Editor/EnhancedTransformInspector.uss";
 
-        private readonly List<HelpEntry> _suggestionEntries = new();
+        private readonly List<TransformExpressionHelp.Entry> _suggestionEntries = new();
         private VisualElement? _suggestionPopup;
         private VisualElement? _suggestionList;
         private FloatField? _suggestionField;
@@ -121,11 +121,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             ShowSuggestions(field, typed, matches);
         }
 
-        private static List<HelpEntry> MatchSuggestions(string typed)
+        private static List<TransformExpressionHelp.Entry> MatchSuggestions(string typed)
         {
-            var result = new List<HelpEntry>();
+            var result = new List<TransformExpressionHelp.Entry>();
 
-            foreach (var entry in HelpEntries)
+            foreach (var entry in TransformExpressionHelp.Entries)
                 if (Matches(entry, typed))
                     result.Add(entry);
 
@@ -136,7 +136,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 .ToList();
         }
 
-        private static int MatchScore(HelpEntry entry, string typed)
+        private static int MatchScore(TransformExpressionHelp.Entry entry, string typed)
         {
             var sample = entry.Sample;
             var open = sample.IndexOf('(');
@@ -147,7 +147,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             return 2;
         }
 
-        private static bool Matches(HelpEntry entry, string typed)
+        private static bool Matches(TransformExpressionHelp.Entry entry, string typed)
         {
             var sample = entry.Sample;
             var open = sample.IndexOf('(');
@@ -160,7 +160,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                    entry.Signature.StartsWith(typed, System.StringComparison.OrdinalIgnoreCase);
         }
 
-        private void ShowSuggestions(FloatField field, string typed, List<HelpEntry> matches)
+        private void ShowSuggestions(FloatField field, string typed, List<TransformExpressionHelp.Entry> matches)
         {
             var windowRoot = GetWindowRoot(field);
             if (windowRoot == null) return;
@@ -243,7 +243,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             return current.parent == panel.visualTree ? current : panel.visualTree;
         }
 
-        private VisualElement CreateSuggestionRow(HelpEntry entry)
+        private VisualElement CreateSuggestionRow(TransformExpressionHelp.Entry entry)
         {
             var row = new VisualElement();
             row.AddToClassList("transform-suggest__row");
@@ -307,7 +307,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             field.schedule.Execute(() => InsertSuggestion(field, entry)).ExecuteLater(0);
         }
 
-        private static void InsertSuggestion(FloatField field, HelpEntry entry)
+        private static void InsertSuggestion(FloatField field, TransformExpressionHelp.Entry entry)
         {
             // FloatField.text has no public setter in 2022.3, and the element named 'unity-text-input' is the
             // FloatInput control; its own text element is what the user sees and edits. Selecting a range only

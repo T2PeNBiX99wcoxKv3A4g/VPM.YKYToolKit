@@ -37,12 +37,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             set => EditorPrefs.SetBool("YKYToolkit/TransformDefaultUIExpanded", value);
         }
 
-        private static bool IsHelpExpanded
-        {
-            get => EditorPrefs.GetBool("YKYToolkit/TransformHelpExpanded");
-            set => EditorPrefs.SetBool("YKYToolkit/TransformHelpExpanded", value);
-        }
-
         private static AlignMode AlignModeSave
         {
             get => (AlignMode)EditorPrefs.GetInt("YKYToolkit/TransformAlignMode", 1);
@@ -775,11 +769,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 clearParentButton.SetEnabled(theTarget.parent != null && stage == null && !exData.lockTransform);
             }).Every(500);
 
-            var helpFoldout = tree.Q<Foldout>("helpFoldout");
-            helpFoldout.value = IsHelpExpanded;
-            helpFoldout.RegisterValueChangedCallback(evt => IsHelpExpanded = evt.newValue);
-
-            BuildHelp(tree.Q<VisualElement>("helpList"));
+            var openHelpButton = tree.Q<IconButton>("openHelp");
+            if (EditorGUIUtility.FindTexture("_Help") is { } helpIcon)
+                openHelpButton.style.backgroundImage = helpIcon;
+            openHelpButton.clicked += TransformHelpWindow.Open;
 
             var lockTransformToggle = tree.Q<Toggle>("lockTransform");
             lockTransformToggle.value = exData.lockTransform;

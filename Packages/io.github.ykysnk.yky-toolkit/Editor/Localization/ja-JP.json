@@ -134,5 +134,7 @@
   "label.enhanced_transform_inspector.help_expr_clamp": "現在値を範囲内に制限",
   "label.enhanced_transform_inspector.help_expr_noise": "Perlin ノイズで分布",
   "label.enhanced_transform_inspector.help_copied": "コピーしました",
-  "label.enhanced_transform_inspector.help_suggest": "↑↓ 選択 · Enter 挿入 · Esc 閉じる"
+  "label.enhanced_transform_inspector.help_suggest": "↑↓ 選択 · Enter 挿入 · Esc 閉じる",
+  "label.enhanced_transform_inspector.help_window_title": "Transform の式",
+  "label.enhanced_transform_inspector.help_no_match": "一致する式はありません。"
 }

@@ -134,5 +134,7 @@
   "label.enhanced_transform_inspector.help_expr_clamp": "Keep the current value inside a range",
   "label.enhanced_transform_inspector.help_expr_noise": "Perlin noise between min and max",
   "label.enhanced_transform_inspector.help_copied": "Copied",
-  "label.enhanced_transform_inspector.help_suggest": "↑↓ Select · Enter insert · Esc close"
+  "label.enhanced_transform_inspector.help_suggest": "↑↓ Select · Enter insert · Esc close",
+  "label.enhanced_transform_inspector.help_window_title": "Transform expressions",
+  "label.enhanced_transform_inspector.help_no_match": "No expression matches."
 }

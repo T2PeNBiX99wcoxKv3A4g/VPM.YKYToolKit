@@ -134,5 +134,7 @@
   "label.enhanced_transform_inspector.help_expr_clamp": "將目前值限制在範圍內",
   "label.enhanced_transform_inspector.help_expr_noise": "以 Perlin 雜訊分佈",
   "label.enhanced_transform_inspector.help_copied": "已複製",
-  "label.enhanced_transform_inspector.help_suggest": "↑↓ 選擇 · Enter 插入 · Esc 關閉"
+  "label.enhanced_transform_inspector.help_suggest": "↑↓ 選擇 · Enter 插入 · Esc 關閉",
+  "label.enhanced_transform_inspector.help_window_title": "Transform 表達式",
+  "label.enhanced_transform_inspector.help_no_match": "沒有符合的表達式。"
 }

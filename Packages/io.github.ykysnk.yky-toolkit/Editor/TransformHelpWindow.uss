@@ -1,0 +1,87 @@
+/* The shared theme in YkyToolkitTheme.uss carries the look; this file only holds what is specific to the help page. */
+
+.yky-help {
+    padding: 10px;
+    flex-grow: 1;
+}
+
+.yky-help__toolbar-title {
+    margin-left: 4px;
+    font-size: 12px;
+    -unity-font-style: bold;
+    color: rgb(120, 165, 255);
+}
+
+.yky-help__search {
+    min-width: 200px;
+    max-width: 280px;
+}
+
+.yky-help__scroll {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-height: 0;
+}
+
+.yky-help__card {
+    margin: 0;
+    padding: 10px 14px;
+}
+
+.yky-help__group {
+    margin-bottom: 6px;
+}
+
+.yky-help__group-title {
+    margin: 6px 0 3px 2px;
+    font-size: 11px;
+    -unity-font-style: bold;
+    color: rgb(120, 165, 255);
+}
+
+.yky-help__row {
+    flex-direction: row;
+    align-items: center;
+    min-height: 21px;
+    padding: 2px 6px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.yky-help__row:hover {
+    background-color: rgba(76, 141, 255, 0.16);
+}
+
+.yky-help__syntax {
+    width: 120px;
+    min-width: 120px;
+    font-size: 11px;
+    -unity-font-style: bold;
+    color: rgb(160, 195, 255);
+}
+
+.yky-help__description {
+    flex-grow: 1;
+    flex-shrink: 1;
+    font-size: 11px;
+    color: rgba(205, 205, 205, 0.95);
+    white-space: normal;
+}
+
+.yky-help__alt {
+    margin-left: 10px;
+    font-size: 10px;
+    color: rgba(150, 150, 150, 0.85);
+}
+
+.yky-help__copied {
+    color: rgb(125, 220, 150);
+}
+
+.yky-help__copy-hint {
+    margin-top: 6px;
+    font-size: 10px;
+    color: rgba(140, 140, 140, 0.85);
+}
