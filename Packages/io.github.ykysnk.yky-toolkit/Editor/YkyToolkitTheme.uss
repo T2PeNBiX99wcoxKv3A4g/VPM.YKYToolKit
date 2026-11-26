@@ -154,6 +154,33 @@ Button:active,
     white-space: normal;
 }
 
+/* Editable cells in a list keep the row clean: no dark input box inside the row. */
+.yky-list .unity-base-text-field__input {
+    background-color: transparent;
+    border-width: 0;
+}
+
+/* ---------- language picker ---------- */
+
+PopupField {
+    margin: 6px 2px 2px 2px;
+    padding-top: 6px;
+    border-top-width: 1px;
+    border-top-color: rgba(128, 128, 128, 0.25);
+    align-items: center;
+}
+
+PopupField .unity-base-field__label {
+    min-width: 0;
+    flex-grow: 1;
+}
+
+PopupField .unity-base-field__input {
+    flex-grow: 0;
+    min-width: 140px;
+    max-width: 220px;
+}
+
 .yky-count {
     margin-left: 6px;
     padding: 0 6px;
