@@ -77,6 +77,7 @@
   "label.import_watcher.color": "高亮颜色",
   "label.import_watcher.duration": "高亮持续时间",
   "label.import_watcher.file_extension_colors": "文件扩展名的高亮颜色",
+  "label.import_watcher.reset_colors": "恢复默认值",
   "label.preferences_page.general": "常规",
   "label.preferences_page.allow_async_compilation": "允许异步编译",
   "label.preferences_page.delete_selected_warn_window": "删除所选时的警告窗口",

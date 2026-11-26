@@ -155,6 +155,15 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
                     addButton.clicked += SaveColorList;
                     removeButton.clicked += SaveColorList;
+
+                    var resetFileColorsButton = tree.Q<Button>("resetFileColors");
+                    resetFileColorsButton.clicked += () =>
+                    {
+                        newColorList.Clear();
+                        foreach (var color in ImportWatcherFileColor.DefaultColors)
+                            newColorList.Add(color);
+                        SaveColorList();
+                    };
                 }
             };
 

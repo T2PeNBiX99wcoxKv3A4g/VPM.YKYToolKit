@@ -412,6 +412,11 @@ MonoBehaviour:
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
+  - key: label.import_watcher.reset_colors
+    translate: "\u6062\u590D\u9ED8\u8BA4\u503C"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.preferences_page.general
     translate: "\u5E38\u89C4"
     tooltip: 

@@ -17,9 +17,14 @@
             </ui:VisualElement>
 
             <ui:VisualElement class="yky-card">
+                <ui:VisualElement class="yky-row">
+                    <ui:VisualElement class="yky-spacer"/>
+                    <ui:Button name="resetFileColors" text="label.import_watcher.reset_colors"
+                               class="yky-button--small"/>
+                </ui:VisualElement>
                 <ui:ListView show-alternating-row-backgrounds="ContentOnly" reorderable="true"
                              reorder-mode="Animated" show-add-remove-footer="true" selection-type="Multiple"
-                             virtualization-method="DynamicHeight" binding-path="fileColors"
+                             virtualization-method="DynamicHeight"
                              name="fileColors" show-bound-collection-size="true" show-foldout-header="true"
                              header-title="label.import_watcher.file_extension_colors" class="yky-list"/>
             </ui:VisualElement>

@@ -41,6 +41,9 @@
                 <ui:VisualElement class="yky-card__title">
                     <ui:VisualElement class="yky-icon yky-icon--section yky-icon--import-watcher"/>
                     <ui:Label text="label.preferences_page.import_watcher" class="yky-section"/>
+                    <ui:VisualElement class="yky-spacer"/>
+                    <ui:Button name="resetFileColors" text="label.import_watcher.reset_colors"
+                               class="yky-button--small"/>
                 </ui:VisualElement>
                 <uie:ColorField label="label.import_watcher.color" value="RGBA(0.000, 1.000, 1.000, 1.000)"
                                 name="importWatcherColor"/>

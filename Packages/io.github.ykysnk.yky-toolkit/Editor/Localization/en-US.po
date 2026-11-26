@@ -240,6 +240,9 @@ msgstr "Highlight Duration"
 msgid "label.import_watcher.file_extension_colors"
 msgstr "Highlight colors for file extensions"
 
+msgid "label.import_watcher.reset_colors"
+msgstr "Reset to defaults"
+
 msgid "label.preferences_page.general"
 msgstr "General"
 

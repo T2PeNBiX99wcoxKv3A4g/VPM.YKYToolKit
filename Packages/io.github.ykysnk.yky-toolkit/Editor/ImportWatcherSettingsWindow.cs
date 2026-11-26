@@ -16,24 +16,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         [SerializeField] private VisualTreeAsset? uxml;
         [SerializeField] private List<ImportWatcherFileColor> fileColors = new();
 
-        private SerializedObject? _serializedObject;
-
-        private void OnDestroy()
-        {
-            fileColors.Rebuild();
-            SaveFileColorList();
-            _serializedObject?.Dispose();
-        }
-
         private void CreateGUI()
         {
-            _serializedObject?.Dispose();
-            _serializedObject = new(this);
             var tree = uxml!.CloneTree();
             tree.UILocalize(false);
-            tree.Bind(_serializedObject);
             rootVisualElement.Add(tree);
-            LoadFileColorList();
 
             var colorField = tree.Q<ColorField>("color");
             colorField.SetValueWithoutNotify(ImportWatcher.HighlightColor);
@@ -48,11 +35,55 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             maxSessionsField.RegisterValueChangedCallback(evt => ImportHistoryManager.MaxSessions = evt.newValue);
 
             var fileColorsField = tree.Q<ListView>("fileColors");
+            fileColorsField.makeItem = CreateFileColorRow;
+            fileColorsField.bindItem = (element, index) =>
+            {
+                if (index < 0 || index >= fileColors.Count) return;
+                var value = fileColors[index];
+                element.userData = value;
+                element.Q<TextField>("fileExtension").SetValueWithoutNotify(value.fileExtension);
+                element.Q<ColorField>("color").SetValueWithoutNotify(value.color);
+            };
+            LoadFileColorList();
+            fileColorsField.itemsSource = fileColors;
+
             var addButton = fileColorsField.Q<Button>("unity-list-view__add-button");
             var removeButton = fileColorsField.Q<Button>("unity-list-view__remove-button");
-
             addButton.clicked += SaveFileColorList;
             removeButton.clicked += SaveFileColorList;
+
+            var resetFileColorsButton = tree.Q<Button>("resetFileColors");
+            resetFileColorsButton.clicked += () =>
+            {
+                fileColors.Clear();
+                fileColors.AddRange(ImportWatcherFileColor.DefaultColors);
+                fileColorsField.Rebuild();
+                SaveFileColorList();
+            };
+        }
+
+        private VisualElement CreateFileColorRow()
+        {
+            var uxml = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(
+                AssetDatabase.GUIDToAssetPath("6bdd0e10034ff1b4281322ac210d8519"));
+            if (uxml == null) return BasicEditor.CreateUxmlImportErrorUI();
+
+            var tree = uxml.CloneTree();
+            tree.UILocalize(false);
+            tree.Q<TextField>("fileExtension").RegisterValueChangedCallback(evt =>
+            {
+                if (tree.userData is not ImportWatcherFileColor value) return;
+                value.fileExtension = evt.newValue;
+                SaveFileColorList();
+            });
+            tree.Q<ColorField>("color").RegisterValueChangedCallback(evt =>
+            {
+                if (tree.userData is not ImportWatcherFileColor value) return;
+                value.color = evt.newValue;
+                SaveFileColorList();
+            });
+
+            return tree;
         }
 
         private void LoadFileColorList()
@@ -64,6 +95,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         private void SaveFileColorList()
         {
+            for (var i = 0; i < fileColors.Count; i++)
+                fileColors[i] ??= new ImportWatcherFileColor("", ImportWatcherFileColor.DefaultColor);
+
             ImportWatcher.ColorList = fileColors;
         }
 

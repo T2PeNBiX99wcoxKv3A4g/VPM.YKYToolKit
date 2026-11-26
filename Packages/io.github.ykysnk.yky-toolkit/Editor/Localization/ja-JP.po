@@ -240,6 +240,9 @@ msgstr "ハイライトの持続時間"
 msgid "label.import_watcher.file_extension_colors"
 msgstr "ファイル拡張子のハイライト色"
 
+msgid "label.import_watcher.reset_colors"
+msgstr "既定値に戻す"
+
 msgid "label.preferences_page.general"
 msgstr "一般"
 

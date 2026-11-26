@@ -448,6 +448,11 @@ MonoBehaviour:
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
+  - key: label.import_watcher.reset_colors
+    translate: Reset to defaults
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.preferences_page.general
     translate: General
     tooltip: 

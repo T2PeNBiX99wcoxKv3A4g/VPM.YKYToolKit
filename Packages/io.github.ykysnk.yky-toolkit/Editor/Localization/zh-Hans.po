@@ -240,6 +240,9 @@ msgstr "高亮持续时间"
 msgid "label.import_watcher.file_extension_colors"
 msgstr "文件扩展名的高亮颜色"
 
+msgid "label.import_watcher.reset_colors"
+msgstr "恢复默认值"
+
 msgid "label.preferences_page.general"
 msgstr "常规"
 

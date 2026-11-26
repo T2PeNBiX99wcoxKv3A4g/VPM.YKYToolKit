@@ -10,11 +10,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
     {
         public static readonly ImportWatcherFileColor[] DefaultColors =
         {
-            new(".cs", new(1f, 0.85f, 0.2f, 0.45f)), new(".prefab", new(0.4f, 0.6f, 1f, 0.45f)),
-            new(".png", new(0.4f, 1f, 0.4f, 0.45f)), new(".jpg", new(0.4f, 1f, 0.4f, 0.45f)),
-            new(".tga", new(0.4f, 1f, 0.4f, 0.45f)), new(".mat", new(0.4f, 1f, 0.4f, 0.45f)),
-            new(".anim", new(0.4f, 1f, 0.4f, 0.45f)), new(".uxml", new(1f, 0.2f, 0.2f, 0.45f)),
-            new(".uss", new(1f, 0.2f, 0.2f, 0.45f))
+            new(".cs", new(1f, 0.78f, 0.2f, 0.45f)), new(".prefab", new(0.35f, 0.62f, 1f, 0.45f)),
+            new(".png", new(0.36f, 0.9f, 0.45f, 0.45f)), new(".jpg", new(0.2f, 0.85f, 0.75f, 0.45f)),
+            new(".tga", new(0.65f, 0.9f, 0.3f, 0.45f)), new(".mat", new(0.7f, 0.5f, 1f, 0.45f)),
+            new(".anim", new(1f, 0.55f, 0.25f, 0.45f)), new(".uxml", new(1f, 0.35f, 0.35f, 0.45f)),
+            new(".uss", new(1f, 0.45f, 0.75f, 0.45f))
         };
 
         public static readonly Color DefaultColor = new(1, 1, 1, 0.45f);
