@@ -349,7 +349,7 @@ msgid "label.list_empty"
 msgstr "No items"
 
 msgid "label.enhanced_transform_inspector.help_hint"
-msgstr "Type into any axis, then press Enter or click elsewhere. With a multi-selection every object is changed."
+msgstr "Type into any axis to see expression suggestions. Enter or Tab inserts the highlighted example; edit it, then Enter applies to every selected object."
 
 msgid "label.enhanced_transform_inspector.help_copy_hint"
 msgstr "Click a row to copy its example."
@@ -410,4 +410,7 @@ msgstr "Perlin noise between min and max"
 
 msgid "label.enhanced_transform_inspector.help_copied"
 msgstr "Copied"
+
+msgid "label.enhanced_transform_inspector.help_suggest"
+msgstr "↑↓ Select · Enter insert · Esc close"
 

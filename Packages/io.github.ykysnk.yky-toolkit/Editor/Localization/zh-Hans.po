@@ -349,7 +349,7 @@ msgid "label.list_empty"
 msgstr "无项目"
 
 msgid "label.enhanced_transform_inspector.help_hint"
-msgstr "在任一轴字段输入后按 Enter 或点击其他位置应用；多选时会应用到所有物体。"
+msgstr "在轴字段输入时会显示表达式建议。按 Enter 或 Tab 插入范例，修改数值后再按 Enter 套用到所有选中物体。"
 
 msgid "label.enhanced_transform_inspector.help_copy_hint"
 msgstr "点击任意一行可复制示例。"
@@ -410,4 +410,7 @@ msgstr "以 Perlin 噪声分布"
 
 msgid "label.enhanced_transform_inspector.help_copied"
 msgstr "已复制"
+
+msgid "label.enhanced_transform_inspector.help_suggest"
+msgstr "↑↓ 选择 · Enter 插入 · Esc 关闭"
 

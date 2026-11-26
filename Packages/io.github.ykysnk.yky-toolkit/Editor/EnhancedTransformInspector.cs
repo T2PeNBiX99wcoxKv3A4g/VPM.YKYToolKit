@@ -94,12 +94,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var scaleProperty = serializedObject.FindProperty("m_LocalScale");
             var tree = uxml!.CloneTree();
             _root = tree;
+            tree.UILocalize(false);
 
             // Every axis label explains that the field accepts expressions, which is where the user needs it.
             foreach (var field in tree.Query<Vector3FieldExtra>().ToList())
                 AttachExpressionHint(field);
 
-            tree.UILocalize(false);
             tree.Bind(serializedObject);
 
             // Expressions are applied when the field is committed. Enter is handled by the axis fields; these
@@ -109,6 +109,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             tree.RegisterCallback<FocusOutEvent>(ApplyExpressionOnFocusOut, TrickleDown.NoTrickleDown);
             tree.RegisterCallback<FocusInEvent>(OnExpressionFocusIn, TrickleDown.TrickleDown);
             tree.RegisterCallback<FocusInEvent>(OnExpressionFocusIn, TrickleDown.NoTrickleDown);
+
+            // A suggestion list pinned to a field would stay behind while the inspector scrolls, so close it instead.
+            tree.RegisterCallback<WheelEvent>(_ => HideSuggestions());
+            tree.RegisterCallback<DetachFromPanelEvent>(_ => RemoveSuggestionPopup());
 
             var exData = EnhancedTransformDatabase.Get(theTarget);
             var stage = PrefabStageUtility.GetCurrentPrefabStage();

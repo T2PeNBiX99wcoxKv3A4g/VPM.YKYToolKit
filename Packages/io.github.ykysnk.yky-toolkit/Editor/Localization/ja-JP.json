@@ -113,7 +113,7 @@
   "label.delete_history_manager": "削除履歴",
   "label.upm_installer_window.packages": "パッケージ",
   "label.list_empty": "項目がありません",
-  "label.enhanced_transform_inspector.help_hint": "いずれかの軸に入力し、Enter か外側をクリックで適用。複数選択時はすべてのオブジェクトに適用されます。",
+  "label.enhanced_transform_inspector.help_hint": "軸に入力すると候補が表示されます。Enter か Tab で挿入し、値を編集して Enter で選択中のすべてに適用します。",
   "label.enhanced_transform_inspector.help_copy_hint": "行をクリックすると例をコピーできます。",
   "label.enhanced_transform_inspector.help_group_basic": "基本",
   "label.enhanced_transform_inspector.help_group_order": "整列（複数選択）",
@@ -133,5 +133,6 @@
   "label.enhanced_transform_inspector.help_expr_random": "範囲内でランダム",
   "label.enhanced_transform_inspector.help_expr_clamp": "現在値を範囲内に制限",
   "label.enhanced_transform_inspector.help_expr_noise": "Perlin ノイズで分布",
-  "label.enhanced_transform_inspector.help_copied": "コピーしました"
+  "label.enhanced_transform_inspector.help_copied": "コピーしました",
+  "label.enhanced_transform_inspector.help_suggest": "↑↓ 選択 · Enter 挿入 · Esc 閉じる"
 }

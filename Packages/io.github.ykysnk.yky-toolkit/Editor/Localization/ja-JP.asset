@@ -589,8 +589,9 @@ MonoBehaviour:
     useTooltip: 0
     tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.help_hint
-    translate: "\u3044\u305A\u308C\u304B\u306E\u8EF8\u306B\u5165\u529B\u3057\u3001Enter
-      \u304B\u5916\u5074\u3092\u30AF\u30EA\u30C3\u30AF\u3067\u9069\u7528\u3002\u8907\u6570\u9078\u629E\u6642\u306F\u3059\u3079\u3066\u306E\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8\u306B\u9069\u7528\u3055\u308C\u307E\u3059\u3002"
+    translate: "\u8EF8\u306B\u5165\u529B\u3059\u308B\u3068\u5019\u88DC\u304C\u8868\u793A\u3055\u308C\u307E\u3059\u3002Enter
+      \u304B Tab \u3067\u633F\u5165\u3057\u3001\u5024\u3092\u7DE8\u96C6\u3057\u3066
+      Enter \u3067\u9078\u629E\u4E2D\u306E\u3059\u3079\u3066\u306B\u9069\u7528\u3057\u307E\u3059\u3002"
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
@@ -691,6 +692,11 @@ MonoBehaviour:
     tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.help_copied
     translate: "\u30B3\u30D4\u30FC\u3057\u307E\u3057\u305F"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_suggest
+    translate: "\u2191\u2193 \u9078\u629E \xB7 Enter \u633F\u5165 \xB7 Esc \u9589\u3058\u308B"
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip

@@ -113,7 +113,7 @@
   "label.delete_history_manager": "删除历史",
   "label.upm_installer_window.packages": "包",
   "label.list_empty": "无项目",
-  "label.enhanced_transform_inspector.help_hint": "在任一轴字段输入后按 Enter 或点击其他位置应用；多选时会应用到所有物体。",
+  "label.enhanced_transform_inspector.help_hint": "在轴字段输入时会显示表达式建议。按 Enter 或 Tab 插入范例，修改数值后再按 Enter 套用到所有选中物体。",
   "label.enhanced_transform_inspector.help_copy_hint": "点击任意一行可复制示例。",
   "label.enhanced_transform_inspector.help_group_basic": "基本",
   "label.enhanced_transform_inspector.help_group_order": "排列（多选）",
@@ -133,5 +133,6 @@
   "label.enhanced_transform_inspector.help_expr_random": "在范围内随机",
   "label.enhanced_transform_inspector.help_expr_clamp": "将当前值限制在范围内",
   "label.enhanced_transform_inspector.help_expr_noise": "以 Perlin 噪声分布",
-  "label.enhanced_transform_inspector.help_copied": "已复制"
+  "label.enhanced_transform_inspector.help_copied": "已复制",
+  "label.enhanced_transform_inspector.help_suggest": "↑↓ 选择 · Enter 插入 · Esc 关闭"
 }

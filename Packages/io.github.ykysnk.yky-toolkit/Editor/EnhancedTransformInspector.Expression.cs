@@ -226,6 +226,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 _pendingExpressions[field] = () => Apply();
                 foreach (var element in field.Query<VisualElement>().ToList())
                     _pendingExpressions[element] = () => Apply();
+
+                AttachExpressionSuggestions(field);
             }
         }
     }

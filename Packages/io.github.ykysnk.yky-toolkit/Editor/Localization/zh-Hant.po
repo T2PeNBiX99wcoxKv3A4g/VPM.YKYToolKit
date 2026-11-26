@@ -349,7 +349,7 @@ msgid "label.list_empty"
 msgstr "沒有項目"
 
 msgid "label.enhanced_transform_inspector.help_hint"
-msgstr "在任一軸欄位輸入後按 Enter 或點擊其他位置套用；多選時會套用到所有物件。"
+msgstr "在軸欄位輸入時會顯示表達式建議。按 Enter 或 Tab 插入範例，修改數值後再按 Enter 套用到所有選取物件。"
 
 msgid "label.enhanced_transform_inspector.help_copy_hint"
 msgstr "點擊任一列可複製範例。"
@@ -410,4 +410,7 @@ msgstr "以 Perlin 雜訊分佈"
 
 msgid "label.enhanced_transform_inspector.help_copied"
 msgstr "已複製"
+
+msgid "label.enhanced_transform_inspector.help_suggest"
+msgstr "↑↓ 選擇 · Enter 插入 · Esc 關閉"
 

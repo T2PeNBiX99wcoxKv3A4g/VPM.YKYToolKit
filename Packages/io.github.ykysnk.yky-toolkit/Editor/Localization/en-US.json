@@ -113,7 +113,7 @@
   "label.delete_history_manager": "Delete History",
   "label.upm_installer_window.packages": "Packages",
   "label.list_empty": "No items",
-  "label.enhanced_transform_inspector.help_hint": "Type into any axis, then press Enter or click elsewhere. With a multi-selection every object is changed.",
+  "label.enhanced_transform_inspector.help_hint": "Type into any axis to see expression suggestions. Enter or Tab inserts the highlighted example; edit it, then Enter applies to every selected object.",
   "label.enhanced_transform_inspector.help_copy_hint": "Click a row to copy its example.",
   "label.enhanced_transform_inspector.help_group_basic": "Basic",
   "label.enhanced_transform_inspector.help_group_order": "Order (multi-selection)",
@@ -133,5 +133,6 @@
   "label.enhanced_transform_inspector.help_expr_random": "Random value in a range",
   "label.enhanced_transform_inspector.help_expr_clamp": "Keep the current value inside a range",
   "label.enhanced_transform_inspector.help_expr_noise": "Perlin noise between min and max",
-  "label.enhanced_transform_inspector.help_copied": "Copied"
+  "label.enhanced_transform_inspector.help_copied": "Copied",
+  "label.enhanced_transform_inspector.help_suggest": "↑↓ Select · Enter insert · Esc close"
 }

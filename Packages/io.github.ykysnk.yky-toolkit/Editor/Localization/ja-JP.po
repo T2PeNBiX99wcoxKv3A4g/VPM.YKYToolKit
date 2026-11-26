@@ -349,7 +349,7 @@ msgid "label.list_empty"
 msgstr "項目がありません"
 
 msgid "label.enhanced_transform_inspector.help_hint"
-msgstr "いずれかの軸に入力し、Enter か外側をクリックで適用。複数選択時はすべてのオブジェクトに適用されます。"
+msgstr "軸に入力すると候補が表示されます。Enter か Tab で挿入し、値を編集して Enter で選択中のすべてに適用します。"
 
 msgid "label.enhanced_transform_inspector.help_copy_hint"
 msgstr "行をクリックすると例をコピーできます。"
@@ -410,4 +410,7 @@ msgstr "Perlin ノイズで分布"
 
 msgid "label.enhanced_transform_inspector.help_copied"
 msgstr "コピーしました"
+
+msgid "label.enhanced_transform_inspector.help_suggest"
+msgstr "↑↓ 選択 · Enter 挿入 · Esc 閉じる"
 
