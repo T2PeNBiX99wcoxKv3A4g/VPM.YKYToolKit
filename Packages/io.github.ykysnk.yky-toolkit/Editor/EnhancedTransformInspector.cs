@@ -94,6 +94,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var scaleProperty = serializedObject.FindProperty("m_LocalScale");
             var tree = uxml!.CloneTree();
             _root = tree;
+
+            // Every axis label explains that the field accepts expressions, which is where the user needs it.
+            foreach (var field in tree.Query<Vector3FieldExtra>().ToList())
+                AttachExpressionHint(field);
+
             tree.UILocalize(false);
             tree.Bind(serializedObject);
 
@@ -770,9 +775,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             helpFoldout.value = IsHelpExpanded;
             helpFoldout.RegisterValueChangedCallback(evt => IsHelpExpanded = evt.newValue);
 
-            var helpText = tree.Q<Label>("helpText");
-            helpText.AddManipulator(new ContextualMenuManipulator(evt =>
-                evt.menu.AppendAction("label.copy".S(), _ => EditorGUIUtility.systemCopyBuffer = helpText.text)));
+            BuildHelp(tree.Q<VisualElement>("helpList"));
 
             var lockTransformToggle = tree.Q<Toggle>("lockTransform");
             lockTransformToggle.value = exData.lockTransform;

@@ -201,9 +201,6 @@ msgstr "親を解除"
 msgid "label.enhanced_transform_inspector.help"
 msgstr "ヘルプ"
 
-msgid "label.enhanced_transform_inspector.helpText"
-msgstr "=x, E(x) -> 絶対値設定\n+x, A(x) -> 加算\n*x, M(x) -> 乗算\n/x, D(x) -> 除算\nL(start, step) -> 線形シーケンス\nR(min, max) -> ランダム\nI(start, end) -> 補間\ni(start, end) -> 逆補間\nLL(min, max) -> クランプ\nRR(center, step) -> ミラー\nTT(start, count) -> ステップシーケンス\nP(start, end) -> ピンポン\nNN(origin, step) -> 距離ベース\nAA(centerAngle, step) -> 角度ベース\nN(scale, min, max) -> ノイズ"
-
 msgid "label.copy"
 msgstr "コピー"
 
@@ -350,4 +347,67 @@ msgstr "パッケージ"
 
 msgid "label.list_empty"
 msgstr "項目がありません"
+
+msgid "label.enhanced_transform_inspector.help_hint"
+msgstr "いずれかの軸に入力し、Enter か外側をクリックで適用。複数選択時はすべてのオブジェクトに適用されます。"
+
+msgid "label.enhanced_transform_inspector.help_copy_hint"
+msgstr "行をクリックすると例をコピーできます。"
+
+msgid "label.enhanced_transform_inspector.help_group_basic"
+msgstr "基本"
+
+msgid "label.enhanced_transform_inspector.help_group_order"
+msgstr "整列（複数選択）"
+
+msgid "label.enhanced_transform_inspector.help_group_random"
+msgstr "ランダムと制限"
+
+msgid "label.enhanced_transform_inspector.help_expr_absolute"
+msgstr "指定した値に設定"
+
+msgid "label.enhanced_transform_inspector.help_expr_additive"
+msgstr "現在値に加算"
+
+msgid "label.enhanced_transform_inspector.help_expr_multiply"
+msgstr "現在値に乗算"
+
+msgid "label.enhanced_transform_inspector.help_expr_division"
+msgstr "現在値を除算"
+
+msgid "label.enhanced_transform_inspector.help_expr_linear"
+msgstr "開始値から一定間隔で並べる"
+
+msgid "label.enhanced_transform_inspector.help_expr_interpolate"
+msgstr "開始から終了まで均等に配置"
+
+msgid "label.enhanced_transform_inspector.help_expr_interpolate_reverse"
+msgstr "終了から開始へ均等に配置"
+
+msgid "label.enhanced_transform_inspector.help_expr_mirror"
+msgstr "中心を基準に対称配置"
+
+msgid "label.enhanced_transform_inspector.help_expr_step"
+msgstr "N 個ごとに繰り返す"
+
+msgid "label.enhanced_transform_inspector.help_expr_pingpong"
+msgstr "2 つの値の間で往復"
+
+msgid "label.enhanced_transform_inspector.help_expr_distance"
+msgstr "最初のオブジェクトからの距離順"
+
+msgid "label.enhanced_transform_inspector.help_expr_angle"
+msgstr "原点からの角度順"
+
+msgid "label.enhanced_transform_inspector.help_expr_random"
+msgstr "範囲内でランダム"
+
+msgid "label.enhanced_transform_inspector.help_expr_clamp"
+msgstr "現在値を範囲内に制限"
+
+msgid "label.enhanced_transform_inspector.help_expr_noise"
+msgstr "Perlin ノイズで分布"
+
+msgid "label.enhanced_transform_inspector.help_copied"
+msgstr "コピーしました"
 

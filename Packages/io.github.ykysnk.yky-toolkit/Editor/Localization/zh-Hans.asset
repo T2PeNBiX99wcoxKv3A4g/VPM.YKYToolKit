@@ -21,7 +21,7 @@ MonoBehaviour:
     useTooltip: 0
     tooltipSuffix: :tooltip
   - key: label.search
-    translate: 搜索
+    translate: "\u641C\u7D22"
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
@@ -126,7 +126,7 @@ MonoBehaviour:
     useTooltip: 0
     tooltipSuffix: :tooltip
   - key: label.new_delete.warning
-    translate: 删除资源后无法撤销。
+    translate: "\u5220\u9664\u8D44\u6E90\u540E\u65E0\u6CD5\u64A4\u9500\u3002"
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
@@ -338,17 +338,6 @@ MonoBehaviour:
     tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.help
     translate: "\u5E2E\u52A9"
-    tooltip: 
-    useTooltip: 0
-    tooltipSuffix: :tooltip
-  - key: label.enhanced_transform_inspector.helpText
-    translate: "=x, E(x) -> \u7EDD\u5BF9\u503C\n+x, A(x) -> \u52A0\u6CD5\n*x, M(x)
-      -> \u4E58\u6CD5\n/x, D(x) -> \u9664\u6CD5\nL(start, step) -> \u7EBF\u6027\u5E8F\u5217\nR(min,
-      max) -> \u968F\u673A\nI(start, end) -> \u63D2\u503C\ni(start, end) -> \u53CD\u5411\u63D2\u503C\nLL(min,
-      max) -> \u9650\u5236\nRR(center, step) -> \u955C\u50CF\nTT(start, count) ->
-      \u6B65\u8FDB\u5E8F\u5217\nP(start, end) -> \u4E52\u4E53\nNN(origin, step) ->
-      \u57FA\u4E8E\u8DDD\u79BB\nAA(centerAngle, step) -> \u57FA\u4E8E\u89D2\u5EA6\nN(scale,
-      min, max) -> \u566A\u58F0"
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
@@ -595,6 +584,112 @@ MonoBehaviour:
     tooltipSuffix: :tooltip
   - key: label.list_empty
     translate: "\u65E0\u9879\u76EE"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_hint
+    translate: "\u5728\u4EFB\u4E00\u8F74\u5B57\u6BB5\u8F93\u5165\u540E\u6309 Enter
+      \u6216\u70B9\u51FB\u5176\u4ED6\u4F4D\u7F6E\u5E94\u7528\uFF1B\u591A\u9009\u65F6\u4F1A\u5E94\u7528\u5230\u6240\u6709\u7269\u4F53\u3002"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_copy_hint
+    translate: "\u70B9\u51FB\u4EFB\u610F\u4E00\u884C\u53EF\u590D\u5236\u793A\u4F8B\u3002"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_group_basic
+    translate: "\u57FA\u672C"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_group_order
+    translate: "\u6392\u5217\uFF08\u591A\u9009\uFF09"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_group_random
+    translate: "\u968F\u673A\u4E0E\u9650\u5236"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_expr_absolute
+    translate: "\u8BBE\u4E3A\u6307\u5B9A\u503C"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_expr_additive
+    translate: "\u52A0\u4E0A\u5F53\u524D\u503C"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_expr_multiply
+    translate: "\u4E58\u4EE5\u5F53\u524D\u503C"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_expr_division
+    translate: "\u9664\u4EE5\u5F53\u524D\u503C"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_expr_linear
+    translate: "\u4ECE\u8D77\u70B9\u5F00\u59CB\uFF0C\u6309\u56FA\u5B9A\u95F4\u8DDD\u6392\u5217"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_expr_interpolate
+    translate: "\u4ECE\u8D77\u70B9\u5230\u7EC8\u70B9\u5E73\u5747\u5206\u5E03"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_expr_interpolate_reverse
+    translate: "\u4ECE\u7EC8\u70B9\u5230\u8D77\u70B9\u5E73\u5747\u5206\u5E03"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_expr_mirror
+    translate: "\u4EE5\u4E2D\u5FC3\u70B9\u5BF9\u79F0\u6392\u5217"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_expr_step
+    translate: "\u6BCF N \u4E2A\u7269\u4F53\u91CD\u590D\u6392\u5217"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_expr_pingpong
+    translate: "\u5728\u4E24\u4E2A\u503C\u4E4B\u95F4\u6765\u56DE"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_expr_distance
+    translate: "\u6309\u4E0E\u7B2C\u4E00\u4E2A\u7269\u4F53\u7684\u8DDD\u79BB\u6392\u5E8F"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_expr_angle
+    translate: "\u6309\u4E0E\u539F\u70B9\u5939\u89D2\u6392\u5E8F"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_expr_random
+    translate: "\u5728\u8303\u56F4\u5185\u968F\u673A"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_expr_clamp
+    translate: "\u5C06\u5F53\u524D\u503C\u9650\u5236\u5728\u8303\u56F4\u5185"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_expr_noise
+    translate: "\u4EE5 Perlin \u566A\u58F0\u5206\u5E03"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_copied
+    translate: "\u5DF2\u590D\u5236"
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip

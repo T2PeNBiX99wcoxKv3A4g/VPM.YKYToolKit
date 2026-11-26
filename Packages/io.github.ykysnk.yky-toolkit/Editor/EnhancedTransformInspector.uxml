@@ -127,9 +127,7 @@
         </ui:VisualElement>
 
         <ui:Foldout text="label.enhanced_transform_inspector.help" name="helpFoldout" class="transform-foldout">
-            <ui:Label tabindex="-1" text="label.enhanced_transform_inspector.helpText" parse-escape-sequences="true"
-                      display-tooltip-when-elided="true" name="helpText"
-                      style="white-space: normal; flex-wrap: wrap;"/>
+            <ui:VisualElement name="helpList" class="transform-help"/>
         </ui:Foldout>
         <ui:Foldout text="label.enhanced_transform_inspector.default_ui" value="false" name="defaultGUIFoldout"
                     class="transform-foldout">

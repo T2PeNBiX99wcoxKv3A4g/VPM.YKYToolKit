@@ -21,7 +21,7 @@ MonoBehaviour:
     useTooltip: 0
     tooltipSuffix: :tooltip
   - key: label.search
-    translate: 検索
+    translate: "\u691C\u7D22"
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
@@ -126,7 +126,7 @@ MonoBehaviour:
     useTooltip: 0
     tooltipSuffix: :tooltip
   - key: label.new_delete.warning
-    translate: 削除操作は元に戻せません。
+    translate: "\u524A\u9664\u64CD\u4F5C\u306F\u5143\u306B\u623B\u305B\u307E\u305B\u3093\u3002"
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
@@ -338,17 +338,6 @@ MonoBehaviour:
     tooltipSuffix: :tooltip
   - key: label.enhanced_transform_inspector.help
     translate: "\u30D8\u30EB\u30D7"
-    tooltip: 
-    useTooltip: 0
-    tooltipSuffix: :tooltip
-  - key: label.enhanced_transform_inspector.helpText
-    translate: "=x, E(x) -> \u7D76\u5BFE\u5024\u8A2D\u5B9A\n+x, A(x) -> \u52A0\u7B97\n*x,
-      M(x) -> \u4E57\u7B97\n/x, D(x) -> \u9664\u7B97\nL(start, step) -> \u7DDA\u5F62\u30B7\u30FC\u30B1\u30F3\u30B9\nR(min,
-      max) -> \u30E9\u30F3\u30C0\u30E0\nI(start, end) -> \u88DC\u9593\ni(start, end)
-      -> \u9006\u88DC\u9593\nLL(min, max) -> \u30AF\u30E9\u30F3\u30D7\nRR(center,
-      step) -> \u30DF\u30E9\u30FC\nTT(start, count) -> \u30B9\u30C6\u30C3\u30D7\u30B7\u30FC\u30B1\u30F3\u30B9\nP(start,
-      end) -> \u30D4\u30F3\u30DD\u30F3\nNN(origin, step) -> \u8DDD\u96E2\u30D9\u30FC\u30B9\nAA(centerAngle,
-      step) -> \u89D2\u5EA6\u30D9\u30FC\u30B9\nN(scale, min, max) -> \u30CE\u30A4\u30BA"
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
@@ -596,6 +585,112 @@ MonoBehaviour:
     tooltipSuffix: :tooltip
   - key: label.list_empty
     translate: "\u9805\u76EE\u304C\u3042\u308A\u307E\u305B\u3093"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_hint
+    translate: "\u3044\u305A\u308C\u304B\u306E\u8EF8\u306B\u5165\u529B\u3057\u3001Enter
+      \u304B\u5916\u5074\u3092\u30AF\u30EA\u30C3\u30AF\u3067\u9069\u7528\u3002\u8907\u6570\u9078\u629E\u6642\u306F\u3059\u3079\u3066\u306E\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8\u306B\u9069\u7528\u3055\u308C\u307E\u3059\u3002"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_copy_hint
+    translate: "\u884C\u3092\u30AF\u30EA\u30C3\u30AF\u3059\u308B\u3068\u4F8B\u3092\u30B3\u30D4\u30FC\u3067\u304D\u307E\u3059\u3002"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_group_basic
+    translate: "\u57FA\u672C"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_group_order
+    translate: "\u6574\u5217\uFF08\u8907\u6570\u9078\u629E\uFF09"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_group_random
+    translate: "\u30E9\u30F3\u30C0\u30E0\u3068\u5236\u9650"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_expr_absolute
+    translate: "\u6307\u5B9A\u3057\u305F\u5024\u306B\u8A2D\u5B9A"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_expr_additive
+    translate: "\u73FE\u5728\u5024\u306B\u52A0\u7B97"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_expr_multiply
+    translate: "\u73FE\u5728\u5024\u306B\u4E57\u7B97"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_expr_division
+    translate: "\u73FE\u5728\u5024\u3092\u9664\u7B97"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_expr_linear
+    translate: "\u958B\u59CB\u5024\u304B\u3089\u4E00\u5B9A\u9593\u9694\u3067\u4E26\u3079\u308B"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_expr_interpolate
+    translate: "\u958B\u59CB\u304B\u3089\u7D42\u4E86\u307E\u3067\u5747\u7B49\u306B\u914D\u7F6E"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_expr_interpolate_reverse
+    translate: "\u7D42\u4E86\u304B\u3089\u958B\u59CB\u3078\u5747\u7B49\u306B\u914D\u7F6E"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_expr_mirror
+    translate: "\u4E2D\u5FC3\u3092\u57FA\u6E96\u306B\u5BFE\u79F0\u914D\u7F6E"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_expr_step
+    translate: "N \u500B\u3054\u3068\u306B\u7E70\u308A\u8FD4\u3059"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_expr_pingpong
+    translate: "2 \u3064\u306E\u5024\u306E\u9593\u3067\u5F80\u5FA9"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_expr_distance
+    translate: "\u6700\u521D\u306E\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8\u304B\u3089\u306E\u8DDD\u96E2\u9806"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_expr_angle
+    translate: "\u539F\u70B9\u304B\u3089\u306E\u89D2\u5EA6\u9806"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_expr_random
+    translate: "\u7BC4\u56F2\u5185\u3067\u30E9\u30F3\u30C0\u30E0"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_expr_clamp
+    translate: "\u73FE\u5728\u5024\u3092\u7BC4\u56F2\u5185\u306B\u5236\u9650"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_expr_noise
+    translate: "Perlin \u30CE\u30A4\u30BA\u3067\u5206\u5E03"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_copied
+    translate: "\u30B3\u30D4\u30FC\u3057\u307E\u3057\u305F"
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip

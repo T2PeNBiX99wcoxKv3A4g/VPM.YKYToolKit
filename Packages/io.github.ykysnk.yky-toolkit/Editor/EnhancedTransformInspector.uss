@@ -51,6 +51,77 @@
     margin-top: 6px;
 }
 
+/* ---------- expression cheat sheet ---------- */
+
+.transform-help {
+    padding: 2px 2px 4px 2px;
+}
+
+.transform-help__hint {
+    margin: 0 0 6px 0;
+    font-size: 10px;
+    color: rgba(150, 150, 150, 0.95);
+    white-space: normal;
+}
+
+.transform-help__group {
+    margin-bottom: 6px;
+}
+
+.transform-help__group-title {
+    margin: 4px 0 2px 2px;
+    font-size: 10px;
+    -unity-font-style: bold;
+    color: rgb(120, 165, 255);
+}
+
+.transform-help__row {
+    flex-direction: row;
+    align-items: center;
+    min-height: 18px;
+    padding: 1px 4px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.transform-help__row:hover {
+    background-color: rgba(76, 141, 255, 0.14);
+}
+
+.transform-help__syntax {
+    width: 96px;
+    min-width: 96px;
+    font-size: 10px;
+    -unity-font-style: bold;
+    color: rgb(160, 195, 255);
+}
+
+.transform-help__description {
+    flex-grow: 1;
+    flex-shrink: 1;
+    font-size: 10px;
+    color: rgba(195, 195, 195, 0.95);
+    white-space: normal;
+}
+
+.transform-help__alt {
+    margin-left: 6px;
+    font-size: 9px;
+    color: rgba(150, 150, 150, 0.85);
+}
+
+.transform-help__copied {
+    color: rgb(125, 220, 150);
+}
+
+.transform-help__copy-hint {
+    margin-top: 2px;
+    font-size: 9px;
+    color: rgba(140, 140, 140, 0.85);
+}
+
 .transform-path .unity-base-field__label {
     min-width: 90px;
 }

@@ -201,9 +201,6 @@ msgstr "清除父物件"
 msgid "label.enhanced_transform_inspector.help"
 msgstr "說明"
 
-msgid "label.enhanced_transform_inspector.helpText"
-msgstr "=x, E(x) -> 絕對值\n+x, A(x) -> 加法\n*x, M(x) -> 乘法\n/x, D(x) -> 除法\nL(start, step) -> 線性序列\nR(min, max) -> 隨機\nI(start, end) -> 插值\ni(start, end) -> 反向插值\nLL(min, max) -> 限制\nRR(center, step) -> 鏡像\nTT(start, count) -> 步進序列\nP(start, end) -> 乒乓\nNN(origin, step) -> 基於距離\nAA(centerAngle, step) -> 基於角度\nN(scale, min, max) -> 雜訊"
-
 msgid "label.copy"
 msgstr "複製"
 
@@ -350,4 +347,67 @@ msgstr "套件"
 
 msgid "label.list_empty"
 msgstr "沒有項目"
+
+msgid "label.enhanced_transform_inspector.help_hint"
+msgstr "在任一軸欄位輸入後按 Enter 或點擊其他位置套用；多選時會套用到所有物件。"
+
+msgid "label.enhanced_transform_inspector.help_copy_hint"
+msgstr "點擊任一列可複製範例。"
+
+msgid "label.enhanced_transform_inspector.help_group_basic"
+msgstr "基本"
+
+msgid "label.enhanced_transform_inspector.help_group_order"
+msgstr "排列（多選）"
+
+msgid "label.enhanced_transform_inspector.help_group_random"
+msgstr "隨機與限制"
+
+msgid "label.enhanced_transform_inspector.help_expr_absolute"
+msgstr "設定為指定值"
+
+msgid "label.enhanced_transform_inspector.help_expr_additive"
+msgstr "加上目前值"
+
+msgid "label.enhanced_transform_inspector.help_expr_multiply"
+msgstr "乘上目前值"
+
+msgid "label.enhanced_transform_inspector.help_expr_division"
+msgstr "除以目前值"
+
+msgid "label.enhanced_transform_inspector.help_expr_linear"
+msgstr "從起點開始，依固定間距排列"
+
+msgid "label.enhanced_transform_inspector.help_expr_interpolate"
+msgstr "從起點到終點平均分佈"
+
+msgid "label.enhanced_transform_inspector.help_expr_interpolate_reverse"
+msgstr "從終點到起點平均分佈"
+
+msgid "label.enhanced_transform_inspector.help_expr_mirror"
+msgstr "以中心點對稱排列"
+
+msgid "label.enhanced_transform_inspector.help_expr_step"
+msgstr "每 N 個物件重複排列"
+
+msgid "label.enhanced_transform_inspector.help_expr_pingpong"
+msgstr "在兩值之間來回"
+
+msgid "label.enhanced_transform_inspector.help_expr_distance"
+msgstr "依與第一個物件的距離排序"
+
+msgid "label.enhanced_transform_inspector.help_expr_angle"
+msgstr "依與原點的角度排序"
+
+msgid "label.enhanced_transform_inspector.help_expr_random"
+msgstr "在範圍內隨機"
+
+msgid "label.enhanced_transform_inspector.help_expr_clamp"
+msgstr "將目前值限制在範圍內"
+
+msgid "label.enhanced_transform_inspector.help_expr_noise"
+msgstr "以 Perlin 雜訊分佈"
+
+msgid "label.enhanced_transform_inspector.help_copied"
+msgstr "已複製"
 

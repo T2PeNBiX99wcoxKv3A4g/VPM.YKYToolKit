@@ -349,45 +349,6 @@ MonoBehaviour:
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
-  - key: label.enhanced_transform_inspector.helpText
-    translate: '=x, E(x) -> Absolute
-
-      +x, A(x) -> Additive
-
-      *x, M(x)
-      -> Multiply
-
-      /x, D(x) -> Division
-
-      L(start, step) -> Linear
-
-      R(min,
-      max) -> Random
-
-      I(start, end) -> Interpolate
-
-      i(start, end) ->
-      Interpolate Reverse
-
-      LL(min, max) -> Clamp
-
-      RR(center, step) ->
-      Mirror
-
-      TT(start, count) -> Step
-
-      P(start, end) -> Ping Pong
-
-      NN(origin,
-      step) -> Distance
-
-      AA(centerAngle, step) -> Angle
-
-      N(scale, min,
-      max) -> Noise'
-    tooltip: 
-    useTooltip: 0
-    tooltipSuffix: :tooltip
   - key: label.copy
     translate: Copy
     tooltip: 
@@ -631,6 +592,112 @@ MonoBehaviour:
     tooltipSuffix: :tooltip
   - key: label.list_empty
     translate: No items
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_hint
+    translate: Type into any axis, then press Enter or click elsewhere. With a multi-selection
+      every object is changed.
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_copy_hint
+    translate: Click a row to copy its example.
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_group_basic
+    translate: Basic
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_group_order
+    translate: Order (multi-selection)
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_group_random
+    translate: Random and limits
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_expr_absolute
+    translate: Set a fixed value
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_expr_additive
+    translate: Add to the current value
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_expr_multiply
+    translate: Multiply the current value
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_expr_division
+    translate: Divide the current value
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_expr_linear
+    translate: Start value, then a fixed step
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_expr_interpolate
+    translate: Spread evenly from start to end
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_expr_interpolate_reverse
+    translate: Spread evenly from end to start
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_expr_mirror
+    translate: Mirror around a center
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_expr_step
+    translate: Repeat every N objects
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_expr_pingpong
+    translate: Bounce between two values
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_expr_distance
+    translate: Order by distance from the first object
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_expr_angle
+    translate: Order by angle around the origin
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_expr_random
+    translate: Random value in a range
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_expr_clamp
+    translate: Keep the current value inside a range
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_expr_noise
+    translate: Perlin noise between min and max
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.enhanced_transform_inspector.help_copied
+    translate: Copied
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip

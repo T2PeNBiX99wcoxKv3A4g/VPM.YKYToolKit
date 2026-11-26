@@ -201,9 +201,6 @@ msgstr "Clear Parent"
 msgid "label.enhanced_transform_inspector.help"
 msgstr "Help"
 
-msgid "label.enhanced_transform_inspector.helpText"
-msgstr "=x, E(x) -> Absolute\n+x, A(x) -> Additive\n*x, M(x) -> Multiply\n/x, D(x) -> Division\nL(start, step) -> Linear\nR(min, max) -> Random\nI(start, end) -> Interpolate\ni(start, end) -> Interpolate Reverse\nLL(min, max) -> Clamp\nRR(center, step) -> Mirror\nTT(start, count) -> Step\nP(start, end) -> Ping Pong\nNN(origin, step) -> Distance\nAA(centerAngle, step) -> Angle\nN(scale, min, max) -> Noise"
-
 msgid "label.copy"
 msgstr "Copy"
 
@@ -350,4 +347,67 @@ msgstr "Packages"
 
 msgid "label.list_empty"
 msgstr "No items"
+
+msgid "label.enhanced_transform_inspector.help_hint"
+msgstr "Type into any axis, then press Enter or click elsewhere. With a multi-selection every object is changed."
+
+msgid "label.enhanced_transform_inspector.help_copy_hint"
+msgstr "Click a row to copy its example."
+
+msgid "label.enhanced_transform_inspector.help_group_basic"
+msgstr "Basic"
+
+msgid "label.enhanced_transform_inspector.help_group_order"
+msgstr "Order (multi-selection)"
+
+msgid "label.enhanced_transform_inspector.help_group_random"
+msgstr "Random and limits"
+
+msgid "label.enhanced_transform_inspector.help_expr_absolute"
+msgstr "Set a fixed value"
+
+msgid "label.enhanced_transform_inspector.help_expr_additive"
+msgstr "Add to the current value"
+
+msgid "label.enhanced_transform_inspector.help_expr_multiply"
+msgstr "Multiply the current value"
+
+msgid "label.enhanced_transform_inspector.help_expr_division"
+msgstr "Divide the current value"
+
+msgid "label.enhanced_transform_inspector.help_expr_linear"
+msgstr "Start value, then a fixed step"
+
+msgid "label.enhanced_transform_inspector.help_expr_interpolate"
+msgstr "Spread evenly from start to end"
+
+msgid "label.enhanced_transform_inspector.help_expr_interpolate_reverse"
+msgstr "Spread evenly from end to start"
+
+msgid "label.enhanced_transform_inspector.help_expr_mirror"
+msgstr "Mirror around a center"
+
+msgid "label.enhanced_transform_inspector.help_expr_step"
+msgstr "Repeat every N objects"
+
+msgid "label.enhanced_transform_inspector.help_expr_pingpong"
+msgstr "Bounce between two values"
+
+msgid "label.enhanced_transform_inspector.help_expr_distance"
+msgstr "Order by distance from the first object"
+
+msgid "label.enhanced_transform_inspector.help_expr_angle"
+msgstr "Order by angle around the origin"
+
+msgid "label.enhanced_transform_inspector.help_expr_random"
+msgstr "Random value in a range"
+
+msgid "label.enhanced_transform_inspector.help_expr_clamp"
+msgstr "Keep the current value inside a range"
+
+msgid "label.enhanced_transform_inspector.help_expr_noise"
+msgstr "Perlin noise between min and max"
+
+msgid "label.enhanced_transform_inspector.help_copied"
+msgstr "Copied"
 
