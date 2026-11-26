@@ -37,6 +37,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private Label? _detailTitle;
         private Label? _emptyLabel;
 
+        // Ids keep increasing across selections, so the tree never mistakes an old row for a new one.
+        private int _nodeIdSeed;
+
         private void CreateGUI()
         {
             var tree = uxml!.CloneTree();
@@ -280,8 +283,14 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 _detailTitle.text = $"{group.LocalTime:HH:mm:ss}  ({group.RecordCount})";
 
             var records = group.Sessions.SelectMany(session => session.records).ToList();
-            var nextId = 0;
-            _tree.SetRootItems(BuildTree(records, ref nextId).Select(CreateTreeViewItem).ToList());
+            _tree.ClearSelection();
+            _tree.SetRootItems(BuildTree(records, ref _nodeIdSeed).Select(CreateTreeViewItem).ToList());
+            _tree.schedule.Execute(() =>
+            {
+                // Expansion state does not follow new items, so the files stay hidden until every item is expanded.
+                _tree.ExpandAll();
+                _tree.ScrollToItem(0);
+            }).ExecuteLater(0);
         }
 
         private void ClearDetail()
@@ -328,7 +337,32 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             }
 
             SortTree(rootNodes);
-            return rootNodes;
+            return rootNodes.Select(Compact).ToList();
+        }
+
+        /// <summary>
+        ///     Collapses a chain of folders that each hold a single folder into one row, so a deep import path reads as
+        ///     one line and the file that changed is visible without scrolling.
+        /// </summary>
+        private static Node Compact(Node node)
+        {
+            var name = node.Name;
+            var fullPath = node.FullPath;
+            var current = node;
+
+            while (current.Children.Count == 1 && current.Children[0].Children.Count > 0)
+            {
+                var child = current.Children[0];
+                name = $"{name}/{child.Name}";
+                fullPath = child.FullPath;
+                current = child;
+            }
+
+            var compact = new Node(name, fullPath, node.Id);
+            foreach (var child in current.Children)
+                compact.Children.Add(Compact(child));
+
+            return compact;
         }
 
         private static TreeViewItemData<Node> CreateTreeViewItem(Node node)
