@@ -7,7 +7,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
     {
         internal const string Name = "YKYToolkit";
 
-        private const int Separator = 11;
+        private const int Separator = 11 * 2;
         internal const int One = 10;
         internal const int Two = One + Separator;
         internal const int Three = Two + Separator;
