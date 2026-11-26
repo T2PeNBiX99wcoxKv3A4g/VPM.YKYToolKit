@@ -10,31 +10,21 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private const string PlaceholderKey = "label.search";
 
         /// <summary>
-        ///     A toolbar search field has no placeholder and the shared button style clears the magnifier, so this adds
-        ///     both and turns the clear button into a visible "x".
+        ///     The toolbar search field has no placeholder and the shared button style clears the magnifier, so this
+        ///     restores the look and puts the hint on the tooltip.
+        ///     <para>
+        ///         The placeholder is deliberately not a Label inside the field: in this Unity version the field can
+        ///         read an added text element as its own value, which fired the search callback and filtered every
+        ///         list entry away after a reload.
+        ///     </para>
         /// </summary>
         internal static void SetupSearchField(this ToolbarSearchField field)
         {
             field.AddToClassList("yky-search");
-
-            var placeholder = new Label(PlaceholderKey.S()) { pickingMode = PickingMode.Ignore };
-            placeholder.AddToClassList("yky-search__placeholder");
-            field.Add(placeholder);
-
-            var registration = PlaceholderKey.Register((text, _) => placeholder.text = text);
-            field.RegisterCallback<DetachFromPanelEvent>(_ => registration.Dispose());
-
-            void Update() =>
-                placeholder.style.display = string.IsNullOrEmpty(field.value) ? DisplayStyle.Flex : DisplayStyle.None;
-
-            field.RegisterValueChangedCallback(_ => Update());
-            Update();
+            field.tooltip = PlaceholderKey.S();
 
             if (field.Q<Button>("unity-cancel") is { } cancel)
-            {
                 cancel.text = "×";
-                cancel.AddToClassList("yky-search__cancel");
-            }
         }
     }
 }

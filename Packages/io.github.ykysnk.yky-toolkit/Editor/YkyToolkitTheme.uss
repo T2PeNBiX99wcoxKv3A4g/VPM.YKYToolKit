@@ -339,14 +339,6 @@ ToolbarButton:hover,
     border-color: rgba(96, 141, 235, 0.70);
 }
 
-.yky-search__placeholder {
-    position: absolute;
-    left: 24px;
-    top: 2px;
-    font-size: 11px;
-    color: rgba(168, 178, 195, 0.80);
-}
-
 .yky-search .unity-search-field-base__search-button {
     width: 18px;
     min-width: 18px;
