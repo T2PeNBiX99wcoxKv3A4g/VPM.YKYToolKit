@@ -4,7 +4,7 @@
         <ui:HelpBox name="info" message-type="Warning" text="label.enhanced_transform_database.info"/>
         <ui:ListView binding-path="entries" name="entries" virtualization-method="DynamicHeight"
                      show-alternating-row-backgrounds="ContentOnly" reorder-mode="Animated"
-                     show-bound-collection-size="false" selection-type="Multiple" show-border="true"
+                     show-bound-collection-size="false" selection-type="Multiple"
                      class="yky-list"/>
     </ui:VisualElement>
 </ui:UXML>

@@ -43,7 +43,7 @@
                 <ui:ListView header-title="label.import_watcher.file_extension_colors" reorder-mode="Animated"
                              show-add-remove-footer="true" show-foldout-header="true" reorderable="true"
                              show-alternating-row-backgrounds="ContentOnly" selection-type="Multiple"
-                             show-border="true" virtualization-method="DynamicHeight"
+                             virtualization-method="DynamicHeight"
                              name="importWatcherFileExtensionColors" class="yky-list"/>
             </ui:VisualElement>
         </ui:VisualElement>

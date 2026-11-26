@@ -154,12 +154,6 @@ Button:active,
     white-space: normal;
 }
 
-/* Editable cells in a list keep the row clean: no dark input box inside the row. */
-.yky-list .unity-base-text-field__input {
-    background-color: transparent;
-    border-width: 0;
-}
-
 /* ---------- language picker ---------- */
 
 PopupField {
