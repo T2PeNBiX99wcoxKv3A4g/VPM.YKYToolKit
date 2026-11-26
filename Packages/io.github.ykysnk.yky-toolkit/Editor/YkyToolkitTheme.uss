@@ -352,6 +352,16 @@ ListView > .unity-list-view__footer {
     flex-grow: 1;
 }
 
+.yky-list-reset {
+    margin-left: 10px;
+}
+
+/* The footer's own button rule sets the margin with two classes, so this selector has to match it to keep the
+   extra offset. */
+.unity-list-view__footer .yky-list-reset {
+    margin-left: 10px;
+}
+
 /* The reset icon is used in a card title and in the list footer. The footer clears its button images, so this rule
    has to come after it to keep the icon on the footer button. */
 .yky-icon-button.yky-button-icon--reset,
