@@ -11,11 +11,11 @@
                 <uie:ToolbarSearchField name="search" class="yky-import-log__search"/>
             </uie:Toolbar>
             <ui:VisualElement class="yky-import-log__body">
-                <ui:VisualElement class="yky-import-log__dates">
+                <ui:VisualElement name="dateColumn" class="yky-import-log__dates">
                     <ui:ListView name="importLogList" selection-type="Single" virtualization-method="DynamicHeight"
                                  show-alternating-row-backgrounds="None" class="yky-list yky-import-log__sessions"/>
                 </ui:VisualElement>
-                <ui:VisualElement class="yky-import-log__times">
+                <ui:VisualElement name="timeColumn" class="yky-import-log__times">
                     <ui:ListView name="importLogTimes" selection-type="Single" virtualization-method="DynamicHeight"
                                  show-alternating-row-backgrounds="None" class="yky-list yky-import-log__sessions"/>
                 </ui:VisualElement>

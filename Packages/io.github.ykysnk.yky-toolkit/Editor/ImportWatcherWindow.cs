@@ -28,6 +28,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         private ListView? _dateList;
         private ListView? _timeList;
+        private VisualElement? _dateColumn;
+        private VisualElement? _timeColumn;
         private TreeView? _tree;
         private Label? _detailTitle;
         private Label? _emptyLabel;
@@ -46,6 +48,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             _dateList = tree.Q<ListView>("importLogList");
             _timeList = tree.Q<ListView>("importLogTimes");
+            _dateColumn = tree.Q<VisualElement>("dateColumn");
+            _timeColumn = tree.Q<VisualElement>("timeColumn");
             _tree = tree.Q<TreeView>("importLogTree");
             _detailTitle = tree.Q<Label>("importLogDetailTitle");
             _emptyLabel = tree.Q<Label>("importLogEmpty");
@@ -267,12 +271,17 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var hasDates = _dates.Count > 0;
             if (_emptyLabel != null)
                 _emptyLabel.style.display = hasDates ? DisplayStyle.None : DisplayStyle.Flex;
+            if (_dateColumn != null)
+                _dateColumn.style.display = hasDates ? DisplayStyle.Flex : DisplayStyle.None;
+            if (_timeColumn != null)
+                _timeColumn.style.display = hasDates ? DisplayStyle.Flex : DisplayStyle.None;
             if (_tree != null) _tree.style.display = hasDates ? DisplayStyle.Flex : DisplayStyle.None;
             if (_detailTitle != null)
                 _detailTitle.style.display = hasDates ? DisplayStyle.Flex : DisplayStyle.None;
 
             if (!hasDates)
             {
+                ClearTimes();
                 ClearDetail();
                 return;
             }
@@ -280,6 +289,15 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var index = selectedDate.HasValue ? _dates.FindIndex(group => group.Date == selectedDate.Value) : -1;
             _dateList.SetSelection(index >= 0 ? index : 0);
             ShowSelectedDate();
+        }
+
+        private void ClearTimes()
+        {
+            _times.Clear();
+            if (_timeList == null) return;
+
+            _timeList.itemsSource = _times;
+            _timeList.Rebuild();
         }
 
         private bool MatchesFilter(ImportRecord record)
