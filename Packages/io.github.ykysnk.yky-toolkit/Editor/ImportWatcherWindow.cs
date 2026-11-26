@@ -42,8 +42,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         private void CreateGUI()
         {
-            HistoryDebug.Log("iw", "CreateGUI begin h=" + rootVisualElement.layout.height + " w=" + rootVisualElement.layout.width);
-
             var tree = uxml!.CloneTree();
             tree.UILocalize(false);
             tree.style.flexGrow = 1;
@@ -87,7 +85,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             search.SetupSearchField(text =>
             {
                 _filter = text;
-                HistoryDebug.Log("iw", "filter=[" + text + "]");
                 RebuildLog();
             });
 
@@ -97,7 +94,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             _laidOut = rootVisualElement.layout.height > 0;
             rootVisualElement.RegisterCallback<GeometryChangedEvent>(evt =>
             {
-                HistoryDebug.Log("iw", "geometry h=" + evt.newRect.height + " w=" + evt.newRect.width + " laidOut=" + _laidOut);
                 if (_laidOut || evt.newRect.height <= 0) return;
                 _laidOut = true;
                 RefreshImportLog();
@@ -122,7 +118,12 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             var label = new Label();
             label.AddToClassList("import-log-date__label");
+
+            var count = new Label();
+            count.AddToClassList("yky-count");
+
             row.Add(label);
+            row.Add(count);
 
             return row;
         }
@@ -130,16 +131,21 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private void BindDateRow(VisualElement element, int index)
         {
             var label = element.Q<Label>(className: "import-log-date__label");
+            var count = element.Q<Label>(className: "yky-count");
+
             if (index < 0 || index >= _dates.Count)
             {
                 element.userData = null;
                 label.text = string.Empty;
+                count.text = string.Empty;
                 return;
             }
 
             var group = _dates[index];
             element.userData = group;
             label.text = group.Date.ToString(DateFormat);
+            // A date opens the time column, so the badge counts those rows, as the delete history does.
+            count.text = group.Times.Count.ToString();
         }
 
         private static VisualElement CreateTimeRow()
@@ -260,7 +266,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             }
 
             if (_emptyReloads++ >= 2) return;
-            HistoryDebug.Log("iw", "history empty, retry " + _emptyReloads);
             rootVisualElement.schedule.Execute(RefreshImportLog).ExecuteLater(500);
         }
 
@@ -299,10 +304,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             }
 
             if (_dateList == null) return;
-
-            HistoryDebug.Log("iw",
-                "rebuild sessions=" + _sessions.Count + " dates=" + _dates.Count + " filter=[" + _filter +
-                "] listH=" + _dateList.layout.height + " rootH=" + rootVisualElement.layout.height);
 
             _dateList.itemsSource = _dates;
             _dateList.Rebuild();

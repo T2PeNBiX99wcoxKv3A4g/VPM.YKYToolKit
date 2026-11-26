@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using io.github.ykysnk.utils.NonUdon;
 using UnityEditor;
+using UnityEngine;
 
 namespace io.github.ykysnk.ykyToolkit.Editor
 {
@@ -63,7 +64,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             if (JsonUtils.TryFromJson<ListWrapper<DeleteRecord>>(json, out var list, out var exception))
                 return list!.items;
 
-            HistoryDebug.Log("history", "delete history unreadable len=" + json.Length + " ex=" + exception?.Message);
+            // A file that exists but cannot be parsed would otherwise look like an empty history.
+            if (!string.IsNullOrEmpty(json))
+                Debug.LogWarning($"[YKYToolkit] Could not read {HistoryFileName}: {exception?.Message}");
+
             return new();
         }
 

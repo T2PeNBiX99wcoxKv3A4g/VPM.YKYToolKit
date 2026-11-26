@@ -47,8 +47,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         private void CreateGUI()
         {
-            HistoryDebug.Log("dh", "CreateGUI begin h=" + rootVisualElement.layout.height + " w=" + rootVisualElement.layout.width);
-
             var tree = uxml!.CloneTree();
             tree.UILocalize(false);
             tree.style.flexGrow = 1;
@@ -85,7 +83,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             search.SetupSearchField(text =>
             {
                 _filter = text;
-                HistoryDebug.Log("dh", "filter=[" + text + "]");
                 RebuildDates();
             });
 
@@ -94,7 +91,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             _laidOut = rootVisualElement.layout.height > 0;
             rootVisualElement.RegisterCallback<GeometryChangedEvent>(evt =>
             {
-                HistoryDebug.Log("dh", "geometry h=" + evt.newRect.height + " w=" + evt.newRect.width + " laidOut=" + _laidOut);
                 if (_laidOut || evt.newRect.height <= 0) return;
                 _laidOut = true;
                 Refresh();
@@ -321,7 +317,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             }
 
             if (_emptyReloads++ >= 2) return;
-            HistoryDebug.Log("dh", "history empty, retry " + _emptyReloads);
             rootVisualElement.schedule.Execute(Refresh).ExecuteLater(500);
         }
 
@@ -351,10 +346,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             }
 
             if (_dateList == null) return;
-
-            HistoryDebug.Log("dh",
-                "rebuild all=" + _all.Count + " dates=" + _dates.Count + " filter=[" + _filter +
-                "] listH=" + _dateList.layout.height + " rootH=" + rootVisualElement.layout.height);
 
             _dateList.itemsSource = _dates;
             _dateList.Rebuild();
