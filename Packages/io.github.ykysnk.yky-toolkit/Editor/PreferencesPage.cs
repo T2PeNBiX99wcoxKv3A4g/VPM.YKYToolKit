@@ -13,7 +13,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 {
     internal static class PreferencesPage
     {
-        [MenuItem("Tools/YKYToolkit/Preferences", false, Util.One)]
+        [MenuItem("Tools/YKYToolkit/Preferences", false, Util.Top)]
         private static void OpenPreferences() => SettingsService.OpenUserPreferences("Preferences/YKYToolkit");
 
         [SettingsProvider]

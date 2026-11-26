@@ -14,6 +14,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         internal const int Four = Three + Separator;
         internal const int Five = Four + Separator;
 
+        // A group above the first one, with a full separator gap below it.
+        internal const int Top = One - Separator;
+
         internal const int One2 = 1000;
         internal const int Two2 = One2 + Separator;
         internal const int Three2 = Two2 + Separator;
