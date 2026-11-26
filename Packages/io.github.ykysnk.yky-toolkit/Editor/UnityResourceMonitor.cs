@@ -38,20 +38,32 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             var container = tree.Q<VisualElement>("metrics");
             _metrics.Clear();
-            _metrics.Add(AddMetric(container, 0, "CPU Usage",
-                "Editor process CPU usage over the last 100 ms."));
-            _metrics.Add(AddMetric(container, 1, "Mono Used",
-                "Managed heap in use / managed heap size."));
-            _metrics.Add(AddMetric(container, 2, "Reserved Memory",
-                "Memory Unity has reserved / total system memory."));
-            _metrics.Add(AddMetric(container, 3, "Allocated Memory",
-                "Memory Unity is using / memory it has reserved."));
-            _metrics.Add(AddMetric(container, 4, "Graphics Memory",
-                "Memory allocated for the graphics driver / video memory."));
-            _metrics.Add(AddMetric(container, 5, "Free Reserved",
-                "Reserved memory that is not in use right now."));
-            _metrics.Add(AddMetric(container, 6, "Temp Allocator",
-                "Size of the temporary native allocator, which render textures and short-lived buffers use."));
+            AddMetric(container, "CPU Usage", "Editor process CPU usage over the last 100 ms.",
+                row => row.Update(SampleCpuPercent(), 100, PercentText));
+            AddMetric(container, "Mono Used", "Managed heap in use / managed heap size.",
+                row => row.Update(Profiler.GetMonoUsedSizeLong() / Megabyte,
+                    Profiler.GetMonoHeapSizeLong() / Megabyte, MegabyteText));
+            AddMetric(container, "Reserved Memory", "Memory Unity has reserved / total system memory.",
+                row => row.Update(Profiler.GetTotalReservedMemoryLong() / Megabyte,
+                    SystemInfo.systemMemorySize, MegabyteText));
+            AddMetric(container, "Allocated Memory", "Memory Unity is using / memory it has reserved.",
+                row => row.Update(Profiler.GetTotalAllocatedMemoryLong() / Megabyte,
+                    Math.Max(1, Profiler.GetTotalReservedMemoryLong() / Megabyte), MegabyteText));
+            AddMetric(container, "Graphics Memory",
+                "Memory allocated for the graphics driver / video memory.", row =>
+                {
+                    var graphicsMemory = Profiler.GetAllocatedMemoryForGraphicsDriver() / Megabyte;
+                    var videoMemory = SystemInfo.graphicsMemorySize;
+                    if (videoMemory > 0)
+                        row.Update(graphicsMemory, videoMemory, MegabyteText);
+                    else
+                        row.UpdateAbsolute(graphicsMemory, MegabyteText);
+                });
+            AddMetric(container, "Free Reserved", "Reserved memory that is not in use right now.",
+                row => row.UpdateAbsolute(Profiler.GetTotalUnusedReservedMemoryLong() / Megabyte, MegabyteText));
+            AddMetric(container, "Temp Allocator",
+                "Size of the temporary native allocator, which render textures and short-lived buffers use.",
+                row => row.UpdateAbsolute(Profiler.GetTempAllocatorSize() / Megabyte, MegabyteText));
 
             rootVisualElement.schedule.Execute(UpdateMetrics).Every(RefreshIntervalMs);
 
@@ -69,9 +81,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             _lastCheckTime = EditorApplication.timeSinceStartup;
         }
 
-        private void UpdateMetrics()
+        private long SampleCpuPercent()
         {
-            if (_process == null) return;
+            if (_process == null) return 0;
 
             _process.Refresh();
 
@@ -79,53 +91,25 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var currentCheckTime = EditorApplication.timeSinceStartup;
             var cpuDelta = currentCpuTime - _lastCpuTime;
             var timeDelta = (currentCheckTime - _lastCheckTime) * 1000.0;
-            var cpuUsage = timeDelta > 0 ? cpuDelta / timeDelta * 100.0 / Environment.ProcessorCount : 0;
+            var usage = timeDelta > 0 ? cpuDelta / timeDelta * 100.0 / Environment.ProcessorCount : 0;
 
             _lastCpuTime = currentCpuTime;
             _lastCheckTime = currentCheckTime;
 
-            var reservedMemory = Profiler.GetTotalReservedMemoryLong() / Megabyte;
-            var graphicsMemory = Profiler.GetAllocatedMemoryForGraphicsDriver() / Megabyte;
-            var videoMemory = SystemInfo.graphicsMemorySize;
+            return (long)Math.Round(usage);
+        }
 
+        private void UpdateMetrics()
+        {
             foreach (var metric in _metrics)
             {
-                switch (metric.Row.id)
-                {
-                    case 0:
-                        metric.Row.Update((long)Math.Round(cpuUsage), 100, PercentText);
-                        break;
-                    case 1:
-                        metric.Row.Update(Profiler.GetMonoUsedSizeLong() / Megabyte,
-                            Profiler.GetMonoHeapSizeLong() / Megabyte, MegabyteText);
-                        break;
-                    case 2:
-                        metric.Row.Update(reservedMemory, SystemInfo.systemMemorySize, MegabyteText);
-                        break;
-                    case 3:
-                        metric.Row.Update(Profiler.GetTotalAllocatedMemoryLong() / Megabyte,
-                            Math.Max(1, reservedMemory), MegabyteText);
-                        break;
-                    case 4:
-                        if (videoMemory > 0)
-                            metric.Row.Update(graphicsMemory, videoMemory, MegabyteText);
-                        else
-                            metric.Row.UpdateAbsolute(graphicsMemory, MegabyteText);
-                        break;
-                    case 5:
-                        metric.Row.UpdateAbsolute(Profiler.GetTotalUnusedReservedMemoryLong() / Megabyte,
-                            MegabyteText);
-                        break;
-                    case 6:
-                        metric.Row.UpdateAbsolute(Profiler.GetTempAllocatorSize() / Megabyte, MegabyteText);
-                        break;
-                }
-
+                metric.Sample();
                 metric.Refresh();
             }
         }
 
-        private static MetricView AddMetric(VisualElement parent, int id, string title, string tooltip)
+        private void AddMetric(VisualElement parent, string title, string tooltip,
+            Action<UnityResourceMonitorRow> sample)
         {
             var metric = new VisualElement();
             metric.AddToClassList("yky-metric");
@@ -153,7 +137,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             parent.Add(metric);
 
-            return new MetricView(new UnityResourceMonitorRow(id, title), meter, fill, value);
+            _metrics.Add(new MetricView(new UnityResourceMonitorRow(title), meter, fill, value, sample));
         }
 
         private static string MegabyteText(long value) => $"{value} MB";
@@ -173,23 +157,28 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             private readonly VisualElement _meter;
             private readonly VisualElement _fill;
             private readonly Label _value;
+            private readonly Action<UnityResourceMonitorRow> _sample;
 
-            internal readonly UnityResourceMonitorRow Row;
+            private readonly UnityResourceMonitorRow _row;
 
-            internal MetricView(UnityResourceMonitorRow row, VisualElement meter, VisualElement fill, Label value)
+            internal MetricView(UnityResourceMonitorRow row, VisualElement meter, VisualElement fill, Label value,
+                Action<UnityResourceMonitorRow> sample)
             {
-                Row = row;
+                _row = row;
                 _meter = meter;
                 _fill = fill;
                 _value = value;
+                _sample = sample;
             }
+
+            internal void Sample() => _sample(_row);
 
             internal void Refresh()
             {
-                _value.text = Row.text;
+                _value.text = _row.text;
 
                 // Metrics without a meaningful maximum only show their value.
-                if (Row.maxValue <= 0)
+                if (_row.maxValue <= 0)
                 {
                     _meter.style.display = DisplayStyle.None;
                     _value.style.color = InfoColor;
@@ -198,7 +187,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
                 _meter.style.display = DisplayStyle.Flex;
 
-                var ratio = Mathf.Clamp01((float)Row.value / Row.maxValue);
+                var ratio = Mathf.Clamp01((float)_row.value / _row.maxValue);
                 _fill.style.width = Length.Percent(ratio * 100f);
 
                 var color = ratio >= 0.8f ? CriticalColor : ratio >= 0.6f ? WarningColor : NormalColor;
