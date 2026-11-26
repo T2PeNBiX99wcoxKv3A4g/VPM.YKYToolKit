@@ -716,5 +716,32 @@ MonoBehaviour:
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
+  - key: label.preferences_page.delete_protection
+    translate: Delete protection
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.preferences_page.delete_protection_hint
+    translate: Assets and Packages are always protected. Add extra directories with
+      the + button.
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.preferences_page.extra_protected_directories
+    translate: Extra protected directories
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.new_delete.restricted_title
+    translate: Cannot delete protected directories
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.new_delete.restricted_warning
+    translate: These directories are protected and cannot be deleted. Remove them
+      from the selection and try again.
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   jsonFile: {fileID: 4900000, guid: 6e72198484143e7449ee76937982b4cc, type: 3}
   poFile: {fileID: 9010515335742159986, guid: 220dc13c173d4294c93efe037715c538, type: 3}

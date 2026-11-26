@@ -21,6 +21,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private const string MaxRecordsEditorKey = "YKYToolkit/DeleteHistory/MaxRecords";
         private const int DefaultMaxRecords = 200;
 
+        /// <summary>Raised after the history was written, so an open window can refresh itself.</summary>
+        internal static event Action? Changed;
+
         internal static int MaxRecords
         {
             get => EditorPrefs.GetInt(MaxRecordsEditorKey, DefaultMaxRecords);
@@ -43,6 +46,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var list = LoadInternal();
             list.AddRange(records);
             SaveInternal(list);
+            Changed?.Invoke();
         }
 
         public static List<DeleteRecord> All() => LoadInternal();
@@ -50,6 +54,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         public static void Clear()
         {
             SaveInternal(new());
+            Changed?.Invoke();
         }
 
         private static List<DeleteRecord> LoadInternal()

@@ -134,6 +134,19 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             {
                 var paths = NormalizePaths(guids.Select(AssetDatabase.GUIDToAssetPath));
 
+                // The safety check runs even when the warning window is turned off. One protected path blocks the
+                // whole selection, so a multi-selection cannot delete Assets or Packages by accident.
+                var restricted = paths.Where(DeletePathGuard.IsRestricted).ToList();
+                if (restricted.Count > 0)
+                {
+                    await EditorUtils.DisplayDialogAsync(
+                        "label.new_delete.restricted_title".S(),
+                        new DeleteDialogContent(paths, restricted),
+                        "label.new_delete.ok".S());
+                    Progress.Finish(progressId, Progress.Status.Canceled);
+                    return;
+                }
+
                 if (ShowWarnWindow && !await EditorUtils.DisplayDialogAsync("label.new_delete.title".S(),
                         new DeleteDialogContent(paths),
                         "label.new_delete.ok".S(),

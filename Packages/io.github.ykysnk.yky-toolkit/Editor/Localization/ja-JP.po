@@ -420,3 +420,18 @@ msgstr "Transform のロックを解除"
 msgid "label.enhanced_transform_settings.info"
 msgstr "Transform の追加データを保存します。編集は Transform インスペクターから行います。"
 
+msgid "label.preferences_page.delete_protection"
+msgstr "削除保護"
+
+msgid "label.preferences_page.delete_protection_hint"
+msgstr "Assets と Packages は常に保護されます。追加するディレクトリは + ボタンで追加してください。"
+
+msgid "label.preferences_page.extra_protected_directories"
+msgstr "追加で保護するディレクトリ"
+
+msgid "label.new_delete.restricted_title"
+msgstr "保護ディレクトリは削除できません"
+
+msgid "label.new_delete.restricted_warning"
+msgstr "これらのディレクトリは保護されているため削除できません。選択から外してからもう一度お試しください。"
+

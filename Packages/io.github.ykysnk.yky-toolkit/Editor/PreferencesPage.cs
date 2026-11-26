@@ -13,6 +13,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 {
     internal static class PreferencesPage
     {
+        [MenuItem("Tools/YKYToolkit/Preferences", false, Util.One)]
+        private static void OpenPreferences() => SettingsService.OpenUserPreferences("Preferences/YKYToolkit");
+
         [SettingsProvider]
         public static SettingsProvider CreateMyPreferencesProvider()
         {
@@ -72,6 +75,68 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     deleteSelectedWarnWindowToggle.SetValueWithoutNotify(NewDelete.ShowWarnWindow);
                     deleteSelectedWarnWindowToggle.RegisterValueChangedCallback(evt =>
                         NewDelete.ShowWarnWindow = evt.newValue);
+
+                    var protectedDirectories = new List<string>(DeletePathGuard.ExtraProtectedDirectories);
+                    var protectedCount = tree.Q<Label>("protectedDirectoryCount");
+                    var protectedList = tree.Q<ListView>("extraProtectedDirectories");
+
+                    void UpdateProtectedCount()
+                    {
+                        if (protectedCount != null) protectedCount.text = protectedDirectories.Count.ToString();
+                    }
+
+                    void SaveProtected()
+                    {
+                        DeletePathGuard.ExtraProtectedDirectories = protectedDirectories;
+                        UpdateProtectedCount();
+                    }
+
+                    protectedList.makeItem = () =>
+                    {
+                        var row = new VisualElement();
+                        row.AddToClassList("row");
+
+                        var field = new TextField { name = "path" };
+                        field.AddToClassList("cell");
+                        field.RegisterValueChangedCallback(evt =>
+                        {
+                            if (row.userData is not int index || index < 0 || index >= protectedDirectories.Count)
+                                return;
+                            protectedDirectories[index] = evt.newValue;
+                            SaveProtected();
+                        });
+
+                        row.Add(field);
+                        return row;
+                    };
+                    protectedList.bindItem = (element, index) =>
+                    {
+                        element.userData = index;
+                        var text = index >= 0 && index < protectedDirectories.Count
+                            ? protectedDirectories[index]
+                            : "";
+                        element.Q<TextField>("path").SetValueWithoutNotify(text);
+                    };
+                    protectedList.itemsSource = protectedDirectories;
+                    protectedList.Rebuild();
+                    UpdateProtectedCount();
+
+                    void SaveAndRebuildProtected()
+                    {
+                        SaveProtected();
+                        protectedList.Rebuild();
+                    }
+
+                    protectedList.Q<Button>("unity-list-view__add-button").clicked += SaveAndRebuildProtected;
+                    protectedList.Q<Button>("unity-list-view__remove-button").clicked += SaveAndRebuildProtected;
+
+                    tree.Q<Button>("resetDeleteProtection").clicked += () =>
+                    {
+                        DeletePathGuard.ResetExtras();
+                        protectedDirectories.Clear();
+                        protectedList.Rebuild();
+                        UpdateProtectedCount();
+                    };
 
                     var enableDiscordRichPresenceToggle = tree.Q<Toggle>("enableDiscordRichPresence");
                     enableDiscordRichPresenceToggle.SetValueWithoutNotify(DiscordEditorRPC.EnableDiscordRichPresence);

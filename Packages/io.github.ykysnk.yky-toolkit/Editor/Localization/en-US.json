@@ -136,5 +136,10 @@
   "label.enhanced_transform_inspector.section_precision": "Decimal places (-1 = off)",
   "label.enhanced_transform_inspector.align_mode": "Alignment mode",
   "label.enhanced_transform_inspector.unlock_transform": "Unlock transform",
-  "label.enhanced_transform_settings.info": "Stores extra data for the Transform. Edit it in the Transform inspector."
+  "label.enhanced_transform_settings.info": "Stores extra data for the Transform. Edit it in the Transform inspector.",
+  "label.preferences_page.delete_protection": "Delete protection",
+  "label.preferences_page.delete_protection_hint": "Assets and Packages are always protected. Add extra directories with the + button.",
+  "label.preferences_page.extra_protected_directories": "Extra protected directories",
+  "label.new_delete.restricted_title": "Cannot delete protected directories",
+  "label.new_delete.restricted_warning": "These directories are protected and cannot be deleted. Remove them from the selection and try again."
 }

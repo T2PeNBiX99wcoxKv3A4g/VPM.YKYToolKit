@@ -37,6 +37,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private const string MaxSessionsEditorKey = "YKYToolkit/ImportWatcher/MaxSessions";
         private const int DefaultMaxSessions = 100;
 
+        /// <summary>Raised after the history was written, so an open window can refresh itself.</summary>
+        internal static event Action? Changed;
+
         internal static int MaxSessions
         {
             get => EditorPrefs.GetInt(MaxSessionsEditorKey, DefaultMaxSessions);
@@ -51,6 +54,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             list.Add(session);
             Trim(list);
             SaveInternal(list);
+            Changed?.Invoke();
         }
 
         public static List<ImportSession> All() => LoadInternal();
@@ -58,6 +62,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         public static void Clear()
         {
             SaveInternal(new());
+            Changed?.Invoke();
         }
 
         private static List<ImportSession> LoadInternal()

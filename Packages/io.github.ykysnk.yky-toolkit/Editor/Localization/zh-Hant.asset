@@ -710,5 +710,31 @@ MonoBehaviour:
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
+  - key: label.preferences_page.delete_protection
+    translate: "\u522A\u9664\u4FDD\u8B77"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.preferences_page.delete_protection_hint
+    translate: "Assets \u8207 Packages \u6C38\u9060\u53D7\u4FDD\u8B77\u3002\u9EDE\u64CA
+      + \u6309\u9215\u65B0\u589E\u66F4\u591A\u76EE\u9304\u3002"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.preferences_page.extra_protected_directories
+    translate: "\u984D\u5916\u4FDD\u8B77\u7684\u76EE\u9304"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.new_delete.restricted_title
+    translate: "\u7121\u6CD5\u522A\u9664\u53D7\u4FDD\u8B77\u7684\u76EE\u9304"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.new_delete.restricted_warning
+    translate: "\u9019\u4E9B\u76EE\u9304\u53D7\u4FDD\u8B77\uFF0C\u7121\u6CD5\u522A\u9664\u3002\u8ACB\u5F9E\u9078\u53D6\u4E2D\u79FB\u9664\u5F8C\u518D\u8A66\u3002"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   jsonFile: {fileID: 0}
   poFile: {fileID: 0}

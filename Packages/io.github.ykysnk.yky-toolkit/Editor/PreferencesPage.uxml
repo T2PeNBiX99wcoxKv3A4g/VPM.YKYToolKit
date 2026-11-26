@@ -34,6 +34,26 @@
             <ui:VisualElement class="yky-card">
                 <ui:VisualElement class="yky-card__title">
                     <ui:VisualElement class="yky-icon yky-icon--section yky-icon--delete-history"/>
+                    <ui:Label text="label.preferences_page.delete_protection" class="yky-section"/>
+                    <ui:VisualElement class="yky-spacer"/>
+                    <ui:Button name="resetDeleteProtection" tooltip="label.import_watcher.reset_colors"
+                               class="yky-icon-button yky-button-icon--reset"/>
+                </ui:VisualElement>
+                <ui:Label text="label.preferences_page.delete_protection_hint" class="yky-hint"/>
+                <ui:VisualElement class="yky-list-header">
+                    <ui:Label text="label.preferences_page.extra_protected_directories" class="yky-list-title"/>
+                    <ui:Label name="protectedDirectoryCount" text="0" class="yky-count"/>
+                    <ui:VisualElement class="yky-spacer"/>
+                </ui:VisualElement>
+                <ui:ListView name="extraProtectedDirectories" show-add-remove-footer="true"
+                             show-alternating-row-backgrounds="ContentOnly" selection-type="Multiple"
+                             virtualization-method="DynamicHeight"
+                             class="yky-list yky-preferences__protected-list"/>
+            </ui:VisualElement>
+
+            <ui:VisualElement class="yky-card">
+                <ui:VisualElement class="yky-card__title">
+                    <ui:VisualElement class="yky-icon yky-icon--section yky-icon--delete-history"/>
                     <ui:Label text="label.delete_history_manager" class="yky-section"/>
                     <ui:VisualElement class="yky-spacer"/>
                     <ui:Button name="resetDeleteHistory" tooltip="label.import_watcher.reset_colors"

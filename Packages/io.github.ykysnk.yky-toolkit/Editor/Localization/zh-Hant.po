@@ -420,3 +420,18 @@ msgstr "解除變換鎖定"
 msgid "label.enhanced_transform_settings.info"
 msgstr "用於儲存 Transform 的額外資料。請在 Transform 檢視器中編輯。"
 
+msgid "label.preferences_page.delete_protection"
+msgstr "刪除保護"
+
+msgid "label.preferences_page.delete_protection_hint"
+msgstr "Assets 與 Packages 永遠受保護。點擊 + 按鈕新增更多目錄。"
+
+msgid "label.preferences_page.extra_protected_directories"
+msgstr "額外保護的目錄"
+
+msgid "label.new_delete.restricted_title"
+msgstr "無法刪除受保護的目錄"
+
+msgid "label.new_delete.restricted_warning"
+msgstr "這些目錄受保護，無法刪除。請從選取中移除後再試。"
+

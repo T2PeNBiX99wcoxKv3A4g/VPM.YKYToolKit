@@ -136,5 +136,10 @@
   "label.enhanced_transform_inspector.section_precision": "小数点以下の桁数（-1 で無効）",
   "label.enhanced_transform_inspector.align_mode": "整列モード",
   "label.enhanced_transform_inspector.unlock_transform": "Transform のロックを解除",
-  "label.enhanced_transform_settings.info": "Transform の追加データを保存します。編集は Transform インスペクターから行います。"
+  "label.enhanced_transform_settings.info": "Transform の追加データを保存します。編集は Transform インスペクターから行います。",
+  "label.preferences_page.delete_protection": "削除保護",
+  "label.preferences_page.delete_protection_hint": "Assets と Packages は常に保護されます。追加するディレクトリは + ボタンで追加してください。",
+  "label.preferences_page.extra_protected_directories": "追加で保護するディレクトリ",
+  "label.new_delete.restricted_title": "保護ディレクトリは削除できません",
+  "label.new_delete.restricted_warning": "これらのディレクトリは保護されているため削除できません。選択から外してからもう一度お試しください。"
 }

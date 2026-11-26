@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using io.github.ykysnk.Localization.Editor;
@@ -20,8 +21,14 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             "Packages/io.github.ykysnk.yky-toolkit/Editor/DeleteDialogContent.uss";
 
         private readonly List<string> _paths;
+        private readonly HashSet<string> _restricted;
 
-        internal DeleteDialogContent(IEnumerable<string> paths) => _paths = paths.ToList();
+        internal DeleteDialogContent(IEnumerable<string> paths, IEnumerable<string>? restricted = null)
+        {
+            _paths = paths.ToList();
+            _restricted = new HashSet<string>(restricted ?? Enumerable.Empty<string>(),
+                StringComparer.OrdinalIgnoreCase);
+        }
 
         public override Vector2 Size => new(660, 470);
 
@@ -33,8 +40,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>(StyleSheetPath);
             if (styleSheet != null) root.styleSheets.Add(styleSheet);
 
-            var warning = new Label("label.new_delete.warning".S());
+            var warning = new Label((_restricted.Count > 0
+                ? "label.new_delete.restricted_warning"
+                : "label.new_delete.warning").S());
             warning.AddToClassList("delete-dialog__warning");
+            warning.EnableInClassList("delete-dialog__warning--error", _restricted.Count > 0);
             root.Add(warning);
 
             var list = new ListView
@@ -98,6 +108,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             var path = _paths[index];
             element.userData = path;
+            element.EnableInClassList("delete-dialog__row--blocked", _restricted.Contains(path));
             element.Q<ObjectField>("object").SetValueWithoutNotify(AssetDatabase.LoadAssetAtPath<Object>(path));
             element.Q<TextField>("path").SetValueWithoutNotify(path);
         }

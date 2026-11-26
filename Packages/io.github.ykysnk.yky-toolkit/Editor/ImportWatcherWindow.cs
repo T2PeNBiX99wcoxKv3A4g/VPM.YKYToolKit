@@ -36,6 +36,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private int _nodeIdSeed;
 
         private string _filter = string.Empty;
+        private bool _historySubscribed;
 
         private void CreateGUI()
         {
@@ -87,6 +88,15 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             });
 
             RefreshImportLog();
+
+            if (_historySubscribed) return;
+            _historySubscribed = true;
+            ImportHistoryManager.Changed += RefreshImportLog;
+            rootVisualElement.RegisterCallback<DetachFromPanelEvent>(_ =>
+            {
+                ImportHistoryManager.Changed -= RefreshImportLog;
+                _historySubscribed = false;
+            });
         }
 
         private static VisualElement CreateDateRow()

@@ -65,3 +65,16 @@
     height: 220px;
     margin-top: 6px;
 }
+
+.yky-preferences__protected-list {
+    height: 150px;
+    margin-top: 4px;
+}
+
+.yky-preferences ListView.yky-preferences__protected-list {
+    height: 150px;
+}
+
+.yky-preferences__protected-list .unity-text-field {
+    margin: 1px 0;
+}

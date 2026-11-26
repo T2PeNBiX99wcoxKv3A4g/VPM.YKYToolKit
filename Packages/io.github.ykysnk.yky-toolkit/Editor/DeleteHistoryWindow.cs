@@ -41,6 +41,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private Label? _emptyLabel;
 
         private string _filter = string.Empty;
+        private bool _historySubscribed;
 
         private void CreateGUI()
         {
@@ -85,6 +86,15 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             });
 
             Refresh();
+
+            if (_historySubscribed) return;
+            _historySubscribed = true;
+            DeleteHistoryManager.Changed += Refresh;
+            rootVisualElement.RegisterCallback<DetachFromPanelEvent>(_ =>
+            {
+                DeleteHistoryManager.Changed -= Refresh;
+                _historySubscribed = false;
+            });
         }
 
         private static VisualElement CreateDateRow()
