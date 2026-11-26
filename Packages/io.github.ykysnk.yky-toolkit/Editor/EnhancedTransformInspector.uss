@@ -63,7 +63,9 @@
 
 .transform-other__path {
     flex-grow: 1;
-    margin: 0;
+    flex-shrink: 1;
+    min-width: 0;
+    margin: 0 4px 0 0;
 }
 
 .transform-other__path .unity-base-field__label {
@@ -124,13 +126,6 @@
 
 .transform-other__slider .unity-base-slider__input {
     flex-grow: 1;
-}
-
-.transform-other__lock {
-    margin-top: 4px;
-    padding-top: 6px;
-    border-top-width: 1px;
-    border-top-color: rgba(128, 128, 128, 0.22);
 }
 
 /* ---------- expression suggestions ---------- */

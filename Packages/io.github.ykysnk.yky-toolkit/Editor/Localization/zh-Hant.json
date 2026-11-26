@@ -135,5 +135,6 @@
   "label.enhanced_transform_inspector.help_no_match": "沒有符合的表達式。",
   "label.enhanced_transform_inspector.section_alignment": "對齊",
   "label.enhanced_transform_inspector.section_precision": "小數位數（-1 為關閉）",
-  "label.enhanced_transform_inspector.align_mode": "對齊模式"
+  "label.enhanced_transform_inspector.align_mode": "對齊模式",
+  "label.enhanced_transform_inspector.unlock_transform": "解除變換鎖定"
 }

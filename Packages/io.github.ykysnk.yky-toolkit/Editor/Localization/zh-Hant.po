@@ -417,3 +417,6 @@ msgstr "小數位數（-1 為關閉）"
 msgid "label.enhanced_transform_inspector.align_mode"
 msgstr "對齊模式"
 
+msgid "label.enhanced_transform_inspector.unlock_transform"
+msgstr "解除變換鎖定"
+

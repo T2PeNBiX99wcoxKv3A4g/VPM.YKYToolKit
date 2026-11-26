@@ -782,9 +782,9 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 openHelpButton.style.backgroundImage = helpIcon;
             openHelpButton.clicked += TransformHelpWindow.Open;
 
-            var lockTransformToggle = tree.Q<Toggle>("lockTransform");
-            lockTransformToggle.value = exData.lockTransform;
-            lockTransformToggle.RegisterValueChangedCallback(evt =>
+            var lockTransformButton = tree.Q<IconButton>("lockTransform");
+            lockTransformButton.SetValueWithoutNotify(exData.lockTransform);
+            lockTransformButton.RegisterValueChangedCallback(evt =>
             {
                 exData.lockTransform = evt.newValue;
                 UpdateLockTransformToggle();
@@ -876,6 +876,14 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             void UpdateLockTransformToggle()
             {
+                var icon = ToolkitIcons.Load(exData.lockTransform ? "lock" : "unlock");
+                if (icon != null)
+                    lockTransformButton.style.backgroundImage = icon;
+
+                lockTransformButton.tooltip = (exData.lockTransform
+                    ? "label.enhanced_transform_inspector.unlock_transform"
+                    : "label.enhanced_transform_inspector.lock_transform").S();
+
                 positionField.SetEnabled(!exData.lockTransform);
                 rotationField.SetEnabled(!exData.lockTransform);
                 scaleField.SetEnabled(!exData.lockTransform);

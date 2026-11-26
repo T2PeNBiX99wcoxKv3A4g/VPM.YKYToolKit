@@ -417,3 +417,6 @@ msgstr "Decimal places (-1 = off)"
 msgid "label.enhanced_transform_inspector.align_mode"
 msgstr "Alignment mode"
 
+msgid "label.enhanced_transform_inspector.unlock_transform"
+msgstr "Unlock transform"
+

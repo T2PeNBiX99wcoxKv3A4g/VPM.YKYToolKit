@@ -417,3 +417,6 @@ msgstr "小数点以下の桁数（-1 で無効）"
 msgid "label.enhanced_transform_inspector.align_mode"
 msgstr "整列モード"
 
+msgid "label.enhanced_transform_inspector.unlock_transform"
+msgstr "Transform のロックを解除"
+
