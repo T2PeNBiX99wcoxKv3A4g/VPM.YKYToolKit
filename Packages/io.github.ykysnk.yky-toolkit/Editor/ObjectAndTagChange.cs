@@ -23,6 +23,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             ToggleInactiveAndTagAsync(selectedObjects).Forget();
         }
 
+        [MenuItem("Tools/YKYToolkit/Set Object and Tag", true, Util.One)]
+        [MenuItem("GameObject/YKYToolkit/Set Object and Tag", true, Util.One)]
+        private static bool ToggleInactiveAndTagValidate() => Selection.gameObjects.Length > 0;
+
         private static async UniTask ToggleInactiveAndTagAsync(GameObject[] selectedObjects)
         {
             var stopwatch = Stopwatch.StartNew();
