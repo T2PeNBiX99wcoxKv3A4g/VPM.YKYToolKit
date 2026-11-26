@@ -1,0 +1,40 @@
+/* The shared theme in YkyToolkitTheme.uss carries the look; this file only holds what is specific to Preferences. */
+
+.yky-preferences {
+    padding: 0;
+}
+
+.yky-preferences__content {
+    width: 100%;
+    max-width: 660px;
+    padding: 14px 12px 24px 12px;
+}
+
+.yky-preferences__header {
+    flex-direction: row;
+    align-items: center;
+    margin: 2px 0 10px 2px;
+}
+
+.yky-preferences__title {
+    font-size: 18px;
+    -unity-font-style: bold;
+}
+
+.yky-preferences Toggle {
+    margin: 3px 0;
+}
+
+.yky-preferences SliderInt {
+    margin: 4px 0;
+}
+
+.yky-preferences .yky-card {
+    padding: 10px 12px;
+    margin: 10px 0;
+}
+
+.yky-preferences ListView {
+    height: 220px;
+    margin-top: 6px;
+}

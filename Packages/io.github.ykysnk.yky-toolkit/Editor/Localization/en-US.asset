@@ -448,6 +448,11 @@ MonoBehaviour:
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
+  - key: label.preferences_page.general
+    translate: General
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.preferences_page.allow_async_compilation
     translate: Allow Async Compilation
     tooltip: 

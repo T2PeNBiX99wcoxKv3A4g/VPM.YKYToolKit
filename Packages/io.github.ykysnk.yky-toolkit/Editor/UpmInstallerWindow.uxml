@@ -5,26 +5,35 @@
         <ui:VisualElement class="yky-card">
             <ui:VisualElement class="yky-toolbar">
                 <ui:Button text="label.upm_installer_window.install" parse-escape-sequences="true"
-                           display-tooltip-when-elided="true" name="install" class="yky-button--primary"/>
+                           display-tooltip-when-elided="true" name="install"
+                           class="yky-button--primary yky-button--icon yky-button--install"/>
                 <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="remove"
-                           text="label.upm_installer_window.remove"/>
+                           text="label.upm_installer_window.remove"
+                           class="yky-button--icon yky-button--remove"/>
                 <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="update"
-                           text="label.upm_installer_window.update"/>
+                           text="label.upm_installer_window.update"
+                           class="yky-button--icon yky-button--update"/>
                 <ui:Button text="label.upm_installer_window.clear" name="clear" parse-escape-sequences="true"
-                           display-tooltip-when-elided="true"/>
+                           display-tooltip-when-elided="true"
+                           class="yky-button--icon yky-button--clear"/>
             </ui:VisualElement>
             <ui:VisualElement class="yky-toolbar">
                 <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="upgrade"
-                           text="label.upm_installer_window.check_and_upgrade"/>
+                           text="label.upm_installer_window.check_and_upgrade"
+                           class="yky-button--icon yky-button--upgrade"/>
                 <ui:VisualElement class="yky-spacer"/>
                 <ui:Button text="label.upm_installer_window.import_to_maker" parse-escape-sequences="true"
-                           display-tooltip-when-elided="true" name="importToMaker"/>
+                           display-tooltip-when-elided="true" name="importToMaker"
+                           class="yky-button--icon yky-button--import-to-maker"/>
             </ui:VisualElement>
         </ui:VisualElement>
 
         <ui:VisualElement class="yky-columns">
             <ui:VisualElement class="yky-card yky-column">
-                <ui:Label text="label.upm_installer_window.packages" class="yky-section"/>
+                <ui:VisualElement class="yky-card__title">
+                    <ui:VisualElement class="yky-icon yky-icon--section yky-icon--packages"/>
+                    <ui:Label text="label.upm_installer_window.packages" class="yky-section"/>
+                </ui:VisualElement>
                 <ui:ListView binding-path="packages" virtualization-method="DynamicHeight"
                              selection-type="Multiple" show-alternating-row-backgrounds="ContentOnly"
                              show-bound-collection-size="false" reorder-mode="Animated" reorderable="true"
@@ -36,16 +45,23 @@
             </ui:VisualElement>
 
             <ui:VisualElement class="yky-card yky-column">
-                <ui:Label text="label.upm_installer_window.package_list" class="yky-section"/>
+                <ui:VisualElement class="yky-card__title">
+                    <ui:VisualElement class="yky-icon yky-icon--section yky-icon--package-list"/>
+                    <ui:Label text="label.upm_installer_window.package_list" class="yky-section"/>
+                </ui:VisualElement>
                 <ui:ScrollView name="packageLists" class="yky-scroll"/>
                 <ui:VisualElement class="yky-row">
                     <ui:Button text="label.upm_installer_window.import" parse-escape-sequences="true"
-                               display-tooltip-when-elided="true" name="import" class="cell"/>
+                               display-tooltip-when-elided="true" name="import"
+                               class="cell yky-button--icon yky-button--import"/>
                     <ui:Button text="label.upm_installer_window.remove_selected" parse-escape-sequences="true"
                                display-tooltip-when-elided="true" name="removeSelected" class="cell"/>
                 </ui:VisualElement>
 
-                <ui:Label text="label.upm_installer_window.package_list_maker" class="yky-section"/>
+                <ui:VisualElement class="yky-card__title">
+                    <ui:VisualElement class="yky-icon yky-icon--section yky-icon--package-list-maker"/>
+                    <ui:Label text="label.upm_installer_window.package_list_maker" class="yky-section"/>
+                </ui:VisualElement>
                 <ui:ListView virtualization-method="DynamicHeight" selection-type="Multiple"
                              show-alternating-row-backgrounds="ContentOnly" reorderable="true"
                              show-add-remove-footer="false" reorder-mode="Animated"
@@ -59,7 +75,8 @@
                     <ui:Label text="label.upm_installer_window.package_list_name" class="yky-hint"/>
                     <ui:TextField name="createListName"/>
                     <ui:Button text="label.upm_installer_window.create_and_copy" parse-escape-sequences="true"
-                               display-tooltip-when-elided="true" name="createAndCopy"/>
+                               display-tooltip-when-elided="true" name="createAndCopy"
+                               class="yky-button--icon yky-button--copy"/>
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>

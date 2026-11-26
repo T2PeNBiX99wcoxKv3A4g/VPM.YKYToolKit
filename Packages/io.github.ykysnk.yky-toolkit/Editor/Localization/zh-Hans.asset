@@ -412,6 +412,11 @@ MonoBehaviour:
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
+  - key: label.preferences_page.general
+    translate: "\u5E38\u89C4"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.preferences_page.allow_async_compilation
     translate: "\u5141\u8BB8\u5F02\u6B65\u7F16\u8BD1"
     tooltip: 

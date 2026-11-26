@@ -240,6 +240,9 @@ msgstr "醒目提示持續時間"
 msgid "label.import_watcher.file_extension_colors"
 msgstr "副檔名的醒目提示顏色"
 
+msgid "label.preferences_page.general"
+msgstr "一般"
+
 msgid "label.preferences_page.allow_async_compilation"
 msgstr "允許非同步編譯"
 

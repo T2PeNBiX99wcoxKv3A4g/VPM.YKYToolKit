@@ -240,6 +240,9 @@ msgstr "高亮持续时间"
 msgid "label.import_watcher.file_extension_colors"
 msgstr "文件扩展名的高亮颜色"
 
+msgid "label.preferences_page.general"
+msgstr "常规"
+
 msgid "label.preferences_page.allow_async_compilation"
 msgstr "允许异步编译"
 

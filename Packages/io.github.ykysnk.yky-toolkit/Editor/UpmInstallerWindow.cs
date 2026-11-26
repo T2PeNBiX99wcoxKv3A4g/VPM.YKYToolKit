@@ -402,7 +402,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private static void ShowWindow()
         {
             var window = GetWindow<UpmInstallerWindow>();
-            window.titleContent = EditorGUIUtils.IconContent(Title, "package manager");
+            window.titleContent = ToolkitIcons.Content(Title, "upm-installer");
             window.minSize = new(620, 420);
         }
     }

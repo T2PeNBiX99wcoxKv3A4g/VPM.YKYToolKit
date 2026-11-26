@@ -77,6 +77,7 @@
   "label.import_watcher.color": "Highlight Color",
   "label.import_watcher.duration": "Highlight Duration",
   "label.import_watcher.file_extension_colors": "Highlight colors for file extensions",
+  "label.preferences_page.general": "General",
   "label.preferences_page.allow_async_compilation": "Allow Async Compilation",
   "label.preferences_page.delete_selected_warn_window": "Warning Window for Delete Selected",
   "label.preferences_page.enable_discord_rich_presence": "Enable Discord Rich Presence",

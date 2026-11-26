@@ -84,7 +84,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private static void ShowWindow()
         {
             var window = GetWindow<ImportWatcherWindow>();
-            window.titleContent = EditorGUIUtils.IconContent(Title, "undohistory");
+            window.titleContent = ToolkitIcons.Content(Title, "import-watcher");
         }
     }
 }

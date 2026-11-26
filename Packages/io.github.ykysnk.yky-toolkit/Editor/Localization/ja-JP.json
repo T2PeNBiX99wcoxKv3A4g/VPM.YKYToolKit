@@ -77,6 +77,7 @@
   "label.import_watcher.color": "ハイライト色",
   "label.import_watcher.duration": "ハイライトの持続時間",
   "label.import_watcher.file_extension_colors": "ファイル拡張子のハイライト色",
+  "label.preferences_page.general": "一般",
   "label.preferences_page.allow_async_compilation": "非同期コンパイルを許可",
   "label.preferences_page.delete_selected_warn_window": "選択項目削除の警告ウィンドウ",
   "label.preferences_page.enable_discord_rich_presence": "Discord リッチプレゼンスを有効にする",

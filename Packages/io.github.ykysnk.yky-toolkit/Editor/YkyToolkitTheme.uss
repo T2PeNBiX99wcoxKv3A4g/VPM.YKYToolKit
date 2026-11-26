@@ -221,11 +221,6 @@ Button:active,
     border-width: 0;
 }
 
-/* The card already has padding, so the first heading does not need its own top margin. */
-.yky-card > .yky-section:first-child {
-    margin-top: 2px;
-}
-
 /* ---------- toolbar ---------- */
 
 Toolbar,
@@ -327,4 +322,154 @@ TextField .unity-base-text-field__input {
     font-size: 11px;
     -unity-font-style: bold;
     -unity-text-align: middle-center;
+}
+
+/* ---------- icons ---------- */
+
+.yky-icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    margin-right: 6px;
+    background-repeat: no-repeat;
+    background-size: 16px 16px;
+    background-position-x: center;
+    background-position-y: center;
+}
+
+.yky-icon--section {
+    width: 18px;
+    height: 18px;
+    background-size: 18px 18px;
+}
+
+.yky-icon--header {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    background-size: 30px 30px;
+}
+
+.yky-card__title {
+    flex-direction: row;
+    align-items: center;
+    margin: 2px 0 8px 0;
+}
+
+.yky-card__title .yky-section {
+    margin: 0;
+    padding: 0;
+    border-bottom-width: 0;
+}
+
+.yky-icon--settings {
+    background-image: url("project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/Icons/settings.png?fileID=2800000&guid=bcd2e0e1b81a2034a98b6cd2c90f9956&type=3");
+}
+
+.yky-icon--preferences {
+    background-image: url("project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/Icons/preferences.png?fileID=2800000&guid=3d4c646e69dbf8f4d955333eea64c89e&type=3");
+}
+
+.yky-icon--upm-installer {
+    background-image: url("project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/Icons/upm-installer.png?fileID=2800000&guid=5ab713cc40cfc93438365a1d080586ed&type=3");
+}
+
+.yky-icon--packages {
+    background-image: url("project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/Icons/packages.png?fileID=2800000&guid=ef61df4e93e0e6c4eb82b56da63dc0e0&type=3");
+}
+
+.yky-icon--package-list {
+    background-image: url("project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/Icons/package-list.png?fileID=2800000&guid=6435467fe0ea91c45a1e402961f4075e&type=3");
+}
+
+.yky-icon--package-list-maker {
+    background-image: url("project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/Icons/package-list-maker.png?fileID=2800000&guid=45a2c72e4d8c5ca46a94e238ac03c33c&type=3");
+}
+
+.yky-icon--install {
+    background-image: url("project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/Icons/install.png?fileID=2800000&guid=d999d9e925fb9564d855507bf4d1c5ba&type=3");
+}
+
+.yky-icon--import {
+    background-image: url("project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/Icons/import.png?fileID=2800000&guid=d637deac9e8d79443b350bc3ef68a34a&type=3");
+}
+
+.yky-icon--remove {
+    background-image: url("project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/Icons/remove.png?fileID=2800000&guid=a0a85867382f9c641b6fbacee483dc93&type=3");
+}
+
+.yky-icon--update {
+    background-image: url("project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/Icons/update.png?fileID=2800000&guid=1dfc89f49047dfd4b95eabd0fdbdbffc&type=3");
+}
+
+.yky-icon--clear {
+    background-image: url("project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/Icons/clear.png?fileID=2800000&guid=034e831a60985e240a8ae1c46bffcb94&type=3");
+}
+
+.yky-icon--upgrade {
+    background-image: url("project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/Icons/upgrade.png?fileID=2800000&guid=a90abf58db62a7a49a7334937ba917e4&type=3");
+}
+
+.yky-icon--import-to-maker {
+    background-image: url("project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/Icons/import-to-maker.png?fileID=2800000&guid=c00d245d8ee3d84408287a23c6655113&type=3");
+}
+
+.yky-icon--import-watcher {
+    background-image: url("project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/Icons/import-watcher.png?fileID=2800000&guid=d062e4b3fa9b7044ca82ec77ab078610&type=3");
+}
+
+.yky-icon--delete-history {
+    background-image: url("project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/Icons/delete-history.png?fileID=2800000&guid=82fdc8dfe1fd3244487006c115a3c899&type=3");
+}
+
+.yky-icon--resource-monitor {
+    background-image: url("project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/Icons/resource-monitor.png?fileID=2800000&guid=f76f274a6a76d8f4f828b3e46b0a25b0&type=3");
+}
+
+.yky-icon--copy {
+    background-image: url("project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/Icons/copy.png?fileID=2800000&guid=f8379f706ae3d4841838ff5cc924da0a&type=3");
+}
+
+.yky-icon--paste {
+    background-image: url("project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/Icons/paste.png?fileID=2800000&guid=3d32b439cc5c09f4f93312cf317a8019&type=3");
+}
+
+.yky-button--icon {
+    padding-left: 28px;
+    background-position-x: 8px;
+    background-position-y: center;
+    background-size: 15px 15px;
+    background-repeat: no-repeat;
+}
+
+.yky-button--install {
+    background-image: url("project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/Icons/install.png?fileID=2800000&guid=d999d9e925fb9564d855507bf4d1c5ba&type=3");
+}
+
+.yky-button--import {
+    background-image: url("project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/Icons/import.png?fileID=2800000&guid=d637deac9e8d79443b350bc3ef68a34a&type=3");
+}
+
+.yky-button--remove {
+    background-image: url("project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/Icons/remove.png?fileID=2800000&guid=a0a85867382f9c641b6fbacee483dc93&type=3");
+}
+
+.yky-button--update {
+    background-image: url("project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/Icons/update.png?fileID=2800000&guid=1dfc89f49047dfd4b95eabd0fdbdbffc&type=3");
+}
+
+.yky-button--clear {
+    background-image: url("project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/Icons/clear.png?fileID=2800000&guid=034e831a60985e240a8ae1c46bffcb94&type=3");
+}
+
+.yky-button--upgrade {
+    background-image: url("project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/Icons/upgrade.png?fileID=2800000&guid=a90abf58db62a7a49a7334937ba917e4&type=3");
+}
+
+.yky-button--import-to-maker {
+    background-image: url("project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/Icons/import-to-maker.png?fileID=2800000&guid=c00d245d8ee3d84408287a23c6655113&type=3");
+}
+
+.yky-button--copy {
+    background-image: url("project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/Icons/copy.png?fileID=2800000&guid=f8379f706ae3d4841838ff5cc924da0a&type=3");
 }

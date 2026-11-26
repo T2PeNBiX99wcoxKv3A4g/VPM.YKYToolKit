@@ -73,7 +73,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private static void ShowWindow()
         {
             var window = GetWindow<DeleteHistoryWindow>();
-            window.titleContent = EditorGUIUtils.IconContent("Delete History", "undohistory");
+            window.titleContent = ToolkitIcons.Content("Delete History", "delete-history");
             window.minSize = new(520, 280);
         }
 

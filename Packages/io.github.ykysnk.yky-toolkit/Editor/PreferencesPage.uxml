@@ -1,27 +1,51 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
     <Style src="project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/YkyToolkitTheme.uss?guid=34e0c41dada851146aeccffc05549196&amp;type=3"/>
     <Style src="project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/PreferencesPage.uss?fileID=7433441132597879392&amp;guid=d16273d813d4ff74482b362d3570add2&amp;type=3#PreferencesPage"/>
-    <ui:VisualElement style="padding-top: 1px; padding-right: 8px; padding-bottom: 8px; padding-left: 8px;">
-        <ui:Label tabindex="-1" text="YKY Toolkit" parse-escape-sequences="true" display-tooltip-when-elided="true"
-                  name="title" style="font-size: 20px; -unity-font-style: bold; padding-bottom: 8px;"/>
-        <ui:Toggle label="label.preferences_page.allow_async_compilation" name="allowAsyncCompilation"/>
-        <ui:Toggle label="label.preferences_page.delete_selected_warn_window" name="deleteSelectedWarnWindow"/>
-        <ui:Toggle label="label.preferences_page.enable_discord_rich_presence" name="enableDiscordRichPresence"/>
-        <ui:Label tabindex="-1" text="label.delete_history_manager" parse-escape-sequences="true"
-                  display-tooltip-when-elided="true" class="yky-section"/>
-        <ui:SliderInt label="label.delete_history_manager.max_records" high-value="1000" low-value="1"
-                      show-input-field="true" name="deleteHistoryManagerMaxRecords"/>
-        <ui:Label tabindex="-1" text="label.preferences_page.import_watcher" parse-escape-sequences="true"
-                  display-tooltip-when-elided="true" class="yky-section"/>
-        <uie:ColorField label="label.import_watcher.color" value="RGBA(0.000, 1.000, 1.000, 1.000)"
-                        name="importWatcherColor"/>
-        <ui:SliderInt label="label.import_watcher.duration" high-value="500" name="importWatcherDuration"
-                      show-input-field="true"/>
-        <ui:SliderInt label="label.import_watcher.max_sessions" high-value="1000" name="importWatcherMaxSessionsField"
-                      show-input-field="true" low-value="1"/>
-        <ui:ListView header-title="label.import_watcher.file_extension_colors" reorder-mode="Animated"
-                     show-add-remove-footer="true" show-foldout-header="true" reorderable="true"
-                     show-alternating-row-backgrounds="ContentOnly" selection-type="Multiple" show-border="true"
-                     virtualization-method="DynamicHeight" name="importWatcherFileExtensionColors"/>
+    <ui:VisualElement class="root yky-preferences">
+        <ui:VisualElement class="yky-preferences__content">
+            <ui:VisualElement class="yky-preferences__header">
+                <ui:VisualElement class="yky-icon yky-icon--header yky-icon--preferences"/>
+                <ui:Label text="YKY Toolkit" class="yky-preferences__title"/>
+            </ui:VisualElement>
+
+            <ui:VisualElement class="yky-card">
+                <ui:VisualElement class="yky-card__title">
+                    <ui:VisualElement class="yky-icon yky-icon--section yky-icon--settings"/>
+                    <ui:Label text="label.preferences_page.general" class="yky-section"/>
+                </ui:VisualElement>
+                <ui:Toggle label="label.preferences_page.allow_async_compilation" name="allowAsyncCompilation"/>
+                <ui:Toggle label="label.preferences_page.delete_selected_warn_window"
+                           name="deleteSelectedWarnWindow"/>
+                <ui:Toggle label="label.preferences_page.enable_discord_rich_presence"
+                           name="enableDiscordRichPresence"/>
+            </ui:VisualElement>
+
+            <ui:VisualElement class="yky-card">
+                <ui:VisualElement class="yky-card__title">
+                    <ui:VisualElement class="yky-icon yky-icon--section yky-icon--delete-history"/>
+                    <ui:Label text="label.delete_history_manager" class="yky-section"/>
+                </ui:VisualElement>
+                <ui:SliderInt label="label.delete_history_manager.max_records" high-value="1000" low-value="1"
+                              show-input-field="true" name="deleteHistoryManagerMaxRecords"/>
+            </ui:VisualElement>
+
+            <ui:VisualElement class="yky-card">
+                <ui:VisualElement class="yky-card__title">
+                    <ui:VisualElement class="yky-icon yky-icon--section yky-icon--import-watcher"/>
+                    <ui:Label text="label.preferences_page.import_watcher" class="yky-section"/>
+                </ui:VisualElement>
+                <uie:ColorField label="label.import_watcher.color" value="RGBA(0.000, 1.000, 1.000, 1.000)"
+                                name="importWatcherColor"/>
+                <ui:SliderInt label="label.import_watcher.duration" high-value="500" name="importWatcherDuration"
+                              show-input-field="true"/>
+                <ui:SliderInt label="label.import_watcher.max_sessions" high-value="1000"
+                              name="importWatcherMaxSessionsField" show-input-field="true" low-value="1"/>
+                <ui:ListView header-title="label.import_watcher.file_extension_colors" reorder-mode="Animated"
+                             show-add-remove-footer="true" show-foldout-header="true" reorderable="true"
+                             show-alternating-row-backgrounds="ContentOnly" selection-type="Multiple"
+                             show-border="true" virtualization-method="DynamicHeight"
+                             name="importWatcherFileExtensionColors"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

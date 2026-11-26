@@ -115,7 +115,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private static void ShowWindow()
         {
             var window = GetWindow<UnityResourceMonitor>();
-            window.titleContent = EditorGUIUtils.IconContent(Title, "Profiler.Memory");
+            window.titleContent = ToolkitIcons.Content(Title, "resource-monitor");
             if (window.rows.Count < 1)
                 window.Reload();
         }

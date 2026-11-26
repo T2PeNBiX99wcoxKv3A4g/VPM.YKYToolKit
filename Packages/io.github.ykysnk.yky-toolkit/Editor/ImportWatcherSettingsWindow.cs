@@ -71,7 +71,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         internal static void ShowWindow()
         {
             var window = GetWindow<ImportWatcherSettingsWindow>();
-            window.titleContent = EditorGUIUtils.IconContent(Title, "settings");
+            window.titleContent = ToolkitIcons.Content(Title, "settings");
         }
     }
 }
