@@ -40,10 +40,3 @@
 .delete-history-item__button--wide {
     width: 110px;
 }
-
-.delete-history-window__empty-label {
-    margin-top: 20px;
-    align-self: center;
-    -unity-font-style: bold;
-    color: gray;
-}

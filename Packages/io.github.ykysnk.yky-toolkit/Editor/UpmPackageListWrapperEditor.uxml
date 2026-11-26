@@ -10,6 +10,6 @@
                      virtualization-method="DynamicHeight" reorderable="true"
                      show-add-remove-footer="true" reorder-mode="Animated" show-bound-collection-size="false"
                      binding-path="wrapPackages" name="ListView" show-foldout-header="true"
-                     header-title="label.upm_package_list_wrapper.packages" class="upm-package-list"/>
+                     header-title="label.upm_package_list_wrapper.packages" class="upm-package-list yky-list"/>
     </ui:VisualElement>
 </ui:UXML>

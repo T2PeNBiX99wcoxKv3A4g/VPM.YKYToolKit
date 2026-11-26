@@ -145,10 +145,13 @@ Button:active,
     background-color: rgba(76, 141, 255, 0.12);
 }
 
-.yky-list-empty {
-    margin: 12px 8px;
+.yky-list-empty,
+.unity-list-view__empty-label {
+    margin: 16px 8px;
     font-size: 12px;
+    -unity-text-align: middle-center;
     color: rgba(140, 140, 140, 0.95);
+    white-space: normal;
 }
 
 .yky-count {
@@ -255,6 +258,7 @@ ListView,
 .unity-list-view {
     margin: 4px 0;
     min-height: 0;
+    background-color: rgba(128, 128, 128, 0.06);
     border-width: 1px;
     border-color: rgba(128, 128, 128, 0.28);
     border-top-left-radius: 6px;
@@ -295,17 +299,6 @@ TextField .unity-base-text-field__input {
     border-top-right-radius: 3px;
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
-}
-
-/* ---------- empty state ---------- */
-
-.empty-label,
-.delete-history-window__empty-label {
-    margin: 24px 12px;
-    font-size: 12px;
-    -unity-text-align: middle-center;
-    color: rgba(140, 140, 140, 0.95);
-    white-space: normal;
 }
 
 /* ---------- table header ---------- */

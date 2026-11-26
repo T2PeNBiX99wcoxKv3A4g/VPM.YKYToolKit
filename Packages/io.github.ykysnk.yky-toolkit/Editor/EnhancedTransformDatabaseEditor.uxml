@@ -5,6 +5,6 @@
         <ui:ListView binding-path="entries" name="entries" virtualization-method="DynamicHeight"
                      show-alternating-row-backgrounds="ContentOnly" reorder-mode="Animated"
                      show-bound-collection-size="false" selection-type="Multiple" show-border="true"
-                     style="margin-top: 2px;"/>
+                     class="yky-list"/>
     </ui:VisualElement>
 </ui:UXML>

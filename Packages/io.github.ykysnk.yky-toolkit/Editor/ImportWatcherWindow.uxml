@@ -1,15 +1,18 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
     <Style src="project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/YkyToolkitTheme.uss?guid=34e0c41dada851146aeccffc05549196&amp;type=3"/>
     <Style src="project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/ImportWatcherWindow.uss?fileID=7433441132597879392&amp;guid=cb3f7d18f6e8d4e4d8f0d704c12890d4&amp;type=3#ImportWatcherWindow"/>
-    <uie:Toolbar>
-        <uie:ToolbarButton text="label.refresh" name="refresh"/>
-        <uie:ToolbarButton text="label.clear" name="clear"/>
-        <uie:ToolbarButton text="label.import_watcher.settings" parse-escape-sequences="true"
-                           display-tooltip-when-elided="true" name="settings"/>
-    </uie:Toolbar>
-    <ui:ListView selection-type="Multiple" virtualization-method="DynamicHeight" name="importLogList"
-                 binding-path="sessions" show-bound-collection-size="false"
-                 show-alternating-row-backgrounds="ContentOnly" reorder-mode="Animated" style="flex-grow: 1;"/>
-    <ui:Label text="label.import_watcher.no_import_log" name="importLogEmpty" class="empty-label"
-              style="unity-font-style: bold;"/>
+    <ui:VisualElement class="root">
+        <ui:VisualElement class="yky-card">
+            <uie:Toolbar>
+                <uie:ToolbarButton text="label.refresh" name="refresh"/>
+                <uie:ToolbarButton text="label.clear" name="clear"/>
+                <uie:ToolbarButton text="label.import_watcher.settings" parse-escape-sequences="true"
+                                   display-tooltip-when-elided="true" name="settings"/>
+            </uie:Toolbar>
+            <ui:ListView selection-type="Multiple" virtualization-method="DynamicHeight" name="importLogList"
+                         binding-path="sessions" show-bound-collection-size="false"
+                         show-alternating-row-backgrounds="ContentOnly" reorder-mode="Animated" class="yky-list"/>
+            <ui:Label text="label.import_watcher.no_import_log" name="importLogEmpty" class="yky-list-empty"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
 </ui:UXML>

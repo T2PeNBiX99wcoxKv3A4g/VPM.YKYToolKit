@@ -30,6 +30,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             if (label.ClassListContains(LocalizedClass)) return true;
 
             label.AddToClassList(LocalizedClass);
+            label.AddToClassList("yky-list-empty");
             label.text = EmptyLabelKey.S();
 
             var registration = EmptyLabelKey.Register((text, _) => label.text = text);

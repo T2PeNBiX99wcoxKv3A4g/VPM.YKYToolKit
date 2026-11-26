@@ -21,7 +21,7 @@
                              reorder-mode="Animated" show-add-remove-footer="true" selection-type="Multiple"
                              show-border="true" virtualization-method="DynamicHeight" binding-path="fileColors"
                              name="fileColors" show-bound-collection-size="true" show-foldout-header="true"
-                             header-title="label.import_watcher.file_extension_colors"/>
+                             header-title="label.import_watcher.file_extension_colors" class="yky-list"/>
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:ScrollView>
