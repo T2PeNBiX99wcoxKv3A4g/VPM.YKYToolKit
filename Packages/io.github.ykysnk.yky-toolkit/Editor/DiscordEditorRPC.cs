@@ -115,26 +115,30 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         }
 
         public static void SetActivity(string details, string state,
-            string? largeImage = null, string? smallImage = null)
+            string? largeImage = null, string? smallImage = null, string? largeText = null, string? smallText = null,
+            long? timestamp = null)
         {
             if (!_initialized || _discord == null || _activityManager == null)
                 return;
 
             var activity = new Activity
             {
-                Details = details,
-                State = state,
+                Details = Clamp(details),
+                State = Clamp(state),
                 Timestamps = new()
                 {
-                    Start = _startTime
+                    Start = timestamp ?? _startTime
                 }
             };
 
-            if (!string.IsNullOrEmpty(largeImage) || !string.IsNullOrEmpty(smallImage))
+            if (!string.IsNullOrEmpty(largeImage) || !string.IsNullOrEmpty(smallImage) ||
+                !string.IsNullOrEmpty(largeText) || !string.IsNullOrEmpty(smallText))
                 activity.Assets = new()
                 {
                     LargeImage = largeImage ?? "",
-                    SmallImage = smallImage ?? ""
+                    LargeText = largeText ?? "",
+                    SmallImage = smallImage ?? "",
+                    SmallText = smallText ?? ""
                 };
 
             _activityManager.UpdateActivity(activity, result =>
@@ -143,6 +147,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     Utils.LogWarning(nameof(DiscordEditorRPC), $"UpdateActivity failed: {result}");
             });
         }
+
+        private static string Clamp(string value) => value.Length <= 128 ? value : value[..128];
 
         public static void ClearActivity()
         {

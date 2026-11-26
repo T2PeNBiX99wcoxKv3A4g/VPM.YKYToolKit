@@ -2,7 +2,6 @@ using System;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace io.github.ykysnk.ykyToolkit.Editor
 {
@@ -20,128 +19,146 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             Playing,
             Paused,
             Compiling,
-            Building
+            Building,
+            Importing
         }
 
+        private const double PollInterval = 0.25;
+
         private static bool _initialized;
+        private static bool _focused;
+        private static double _nextPoll;
+        private static long _playStartTime;
+        private static string _lastDetails = string.Empty;
+        private static string _lastState = string.Empty;
 
         static EditorActivityDetector()
         {
             EditorApplication.update += Update;
+            EditorApplication.playModeStateChanged += OnPlayModeChanged;
             EditorApplication.delayCall += DelayedInit;
         }
 
         public static EditorState CurrentState { get; private set; } = EditorState.Idle;
-        public static string CurrentDetails { get; private set; } = "Idle in Unity Editor";
+        public static string CurrentDetails { get; private set; } = "Browsing project";
 
         private static void DelayedInit()
         {
             _initialized = true;
-            UpdateDiscordState();
+            _focused = EditorMainWindowTitle.IsCurrentProcessFocused();
+            if (_focused) UpdateDiscordState(true);
+        }
+
+        private static void OnPlayModeChanged(PlayModeStateChange change)
+        {
+            if (change == PlayModeStateChange.EnteredPlayMode)
+                _playStartTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            else if (change == PlayModeStateChange.EnteredEditMode)
+                _playStartTime = 0;
         }
 
         private static void Update()
         {
+            if (!DiscordEditorRPC.EnableDiscordRichPresence) return;
+
+            var now = EditorApplication.timeSinceStartup;
+            if (now < _nextPoll) return;
+            _nextPoll = now + PollInterval;
+
+            // With several Unity editors open, only the one owning the foreground window publishes an activity.
+            var focused = EditorMainWindowTitle.IsCurrentProcessFocused();
+            if (focused != _focused)
+            {
+                _focused = focused;
+                if (focused) UpdateDiscordState(true);
+            }
+
+            if (!focused) return;
+
             if (EditorApplication.isCompiling)
             {
-                SetState(EditorState.Compiling, () => "Reloading Domain…");
+                SetState(EditorState.Compiling, "Reloading domain");
                 return;
             }
 
             if (BuildPipeline.isBuildingPlayer)
             {
-                SetState(EditorState.Building, () => "Building Project…");
+                SetState(EditorState.Building, "Building project");
+                return;
+            }
+
+            if (EditorApplication.isUpdating)
+            {
+                SetState(EditorState.Importing, "Importing assets");
                 return;
             }
 
             if (EditorApplication.isPlaying)
             {
                 SetState(EditorApplication.isPaused ? EditorState.Paused : EditorState.Playing,
-                    () => $"Scene: {GetActiveSceneName()}");
-                return;
-            }
-
-            if (IsEditingScript())
-            {
-                SetState(EditorState.EditingScript, () => $"File: {GetSelectedObjectName()}");
+                    EditorApplication.isPaused ? "Paused" : "Playing");
                 return;
             }
 
             if (PrefabStageUtility.GetCurrentPrefabStage() != null)
             {
-                var prefab = PrefabStageUtility.GetCurrentPrefabStage().prefabContentsRoot;
-                SetState(EditorState.EditingPrefab, () => $"Prefab: {prefab.name}.prefab");
+                SetState(EditorState.EditingPrefab, "Editing a prefab");
                 return;
             }
 
-            if (IsEditingMaterial())
+            // The selected object type is enough; the name of the file is deliberately not published.
+            if (Selection.activeObject is MonoScript)
             {
-                SetState(EditorState.EditingMaterial, () => $"Material: {GetSelectedObjectName()}");
+                SetState(EditorState.EditingScript, "Editing a script");
                 return;
             }
 
-            if (IsEditingShader())
+            if (Selection.activeObject is Material)
             {
-                SetState(EditorState.EditingShader, () => $"Shader: {GetSelectedObjectName()}");
+                SetState(EditorState.EditingMaterial, "Editing a material");
                 return;
             }
 
-            if (SceneView.lastActiveSceneView != null &&
-                EditorWindow.focusedWindow is SceneView)
+            if (Selection.activeObject is Shader)
             {
-                SetState(EditorState.EditingScene, () => $"Scene: {GetActiveSceneName()}");
+                SetState(EditorState.EditingShader, "Editing a shader");
                 return;
             }
 
-            SetState(EditorState.Idle, () => "Browsing Project");
+            if (SceneView.lastActiveSceneView != null && EditorWindow.focusedWindow is SceneView)
+            {
+                SetState(EditorState.EditingScene, "Editing a scene");
+                return;
+            }
+
+            SetState(EditorState.Idle, "Browsing project");
         }
 
-        private static void SetState(EditorState state, Func<string> details)
+        private static void SetState(EditorState state, string details)
         {
-            // The state is recomputed every editor update; the details are only built when the state actually changes,
-            // so the per frame string interpolation (and the Discord update) disappears.
+            // The state is recomputed on every poll; the details and the Discord update only happen on a real change.
             if (CurrentState == state) return;
 
             CurrentState = state;
-            CurrentDetails = details();
+            CurrentDetails = details;
             UpdateDiscordState();
         }
 
-        private static void UpdateDiscordState()
+        private static void UpdateDiscordState(bool force = false)
         {
             if (!_initialized || !DiscordEditorRPC.EnableDiscordRichPresence) return;
-            DiscordEditorRPC.SetActivity(EditorMainWindowTitle.GetTitleOrDefault("Unity Editor"), CurrentDetails,
-                "unity-1024");
-        }
 
-        private static string GetActiveSceneName()
-        {
-            var scene = SceneManager.GetActiveScene();
-            return scene.IsValid() ? scene.name : "Untitled";
-        }
+            var details = EditorPresenceInfo.ProjectName;
+            var state = $"{CurrentDetails} · {EditorPresenceInfo.Context}";
 
-        private static string GetSelectedObjectName()
-        {
-            var obj = Selection.activeObject;
-            return obj != null ? obj.name : "Unknown";
-        }
+            if (!force && details == _lastDetails && state == _lastState) return;
+            _lastDetails = details;
+            _lastState = state;
 
-        private static bool IsEditingScript()
-        {
-            var obj = Selection.activeObject;
-            return obj is MonoScript;
-        }
-
-        private static bool IsEditingMaterial()
-        {
-            var obj = Selection.activeObject;
-            return obj is Material;
-        }
-
-        private static bool IsEditingShader()
-        {
-            var obj = Selection.activeObject;
-            return obj is Shader;
+            // While playing, the elapsed timer shows how long the play session has been running.
+            var timestamp = EditorApplication.isPlaying && _playStartTime > 0 ? _playStartTime : (long?)null;
+            DiscordEditorRPC.SetActivity(details, state, "unity-1024",
+                largeText: EditorPresenceInfo.LargeText, timestamp: timestamp);
         }
     }
 }
