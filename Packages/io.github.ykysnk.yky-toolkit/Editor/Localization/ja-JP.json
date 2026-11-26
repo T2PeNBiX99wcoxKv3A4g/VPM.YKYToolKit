@@ -21,6 +21,7 @@
   "label.upm_installer_window.copy": "コピー",
   "label.new_delete.title": "選択したアセットを削除",
   "label.new_delete.message": "{0}\n\n削除操作は元に戻せません。",
+  "label.new_delete.warning": "削除操作は元に戻せません。",
   "label.new_delete.ok": "削除",
   "label.new_delete.cancel": "キャンセル",
   "label.empty_folder_clear.no_empty_folders": "空のフォルダは見つかりませんでした。",

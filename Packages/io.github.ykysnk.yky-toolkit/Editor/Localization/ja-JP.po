@@ -72,6 +72,9 @@ msgstr "選択したアセットを削除"
 msgid "label.new_delete.message"
 msgstr "{0}\n\n削除操作は元に戻せません。"
 
+msgid "label.new_delete.warning"
+msgstr "削除操作は元に戻せません。"
+
 msgid "label.new_delete.ok"
 msgstr "削除"
 

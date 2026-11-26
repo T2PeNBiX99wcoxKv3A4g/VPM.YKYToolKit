@@ -125,6 +125,11 @@ MonoBehaviour:
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
+  - key: label.new_delete.warning
+    translate: 刪除資產後無法復原。
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.new_delete.ok
     translate: "\u522A\u9664"
     tooltip: 

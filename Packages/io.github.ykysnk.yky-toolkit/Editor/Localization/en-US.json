@@ -21,6 +21,7 @@
   "label.upm_installer_window.copy": "Copy",
   "label.new_delete.title": "Delete selected assets",
   "label.new_delete.message": "{0}\n\nDeleting assets cannot be undone.",
+  "label.new_delete.warning": "Deleting assets cannot be undone.",
   "label.new_delete.ok": "Delete",
   "label.new_delete.cancel": "Cancel",
   "label.empty_folder_clear.no_empty_folders": "No empty folders found.",

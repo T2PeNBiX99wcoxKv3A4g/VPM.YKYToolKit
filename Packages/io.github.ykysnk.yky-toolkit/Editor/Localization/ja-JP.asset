@@ -125,6 +125,11 @@ MonoBehaviour:
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
+  - key: label.new_delete.warning
+    translate: 削除操作は元に戻せません。
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.new_delete.ok
     translate: "\u524A\u9664"
     tooltip: 

@@ -108,14 +108,17 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             if (deletedAssets.Length <= 0) return;
 
+            var records = new List<DeleteRecord>(deletedAssets.Length);
             foreach (var path in deletedAssets)
-                DeleteHistoryManager.Add(new()
+                records.Add(new()
                 {
                     path = path,
                     guid = AssetDatabase.AssetPathToGUID(path),
                     extension = Path.GetExtension(path),
                     unixSeconds = DateTimeOffset.UtcNow.ToUnixTimeSeconds()
                 });
+
+            DeleteHistoryManager.AddRange(records);
         }
 
         // The project window item callback runs for every visible item on every repaint, so the lookups use sets

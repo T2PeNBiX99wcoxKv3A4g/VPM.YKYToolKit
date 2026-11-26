@@ -31,9 +31,17 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         public static void Add(DeleteRecord record)
         {
+            AddRange(new[] { record });
+        }
+
+        /// <summary>
+        ///     Adds several records with one load and one save. Deleting in bulk used to rewrite the whole history for
+        ///     every file, which made large deletes quadratic.
+        /// </summary>
+        public static void AddRange(IEnumerable<DeleteRecord> records)
+        {
             var list = LoadInternal();
-            list.Add(record);
-            Trim(list);
+            list.AddRange(records);
             SaveInternal(list);
         }
 

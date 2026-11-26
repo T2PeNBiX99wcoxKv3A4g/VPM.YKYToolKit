@@ -21,6 +21,7 @@
   "label.upm_installer_window.copy": "複製",
   "label.new_delete.title": "刪除所選資產",
   "label.new_delete.message": "{0}\n\n刪除資產後無法復原。",
+  "label.new_delete.warning": "刪除資產後無法復原。",
   "label.new_delete.ok": "刪除",
   "label.new_delete.cancel": "取消",
   "label.empty_folder_clear.no_empty_folders": "找不到空資料夾。",

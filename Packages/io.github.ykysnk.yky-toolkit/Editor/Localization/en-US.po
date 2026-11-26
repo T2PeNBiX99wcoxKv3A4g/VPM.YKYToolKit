@@ -72,6 +72,9 @@ msgstr "Delete selected assets"
 msgid "label.new_delete.message"
 msgstr "{0}\n\nDeleting assets cannot be undone."
 
+msgid "label.new_delete.warning"
+msgstr "Deleting assets cannot be undone."
+
 msgid "label.new_delete.ok"
 msgstr "Delete"
 

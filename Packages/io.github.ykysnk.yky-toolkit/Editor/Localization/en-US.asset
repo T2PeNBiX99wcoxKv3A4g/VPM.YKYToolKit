@@ -128,6 +128,11 @@ MonoBehaviour:
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
+  - key: label.new_delete.warning
+    translate: Deleting assets cannot be undone.
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.new_delete.ok
     translate: Delete
     tooltip: 

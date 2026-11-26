@@ -21,6 +21,7 @@
   "label.upm_installer_window.copy": "复制",
   "label.new_delete.title": "删除所选资源",
   "label.new_delete.message": "{0}\n\n删除资源后无法撤销。",
+  "label.new_delete.warning": "删除资源后无法撤销。",
   "label.new_delete.ok": "删除",
   "label.new_delete.cancel": "取消",
   "label.empty_folder_clear.no_empty_folders": "未找到空文件夹。",

@@ -125,6 +125,11 @@ MonoBehaviour:
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
+  - key: label.new_delete.warning
+    translate: 删除资源后无法撤销。
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   - key: label.new_delete.ok
     translate: "\u5220\u9664"
     tooltip: 

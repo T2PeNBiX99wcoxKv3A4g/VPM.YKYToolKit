@@ -1,0 +1,58 @@
+.delete-dialog {
+    flex-grow: 1;
+    min-height: 0;
+}
+
+.delete-dialog__warning {
+    margin: 0 2px 8px 2px;
+    font-size: 12px;
+    -unity-font-style: bold;
+    color: rgb(240, 150, 120);
+    white-space: normal;
+}
+
+.delete-dialog__list {
+    flex-grow: 1;
+    min-height: 0;
+    margin: 0;
+    background-color: rgba(128, 128, 128, 0.06);
+    border-width: 1px;
+    border-color: rgba(128, 128, 128, 0.28);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.delete-dialog__row {
+    flex-direction: row;
+    align-items: center;
+    padding: 3px 6px;
+}
+
+.delete-dialog__object {
+    width: 42%;
+    min-width: 170px;
+    margin: 0 8px 0 0;
+}
+
+.delete-dialog__object .unity-base-field__label {
+    display: none;
+}
+
+.delete-dialog__path {
+    flex-grow: 1;
+    min-width: 0;
+    margin: 0;
+}
+
+.delete-dialog__path .unity-base-field__label {
+    display: none;
+}
+
+.delete-dialog__path .unity-base-text-field__input {
+    background-color: rgba(128, 128, 128, 0.10);
+    border-color: rgba(128, 128, 128, 0.24);
+    font-size: 10px;
+    color: rgb(180, 188, 202);
+}
