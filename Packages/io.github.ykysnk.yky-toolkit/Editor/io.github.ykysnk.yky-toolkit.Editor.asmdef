@@ -23,11 +23,6 @@
       "name": "com.vrchat.base",
       "expression": "",
       "define": "YKYTOOLKIT_VRCBASE"
-    },
-    {
-      "name": "jp.lilxyzw.editortoolbox",
-      "expression": "",
-      "define": "YKYTOOLKIT_LILEDITORTOOLBOX"
     }
   ],
   "noEngineReferences": false
