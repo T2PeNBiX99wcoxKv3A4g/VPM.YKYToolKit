@@ -44,7 +44,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
                 count.text = size.ToString();
                 list.style.display = size > 0 ? DisplayStyle.Flex : DisplayStyle.None;
-                list.style.height = size > 0 ? size * 28 + 4 : 0;
+                list.style.height = size > 0 ? size * 24 + 4 : 0;
                 empty.style.display = size > 0 ? DisplayStyle.None : DisplayStyle.Flex;
             }
 

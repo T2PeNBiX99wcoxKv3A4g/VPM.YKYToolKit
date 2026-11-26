@@ -11,7 +11,7 @@
             </ui:VisualElement>
             <ui:Label text="label.enhanced_transform_database.info" class="yky-hint"/>
             <ui:ListView binding-path="entries" name="entries" virtualization-method="FixedHeight"
-                         fixed-item-height="28"
+                         fixed-item-height="24"
                          show-alternating-row-backgrounds="None"
                          show-bound-collection-size="false" selection-type="None"
                          class="yky-list transform-db__list"/>
