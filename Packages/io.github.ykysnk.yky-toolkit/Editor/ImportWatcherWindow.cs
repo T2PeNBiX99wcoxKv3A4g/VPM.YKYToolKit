@@ -20,12 +20,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         private const string DateFormat = "yyyy-MM-dd";
         private const string TimeFormat = "HH:mm:ss";
 
-        private static readonly List<string> RootFolders = new()
-        {
-            "Packages",
-            "ProjectSettings"
-        };
-
         [SerializeField] private VisualTreeAsset? uxml;
 
         private readonly List<DateGroup> _dates = new();
@@ -97,11 +91,17 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         private void BindDateRow(VisualElement element, int index)
         {
-            if (index < 0 || index >= _dates.Count) return;
+            var label = element.Q<Label>(className: "import-log-date__label");
+            if (index < 0 || index >= _dates.Count)
+            {
+                element.userData = null;
+                label.text = string.Empty;
+                return;
+            }
 
             var group = _dates[index];
             element.userData = group;
-            element.Q<Label>(className: "import-log-date__label").text = group.Date.ToString(DateFormat);
+            label.text = group.Date.ToString(DateFormat);
         }
 
         private static VisualElement CreateTimeRow()
@@ -118,11 +118,17 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
         private void BindTimeRow(VisualElement element, int index)
         {
-            if (index < 0 || index >= _times.Count) return;
+            var label = element.Q<Label>(className: "import-log-time__label");
+            if (index < 0 || index >= _times.Count)
+            {
+                element.userData = null;
+                label.text = string.Empty;
+                return;
+            }
 
             var group = _times[index];
             element.userData = group;
-            element.Q<Label>(className: "import-log-time__label").text = group.LocalTime.ToString(TimeFormat);
+            label.text = group.LocalTime.ToString(TimeFormat);
         }
 
         private VisualElement CreateRecordRow()
@@ -157,27 +163,39 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         {
             if (_tree == null) return;
 
-            var id = _tree.GetIdForIndex(index);
-            var node = _tree.GetItemDataForId<Node>(id);
-            if (node == null) return;
-
-            element.userData = node;
-
             var icon = element.Q<Image>("icon");
             var label = element.Q<Label>("name");
+
+            var id = _tree.GetIdForIndex(index);
+            var node = _tree.GetItemDataForId<Node>(id);
+            if (node == null)
+            {
+                // A recycled row can be bound before its item resolves; clear it instead of leaving a blank line.
+                element.userData = null;
+                icon.image = null;
+                label.text = string.Empty;
+                label.tooltip = null;
+                return;
+            }
+
+            element.userData = node;
 
             label.text = node.Name;
             label.tooltip = node.FullPath;
 
-            var type = AssetDatabase.GetMainAssetTypeAtPath(node.FullPath);
-            if (type != null || AssetDatabase.IsValidFolder(node.FullPath))
+            // A node with children is a folder, so it gets a folder icon even when the folder no longer exists.
+            if (node.Children.Count > 0)
             {
-                icon.image = AssetDatabase.GetCachedIcon(node.FullPath);
+                icon.image = AssetDatabase.GetCachedIcon(node.FullPath) ??
+                             EditorGUIUtility.FindTexture("Folder Icon");
                 label.style.color = StyleKeyword.Null;
+                return;
             }
-            else if (RootFolders.Contains(node.FullPath))
+
+            if (AssetDatabase.GetMainAssetTypeAtPath(node.FullPath) != null)
             {
-                icon.image = EditorGUIUtility.FindTexture("Folder Icon");
+                icon.image = AssetDatabase.GetCachedIcon(node.FullPath) ??
+                             InternalEditorUtility.GetIconForFile(node.FullPath);
                 label.style.color = StyleKeyword.Null;
             }
             else
