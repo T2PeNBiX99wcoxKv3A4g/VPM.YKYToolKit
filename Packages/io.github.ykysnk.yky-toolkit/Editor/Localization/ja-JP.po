@@ -432,3 +432,6 @@ msgstr "未読み込み"
 msgid "label.enhanced_transform_database.read_only"
 msgstr "読み取り専用"
 
+msgid "label.enhanced_transform_settings.info"
+msgstr "Transform インスペクターで編集します。"
+

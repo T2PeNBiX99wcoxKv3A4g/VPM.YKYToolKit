@@ -432,3 +432,6 @@ msgstr "Not loaded"
 msgid "label.enhanced_transform_database.read_only"
 msgstr "Read only"
 
+msgid "label.enhanced_transform_settings.info"
+msgstr "Edited from the Transform inspector."
+

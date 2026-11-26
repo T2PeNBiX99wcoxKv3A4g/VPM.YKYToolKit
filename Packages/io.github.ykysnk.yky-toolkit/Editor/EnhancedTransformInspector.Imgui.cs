@@ -12,7 +12,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         {
             var type = ReflectionWrapper.GetType("UnityEditor.TransformInspector, UnityEditor");
             var theTarget = (Transform)target;
-            var exData = EnhancedTransformDatabase.Get(theTarget);
+            var exData = EnhancedTransformSettingsAccessor.Get(theTarget);
             _defaultEditor ??= CreateEditor(targets, type);
             var previousEnabled = GUI.enabled;
 
@@ -60,7 +60,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             exData.rotationDecimalPrecision = rotationDecimalPrecision;
             exData.scaleDecimalPrecision = scaleDecimalPrecision;
             exData.lockTransform = lockTransform;
-            EnhancedTransformDatabase.Save();
         }
     }
 }

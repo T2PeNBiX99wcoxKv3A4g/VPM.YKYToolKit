@@ -108,7 +108,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             tree.RegisterCallback<WheelEvent>(_ => HideSuggestions());
             tree.RegisterCallback<DetachFromPanelEvent>(_ => RemoveSuggestionPopup());
 
-            var exData = EnhancedTransformDatabase.Get(theTarget);
+            var exData = EnhancedTransformSettingsAccessor.Get(theTarget);
             var stage = PrefabStageUtility.GetCurrentPrefabStage();
 
             var defaultUIFoldOut = tree.Q<Foldout>("defaultGUIFoldout");
@@ -715,7 +715,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             positionDecimalField.RegisterValueChangedCallback(evt =>
             {
                 exData.positionDecimalPrecision = evt.newValue;
-                EnhancedTransformDatabase.Save();
             });
 
             var rotationDecimalField = tree.Q<SliderInt>("rotationDecimal");
@@ -724,7 +723,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             rotationDecimalField.RegisterValueChangedCallback(evt =>
             {
                 exData.rotationDecimalPrecision = evt.newValue;
-                EnhancedTransformDatabase.Save();
             });
 
             var scaleDecimalField = tree.Q<SliderInt>("scaleDecimal");
@@ -733,7 +731,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             scaleDecimalField.RegisterValueChangedCallback(evt =>
             {
                 exData.scaleDecimalPrecision = evt.newValue;
-                EnhancedTransformDatabase.Save();
             });
 
             var alignToParentButton = tree.Q<Button>("alignToParent");
@@ -788,7 +785,6 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             {
                 exData.lockTransform = evt.newValue;
                 UpdateLockTransformToggle();
-                EnhancedTransformDatabase.Save();
             });
 
             // Reused by the once-per-second override check; creating a SerializedObject there every second was the

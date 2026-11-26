@@ -31,7 +31,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
                 Undo.RecordObject(t, "Clean Transform");
 
-                var exData = EnhancedTransformDatabase.Get(t);
+                var exData = EnhancedTransformSettingsAccessor.Get(t);
                 var newPosition = t.localPosition.Clean(threshold);
                 var newRotation = t.localEulerAngles.Clean(threshold);
                 var newScale = t.localScale.Clean(threshold);
@@ -65,7 +65,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
                 Undo.RecordObject(t, "Clean World Transform");
 
-                var exData = EnhancedTransformDatabase.Get(t);
+                var exData = EnhancedTransformSettingsAccessor.Get(t);
                 var newPosition = t.position.Clean(threshold);
                 var newRotation = t.eulerAngles.Clean(threshold);
                 var newScale = t.lossyScale.Clean(threshold);

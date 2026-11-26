@@ -140,5 +140,6 @@
   "label.enhanced_transform_database.entries": "項目",
   "label.enhanced_transform_database.no_entries": "還沒有項目。",
   "label.enhanced_transform_database.missing": "未載入",
-  "label.enhanced_transform_database.read_only": "唯讀"
+  "label.enhanced_transform_database.read_only": "唯讀",
+  "label.enhanced_transform_settings.info": "在 Transform 檢視器中編輯。"
 }

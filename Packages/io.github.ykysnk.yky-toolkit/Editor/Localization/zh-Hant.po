@@ -432,3 +432,6 @@ msgstr "未載入"
 msgid "label.enhanced_transform_database.read_only"
 msgstr "唯讀"
 
+msgid "label.enhanced_transform_settings.info"
+msgstr "在 Transform 檢視器中編輯。"
+
