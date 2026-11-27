@@ -36,6 +36,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
                     var tree = uxml.CloneTree();
                     tree.UILocalize(false);
+                    YkyTheme.Apply(tree);
                     root.Add(tree);
 
                     // The Settings window reuses the provider UI, so the scroll view can keep an old offset and hide
@@ -65,6 +66,17 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                         });
                         languageHost.Add(languagePicker);
                     }
+
+                    var accentField = tree.Q<ColorField>("accentColor");
+                    accentField.showAlpha = false;
+                    accentField.SetValueWithoutNotify(YkyTheme.Accent);
+                    accentField.RegisterValueChangedCallback(evt => YkyTheme.Accent = evt.newValue);
+
+                    tree.Q<Button>("resetAppearance").clicked += () =>
+                    {
+                        YkyTheme.Reset();
+                        accentField.SetValueWithoutNotify(YkyTheme.Accent);
+                    };
 
                     var allowAsyncCompilationToggle = tree.Q<Toggle>("allowAsyncCompilation");
                     allowAsyncCompilationToggle.SetValueWithoutNotify(ShaderAsync.AllowAsyncCompilation);

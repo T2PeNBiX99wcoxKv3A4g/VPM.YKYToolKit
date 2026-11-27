@@ -142,5 +142,9 @@
   "label.preferences_page.delete_protection_hint": "Assets and Packages are always protected. Add extra directories with the + button.",
   "label.preferences_page.extra_protected_directories": "Extra protected directories",
   "label.new_delete.restricted_title": "Cannot delete protected directories",
-  "label.new_delete.restricted_warning": "These directories are protected and cannot be deleted. Remove them from the selection and try again."
+  "label.new_delete.restricted_warning": "These directories are protected and cannot be deleted. Remove them from the selection and try again.",
+  "label.preferences_page.appearance": "Appearance",
+  "label.preferences_page.accent_color": "Accent Color",
+  "label.preferences_page.accent_color_hint": "Used for section titles, highlights and buttons across the toolkit and the Transform inspector.",
+  "label.preferences_page.reset_appearance": "Reset the accent colour"
 }

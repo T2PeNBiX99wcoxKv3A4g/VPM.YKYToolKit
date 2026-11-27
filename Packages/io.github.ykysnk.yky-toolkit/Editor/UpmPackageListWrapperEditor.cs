@@ -21,6 +21,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             var tree = uxml.CloneTree();
             tree.UILocalize(false);
+            YkyTheme.Apply(tree);
             tree.Bind(property.serializedObject);
 
             var importButton = tree.Q<Button>("import");

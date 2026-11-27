@@ -142,5 +142,9 @@
   "label.preferences_page.delete_protection_hint": "Assets 和 Packages 永远受保护。点击 + 按钮添加更多目录。",
   "label.preferences_page.extra_protected_directories": "额外保护的目录",
   "label.new_delete.restricted_title": "无法删除受保护的目录",
-  "label.new_delete.restricted_warning": "这些目录受保护，无法删除。请从选择中移除后再试。"
+  "label.new_delete.restricted_warning": "这些目录受保护，无法删除。请从选择中移除后再试。",
+  "label.preferences_page.appearance": "外观",
+  "label.preferences_page.accent_color": "主题色",
+  "label.preferences_page.accent_color_hint": "用于工具包和 Transform 检查器的标题、高亮与按钮。",
+  "label.preferences_page.reset_appearance": "恢复默认主题色"
 }

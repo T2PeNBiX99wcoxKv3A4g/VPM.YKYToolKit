@@ -741,5 +741,25 @@ MonoBehaviour:
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
+  - key: label.preferences_page.appearance
+    translate: "\u5916\u89C0"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.preferences_page.accent_color
+    translate: "\u4E3B\u984C\u8272"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.preferences_page.accent_color_hint
+    translate: "\u7528\u65BC\u5DE5\u5177\u5305\u8207 Transform \u6AA2\u8996\u5668\u7684\u6A19\u984C\u3001\u9192\u76EE\u63D0\u793A\u8207\u6309\u9215\u3002"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.preferences_page.reset_appearance
+    translate: "\u6062\u5FA9\u9810\u8A2D\u4E3B\u984C\u8272"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   jsonFile: {fileID: 0}
   poFile: {fileID: 0}

@@ -16,6 +16,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             if (uxml == null) return BasicEditor.CreateUxmlImportErrorUI();
             var tree = uxml.CloneTree();
             tree.UILocalize(false);
+            YkyTheme.Apply(tree);
             tree.Bind(property.serializedObject);
             return tree;
         }

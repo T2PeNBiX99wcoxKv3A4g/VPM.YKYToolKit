@@ -17,11 +17,11 @@
 .yky-section {
     font-size: 11px;
     -unity-font-style: bold;
-    color: rgb(120, 165, 255);
+    color: var(--yky-accent-text, rgb(120, 165, 255));
     margin: 16px 0 6px 0;
     padding-bottom: 4px;
     border-bottom-width: 1px;
-    border-bottom-color: rgba(96, 141, 235, 0.55);
+    border-bottom-color: var(--yky-accent-line, rgba(96, 141, 235, 0.55));
 }
 
 /* ---------- card ---------- */
@@ -66,25 +66,25 @@ Button,
 
 Button:hover,
 .unity-button:hover {
-    border-color: rgb(76, 141, 255);
-    background-color: rgba(76, 141, 255, 0.22);
+    border-color: var(--yky-accent, rgb(76, 141, 255));
+    background-color: var(--yky-accent-22, rgba(76, 141, 255, 0.22));
 }
 
 Button:active,
 .unity-button:active {
-    background-color: rgba(76, 141, 255, 0.34);
+    background-color: var(--yky-accent-34, rgba(76, 141, 255, 0.34));
 }
 
 .yky-button--primary {
     color: rgb(255, 255, 255);
     background-image: none;
-    background-color: rgb(76, 141, 255);
-    border-color: rgb(60, 122, 238);
+    background-color: var(--yky-accent, rgb(76, 141, 255));
+    border-color: var(--yky-accent-border, rgb(60, 122, 238));
 }
 
 .yky-button--primary:hover {
-    background-color: rgb(94, 155, 255);
-    border-color: rgb(94, 155, 255);
+    background-color: var(--yky-accent-hover, rgb(94, 155, 255));
+    border-color: var(--yky-accent-hover, rgb(94, 155, 255));
 }
 
 .cell {
@@ -109,7 +109,7 @@ Button:active,
 .yky-list-title {
     font-size: 11px;
     -unity-font-style: bold;
-    color: rgb(120, 165, 255);
+    color: var(--yky-accent-text, rgb(120, 165, 255));
 }
 
 /* ---------- layout helpers ---------- */
@@ -162,7 +162,7 @@ Button:active,
 }
 
 .yky-list-row--selected {
-    background-color: rgba(76, 141, 255, 0.12);
+    background-color: var(--yky-accent-12, rgba(76, 141, 255, 0.12));
 }
 
 .yky-list-empty,
@@ -269,12 +269,12 @@ PopupField .unity-base-field__input {
 
 .yky-icon-button:hover,
 .unity-list-view__footer .unity-button:hover {
-    background-color: rgba(76, 141, 255, 0.30);
+    background-color: var(--yky-accent-30, rgba(76, 141, 255, 0.30));
 }
 
 .yky-icon-button:active,
 .unity-list-view__footer .unity-button:active {
-    background-color: rgba(76, 141, 255, 0.45);
+    background-color: var(--yky-accent-45, rgba(76, 141, 255, 0.45));
 }
 
 .yky-inline-label {
@@ -313,7 +313,7 @@ ToolbarButton,
 
 ToolbarButton:hover,
 .unity-toolbar-button:hover {
-    background-color: rgba(76, 141, 255, 0.20);
+    background-color: var(--yky-accent-20, rgba(76, 141, 255, 0.20));
 }
 
 /* ---------- search field ---------- */
@@ -336,7 +336,7 @@ ToolbarButton:hover,
 }
 
 .yky-search:hover {
-    border-color: rgba(96, 141, 235, 0.70);
+    border-color: var(--yky-accent-line-strong, rgba(96, 141, 235, 0.70));
 }
 
 .yky-search .unity-search-field-base__search-button {
@@ -416,7 +416,7 @@ ListView,
 }
 
 .unity-list-view__item:hover {
-    background-color: rgba(76, 141, 255, 0.12);
+    background-color: var(--yky-accent-12, rgba(76, 141, 255, 0.12));
 }
 
 /* The built-in add/remove footer is painted with a solid dark toolbar, which reads as a black frame in a card. */
@@ -476,7 +476,7 @@ TextField .unity-base-text-field__input {
 .tableHeader {
     padding: 4px 6px;
     margin-top: 4px;
-    background-color: rgba(76, 141, 255, 0.16);
+    background-color: var(--yky-accent-16, rgba(76, 141, 255, 0.16));
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
 }
@@ -536,6 +536,10 @@ TextField .unity-base-text-field__input {
 }
 .yky-icon--language {
     background-image: url("project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/Icons/language.png?fileID=2800000&guid=371f21e69eb122441accf9a5dd98bcf5&type=3");
+}
+
+.yky-icon--theme {
+    background-image: url("project://database/Packages/io.github.ykysnk.yky-toolkit/Editor/Icons/theme.png?fileID=2800000&guid=33ba37a80a674ac2b2f7c616f33166b0&type=3");
 }
 
 .yky-icon--upm-installer {

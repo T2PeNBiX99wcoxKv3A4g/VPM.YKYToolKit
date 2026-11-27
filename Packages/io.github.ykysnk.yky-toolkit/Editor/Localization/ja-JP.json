@@ -142,5 +142,9 @@
   "label.preferences_page.delete_protection_hint": "Assets と Packages は常に保護されます。追加するディレクトリは + ボタンで追加してください。",
   "label.preferences_page.extra_protected_directories": "追加で保護するディレクトリ",
   "label.new_delete.restricted_title": "保護ディレクトリは削除できません",
-  "label.new_delete.restricted_warning": "これらのディレクトリは保護されているため削除できません。選択から外してからもう一度お試しください。"
+  "label.new_delete.restricted_warning": "これらのディレクトリは保護されているため削除できません。選択から外してからもう一度お試しください。",
+  "label.preferences_page.appearance": "外観",
+  "label.preferences_page.accent_color": "アクセントカラー",
+  "label.preferences_page.accent_color_hint": "ツールキットと Transform インスペクターの見出し、強調、ボタンに使われる色です。",
+  "label.preferences_page.reset_appearance": "アクセントカラーを既定値に戻す"
 }

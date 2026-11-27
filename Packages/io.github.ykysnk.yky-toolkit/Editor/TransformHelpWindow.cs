@@ -31,6 +31,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             var tree = uxml.CloneTree();
             tree.style.flexGrow = 1;
+            YkyTheme.Apply(tree);
             rootVisualElement.Add(tree);
 
             var groups = tree.Q<VisualElement>("groups");

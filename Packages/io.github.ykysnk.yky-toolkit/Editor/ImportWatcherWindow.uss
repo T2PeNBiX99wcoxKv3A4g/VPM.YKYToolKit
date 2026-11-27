@@ -47,7 +47,7 @@
 }
 
 .yky-import-log__sessions .unity-collection-view__item--selected {
-    background-color: rgba(76, 141, 255, 0.30);
+    background-color: var(--yky-accent-30, rgba(76, 141, 255, 0.30));
 }
 
 .yky-import-log__search {
@@ -65,7 +65,7 @@
 .yky-import-log__detail-title {
     font-size: 11px;
     -unity-font-style: bold;
-    color: rgb(120, 165, 255);
+    color: var(--yky-accent-text, rgb(120, 165, 255));
     margin: 2px 0 4px 2px;
     min-height: 16px;
 }

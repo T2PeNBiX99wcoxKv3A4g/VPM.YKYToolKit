@@ -180,6 +180,8 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 if (sheet != null)
                     _suggestionPopup.styleSheets.Add(sheet);
 
+                YkyTheme.Apply(_suggestionPopup);
+
                 _suggestionList = new VisualElement();
                 _suggestionList.AddToClassList("transform-suggest__list");
                 _suggestionPopup.Add(_suggestionList);

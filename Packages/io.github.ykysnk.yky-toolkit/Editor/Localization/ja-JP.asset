@@ -741,5 +741,25 @@ MonoBehaviour:
     tooltip: 
     useTooltip: 0
     tooltipSuffix: :tooltip
+  - key: label.preferences_page.appearance
+    translate: "\u5916\u89B3"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.preferences_page.accent_color
+    translate: "\u30A2\u30AF\u30BB\u30F3\u30C8\u30AB\u30E9\u30FC"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.preferences_page.accent_color_hint
+    translate: "\u30C4\u30FC\u30EB\u30AD\u30C3\u30C8\u3068 Transform \u30A4\u30F3\u30B9\u30DA\u30AF\u30BF\u30FC\u306E\u898B\u51FA\u3057\u3001\u5F37\u8ABF\u3001\u30DC\u30BF\u30F3\u306B\u4F7F\u308F\u308C\u308B\u8272\u3067\u3059\u3002"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
+  - key: label.preferences_page.reset_appearance
+    translate: "\u30A2\u30AF\u30BB\u30F3\u30C8\u30AB\u30E9\u30FC\u3092\u65E2\u5B9A\u5024\u306B\u623B\u3059"
+    tooltip: 
+    useTooltip: 0
+    tooltipSuffix: :tooltip
   jsonFile: {fileID: 4900000, guid: 7b3209e0616e1124bb35ec590e95cabb, type: 3}
   poFile: {fileID: 9010515335742159986, guid: 3b2e9f0ca3cf1ef4bb361ec89a927d5e, type: 3}

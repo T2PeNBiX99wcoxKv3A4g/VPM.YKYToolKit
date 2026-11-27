@@ -18,6 +18,18 @@
 
             <ui:VisualElement class="yky-card">
                 <ui:VisualElement class="yky-card__title">
+                    <ui:VisualElement class="yky-icon yky-icon--section yky-icon--theme"/>
+                    <ui:Label text="label.preferences_page.appearance" class="yky-section"/>
+                    <ui:VisualElement class="yky-spacer"/>
+                    <ui:Button name="resetAppearance" tooltip="label.preferences_page.reset_appearance"
+                               class="yky-icon-button yky-button-icon--reset"/>
+                </ui:VisualElement>
+                <uie:ColorField label="label.preferences_page.accent_color" name="accentColor"/>
+                <ui:Label text="label.preferences_page.accent_color_hint" class="yky-hint"/>
+            </ui:VisualElement>
+
+            <ui:VisualElement class="yky-card">
+                <ui:VisualElement class="yky-card__title">
                     <ui:VisualElement class="yky-icon yky-icon--section yky-icon--settings"/>
                     <ui:Label text="label.preferences_page.general" class="yky-section"/>
                     <ui:VisualElement class="yky-spacer"/>

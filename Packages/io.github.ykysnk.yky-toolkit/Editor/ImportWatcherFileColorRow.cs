@@ -24,6 +24,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             var row = uxml.CloneTree();
             row.UILocalize(false);
+            YkyTheme.Apply(row);
 
             ImportWatcherFileColor? Value() => row.userData as ImportWatcherFileColor;
 

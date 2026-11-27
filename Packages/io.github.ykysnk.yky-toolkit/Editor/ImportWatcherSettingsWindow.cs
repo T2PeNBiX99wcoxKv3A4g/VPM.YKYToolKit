@@ -23,6 +23,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         {
             var tree = uxml!.CloneTree();
             tree.UILocalize(false);
+            YkyTheme.Apply(tree);
             rootVisualElement.Add(tree);
 
             var colorField = tree.Q<ColorField>("color");

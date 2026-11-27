@@ -142,5 +142,9 @@
   "label.preferences_page.delete_protection_hint": "Assets 與 Packages 永遠受保護。點擊 + 按鈕新增更多目錄。",
   "label.preferences_page.extra_protected_directories": "額外保護的目錄",
   "label.new_delete.restricted_title": "無法刪除受保護的目錄",
-  "label.new_delete.restricted_warning": "這些目錄受保護，無法刪除。請從選取中移除後再試。"
+  "label.new_delete.restricted_warning": "這些目錄受保護，無法刪除。請從選取中移除後再試。",
+  "label.preferences_page.appearance": "外觀",
+  "label.preferences_page.accent_color": "主題色",
+  "label.preferences_page.accent_color_hint": "用於工具包與 Transform 檢視器的標題、醒目提示與按鈕。",
+  "label.preferences_page.reset_appearance": "恢復預設主題色"
 }

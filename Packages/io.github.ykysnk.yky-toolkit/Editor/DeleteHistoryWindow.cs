@@ -50,6 +50,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var tree = uxml!.CloneTree();
             tree.UILocalize(false);
             tree.style.flexGrow = 1;
+            YkyTheme.Apply(tree);
             rootVisualElement.Add(tree);
 
             _dateList = tree.Q<ListView>("dateList");

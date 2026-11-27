@@ -89,6 +89,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var tree = uxml!.CloneTree();
             _root = tree;
             tree.UILocalize(false);
+            YkyTheme.Apply(tree);
 
             // Every axis label explains that the field accepts expressions, which is where the user needs it.
             foreach (var field in tree.Query<Vector3FieldExtra>().ToList())

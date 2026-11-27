@@ -22,8 +22,8 @@
 }
 
 .yky-card--language {
-    border-color: rgba(96, 141, 235, 0.55);
-    background-color: rgba(76, 141, 255, 0.10);
+    border-color: var(--yky-accent-line, rgba(96, 141, 235, 0.55));
+    background-color: var(--yky-accent-10, rgba(76, 141, 255, 0.10));
 }
 
 .yky-language-picker {
@@ -43,8 +43,8 @@
     height: 28px;
     font-size: 13px;
     -unity-font-style: bold;
-    background-color: rgba(76, 141, 255, 0.22);
-    border-color: rgba(96, 141, 235, 0.75);
+    background-color: var(--yky-accent-22, rgba(76, 141, 255, 0.22));
+    border-color: var(--yky-accent-line-strong, rgba(96, 141, 235, 0.75));
 }
 
 .yky-preferences Toggle {

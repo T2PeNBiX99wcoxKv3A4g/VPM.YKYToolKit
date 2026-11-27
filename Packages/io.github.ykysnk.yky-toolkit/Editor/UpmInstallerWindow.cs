@@ -51,6 +51,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var tree = uxml!.CloneTree();
             tree.UILocalize(false);
             tree.Bind(_serializedObject);
+            YkyTheme.Apply(tree);
             rootVisualElement.Add(tree);
             // The template wrapper is not a flex child of the window root by default, so the page would only be as
             // tall as its content instead of filling the window.
