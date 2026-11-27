@@ -1,5 +1,129 @@
 # Changelog
 
+## [1.2.0](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/compare/1.1.3..1.2.0) - 2026-11-27
+
+### ⛰️  Features
+
+- Restyle the import watcher highlight in the project window - ([a9ef231](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/a9ef23146e475d2018faa462cb2df187896ccf2c))
+- Add a configurable accent colour preference - ([b21e239](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/b21e239d9f0183bc1a73ce07eecb876b1148f5ec))
+- Point the package metadata at the documentation site - ([4927ba8](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/4927ba8d01b3e96844664c0fa9578fc4f66e7f8f))
+- Restyle the delete confirmation dialog - ([3ff36e7](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/3ff36e75f5def078ba5d80b1e3ded986c7b8f433))
+- Count the time entries on each import watcher date - ([c455c34](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/c455c34524a23913204d93f30b8cf9e88f4d880f))
+- Protect directories from the delete shortcut and refresh history windows - ([6750f2b](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/6750f2b26cf25a7a259649b2c2aef56639eeb37b))
+- Store transform settings on the object instead of a database asset - ([4b79b33](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/4b79b3341ca18dfac3f4c52d41d673bbe6c7d687))
+- Give the transform database a readable editor and script icon - ([c2c20e5](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/c2c20e54042afe4324f43f84b54abe773cb153fc))
+- Use Unity labels for world space and reorganise the other card - ([273a780](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/273a780ba76fa0905f3e245e3ac89646513ec908))
+- Move the transform expression help into its own window - ([72ca747](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/72ca747c2870d2addefef488168f8f84fc6bbdef))
+- Suggest transform expressions while typing - ([d2b5e4c](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/d2b5e4ce8066ed311c1e8c00d72fed7970463822))
+- Turn the transform help into a structured expression cheat sheet - ([6dcf22a](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/6dcf22a0826a639731cbfba1b6b844ed002953b7))
+- Redesign the transform inspector and fix rotation edits - ([82c548c](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/82c548c6bfa1356a36df989031bf393f58629365))
+- Keep both import log columns visible when empty - ([f1ab10c](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/f1ab10c3e5c5bb535efec50f85fde196b49204af))
+- Keep the import log date column and scope histories to the project - ([93661a4](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/93661a49cd48683bfcec9245a644e0529a2c34a9))
+- Make rich presence follow the focused Unity project - ([84b05b5](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/84b05b5d7892152ab224fe81963da0ac9f614f96))
+- Confirm deletes with an object list instead of a text message - ([23ec902](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/23ec9024c6800009b2eecbbd83ef57a78c2cf493))
+- Mark the folder in each delete history row - ([5a16c0a](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/5a16c0a45d82110d481f356787359566ad6e33f4))
+- Make the toolbar search fields readable - ([ae993d6](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/ae993d6a6664641a69bc542f9cc674a94a7e676e))
+- Add a search field to the import watcher - ([3358f9b](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/3358f9bb7808272bc55ffcca17a245ec591e93b4))
+- Rebuild the delete history as dates with file rows - ([6355eb5](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/6355eb5d6a49de10827925d9edca229c914c1acd))
+- Add a time column between the import dates and the file tree - ([b790a4f](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/b790a4f07540f213952cd61d1e6c7f1a64d7ed3b))
+- Group the import log by date and show times in the detail pane - ([efd8856](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/efd885633a1554c66cc1f3f64c339d6b9747de5f))
+- Add graphics, free reserved and temp allocator metrics - ([3b3cf46](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/3b3cf460af324880646ee273225c64900781db33))
+- Rebuild the resource monitor without the handle counters - ([2bf2a09](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/2bf2a094698af4cdcfc29ca64f559283e6966778))
+- Add a row context menu and put the list reset in the footer - ([2b976c5](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/2b976c52cb2e696f13c86456b6826a78c2868944))
+- Per-category resets, count after the list name, and distinct colours - ([bb4a453](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/bb4a453aeb84b83a4aba41caae0ddc91693fce9f))
+- Add a reset for the highlight colours and fix the language refresh - ([45db125](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/45db125480b478e298fdf7b287f0e124a1373ce4))
+- Give Preferences a real language card - ([008e3bb](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/008e3bb502693194861f82f4bb7f085e27ab8f26))
+- Restyle Preferences and give the toolkit windows their own icons - ([6a19b17](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/6a19b17538813bfb2c98618e945ef6178b107522))
+- Add Chinese translations and drop the duplicate keys - ([0f1aa72](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/0f1aa7262cb4c1095bb557ea1724ff373ca3ca10))
+
+### 🐛 Bug Fixes
+
+- Keep entered rotation values and round expression edits - ([3091558](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/3091558f23bc5703408cc3db8fbe4db7561233d5))
+- Forget materials lilEditorToolbox cached before they were deleted - ([dfeadbd](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/dfeadbd301bb6b4d825ce9f1b1b205fb30e9458b))
+- Acknowledge a protected selection instead of offering delete - ([41bfece](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/41bfece76b312fbae288967564039e231c89dc8f))
+- Rebuild the history lists once a docked window gets a layout - ([cc8deb1](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/cc8deb1b2ccbbcc24f2923b14e4f470fb40ab64d))
+- Keep the history filters empty after a reload - ([3461690](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/34616907f58b43fbf93b6f6e72d302cbb8bfee9c))
+- Increase editor menu separator spacing - ([09611da](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/09611da86e7e17244cdf4813d8696472c95bc08c))
+- Put preferences first in its menu group without losing separators - ([f3d6c96](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/f3d6c9609450586ac9d810c7410ccbb2dbd213c2))
+- Move preferences above delete history and disable set object and tag without a selection - ([cdf20cd](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/cdf20cddc655eb557332604b342629db16e3ab2c))
+- Keep the path copy inside the card and move the lock into the header - ([1dbd919](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/1dbd919022285895e74124f89f6063b7611f4c46))
+- Reserve the scale link gutter and drop the inspector language picker - ([e3bc6e7](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/e3bc6e7ef0b2bee02aad3ed0d247af9d58b7c27b))
+- Commit transform expressions once and put the scale link before the fields - ([2d9559e](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/2d9559ecd1d50a58f0526034fc3539606039b460))
+- Hide import log times that the search filtered out - ([b9cc60c](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/b9cc60c8051cf44dbbc465332d0b25440c07bc50))
+- Clear recycled import log rows and give folders a fallback icon - ([77fb177](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/77fb1774b36e411b4f040b808759c08bb8155c2a))
+- Expand every import tree branch and compact single-child folders - ([3aae7ae](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/3aae7ae7944e7a732d7fd4a0d17395e29a919747))
+- Drop the extra list border instead of the input boxes - ([f361c55](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/f361c554f5a60f4bae44dd2d207e2bb5b8d454cf))
+- Keep the Preferences cards at their natural height and size the title icons - ([364ac6d](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/364ac6d5b2f7efd79a45ce27e27088f2a36a2800))
+- Apply the lilEditorToolbox material guards again - ([55eb421](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/55eb421da9fbd59fded4bc6a02e5284991458c45))
+- Make the UPM installer lists behave and read correctly - ([f76dd73](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/f76dd739abdfd2891ad9d796329d3a364dba5565))
+- Edit the UPM package lists through their SerializedProperty - ([e0f5d26](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/e0f5d26b2542247dba107fb12fd1b7a43d408954))
+- Dispose the SerializedObject of every window - ([dcfd1cd](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/dcfd1cd65feaa2660ae247601c4eb6ffe4c680cb))
+- Make the constraint conversion reversible and repair the broken panels - ([b638bd1](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/b638bd10b4455ad0384f512f0e6c875496d7e8ab))
+- Guard lilEditorToolbox references with compile define - ([44f638c](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/44f638c746f5042ebcfcb769e4d041afee82fa52))
+
+### 🚜 Refactor
+
+- Move patch class into Patches namespace - ([a5e2d8a](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/a5e2d8a95f1db557b4b8edb9c0346db778e12b80))
+- Explain what the transform settings component stores - ([318d5ca](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/318d5cafce85729b85ad2cb699d9862f5b147e2c))
+- Drop the legacy transform database - ([0317306](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/031730676f8478da2d385bbb3d7763bb88d547dd))
+- List only object paths in the transform database - ([d373cb2](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/d373cb2842512b07602a6c6496dcf7c1aa683c49))
+- Make the transform database read-only and adapt its height - ([4e4e558](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/4e4e558459b3a5ff5eb4118cac94042bbe222a54))
+- Let each resource monitor row sample itself - ([0eccdf5](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/0eccdf5ee39c208c6cb6c21377c04e6f9fd8d1c7))
+- Remove the lilEditorToolbox material patches - ([588f384](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/588f38416c54114834f86ff77bd927ee41257b29))
+- Reach lilEditorToolbox through ReflectionUtils - ([e5d7151](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/e5d715163634ad2dbc7f8b40d7ec47a9d73d02fe))
+- Clean up editor code and formatting - ([a6839c3](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/a6839c3adbeac94865742390a8f7612a83567748))
+- Split the transform inspector into partial files - ([001e3ec](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/001e3ec1c32d3f82c0387a9e599dbf8e8f033cc2))
+
+### 📚 Documentation
+
+- Link the VitePress pages - ([b8464c5](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/b8464c54a3dae2ff87d9ba8d5f45d18156e93a20))
+- Leave only the documentation link above the readme - ([79da2a1](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/79da2a19bf11f733eebc7f1ec5f3eae102a5cc11))
+- Describe the package and link the documentation site - ([5f47d5d](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/5f47d5d60af7439539914960ebc910e402f133e2))
+
+### 🎨 Styling
+
+- Separate the toolkit preferences menu entry - ([6a36ddf](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/6a36ddf7955f3b6d56bbe1128385cb9eb86a8adb))
+- Unify the list footer across the toolkit - ([65faf93](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/65faf93ae3540cbfa8b4907fae1777c02d1be5ed))
+- Turn the default transform UI foldout into a muted card - ([f4b2909](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/f4b2909baebb409862dd20d62321217868795c06))
+- Align the list reset with the list title - ([e4defe1](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/e4defe1839b430accc2d9daa3f0bd74f78e2ed2a))
+- Move the list reset another step to the right - ([468cab1](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/468cab13f35b170c599851a1b80eebbc8a292748))
+- Nudge the list reset button to the right - ([a8d7ded](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/a8d7dedc8fc630fae3bfda13e6f4261a9a2e04af))
+- Put the category reset in the title row and the list reset in the list - ([5520a3d](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/5520a3dd0ca7d215fe58b9e73bee2be3ff06e324))
+- Drop the dark input boxes in list rows and tidy the language picker - ([d975d79](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/d975d7979bc7c356271dde83b392022e3bcd28a7))
+- Unify every list and sharpen the title-bar icons - ([1e56f64](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/1e56f64d893816f2d54fb5c1f54c284790769a1f))
+- Draw the list footer buttons like the custom icon buttons - ([f79a679](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/f79a679311d1497dcc28ba22f9c2565c48a67ea1))
+- Lay out the UPM installer in two columns - ([c1ba830](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/c1ba8305bb001edb23b773d4d38e0d4c1b60de85))
+- Give the toolkit windows a shared, theme-neutral look - ([8ef5411](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/8ef5411853abe0ff572e15bddab685a68ca32b0e))
+
+### ⚙️ Miscellaneous Tasks
+
+- Bump package version to 1.2.0 in package.json - ([28bf012](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/28bf0125f6f3b1889fc4221c74eff63161f2e73f))
+- Mark patch prefix as used implicitly - ([d3bc41c](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/d3bc41cb8300cd535145f6343b1520ec84a413fb))
+- Mark patch class as used implicitly - ([c2f38e7](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/c2f38e77846f9724e0b82b5c1fd17601ff5ee268))
+- Update VPM dependencies and asset marker data - ([b8f9449](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/b8f94498b4c6e6554b3abec630a00cd986318abb))
+- Update Unity and VPM dependencies - ([b4c2461](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/b4c24614daaaf250103e7761b7aa443a7da85cf2))
+- Require localization 1.0.0 - ([83ddde2](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/83ddde2fae2b82043c6e6956b2ee3298fae02c87))
+- Require utils 1.9.2 for the dialog layout fix - ([8d3d980](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/8d3d98040ad248e83734ff5968d6820d4a8c7ef2))
+- Require utils 1.9.1 for the dialog domain reload fix - ([cf4f646](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/cf4f64641ff433e285e520d48818504a97abca56))
+- Require utils 1.9.0 for the custom dialog body - ([864f13a](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/864f13a6542cabfa5828f0bb08bfde09250d07ec))
+- Require Utils 1.8.2 for the faster update check - ([6efa830](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/6efa8308192e878b69d802c6b72887cfe7215a2c))
+- Update VPM dependencies - ([84bc346](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/84bc3469c50a0e13410483740094f08ce6b9231b))
+- Format editor asmdef - ([db71da3](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/db71da38cca1365c797037f314c363b9d872177b))
+- Update Unity MCP and VPM dependencies - ([d2d0ae6](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/d2d0ae65d547596c04e6dbabc6f9e068543fb722))
+- Keep the editor-only Discord SDK out of player builds - ([7ef922e](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/7ef922e798d8393cfa8d144aebd9315e75b8c0b5))
+- Add the license link to package.json - ([2d9c0b4](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/2d9c0b4ad6234868d75781956a9ca1a920cd1b4e))
+- Drop the local Website copy, the listing is built from VPM-WebSite - ([cb3695c](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/cb3695c80ac6c28040acdce79eefd345495c0ec1))
+- Use the shared Release-Workflows release and listing workflows - ([e5048c1](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/e5048c15071bb9fdf9b31e25d5192d05fae13326))
+- Add OpenUPM registry and update VPM dependencies - ([70e2add](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/70e2addfe892af09125966fee2bb1f0f4a1821e6))
+
+### Action
+
+- Update `CHANGELOG.md` - ([9dd939a](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/9dd939a0c23cec106054bdcd42ca087572e7d981))
+
+## New Contributors ❤️
+
+* @opencode-agent[bot] made their first contribution
+
 ## [1.1.3](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/compare/1.1.2..1.1.3) - 2026-07-09
 
 ### 🚜 Refactor
