@@ -161,7 +161,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             if (!isFile && !HighlightFolders.Contains(path)) return;
             if (rect.width < 6f || rect.height < 6f) return;
-            if (Event.current != null && Event.current.type != EventType.Repaint) return;
+            if (Event.current == null || Event.current.type != EventType.Repaint) return;
 
             var now = Now;
             if (isFile && info!.expireTime <= now) return;
