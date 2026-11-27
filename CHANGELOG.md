@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.2.1](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/compare/1.2.0..1.2.1) - 2026-11-27
+
+### 🐛 Bug Fixes
+
+- Refilter the expression help once the localization pass settles - ([7cbb98e](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/7cbb98ecc400c6526ef4e2778a718e2491710f4e))
+- Draw the project highlight only while repainting - ([2caff27](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/2caff2705e844d6bd9dda9ca2fefa3770213e588))
+- Keep the search fields out of the localization pass - ([5223c2d](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/5223c2d6dd1c3b9b020cf1658cf7ea6b091fa163))
+
+### ⚙️ Miscellaneous Tasks
+
+- Bump package version to 1.2.1 in package.json - ([f181bdb](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/f181bdbe9b6ee7916a7f6ec4f313fa5d66a595fa))
+
+### Action
+
+- Update `CHANGELOG.md` - ([a1d5ef6](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/commit/a1d5ef6ef0540d99c626f73cf5d9453c36cde2fa))
+
+
 ## [1.2.0](https://github.com/T2PeNBiX99wcoxKv3A4g/VPM.YKYToolKit/compare/1.1.3..1.2.0) - 2026-11-27
 
 ### ⛰️  Features
