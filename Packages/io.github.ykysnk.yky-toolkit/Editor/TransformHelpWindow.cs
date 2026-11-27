@@ -72,14 +72,14 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             SetupSearch(search);
             search.RegisterValueChangedCallback(evt => Filter(evt.newValue));
 
-            Filter("");
+            Filter(search.value);
+
+            // The localization assets load after this window is built; a pass that still reaches the field must
+            // not leave every row hidden, so the filter is applied once more with whatever the field holds then.
+            tree.schedule.Execute(() => Filter(search.value)).ExecuteLater(50);
         }
 
-        /// <summary>
-        ///     The shared <c>SetupSearchField</c> adds a placeholder label inside the field; on a language change that
-        ///     label pushes its text into the field value and the filter hides every row. This window uses a tooltip
-        ///     for the same hint instead.
-        /// </summary>
+        /// <summary>Sets up the search field: styling, the clear glyph and its own tooltip instead of a placeholder.</summary>
         private static void SetupSearch(ToolbarSearchField search)
         {
             search.AddToClassList("yky-search");
