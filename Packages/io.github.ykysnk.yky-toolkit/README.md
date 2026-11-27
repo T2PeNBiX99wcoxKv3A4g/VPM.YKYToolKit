@@ -3,10 +3,7 @@
 Editor toolkit for Unity: a UPM package installer, the import watcher, delete history, a resource monitor, cache
 cleanup and an enhanced transform inspector.
 
-[Documentation](https://t2penbix99wcoxkv3a4g.github.io/VPM-Docs/#/yky-toolkit/Overview) ·
-[日本語](https://t2penbix99wcoxkv3a4g.github.io/VPM-Docs/?lang=ja#/yky-toolkit/Overview) ·
-[简体中文](https://t2penbix99wcoxkv3a4g.github.io/VPM-Docs/?lang=zh-CN#/yky-toolkit/Overview) ·
-[繁體中文](https://t2penbix99wcoxkv3a4g.github.io/VPM-Docs/?lang=zh-TW#/yky-toolkit/Overview)
+[Documentation](https://t2penbix99wcoxkv3a4g.github.io/VPM-Docs/#/yky-toolkit/Overview)
 
 ## Installation
 
