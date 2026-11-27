@@ -167,7 +167,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         }
 
         private void Vector3FieldApplyParsedInput(Vector3Field? vector3Field, Func<Transform, Vector3> getter,
-            Action<Transform, Vector3> setter, Action? onParsed = null)
+            Action<Transform, Vector3> setter, Action? onParsed = null, Func<Transform, Vector3>? editBase = null)
         {
             if (vector3Field == null) return;
 
@@ -177,19 +177,33 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 
             void ApplyAxis(FloatField field, int axis)
             {
+                // Rotation is edited from the angles the field shows, which can be a different but equivalent set
+                // from the one read back out of the quaternion.
+                Vector3 Base(Transform t) => editBase != null ? editBase(t) : getter(t);
+
                 var axisGetter = new Func<Transform, float>(t =>
                 {
-                    var value = getter(t);
+                    var value = Base(t);
                     return axis == 0 ? value.x : axis == 1 ? value.y : value.z;
                 });
 
+                var applied = default(Vector3);
+                var appliedToTarget = false;
+
                 var axisSetter = new Action<Transform, float>((t, value) =>
                 {
-                    var p = getter(t);
+                    var p = Base(t);
                     var old = p;
                     if (axis == 0) p.x = value;
                     else if (axis == 1) p.y = value;
                     else p.z = value;
+
+                    if (t == target)
+                    {
+                        applied = p;
+                        appliedToTarget = true;
+                    }
+
                     ApplyVector3WhenChanged(old, p, v => setter(t, v));
                 });
 
@@ -207,9 +221,19 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     // Leave the resulting number in the field instead of the expression, so it cannot be applied twice.
                     // The composite field has to be updated as well, or its value would still be the old vector.
                     if (target is Transform theTarget)
-                        vector3Field.SetValueWithoutNotify(getter(theTarget).Clean());
+                        vector3Field.SetValueWithoutNotify(ShownResult(theTarget));
 
                     return true;
+                }
+
+                Vector3 ShownResult(Transform theTarget)
+                {
+                    var actual = getter(theTarget).Clean();
+
+                    // Only rotation shows the entered angles back: for the other vectors the transform holds what was
+                    // applied, while Euler angles can come back as an equivalent set of numbers.
+                    if (editBase != null && appliedToTarget && IsSameRotation(applied, actual)) return applied.Clean();
+                    return actual;
                 }
 
                 // Expressions used to be polled every second, so "+90" kept adding 90 while the field held the text.

@@ -68,10 +68,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             var theTarget = (Transform)target;
 
             _root.Q<Vector3FieldExtra>("position")?.SetValueWithoutNotify(theTarget.localPosition.Clean());
-            _root.Q<Vector3FieldExtra>("rotation")?.SetValueWithoutNotify(theTarget.localEulerAngles.Clean());
+            SetEulerWithoutNotify(_root.Q<Vector3FieldExtra>("rotation"), theTarget.localEulerAngles.Clean());
             _root.Q<Vector3FieldExtra>("scale")?.SetValueWithoutNotify(theTarget.localScale.Clean());
             _root.Q<Vector3FieldExtra>("globalPosition")?.SetValueWithoutNotify(theTarget.position.Clean());
-            _root.Q<Vector3FieldExtra>("globalRotation")?.SetValueWithoutNotify(theTarget.eulerAngles.Clean());
+            SetEulerWithoutNotify(_root.Q<Vector3FieldExtra>("globalRotation"), theTarget.eulerAngles.Clean());
             _root.Q<Vector3FieldExtra>("lossyScale")?.SetValueWithoutNotify(theTarget.lossyScale.Clean());
         }
 
@@ -128,8 +128,21 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             globalPositionField.SetValueWithoutNotify(theTarget.position);
 
             Vector3FieldApplyParsedInput(positionField, t => t.localPosition,
-                (t, newVector) => t.localPosition = newVector);
-            Vector3FieldApplyParsedInput(globalPositionField, t => t.position, (t, newVector) => t.position = newVector);
+                (t, newVector) => t.localPosition = newVector, () =>
+                {
+                    CleanTransforms();
+
+                    if (target is Transform current)
+                        globalPositionField.SetValueWithoutNotify(current.position.Clean());
+                });
+            Vector3FieldApplyParsedInput(globalPositionField, t => t.position, (t, newVector) => t.position = newVector,
+                () =>
+                {
+                    CleanTransforms();
+
+                    if (target is Transform current)
+                        positionField.SetValueWithoutNotify(current.localPosition.Clean());
+                });
 
             positionField.RegisterValueChangedCallback(evt =>
             {
@@ -246,10 +259,32 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             rotationField.SetValueWithoutNotify(theTarget.localEulerAngles.Clean());
             globalRotationField.SetValueWithoutNotify(theTarget.eulerAngles.Clean());
 
+            // Euler angles are not unique, so an edit starts from the numbers the field shows when those still
+            // describe the transform's rotation, the same way Unity's own transform inspector uses its Euler hint.
+            // The field's own value is already the new one when the change callback runs, so the caller passes the
+            // value that was shown before the edit.
+            Vector3 LocalEulerForEdit(Transform t, Vector3 shown) =>
+                t == target && IsSameRotation(shown, t.localEulerAngles) ? shown : t.localEulerAngles;
+
+            Vector3 GlobalEulerForEdit(Transform t, Vector3 shown) =>
+                t == target && IsSameRotation(shown, t.eulerAngles) ? shown : t.eulerAngles;
+
             Vector3FieldApplyParsedInput(rotationField, t => t.localEulerAngles,
-                (t, newVector) => t.localEulerAngles = newVector);
+                (t, newVector) => t.localEulerAngles = newVector, () =>
+                {
+                    CleanTransforms();
+
+                    if (target is Transform current)
+                        SetEulerWithoutNotify(globalRotationField, current.eulerAngles.Clean());
+                }, t => LocalEulerForEdit(t, rotationField.value));
             Vector3FieldApplyParsedInput(globalRotationField, t => t.eulerAngles,
-                (t, newVector) => t.eulerAngles = newVector);
+                (t, newVector) => t.eulerAngles = newVector, () =>
+                {
+                    CleanTransforms();
+
+                    if (target is Transform current)
+                        rotationField.SetValueWithoutNotify(current.localEulerAngles.Clean());
+                }, t => GlobalEulerForEdit(t, globalRotationField.value));
 
             var rotationEditing = false;
 
@@ -275,13 +310,13 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 }
 
                 if (rotationEditing)
-                    ApplyToTargetsInChanged(prev, next, t => t.localEulerAngles, (t, apply) => t.localEulerAngles = apply,
-                        "Set Local Rotation");
+                    ApplyToTargetsInChanged(prev, next, t => LocalEulerForEdit(t, prev),
+                        (t, apply) => t.localEulerAngles = apply, "Set Local Rotation");
 
                 CleanTransforms();
 
-                rotationField.SetValueWithoutNotify(next);
-                globalRotationField.SetValueWithoutNotify(theTarget.eulerAngles);
+                SetEulerShown(rotationField, next, theTarget.localEulerAngles);
+                SetEulerWithoutNotify(globalRotationField, theTarget.eulerAngles);
             });
 
             rotationField.CopyButton.clicked += () =>
@@ -319,7 +354,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             globalRotationField.schedule.Execute(() =>
             {
                 if (theTarget == null || globalRotationEditing) return;
-                globalRotationField.SetValueWithoutNotify(theTarget.eulerAngles.Clean());
+                SetEulerWithoutNotify(globalRotationField, theTarget.eulerAngles.Clean());
             }).Every(1000);
 
             globalRotationField.RegisterValueChangedCallback(evt =>
@@ -337,13 +372,13 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 }
 
                 if (globalRotationEditing)
-                    ApplyToTargetsInChanged(prev, next, t => t.eulerAngles, (t, apply) => t.eulerAngles = apply,
-                        "Set World Rotation");
+                    ApplyToTargetsInChanged(prev, next, t => GlobalEulerForEdit(t, prev),
+                        (t, apply) => t.eulerAngles = apply, "Set World Rotation");
 
                 CleanTransforms();
 
                 rotationField.SetValueWithoutNotify(theTarget.localEulerAngles);
-                globalRotationField.SetValueWithoutNotify(next);
+                SetEulerShown(globalRotationField, next, theTarget.eulerAngles);
             });
 
             globalRotationField.AddManipulator(new ContextualMenuManipulator(evt =>
@@ -434,6 +469,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                     t.localScale = newVector;
             }, () =>
             {
+                CleanTransforms();
                 scaleField.SetValueWithoutNotify(theTarget.localScale);
                 lossyScaleField.SetValueWithoutNotify(theTarget.lossyScale);
             });
@@ -458,6 +494,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                         t.SetLossyScale(newVector);
                 }, () =>
                 {
+                    CleanTransforms();
                     scaleField.SetValueWithoutNotify(theTarget.localScale);
                     lossyScaleField.SetValueWithoutNotify(theTarget.lossyScale);
                 });
@@ -817,7 +854,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor
             void UpdateLocalRotation()
             {
                 if (theTarget == null || rotationEditing) return;
-                rotationField.SetValueWithoutNotify(theTarget.localEulerAngles.Clean());
+                SetEulerWithoutNotify(rotationField, theTarget.localEulerAngles.Clean());
             }
 
             void ClearOverride()
@@ -949,10 +986,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
                 var t = (Transform)target;
 
                 _root.Q<Vector3FieldExtra>("position")?.SetValueWithoutNotify(t.localPosition.Clean());
-                _root.Q<Vector3FieldExtra>("rotation")?.SetValueWithoutNotify(t.localEulerAngles.Clean());
+                SetEulerWithoutNotify(_root.Q<Vector3FieldExtra>("rotation"), t.localEulerAngles.Clean());
                 _root.Q<Vector3FieldExtra>("scale")?.SetValueWithoutNotify(t.localScale.Clean());
                 _root.Q<Vector3FieldExtra>("globalPosition")?.SetValueWithoutNotify(t.position.Clean());
-                _root.Q<Vector3FieldExtra>("globalRotation")?.SetValueWithoutNotify(t.eulerAngles.Clean());
+                SetEulerWithoutNotify(_root.Q<Vector3FieldExtra>("globalRotation"), t.eulerAngles.Clean());
                 _root.Q<Vector3FieldExtra>("lossyScale")?.SetValueWithoutNotify(t.lossyScale.Clean());
             }
 

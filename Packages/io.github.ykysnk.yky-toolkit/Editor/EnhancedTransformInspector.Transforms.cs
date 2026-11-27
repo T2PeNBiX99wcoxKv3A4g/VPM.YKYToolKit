@@ -1,5 +1,6 @@
 using System;
 using io.github.ykysnk.utils.Extensions;
+using io.github.ykysnk.ykyToolkit.Editor.UIElements;
 using UnityEditor;
 using UnityEngine;
 
@@ -7,6 +8,32 @@ namespace io.github.ykysnk.ykyToolkit.Editor
 {
     public partial class EnhancedTransformInspector
     {
+        /// <summary>
+        ///     Whether two sets of Euler angles describe the same rotation. Euler angles are not unique (several sets
+        ///     describe one rotation, especially at gimbal lock), so the numbers have to be compared by the rotation
+        ///     they produce, the same way Unity's own Transform inspector compares them with its Euler hint.
+        /// </summary>
+        private static bool IsSameRotation(Vector3 a, Vector3 b) =>
+            Mathf.Abs(Quaternion.Dot(Quaternion.Euler(a), Quaternion.Euler(b))) > 0.999999f;
+
+        /// <summary>
+        ///     Refreshes a rotation field from the transform without replacing numbers that already describe that
+        ///     rotation. Reading the Euler angles back from the quaternion can return a different but equivalent set,
+        ///     which would make the value jump right after it was entered.
+        /// </summary>
+        private static void SetEulerWithoutNotify(Vector3FieldExtra? field, Vector3 euler)
+        {
+            if (field == null || IsSameRotation(field.value, euler)) return;
+            field.SetValueWithoutNotify(euler);
+        }
+
+        /// <summary>
+        ///     Shows <paramref name="euler" /> as the value that was just entered, unless rounding changed the
+        ///     rotation, in which case the transform's own angles are shown instead.
+        /// </summary>
+        private static void SetEulerShown(Vector3FieldExtra field, Vector3 euler, Vector3 actual) =>
+            field.SetValueWithoutNotify(IsSameRotation(euler, actual) ? euler.Clean() : actual.Clean());
+
         private static void ApplyVector3WhenChanged(Vector3 prev, Vector3 next, Action<Vector3> after)
         {
             var xChanged = !Mathf.Approximately(prev.x, next.x);
