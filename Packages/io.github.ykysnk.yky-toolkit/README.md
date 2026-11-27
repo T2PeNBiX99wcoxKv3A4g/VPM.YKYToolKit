@@ -3,7 +3,7 @@
 Editor toolkit for Unity: a UPM package installer, the import watcher, delete history, a resource monitor, cache
 cleanup and an enhanced transform inspector.
 
-[Documentation](https://t2penbix99wcoxkv3a4g.github.io/VPM-Docs/#/yky-toolkit/Overview)
+[Documentation](https://t2penbix99wcoxkv3a4g.github.io/VPM-Docs/en-US/yky-toolkit/Overview.html)
 
 ## Installation
 
@@ -38,12 +38,12 @@ Everything lives under **Tools > YKYToolkit**, with context actions under **Game
 
 The documentation site covers every window and tool:
 
-- [Overview](https://t2penbix99wcoxkv3a4g.github.io/VPM-Docs/#/yky-toolkit/Overview) - what the toolkit contains
-- [Installation](https://t2penbix99wcoxkv3a4g.github.io/VPM-Docs/#/yky-toolkit/Installation) - install and first steps
-- [UPM Installer](https://t2penbix99wcoxkv3a4g.github.io/VPM-Docs/#/yky-toolkit/UPM-Installer) - installing and updating packages
-- [Import Watcher](https://t2penbix99wcoxkv3a4g.github.io/VPM-Docs/#/yky-toolkit/Import-Watcher) - the import history and its settings
-- [Tools](https://t2penbix99wcoxkv3a4g.github.io/VPM-Docs/#/yky-toolkit/Tools) - cache cleanup, backups, GUID copy and constraint conversion
-- [Transform Inspector](https://t2penbix99wcoxkv3a4g.github.io/VPM-Docs/#/yky-toolkit/Transform-Inspector) - expressions, alignment and clipboard
+- [Overview](https://t2penbix99wcoxkv3a4g.github.io/VPM-Docs/en-US/yky-toolkit/Overview.html) - what the toolkit contains
+- [Installation](https://t2penbix99wcoxkv3a4g.github.io/VPM-Docs/en-US/yky-toolkit/Installation.html) - install and first steps
+- [UPM Installer](https://t2penbix99wcoxkv3a4g.github.io/VPM-Docs/en-US/yky-toolkit/UPM-Installer.html) - installing and updating packages
+- [Import Watcher](https://t2penbix99wcoxkv3a4g.github.io/VPM-Docs/en-US/yky-toolkit/Import-Watcher.html) - the import history and its settings
+- [Tools](https://t2penbix99wcoxkv3a4g.github.io/VPM-Docs/en-US/yky-toolkit/Tools.html) - cache cleanup, backups, GUID copy and constraint conversion
+- [Transform Inspector](https://t2penbix99wcoxkv3a4g.github.io/VPM-Docs/en-US/yky-toolkit/Transform-Inspector.html) - expressions, alignment and clipboard
 
 The site is available in English, Japanese, Simplified Chinese and Traditional Chinese; the links above open the
 English text and the language picker in the corner switches the rest.
