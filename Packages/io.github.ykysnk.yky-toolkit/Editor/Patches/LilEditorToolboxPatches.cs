@@ -4,6 +4,7 @@ using System.Reflection;
 using HarmonyLib;
 using io.github.ykysnk.utils.Editor.Patches;
 using io.github.ykysnk.utils.NonUdon;
+using JetBrains.Annotations;
 using Object = UnityEngine.Object;
 
 namespace io.github.ykysnk.ykyToolkit.Editor
@@ -27,20 +28,21 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         {
             private const string ExtensionTypeName = "jp.lilxyzw.editortoolbox.ProjectExtension";
 
-            /// <summary>The plugin is optional, so the whole group stays off when it is not installed.</summary>
-            public override bool Enabled => Cache.Value != null;
-
             /// <summary>The cache is private static, and it only exists when the plugin is installed.</summary>
             private static readonly Lazy<Dictionary<string, Object>?> Cache = new(() =>
                 ReflectionUtils.FindType(ExtensionTypeName)?
                     .GetField("objMap", BindingFlags.Static | BindingFlags.NonPublic)?
                     .GetValue(null) as Dictionary<string, Object>);
 
+            /// <summary>The plugin is optional, so the whole group stays off when it is not installed.</summary>
+            public override bool Enabled => Cache.Value != null;
+
             protected override void Execute(Harmony harmony)
             {
                 // The group has nothing to apply by hand; the nested patch below does the work.
             }
 
+            [UsedImplicitly]
             private sealed class ForgetDestroyedObject : PatchMethod<ForgetDestroyedObject>
             {
                 public override MethodInfo? TargetMethod { get; } =
