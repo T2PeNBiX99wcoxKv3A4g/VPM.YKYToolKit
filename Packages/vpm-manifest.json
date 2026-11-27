@@ -77,13 +77,13 @@
       "dependencies": {}
     },
     "io.github.ykysnk.localization": {
-      "version": "1.0.0",
+      "version": "1.0.4",
       "dependencies": {
         "io.github.ykysnk.utils": ">=0.33.2"
       }
     },
     "io.github.ykysnk.utils": {
-      "version": "1.9.2",
+      "version": "1.10.3",
       "dependencies": {}
     }
   }
