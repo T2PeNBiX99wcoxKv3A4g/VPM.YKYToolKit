@@ -7,7 +7,7 @@
                 <uie:ToolbarButton text="label.refresh" name="refreshButton"/>
                 <uie:ToolbarButton text="label.clear" name="clearButton"/>
                 <ui:VisualElement class="yky-spacer"/>
-                <uie:ToolbarSearchField name="search" class="yky-delete-history__search"/>
+                <uie:ToolbarSearchField name="search" class="yky-delete-history__search localize-skip"/>
             </uie:Toolbar>
             <ui:VisualElement class="yky-delete-history__body">
                 <ui:VisualElement class="yky-delete-history__dates">

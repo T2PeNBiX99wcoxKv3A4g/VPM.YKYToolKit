@@ -84,6 +84,10 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         {
             search.AddToClassList("yky-search");
 
+            // The localizer must not touch the field: on a restored window it pushes a translation into the
+            // field's value, the filter then runs with it and hides every row.
+            search.AddToClassList("localize-skip");
+
             const string key = "label.search";
             var helper = LocalizationHelper.For(typeof(TransformHelpWindow));
             search.tooltip = helper.S(key);

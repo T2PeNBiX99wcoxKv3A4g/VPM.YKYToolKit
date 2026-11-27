@@ -23,6 +23,11 @@ namespace io.github.ykysnk.ykyToolkit.Editor
         internal static void SetupSearchField(this ToolbarSearchField field, Action<string> changed)
         {
             field.AddToClassList("yky-search");
+
+            // The localizer must not touch the field: on a restored window it pushes a translation into the
+            // field's value, the filter then runs with it and hides every row.
+            field.AddToClassList("localize-skip");
+
             field.tooltip = PlaceholderKey.S();
 
             if (field.Q<Button>("unity-cancel") is { } cancel) cancel.text = ClearGlyph;

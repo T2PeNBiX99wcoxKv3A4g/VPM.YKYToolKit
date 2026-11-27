@@ -5,7 +5,7 @@
         <uie:Toolbar>
             <ui:Label text="label.enhanced_transform_inspector.help_window_title" class="yky-help__toolbar-title"/>
             <ui:VisualElement class="yky-spacer"/>
-            <uie:ToolbarSearchField name="search" class="yky-help__search"/>
+            <uie:ToolbarSearchField name="search" class="yky-help__search localize-skip"/>
         </uie:Toolbar>
         <ui:ScrollView class="yky-help__scroll">
             <ui:VisualElement class="yky-card yky-help__card">

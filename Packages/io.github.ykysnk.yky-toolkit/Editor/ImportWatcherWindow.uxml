@@ -8,7 +8,7 @@
                 <uie:ToolbarButton text="label.clear" name="clear"/>
                 <uie:ToolbarButton text="label.import_watcher.settings" name="settings"/>
                 <ui:VisualElement class="yky-spacer"/>
-                <uie:ToolbarSearchField name="search" class="yky-import-log__search"/>
+                <uie:ToolbarSearchField name="search" class="yky-import-log__search localize-skip"/>
             </uie:Toolbar>
             <ui:VisualElement class="yky-import-log__body">
                 <ui:VisualElement name="dateColumn" class="yky-import-log__dates">
