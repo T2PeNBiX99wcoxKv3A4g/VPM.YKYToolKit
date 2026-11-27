@@ -7,7 +7,7 @@ using io.github.ykysnk.utils.NonUdon;
 using JetBrains.Annotations;
 using Object = UnityEngine.Object;
 
-namespace io.github.ykysnk.ykyToolkit.Editor
+namespace io.github.ykysnk.ykyToolkit.Editor.Patches
 {
     /// <summary>
     ///     Patches for lilEditorToolbox. Its project extension caches every object it loaded by GUID, so deleting an

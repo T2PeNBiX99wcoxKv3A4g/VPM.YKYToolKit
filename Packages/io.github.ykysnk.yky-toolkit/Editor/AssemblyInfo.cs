@@ -1,6 +1,6 @@
 using io.github.ykysnk.Localization.Editor;
 using io.github.ykysnk.utils.Editor.Patches;
-using io.github.ykysnk.ykyToolkit.Editor;
+using io.github.ykysnk.ykyToolkit.Editor.Patches;
 
 // The editor UI of this package localizes through this id; the S()/G()/UILocalize() extensions resolve the helper
 // from it, so the package needs no wrapper class of its own.
