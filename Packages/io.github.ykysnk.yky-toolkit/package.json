@@ -1,9 +1,9 @@
 {
   "name": "io.github.ykysnk.yky-toolkit",
   "displayName": "YKY Toolkit",
-  "version": "1.1.3",
+  "version": "1.2.0",
   "unity": "2022.3",
-  "documentationUrl": "https://t2penbix99wcoxkv3a4g.github.io/VPM-Docs/#/yky-toolkit/Overview",
+  "documentationUrl": "https://t2penbix99wcoxkv3a4g.github.io/VPM-Docs/en-US/yky-toolkit/",
   "description": "Editor toolkit for Unity: a UPM package installer, import watcher, delete history, resource monitor, cache cleanup and an enhanced transform inspector.",
   "gitDependencies": {},
   "vpmDependencies": {
