@@ -56,6 +56,7 @@ namespace io.github.ykysnk.ykyToolkit.Editor.Patches
                 ///     Removes an entry whose object was destroyed, so the original loads the asset again. A deleted
                 ///     asset then resolves to <see langword="null" /> instead of a wrapper that throws when it is read.
                 /// </summary>
+                [UsedImplicitly]
                 private static void Prefix(string guid)
                 {
                     var cache = Cache.Value;
